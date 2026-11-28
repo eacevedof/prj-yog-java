@@ -30,7 +30,7 @@ public final class ExplorerReaderRepositoryFactory {
     public AbstractExplorerReaderRepository getRepository(String connectionUuid, String sessionKey) {
         TargetSessionFactory targetSessionFactory = TargetSessionFactory.getInstance();
         String dbEngine = targetSessionFactory.getDbEngine(connectionUuid);
-        Connection pdo = targetSessionFactory.getSessionPdo(connectionUuid, sessionKey);
+        Connection pdo = targetSessionFactory.getSession(connectionUuid, sessionKey);
         return switch (dbEngine) {
             case SqlDialect.PGSQL -> ExplorerReaderPgsqlRepository.getInstance(pdo);
             case SqlDialect.SQLITE -> ExplorerReaderSqliteRepository.getInstance(pdo);

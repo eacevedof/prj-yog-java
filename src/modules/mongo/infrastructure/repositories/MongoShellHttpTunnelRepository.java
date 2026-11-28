@@ -9,6 +9,8 @@ import org.bson.types.ObjectId;
 
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelClient;
 
+import modules.mongo.domain.enums.MongoKeyEnum;
+import modules.mongo.domain.enums.MongoShellCommandTypeEnum;
 import modules.mongo.domain.entities.MongoShellCommandEntity;
 
 /**
@@ -31,23 +33,23 @@ public final class MongoShellHttpTunnelRepository extends AbstractMongoShellRepo
     @Override
     public String execute(MongoShellCommandEntity command, String databaseName) {
         return switch (command.type()) {
-            case MongoShellCommandEntity.SHOW_DATABASES -> getShowDatabasesText();
-            case MongoShellCommandEntity.SHOW_COLLECTIONS -> {
+            case MongoShellCommandTypeEnum.SHOW_DATABASES -> getShowDatabasesText();
+            case MongoShellCommandTypeEnum.SHOW_COLLECTIONS -> {
                 List<String> names = new ArrayList<>();
                 for (Document collection : mongoHttpTunnelCommands.getDocuments(new Document("listCollections", 1).append("nameOnly", true), databaseName)) {
                     names.add(collection.getString("name"));
                 }
                 yield String.join("\n", names);
             }
-            case MongoShellCommandEntity.DROP_DATABASE -> {
+            case MongoShellCommandTypeEnum.DROP_DATABASE -> {
                 mongoHttpTunnelCommands.getResponse(new Document("dropDatabase", 1), databaseName);
                 yield getResultText(new Document("ok", 1).append("dropped", databaseName));
             }
-            case MongoShellCommandEntity.RUN_COMMAND -> {
+            case MongoShellCommandTypeEnum.RUN_COMMAND -> {
                 String targetDatabase = "adminCommand".equals(command.name()) ? ADMIN_DATABASE : databaseName;
                 yield getResultText(mongoHttpTunnelCommands.getResponse(getDocument(command.arguments(), 0), targetDatabase));
             }
-            case MongoShellCommandEntity.COLLECTION_METHOD -> executeCollectionMethod(command, databaseName);
+            case MongoShellCommandTypeEnum.COLLECTION_METHOD -> executeCollectionMethod(command, databaseName);
             default -> throw new IllegalArgumentException(command.type());
         };
     }
@@ -79,13 +81,13 @@ public final class MongoShellHttpTunnelRepository extends AbstractMongoShellRepo
             case "insertOne" -> {
                 Document document = getWithId(getDocument(arguments, 0));
                 getResponse(new Document("insert", collection).append("documents", List.of(document)), databaseName);
-                yield getResultText(new Document("acknowledged", true).append("insertedId", document.get("_id")));
+                yield getResultText(new Document("acknowledged", true).append("insertedId", document.get(MongoKeyEnum.ID)));
             }
             case "insertMany" -> {
                 List<Document> documents = new ArrayList<>();
                 for (Document document : getDocumentList(arguments, 0, command.method())) documents.add(getWithId(document));
                 getResponse(new Document("insert", collection).append("documents", documents), databaseName);
-                yield getResultText(new Document("acknowledged", true).append("insertedIds", documents.stream().map(document -> document.get("_id")).toList()));
+                yield getResultText(new Document("acknowledged", true).append("insertedIds", documents.stream().map(document -> document.get(MongoKeyEnum.ID)).toList()));
             }
             case "updateOne" -> getUpdateText(collection, getDocument(arguments, 0), getOperatorsUpdate(getDocument(arguments, 1)), false, databaseName);
             case "updateMany" -> getUpdateText(collection, getDocument(arguments, 0), getOperatorsUpdate(getDocument(arguments, 1)), true, databaseName);
@@ -147,7 +149,7 @@ public final class MongoShellHttpTunnelRepository extends AbstractMongoShellRepo
             .append("matchedCount", getN(response))
             .append("modifiedCount", response.get("nModified") instanceof Number number ? number.longValue() : 0L);
         List<Document> upserted = response.getList("upserted", Document.class, List.of());
-        if (!upserted.isEmpty()) result.append("upsertedId", upserted.getFirst().get("_id"));
+        if (!upserted.isEmpty()) result.append("upsertedId", upserted.getFirst().get(MongoKeyEnum.ID));
         return getResultText(result);
     }
 
@@ -195,8 +197,8 @@ public final class MongoShellHttpTunnelRepository extends AbstractMongoShellRepo
      * Como el driver: un documento sin _id recibe un ObjectId nuevo antes de insertarse.
      */
     private Document getWithId(Document document) {
-        if (!document.containsKey("_id")) {
-            Document withId = new Document("_id", new ObjectId());
+        if (!document.containsKey(MongoKeyEnum.ID)) {
+            Document withId = new Document(MongoKeyEnum.ID, new ObjectId());
             withId.putAll(document);
             return withId;
         }

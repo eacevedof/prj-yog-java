@@ -89,7 +89,7 @@ public final class RedisReplyFormatter {
     /**
      * El texto si los bytes son UTF-8 valido; null si son binarios.
      */
-    public static String getUtf8OrNull(byte[] bytes) {
+    public String getUtf8OrNull(byte[] bytes) {
         try {
             return StandardCharsets.UTF_8.newDecoder()
                 .onMalformedInput(CodingErrorAction.REPORT)

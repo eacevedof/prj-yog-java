@@ -11,6 +11,7 @@ import static core.config.Global.__;
 
 import modules.history.application.recordqueryhistory.QueryHistoryTracer;
 
+import modules.explorer.domain.enums.ExplorerKeyEnum;
 import modules.explorer.domain.enums.ExplorerMessageEnum;
 import modules.explorer.infrastructure.factories.ExplorerReaderRepositoryFactory;
 import modules.explorer.infrastructure.repositories.AbstractExplorerReaderRepository;
@@ -46,7 +47,7 @@ public final class GetTableInfoService {
             getTableInfoDto.getConnectionUuid(), getTableInfoDto.getSessionKey()
         );
         Map<String, Object> status = explorerReaderRepository.getTableStatus(databaseName, tableName);
-        boolean isView = getTrimmedString(status.get("table_type")).contains("VIEW");
+        boolean isView = getTrimmedString(status.get(ExplorerKeyEnum.TABLE_TYPE)).contains(ExplorerKeyEnum.TABLE_TYPE_VIEW);
         return GetTableInfoResultDto.fromPrimitives(Primitives.of(
             "databaseName", databaseName,
             "tableName", tableName,

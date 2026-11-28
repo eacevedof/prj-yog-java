@@ -11,6 +11,7 @@ import static modules.shared.application.Primitives.getTrimmedString;
 
 import static core.config.Global.__;
 
+import modules.explorer.domain.enums.ExplorerKeyEnum;
 import modules.explorer.application.gettableinfo.GetTableInfoResultDto;
 
 /**
@@ -67,7 +68,7 @@ public final class TableInfoFormatter {
         for (Map<String, Object> indexRow : indexRows) {
             String indexName = getTrimmedString(indexRow.get("index_name"));
             columnsByIndex.computeIfAbsent(indexName, key -> new ArrayList<>()).add(getTrimmedString(indexRow.get("column_name")));
-            String kind = "PRIMARY".equals(indexName) ? "PRIMARY KEY" : getInt(indexRow.get("non_unique")) == 0 ? "UNIQUE " + indexName : "INDEX " + indexName;
+            String kind = ExplorerKeyEnum.PRIMARY_INDEX_NAME.equals(indexName) ? "PRIMARY KEY" : getInt(indexRow.get("non_unique")) == 0 ? "UNIQUE " + indexName : "INDEX " + indexName;
             headerByIndex.putIfAbsent(indexName, kind + "|" + getTrimmedString(indexRow.get("index_type")));
         }
         List<String> indexLines = new ArrayList<>();

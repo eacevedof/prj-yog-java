@@ -36,7 +36,7 @@ public final class UpdateConnectionDto {
         this.databaseName = getTrimmedString(primitives.get("databaseName"));
         this.colorHex = getTrimmedString(primitives.get("colorHex"));
         this.isProduction = getBool(primitives.get("isProduction"));
-        this.tunnelForm = TunnelFormPrimitives.getFormValues(primitives);
+        this.tunnelForm = TunnelFormPrimitives.getInstance().getFormValues(primitives);
     }
 
     public static UpdateConnectionDto fromPrimitives(Map<String, Object> primitives) {

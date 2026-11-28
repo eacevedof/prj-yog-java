@@ -5,11 +5,9 @@ import java.util.Map;
 import static modules.shared.application.Primitives.getInt;
 import static modules.shared.application.Primitives.getTrimmedString;
 
-public final class ScanKeysDto {
+import modules.redis.domain.enums.RedisConfigEnum;
 
-    public static final String DEFAULT_PATTERN = "*";
-    public static final String FIRST_CURSOR = "0";
-    public static final int DEFAULT_COUNT = 500;
+public final class ScanKeysDto {
 
     private final String connectionUuid;
     private final String sessionKey;
@@ -21,11 +19,11 @@ public final class ScanKeysDto {
         this.connectionUuid = getTrimmedString(primitives.get("connectionUuid"));
         this.sessionKey = getTrimmedString(primitives.get("sessionKey"));
         String patternValue = getTrimmedString(primitives.get("pattern"));
-        this.pattern = patternValue.isEmpty() ? DEFAULT_PATTERN : patternValue;
+        this.pattern = patternValue.isEmpty() ? RedisConfigEnum.SCAN_DEFAULT_PATTERN : patternValue;
         String cursorValue = getTrimmedString(primitives.get("cursor"));
-        this.cursor = cursorValue.isEmpty() ? FIRST_CURSOR : cursorValue;
+        this.cursor = cursorValue.isEmpty() ? RedisConfigEnum.SCAN_FIRST_CURSOR : cursorValue;
         int countValue = getInt(primitives.get("count"));
-        this.count = countValue <= 0 ? DEFAULT_COUNT : countValue;
+        this.count = countValue <= 0 ? RedisConfigEnum.SCAN_DEFAULT_COUNT : countValue;
     }
 
     public static ScanKeysDto fromPrimitives(Map<String, Object> primitives) {

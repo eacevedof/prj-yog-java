@@ -31,9 +31,10 @@ import static modules.shared.application.Primitives.getTrimmedString;
 
 import static core.config.Global.__;
 
+import modules.connections.domain.enums.ConnectionsConfigEnum;
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.domain.enums.DbEngineEnum;
-import modules.connections.domain.entities.ConnectionEntity;
+import modules.connections.domain.enums.TunnelFormKeyEnum;
 import modules.connections.application.createconnection.CreateConnectionDto;
 import modules.connections.application.getconnection.GetConnectionDto;
 import modules.connections.application.testconnection.TestConnectionDto;
@@ -154,8 +155,8 @@ public final class ConnectionDialogController extends AbstractFxController {
         if (connectionUuid.isEmpty()) {
             dbEngineComboBox.setValue(DbEngineEnum.DEFAULT);
             portField.setText(String.valueOf(DbEngineEnum.MYSQL_DEFAULT_PORT));
-            sshPortField.setText(String.valueOf(ConnectionEntity.DEFAULT_SSH_PORT));
-            httpTimeoutField.setText(String.valueOf(ConnectionEntity.DEFAULT_HTTP_TIMEOUT_S));
+            sshPortField.setText(String.valueOf(ConnectionsConfigEnum.DEFAULT_SSH_PORT));
+            httpTimeoutField.setText(String.valueOf(ConnectionsConfigEnum.DEFAULT_HTTP_TIMEOUT_S));
             isPasswordChanged = true;
             isSshSecretsChanged = true;
             isHttpUrlChanged = true;
@@ -404,18 +405,18 @@ public final class ConnectionDialogController extends AbstractFxController {
             "databaseName", databaseNameField.getText(),
             "colorHex", useColorCheckBox.isSelected() ? getColorHex(colorPicker.getValue()) : "",
             "isProduction", isProductionCheckBox.isSelected(),
-            "sshEnabled", sshEnabledCheckBox.isSelected(),
-            "sshHost", sshHostField.getText(),
-            "sshPort", sshPortField.getText(),
-            "sshUser", sshUserField.getText(),
-            "sshPassword", sshPasswordField.getText(),
-            "sshPrivateKeyPath", sshPrivateKeyPathField.getText(),
-            "sshPassphrase", sshPassphraseField.getText(),
-            "isSshSecretsChanged", isSshSecretsChanged,
-            "httpEnabled", httpEnabledCheckBox.isSelected(),
-            "httpUrl", httpUrlField.getText(),
-            "httpTimeoutS", httpTimeoutField.getText(),
-            "isHttpUrlChanged", isHttpUrlChanged
+            TunnelFormKeyEnum.SSH_ENABLED, sshEnabledCheckBox.isSelected(),
+            TunnelFormKeyEnum.SSH_HOST, sshHostField.getText(),
+            TunnelFormKeyEnum.SSH_PORT, sshPortField.getText(),
+            TunnelFormKeyEnum.SSH_USER, sshUserField.getText(),
+            TunnelFormKeyEnum.SSH_PASSWORD, sshPasswordField.getText(),
+            TunnelFormKeyEnum.SSH_PRIVATE_KEY_PATH, sshPrivateKeyPathField.getText(),
+            TunnelFormKeyEnum.SSH_PASSPHRASE, sshPassphraseField.getText(),
+            TunnelFormKeyEnum.IS_SSH_SECRETS_CHANGED, isSshSecretsChanged,
+            TunnelFormKeyEnum.HTTP_ENABLED, httpEnabledCheckBox.isSelected(),
+            TunnelFormKeyEnum.HTTP_URL, httpUrlField.getText(),
+            TunnelFormKeyEnum.HTTP_TIMEOUT_S, httpTimeoutField.getText(),
+            TunnelFormKeyEnum.IS_HTTP_URL_CHANGED, isHttpUrlChanged
         );
     }
 
@@ -431,8 +432,8 @@ public final class ConnectionDialogController extends AbstractFxController {
      * Los errores de validacion llevan delante la columna (ssh_host: ..., http_url: ...): se abre su pestaña.
      */
     private void selectTabWithError(String errorMessage) {
-        if (errorMessage.contains("ssh_")) connectionTabPane.getSelectionModel().select(sshTab);
-        else if (errorMessage.contains("http_")) connectionTabPane.getSelectionModel().select(httpTab);
+        if (errorMessage.contains(ConnectionsKeyEnum.SSH_PREFIX)) connectionTabPane.getSelectionModel().select(sshTab);
+        else if (errorMessage.contains(ConnectionsKeyEnum.HTTP_PREFIX)) connectionTabPane.getSelectionModel().select(httpTab);
     }
 
     private void showMessage(String message, String styleClass) {

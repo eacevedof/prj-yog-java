@@ -8,6 +8,7 @@ import java.util.Set;
 
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.domain.services.SqlIdentifierQuoter;
+import modules.shared.application.Primitives;
 
 import modules.query.domain.enums.TableChangeKeyEnum;
 import modules.query.domain.entities.PreparedSqlEntity;
@@ -75,7 +76,7 @@ public final class TableChangesSqlBuilder {
 
     private PreparedSqlEntity getInsert(String quotedTable, Map<String, String> newValues, List<String> defaultColumns) {
         if (newValues.isEmpty() && defaultColumns.isEmpty()) {
-            return PreparedSqlEntity.of("INSERT INTO " + quotedTable + sqlDialect.getEmptyInsertSuffix(), List.of(), false);
+            return getPreparedSql("INSERT INTO " + quotedTable + sqlDialect.getEmptyInsertSuffix(), List.of(), false);
         }
         List<String> quotedColumns = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -89,7 +90,7 @@ public final class TableChangesSqlBuilder {
             quotedColumns.add(sqlIdentifierQuoter.getQuoted(defaultColumn));
             placeholders.add("DEFAULT");
         }
-        return PreparedSqlEntity.of(
+        return getPreparedSql(
             "INSERT INTO " + quotedTable + " (" + String.join(", ", quotedColumns) + ") VALUES (" + String.join(", ", placeholders) + ")",
             params,
             false
@@ -113,13 +114,17 @@ public final class TableChangesSqlBuilder {
             if (!newValues.containsKey(defaultColumn)) assignments.add(sqlIdentifierQuoter.getQuoted(defaultColumn) + " = DEFAULT");
         }
         String where = getWhereByKey(primaryKeyColumns, keyValues, params);
-        return PreparedSqlEntity.of("UPDATE " + quotedTable + " SET " + String.join(", ", assignments) + where + getLimitOne(), params, true);
+        return getPreparedSql("UPDATE " + quotedTable + " SET " + String.join(", ", assignments) + where + getLimitOne(), params, true);
     }
 
     private PreparedSqlEntity getDelete(String quotedTable, Set<String> primaryKeyColumns, Map<String, String> keyValues) {
         List<Object> params = new ArrayList<>();
         String where = getWhereByKey(primaryKeyColumns, keyValues, params);
-        return PreparedSqlEntity.of("DELETE FROM " + quotedTable + where + getLimitOne(), params, true);
+        return getPreparedSql("DELETE FROM " + quotedTable + where + getLimitOne(), params, true);
+    }
+
+    private PreparedSqlEntity getPreparedSql(String sql, List<Object> params, boolean isOneRowExpected) {
+        return PreparedSqlEntity.fromPrimitives(Primitives.of("sql", sql, "params", params, "isOneRowExpected", isOneRowExpected));
     }
 
     private String getLimitOne() {

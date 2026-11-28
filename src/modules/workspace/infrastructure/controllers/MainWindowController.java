@@ -81,6 +81,9 @@ public final class MainWindowController extends AbstractFxController {
     private static final double SAVE_FILTERS_DELAY_MS = 600;
     // el ajuste automatico del panel de conexiones no pasa de media ventana
     private static final double MAX_PANEL_FRACTION = 0.5;
+    // la clase CSS del divisor de un SplitPane de JavaFX y la separacion entre el nombre y PROD en la pestaña
+    private static final String STYLE_SPLIT_PANE_DIVIDER = "split-pane-divider";
+    private static final double CONNECTION_TAB_HEADER_SPACING = 6;
 
     @FXML
     private SplitPane mainSplitPane;
@@ -164,7 +167,7 @@ public final class MainWindowController extends AbstractFxController {
     private boolean isOnDivider(Object eventTarget) {
         Node node = eventTarget instanceof Node targetNode ? targetNode : null;
         while (node != null && node != mainSplitPane) {
-            if (node.getStyleClass().contains("split-pane-divider")) return true;
+            if (node.getStyleClass().contains(STYLE_SPLIT_PANE_DIVIDER)) return true;
             node = node.getParent();
         }
         return false;
@@ -188,10 +191,10 @@ public final class MainWindowController extends AbstractFxController {
      */
     private void loadLanguageMenu() {
         String currentLanguage = Translator.getInstance().getLanguage();
-        languageMenuButton.setGraphic(FlagIcon.of(currentLanguage));
+        languageMenuButton.setGraphic(FlagIcon.getInstance().getFlag(currentLanguage));
         languageMenuButton.setText(LanguageEnum.NATIVE_NAMES.get(currentLanguage));
         for (String language : LanguageEnum.VALUES) {
-            MenuItem languageMenuItem = new MenuItem(LanguageEnum.NATIVE_NAMES.get(language), FlagIcon.of(language));
+            MenuItem languageMenuItem = new MenuItem(LanguageEnum.NATIVE_NAMES.get(language), FlagIcon.getInstance().getFlag(language));
             languageMenuItem.setOnAction(actionEvent -> changeLanguage(language));
             languageMenuButton.getItems().add(languageMenuItem);
         }
@@ -435,7 +438,7 @@ public final class MainWindowController extends AbstractFxController {
         String connectionName = getTrimmedString(connection.get(ConnectionsKeyEnum.CONNECTION_NAME));
         Label nameLabel = new Label(connectionName);
         nameLabel.setMnemonicParsing(false);
-        HBox header = new HBox(6, nameLabel);
+        HBox header = new HBox(CONNECTION_TAB_HEADER_SPACING, nameLabel);
         header.setAlignment(Pos.CENTER_LEFT);
 
         String colorHex = getTrimmedString(connection.get(ConnectionsKeyEnum.COLOR_HEX));

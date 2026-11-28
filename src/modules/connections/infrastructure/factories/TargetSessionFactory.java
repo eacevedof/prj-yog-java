@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.jcraft.jsch.JSchException;
 
+import modules.shared.domain.enums.SessionKeyEnum;
+
 import static core.config.Global.__;
 
 import modules.connections.domain.enums.ConnectionsMessageEnum;
@@ -27,7 +29,6 @@ import modules.connections.domain.exceptions.ConnectionsException;
  */
 public final class TargetSessionFactory {
 
-    public static final String SESSION_KEY_SEPARATOR = ":";
     private static final int IS_VALID_TIMEOUT_S = 2;
 
     private static final Map<String, Connection> SESSIONS_BY_KEY = new ConcurrentHashMap<>();
@@ -47,13 +48,13 @@ public final class TargetSessionFactory {
      * La sesion de esa clave; si no existe o se ha caido (timeout del servidor, red), se abre de nuevo.
      * @throws ConnectionsException
      */
-    public Connection getSessionPdo(String connectionUuid, String sessionKey) {
+    public Connection getSession(String connectionUuid, String sessionKey) {
         synchronized (LOCKS_BY_KEY.computeIfAbsent(sessionKey, key -> new Object())) {
-            return getOrOpenSessionPdo(connectionUuid, sessionKey);
+            return getOrOpenSession(connectionUuid, sessionKey);
         }
     }
 
-    private Connection getOrOpenSessionPdo(String connectionUuid, String sessionKey) {
+    private Connection getOrOpenSession(String connectionUuid, String sessionKey) {
         Connection connection = SESSIONS_BY_KEY.get(sessionKey);
         if (isUsable(connection)) {
             return connection;
@@ -68,9 +69,9 @@ public final class TargetSessionFactory {
 
         // feature 13: por el tunel HTTP no hay JDBC; la sesion habla el protocolo de SQLyog
         if (connectionEntity.isHttpEnabled()) {
-            Connection httpTunnelConnection = HttpTunnelSession.getConnection(
+            Connection httpTunnelConnection = HttpTunnelSession.getInstance(
                 HttpTunnelClient.getInstance(connectionEntity), connectionEntity.getDbEngine(), connectionEntity.getDatabaseName()
-            );
+            ).getConnection();
             SESSIONS_BY_KEY.put(sessionKey, httpTunnelConnection);
             return httpTunnelConnection;
         }
@@ -121,7 +122,7 @@ public final class TargetSessionFactory {
      */
     public void closeSessions(String sessionKeyPrefix) {
         List<String> sessionKeys = SESSIONS_BY_KEY.keySet().stream()
-            .filter(sessionKey -> sessionKey.equals(sessionKeyPrefix) || sessionKey.startsWith(sessionKeyPrefix + SESSION_KEY_SEPARATOR))
+            .filter(sessionKey -> sessionKey.equals(sessionKeyPrefix) || sessionKey.startsWith(sessionKeyPrefix + SessionKeyEnum.SEPARATOR))
             .toList();
         for (String sessionKey : sessionKeys) {
             closeQuietly(SESSIONS_BY_KEY.remove(sessionKey));

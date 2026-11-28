@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 
+import modules.shared.domain.enums.SharedConfigEnum;
 import modules.shared.application.Primitives;
 
 import static core.config.Global.__;
@@ -67,7 +68,7 @@ public final class ExecuteRedisCommandService {
             output = RedisReplyFormatter.getInstance().getText(redisWriterRepository.executeCommand(rawArguments));
         }
         catch (JedisDataException e) {
-            output = "(error) " + e.getMessage();
+            output = SharedConfigEnum.CONSOLE_ERROR_PREFIX + e.getMessage();
             isError = true;
         }
         catch (JedisConnectionException e) {

@@ -32,9 +32,6 @@ public final class WorkspaceKeyEnum {
     public static final String SQL_TEXT = "sql_text";
     public static final String IS_SELECTED = "is_selected";
 
-    public static final int MAX_TAB_TITLE_LENGTH = 100;
-    public static final int MAX_STATE_VALUE_LENGTH = 1000;
-
     /**
      * Una clave de app_workspace_state que existe: una de STATE_KEYS o un prefijo con algo detras.
      */

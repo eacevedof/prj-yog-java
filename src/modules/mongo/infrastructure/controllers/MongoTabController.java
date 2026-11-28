@@ -25,6 +25,8 @@ import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 
 import modules.shared.domain.enums.ExceptionEnum;
+import modules.shared.domain.enums.SessionKeyEnum;
+import modules.shared.domain.enums.SharedConfigEnum;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.icons.AppIconEnum;
 import modules.shared.infrastructure.components.icons.AppIcon;
@@ -40,8 +42,9 @@ import static core.config.Global.__;
 
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.infrastructure.factories.MongoSessionFactory;
-import modules.connections.infrastructure.factories.TargetSessionFactory;
 
+import modules.mongo.domain.enums.MongoConfigEnum;
+import modules.mongo.domain.enums.MongoKeyEnum;
 import modules.mongo.application.executecommand.ExecuteMongoCommandDto;
 import modules.mongo.application.finddocuments.FindMongoDocumentsDto;
 import modules.mongo.application.finddocuments.FindMongoDocumentsResultDto;
@@ -63,7 +66,6 @@ public final class MongoTabController extends AbstractFxController implements Co
 
     private static final String TAB_PREFIX = "ctab-";
     private static final String LOADING = "loading";
-    private static final String DEFAULT_CONSOLE_DATABASE = "test";
 
     @FXML
     private TreeView<MongoNode> databasesTreeView;
@@ -110,7 +112,7 @@ public final class MongoTabController extends AbstractFxController implements Co
     private String consoleSessionKey = "";
     private String currentDatabase = "";
     private String currentCollection = "";
-    private String consoleDatabase = DEFAULT_CONSOLE_DATABASE;
+    private String consoleDatabase = MongoConfigEnum.DEFAULT_CONSOLE_DATABASE;
     private List<String> documentsJson = List.of();
     private final List<String> consoleHistory = new ArrayList<>();
     private int consoleHistoryIndex;
@@ -143,10 +145,10 @@ public final class MongoTabController extends AbstractFxController implements Co
     public void setup(Map<String, Object> connection) {
         connectionUuid = getTrimmedString(connection.get(ConnectionsKeyEnum.CONNECTION_UUID));
         tabUuid = UuidGenerator.getInstance().getUniqueIdWithPrefix(TAB_PREFIX);
-        browserSessionKey = tabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + "mongo-browser";
-        consoleSessionKey = tabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + "mongo-console";
+        browserSessionKey = tabUuid + SessionKeyEnum.SEPARATOR + SessionKeyEnum.MONGO_BROWSER;
+        consoleSessionKey = tabUuid + SessionKeyEnum.SEPARATOR + SessionKeyEnum.MONGO_CONSOLE;
         String databaseName = getTrimmedString(connection.get(ConnectionsKeyEnum.DATABASE_NAME));
-        consoleDatabase = databaseName.isEmpty() ? DEFAULT_CONSOLE_DATABASE : databaseName;
+        consoleDatabase = databaseName.isEmpty() ? MongoConfigEnum.DEFAULT_CONSOLE_DATABASE : databaseName;
         consolePromptLabel.setText(consoleDatabase + ">");
         onRefresh();
     }
@@ -198,8 +200,8 @@ public final class MongoTabController extends AbstractFxController implements Co
             collections -> {
                 List<TreeItem<MongoNode>> collectionItems = new ArrayList<>();
                 for (Map<String, Object> collection : collections) {
-                    long count = collection.get("count") instanceof Number number ? number.longValue() : -1;
-                    collectionItems.add(new TreeItem<>(new MongoNode(databaseName, String.valueOf(collection.get("name")), count, false)));
+                    long count = collection.get(MongoKeyEnum.COUNT) instanceof Number number ? number.longValue() : -1;
+                    collectionItems.add(new TreeItem<>(new MongoNode(databaseName, String.valueOf(collection.get(MongoKeyEnum.NAME)), count, false)));
                 }
                 databaseItem.getChildren().setAll(collectionItems);
             },
@@ -333,7 +335,7 @@ public final class MongoTabController extends AbstractFxController implements Co
                     runCommand(commandLine, true);
                     return;
                 }
-                appendConsole(databaseName, commandLine, "(error) " + getErrorMessage(throwable));
+                appendConsole(databaseName, commandLine, SharedConfigEnum.CONSOLE_ERROR_PREFIX + getErrorMessage(throwable));
             },
             "mongo-command"
         );

@@ -17,13 +17,13 @@ import org.bson.Document;
 import modules.shared.application.Primitives;
 
 import modules.mongo.domain.enums.MongoConfigEnum;
+import modules.mongo.domain.enums.MongoKeyEnum;
 
 /**
  * Lo que lee el navegador de MongoDB: BDs, colecciones con su numero (estimado) de documentos y una pagina de
  * documentos con filtro, orden, salto y limite.
  */
 public final class MongoReaderRepository extends AbstractMongoReaderRepository {
-
 
     private final MongoClient mongoClient;
 
@@ -71,7 +71,7 @@ public final class MongoReaderRepository extends AbstractMongoReaderRepository {
                 // una vista no tiene recuento por metadatos
                 count = -1;
             }
-            collections.add(Primitives.of("name", collectionName, "count", count));
+            collections.add(Primitives.of(MongoKeyEnum.NAME, collectionName, MongoKeyEnum.COUNT, count));
         }
         return collections;
     }

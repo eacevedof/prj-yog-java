@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import modules.shared.application.Primitives;
+
 import modules.query.domain.enums.SqlKeywordsEnum;
 import modules.query.domain.entities.SqlCompletionContextEntity;
 
@@ -52,13 +54,13 @@ public final class SqlCompletionAnalyzer {
         List<String> tokensBeforeCaret = getTokens(getWithoutCommentsAndLiterals(beforePrefix));
         boolean isTableExpected = qualifier.isEmpty() && isAfterTableKeyword(tokensBeforeCaret);
 
-        return SqlCompletionContextEntity.of(
-            getUnquoted(prefix),
-            prefix.length(),
-            getUnquoted(qualifier),
-            getTablesByAlias(getTokens(getWithoutCommentsAndLiterals(statementSql))),
-            isTableExpected
-        );
+        return SqlCompletionContextEntity.fromPrimitives(Primitives.of(
+            "prefix", getUnquoted(prefix),
+            "rawPrefixLength", prefix.length(),
+            "qualifier", getUnquoted(qualifier),
+            "tablesByAlias", getTablesByAlias(getTokens(getWithoutCommentsAndLiterals(statementSql))),
+            "isTableExpected", isTableExpected
+        ));
     }
 
     /**

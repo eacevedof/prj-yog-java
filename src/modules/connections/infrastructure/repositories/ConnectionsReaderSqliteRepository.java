@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import modules.shared.application.Primitives;
-import modules.shared.infrastructure.components.secrets.SecretCipherComponent;
 import modules.shared.infrastructure.repositories.AbstractSqliteRepository;
 
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.domain.entities.ConnectionEntity;
+import modules.connections.infrastructure.components.SecretCipherComponent;
 
 public final class ConnectionsReaderSqliteRepository extends AbstractSqliteRepository {
 

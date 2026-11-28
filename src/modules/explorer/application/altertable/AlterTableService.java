@@ -57,7 +57,7 @@ public final class AlterTableService {
         long startNanos = System.nanoTime();
         boolean hasError = true;
         try {
-            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSessionPdo(alterTableDto.getConnectionUuid(), alterTableDto.getSessionKey()))
+            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSession(alterTableDto.getConnectionUuid(), alterTableDto.getSessionKey()))
                 .executeStatements(statements);
             hasError = false;
         }

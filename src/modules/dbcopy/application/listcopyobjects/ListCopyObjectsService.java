@@ -54,7 +54,7 @@ public final class ListCopyObjectsService {
         }
         if (!DbEngineEnum.MYSQL.equals(dbEngine)) return getObjectsOfOtherEngine(listCopyObjectsDto);
         DbCopyReaderMysqlRepository dbCopyReaderMysqlRepository = DbCopyReaderMysqlRepository.getInstance(
-            targetSessionFactory.getSessionPdo(listCopyObjectsDto.getConnectionUuid(), listCopyObjectsDto.getSessionKey())
+            targetSessionFactory.getSession(listCopyObjectsDto.getConnectionUuid(), listCopyObjectsDto.getSessionKey())
         );
         return ListCopyObjectsResultDto.fromPrimitives(dbCopyReaderMysqlRepository.getObjects(listCopyObjectsDto.getDatabaseName()));
     }

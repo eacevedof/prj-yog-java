@@ -10,6 +10,8 @@ import org.bson.Document;
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
 
+import modules.mongo.domain.enums.MongoKeyEnum;
+
 /**
  * Como se ensenan y se leen los documentos. Para ver y editar, JSON con la sintaxis de mongosh (ObjectId("..."),
  * ISODate("..."), NumberLong(...)): asi un documento vuelve a la BD con los mismos tipos al guardarlo. En la tabla, cada
@@ -19,7 +21,6 @@ public final class MongoDocumentFormatter {
 
     private static final JsonWriterSettings PRETTY_SETTINGS = JsonWriterSettings.builder().outputMode(JsonMode.SHELL).indent(true).build();
     private static final JsonWriterSettings COMPACT_SETTINGS = JsonWriterSettings.builder().outputMode(JsonMode.SHELL).build();
-    private static final String ID_FIELD = "_id";
     private static final String VALUE_FIELD = "v";
 
     private MongoDocumentFormatter() {
@@ -68,7 +69,7 @@ public final class MongoDocumentFormatter {
      */
     public Map<String, Object> getTable(List<Document> documents) {
         Set<String> columns = new LinkedHashSet<>();
-        columns.add(ID_FIELD);
+        columns.add(MongoKeyEnum.ID);
         for (Document document : documents) columns.addAll(document.keySet());
         List<List<String>> rows = new ArrayList<>();
         for (Document document : documents) {
@@ -83,6 +84,6 @@ public final class MongoDocumentFormatter {
             }
             rows.add(row);
         }
-        return Map.of("columns", List.copyOf(columns), "rows", rows);
+        return Map.of(MongoKeyEnum.COLUMNS, List.copyOf(columns), MongoKeyEnum.ROWS, rows);
     }
 }

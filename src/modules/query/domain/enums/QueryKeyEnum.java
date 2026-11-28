@@ -13,6 +13,8 @@ public final class QueryKeyEnum {
     public static final String IS_TRUNCATED = "is_truncated";
     public static final String ELAPSED_MS = "elapsed_ms";
     public static final String ERROR_MESSAGE = "error_message";
+    // cada error de "Ejecutar fichero SQL": la sentencia (recortada) y su mensaje
+    public static final String MESSAGE = "message";
 
     private QueryKeyEnum() {
     }

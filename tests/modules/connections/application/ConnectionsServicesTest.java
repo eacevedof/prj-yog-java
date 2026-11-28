@@ -16,6 +16,7 @@ import modules.shared.infrastructure.exceptions.FieldsException;
 
 import testcase.AbstractTestCase;
 
+import modules.connections.domain.enums.ConnectionsConfigEnum;
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.domain.entities.ConnectionEntity;
 import modules.connections.application.cloneconnection.CloneConnectionDto;
@@ -52,7 +53,7 @@ final class ConnectionsServicesTest extends AbstractTestCase {
     void testCreateConnectionSavesItWithoutReturningThePassword() {
         Map<String, Object> connection = createConnection("loc-mi-app").getConnection();
 
-        assertTrue(String.valueOf(connection.get(ConnectionsKeyEnum.CONNECTION_UUID)).startsWith(ConnectionEntity.CONNECTION_UUID_PREFIX));
+        assertTrue(String.valueOf(connection.get(ConnectionsKeyEnum.CONNECTION_UUID)).startsWith(ConnectionsConfigEnum.CONNECTION_UUID_PREFIX));
         assertEquals("loc-mi-app", connection.get(ConnectionsKeyEnum.CONNECTION_NAME));
         assertEquals("#e53935", connection.get(ConnectionsKeyEnum.COLOR_HEX));
         assertFalse(connection.containsKey(ConnectionsKeyEnum.USER_PASSWORD));

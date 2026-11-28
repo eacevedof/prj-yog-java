@@ -30,7 +30,7 @@ public final class GetTableInfoResultDto {
         return new GetTableInfoResultDto(primitives);
     }
 
-    private static Map<String, Object> withoutNulls(Map<String, Object> map) {
+    private Map<String, Object> withoutNulls(Map<String, Object> map) {
         Map<String, Object> copy = new LinkedHashMap<>();
         map.forEach((key, value) -> {
             if (value != null) copy.put(key, value);

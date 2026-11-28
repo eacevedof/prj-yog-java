@@ -73,7 +73,7 @@ public final class TableRenameSqlBuilder {
         return objectType.isEmpty() ? sql : sql + ", " + getNString(objectType);
     }
 
-    private static String getNString(String value) {
+    private String getNString(String value) {
         return "N'" + value.replace("'", "''") + "'";
     }
 }

@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import modules.shared.domain.enums.ExceptionEnum;
+import modules.shared.domain.enums.SessionKeyEnum;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.icons.AppIconEnum;
 import modules.shared.infrastructure.components.date.DateTimer;
@@ -62,6 +63,7 @@ import modules.connections.infrastructure.factories.TargetSessionFactory;
 import modules.explorer.application.listdatabases.ListDatabasesDto;
 import modules.explorer.application.listdatabases.ListDatabasesService;
 
+import modules.dbcopy.domain.enums.DbCopyConfigEnum;
 import modules.dbcopy.domain.enums.DbCopyKeyEnum;
 import modules.dbcopy.domain.enums.DbCopyObjectTypeEnum;
 import modules.dbcopy.domain.services.DatabaseCopyNameBuilder;
@@ -193,7 +195,7 @@ public final class CopyDatabaseDialogController extends AbstractFxController {
         this.sourceConnectionUuid = sourceConnectionUuid;
         this.sourceDatabase = sourceDatabase;
         this.sourceEngine = TargetSessionFactory.getInstance().getDbEngine(sourceConnectionUuid);
-        this.dialogSessionPrefix = UuidGenerator.getInstance().getUniqueIdWithPrefix("dbcopy-dialog-");
+        this.dialogSessionPrefix = UuidGenerator.getInstance().getUniqueIdWithPrefix(DbCopyConfigEnum.COPY_DIALOG_SESSION_PREFIX);
         objectsTreeView.setCellFactory(CheckBoxTreeCell.forTreeView());
         objectsTreeView.setRoot(new CheckBoxTreeItem<>(""));
         targetConnectionComboBox.setCellFactory(listView -> new ConnectionCell());
@@ -243,7 +245,7 @@ public final class CopyDatabaseDialogController extends AbstractFxController {
         setStatus(__("Leyendo los objetos de {0}...", sourceDatabase));
         ListCopyObjectsDto listCopyObjectsDto = ListCopyObjectsDto.fromPrimitives(Primitives.of(
             "connectionUuid", sourceConnectionUuid,
-            "sessionKey", dialogSessionPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "source",
+            "sessionKey", dialogSessionPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.SOURCE,
             "databaseName", sourceDatabase
         ));
         runInBackground(
@@ -313,7 +315,7 @@ public final class CopyDatabaseDialogController extends AbstractFxController {
         String connectionUuid = getTrimmedString(targetConnection.get(ConnectionsKeyEnum.CONNECTION_UUID));
         ListDatabasesDto listDatabasesDto = ListDatabasesDto.fromPrimitives(Primitives.of(
             "connectionUuid", connectionUuid,
-            "sessionKey", dialogSessionPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "target-" + connectionUuid
+            "sessionKey", dialogSessionPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.TARGET_PREFIX + connectionUuid
         ));
         targetDatabaseComboBox.getItems().clear();
         setStatus(__("Leyendo las BD del destino..."));

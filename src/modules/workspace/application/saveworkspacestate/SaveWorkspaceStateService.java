@@ -5,6 +5,7 @@ import modules.shared.infrastructure.components.date.DateTimer;
 
 import static core.config.Global.__;
 
+import modules.workspace.domain.enums.WorkspaceConfigEnum;
 import modules.workspace.domain.enums.WorkspaceKeyEnum;
 import modules.workspace.domain.enums.WorkspaceMessageEnum;
 import modules.workspace.infrastructure.repositories.WorkspaceStateSqliteRepository;
@@ -43,7 +44,7 @@ public final class SaveWorkspaceStateService {
         if (!WorkspaceKeyEnum.isStateKey(stateKey)) {
             throw WorkspaceException.badRequestCustom(__(WorkspaceMessageEnum.UNKNOWN_WORKSPACE_STATE_X, stateKey));
         }
-        if (saveWorkspaceStateDto.getStateValue().length() > WorkspaceKeyEnum.MAX_STATE_VALUE_LENGTH) {
+        if (saveWorkspaceStateDto.getStateValue().length() > WorkspaceConfigEnum.MAX_STATE_VALUE_LENGTH) {
             throw WorkspaceException.badRequestCustom(__(WorkspaceMessageEnum.FIELD_X_IS_TOO_LONG, stateKey));
         }
     }

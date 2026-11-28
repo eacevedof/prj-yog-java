@@ -28,6 +28,7 @@ import modules.connections.infrastructure.components.MongoClientComponent;
 import modules.connections.infrastructure.components.RedisClientComponent;
 import modules.connections.infrastructure.components.SshTunnelComponent;
 import modules.connections.infrastructure.components.TargetJdbcComponent;
+import modules.connections.infrastructure.components.httptunnel.HttpTunnelCellDecoder;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelClient;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelResult;
 
@@ -37,8 +38,10 @@ import modules.connections.infrastructure.components.httptunnel.HttpTunnelResult
 public final class TargetDbReaderJdbcRepository {
 
     private static final int TEST_SOCKET_TIMEOUT_MS = 8000;
+    private final HttpTunnelCellDecoder httpTunnelCellDecoder;
 
     private TargetDbReaderJdbcRepository() {
+        this.httpTunnelCellDecoder = HttpTunnelCellDecoder.getInstance();
     }
 
     public static TargetDbReaderJdbcRepository getInstance() {
@@ -175,8 +178,8 @@ public final class TargetDbReaderJdbcRepository {
         HttpTunnelResult firstResult = results.getFirst();
         boolean isVersionInRows = !DbEngineEnum.MSSQL.equals(dbEngine) && !DbEngineEnum.REDIS.equals(dbEngine) && !DbEngineEnum.MONGODB.equals(dbEngine);
         String serverVersion = isVersionInRows
-            ? (firstResult.rows().isEmpty() ? "" : HttpTunnelResult.getText(firstResult.rows().getFirst().getFirst()))
-            : firstResult.serverVersion();
+            ? (firstResult.getRows().isEmpty() ? "" : httpTunnelCellDecoder.getText(firstResult.getRows().getFirst().getFirst()))
+            : firstResult.getServerVersion();
         return serverVersion + " (HTTP tunnel " + tunnelVersion + ")";
     }
 

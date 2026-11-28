@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import testcase.AbstractTestCase;
 
 import modules.query.domain.enums.TableChangeKeyEnum;
+import modules.query.domain.enums.TableEditRowStateEnum;
 import modules.query.domain.entities.PreparedSqlEntity;
 import modules.query.domain.services.TableChangesSqlBuilder;
 import modules.query.infrastructure.components.TableEditSession;
@@ -29,7 +30,7 @@ final class TableEditSessionTest extends AbstractTestCase {
         TableEditSession tableEditSession = getSession(List.of(row));
 
         tableEditSession.setValue(row, 2, "Anabel");
-        assertEquals(TableEditSession.STATE_MODIFIED, tableEditSession.getState(row));
+        assertEquals(TableEditRowStateEnum.STATE_MODIFIED, tableEditSession.getState(row));
 
         tableEditSession.setValue(row, 2, "Ana");
         assertEquals(null, tableEditSession.getState(row));
@@ -98,9 +99,9 @@ final class TableEditSessionTest extends AbstractTestCase {
 
         assertEquals("UPDATE `shop`.`users` SET `name` = ? WHERE `id` = ? LIMIT 1", statements.getFirst().getSql());
         assertEquals(Arrays.asList("O'Neil", "1"), statements.getFirst().getParams());
-        assertTrue(statements.getFirst().expectsOneRow());
+        assertTrue(statements.getFirst().isOneRowExpected());
         assertEquals("INSERT INTO `shop`.`users` (`email`, `name`) VALUES (?, ?)", statements.get(1).getSql());
-        assertFalse(statements.get(1).expectsOneRow());
+        assertFalse(statements.get(1).isOneRowExpected());
     }
 
     @Test
@@ -122,7 +123,7 @@ final class TableEditSessionTest extends AbstractTestCase {
 
         tableEditSession.setDefault(row, 2);
         assertTrue(tableEditSession.isDefault(row, 2));
-        assertEquals(TableEditSession.STATE_MODIFIED, tableEditSession.getState(row));
+        assertEquals(TableEditRowStateEnum.STATE_MODIFIED, tableEditSession.getState(row));
         List<String> newRow = tableEditSession.newRow();
         tableEditSession.setValue(newRow, 1, "b@x.es");
         tableEditSession.setDefault(newRow, 2);
@@ -141,7 +142,7 @@ final class TableEditSessionTest extends AbstractTestCase {
     }
 
     private TableEditSession getSession(List<List<String>> rows) {
-        TableEditSession tableEditSession = new TableEditSession(COLUMNS, Set.of("id"), Set.of("id"));
+        TableEditSession tableEditSession = TableEditSession.getInstance(COLUMNS, Set.of("id"), Set.of("id"));
         tableEditSession.trackLoadedRows(rows);
         return tableEditSession;
     }

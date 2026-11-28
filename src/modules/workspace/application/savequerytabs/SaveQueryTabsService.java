@@ -8,6 +8,7 @@ import static modules.shared.application.Primitives.getTrimmedString;
 
 import static core.config.Global.__;
 
+import modules.workspace.domain.enums.WorkspaceConfigEnum;
 import modules.workspace.domain.enums.WorkspaceKeyEnum;
 import modules.workspace.domain.enums.WorkspaceMessageEnum;
 import modules.workspace.infrastructure.repositories.QueryTabsWriterSqliteRepository;
@@ -54,7 +55,7 @@ public final class SaveQueryTabsService {
             if (tabTitle.isEmpty()) {
                 throw WorkspaceException.badRequestCustom(__(WorkspaceMessageEnum.FIELD_IS_REQUIRED_X, WorkspaceKeyEnum.TAB_TITLE));
             }
-            if (tabTitle.length() > WorkspaceKeyEnum.MAX_TAB_TITLE_LENGTH) {
+            if (tabTitle.length() > WorkspaceConfigEnum.MAX_TAB_TITLE_LENGTH) {
                 throw WorkspaceException.badRequestCustom(__(WorkspaceMessageEnum.FIELD_X_IS_TOO_LONG, WorkspaceKeyEnum.TAB_TITLE));
             }
         }

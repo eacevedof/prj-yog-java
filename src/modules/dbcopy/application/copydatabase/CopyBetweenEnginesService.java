@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import modules.shared.domain.enums.SessionKeyEnum;
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.uuid.UuidGenerator;
@@ -100,8 +101,8 @@ public final class CopyBetweenEnginesService {
 
         long startNanos = System.nanoTime();
         String sessionKeyPrefix = UuidGenerator.getInstance().getUniqueIdWithPrefix(DbCopyConfigEnum.SESSION_PREFIX);
-        String sourceSessionKey = sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "source";
-        String targetSessionKey = sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "target";
+        String sourceSessionKey = sessionKeyPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.SOURCE;
+        String targetSessionKey = sessionKeyPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.TARGET;
         List<Map<String, Object>> objectResults = new ArrayList<>();
         boolean isCancelled = false;
         try {
@@ -111,10 +112,10 @@ public final class CopyBetweenEnginesService {
                 targetConnectionEntity.getConnectionUuid(), targetSessionKey
             );
             dbCopyRowsReaderJdbcRepository = DbCopyRowsReaderJdbcRepository.getInstance(
-                targetSessionFactory.getSessionPdo(sourceConnectionEntity.getConnectionUuid(), sourceSessionKey), sourceEngine
+                targetSessionFactory.getSession(sourceConnectionEntity.getConnectionUuid(), sourceSessionKey), sourceEngine
             );
             dbCopyWriterJdbcRepository = DbCopyWriterJdbcRepository.getInstance(
-                targetSessionFactory.getSessionPdo(targetConnectionEntity.getConnectionUuid(), targetSessionKey), targetEngine
+                targetSessionFactory.getSession(targetConnectionEntity.getConnectionUuid(), targetSessionKey), targetEngine
             );
             portableCopySqlBuilder = PortableCopySqlBuilder.getInstance(sourceEngine, targetEngine, dbCopyWriterJdbcRepository.isHttpTunnel());
             dbCopyRowsReaderJdbcRepository.prepareSession();
@@ -204,7 +205,7 @@ public final class CopyBetweenEnginesService {
             String targetDatabase = copyDatabaseDto.getTargetDatabase();
             List<PortableColumnEntity> columns = getPortableColumns(tableName);
             if (columns.isEmpty()) return CopyOutcome.ok(0, "");
-            Set<String> columnNames = new HashSet<>(columns.stream().map(PortableColumnEntity::name).toList());
+            Set<String> columnNames = new HashSet<>(columns.stream().map(PortableColumnEntity::getName).toList());
             List<String> primaryKeyColumns = new ArrayList<>(sourceExplorerReaderRepository.getPrimaryKeyColumns(sourceDatabase, tableName));
             // una clave con columnas calculadas (no se copian) no se puede rehacer
             if (!columnNames.containsAll(primaryKeyColumns)) primaryKeyColumns = List.of();
@@ -215,7 +216,7 @@ public final class CopyBetweenEnginesService {
             String identityColumn = portableCopySqlBuilder.getIdentityColumn(columns, primaryKeyColumns);
             List<String> targetTypes = new ArrayList<>();
             for (PortableColumnEntity column : columns) {
-                targetTypes.add(portableColumnMapper.getTargetType(targetEngine, column, indexedColumns.contains(column.name()), column.name().equals(identityColumn)));
+                targetTypes.add(portableColumnMapper.getTargetType(targetEngine, column, indexedColumns.contains(column.getName()), column.getName().equals(identityColumn)));
             }
 
             boolean isCreated = false;
@@ -275,7 +276,7 @@ public final class CopyBetweenEnginesService {
             String indexName = getTrimmedString(row.get(ExplorerKeyEnum.INDEX_NAME));
             String indexType = getTrimmedString(row.get(ExplorerKeyEnum.INDEX_TYPE)).toUpperCase(Locale.ROOT);
             String columnName = getTrimmedString(row.get(ExplorerKeyEnum.COLUMN_NAME));
-            if ("PRIMARY".equals(indexName) || skippedIndexes.contains(indexName)) continue;
+            if (ExplorerKeyEnum.PRIMARY_INDEX_NAME.equals(indexName) || skippedIndexes.contains(indexName)) continue;
             if (!columnNames.contains(columnName) || indexType.equals("FULLTEXT") || indexType.equals("SPATIAL")) {
                 skippedIndexes.add(indexName);
                 indexes.remove(indexName);
@@ -317,10 +318,10 @@ public final class CopyBetweenEnginesService {
         String targetDatabase = copyDatabaseDto.getTargetDatabase();
         boolean[] binaryColumns = new boolean[columns.size()];
         for (int i = 0; i < columns.size(); i++) {
-            binaryColumns[i] = DbCopyTypeFamilyEnum.BINARY.equals(columns.get(i).family());
+            binaryColumns[i] = DbCopyTypeFamilyEnum.BINARY.equals(columns.get(i).getFamily());
         }
         String keysetColumn = getKeysetColumn(columns, primaryKeyColumns);
-        int keysetIndex = keysetColumn.isEmpty() ? -1 : columns.stream().map(PortableColumnEntity::name).toList().indexOf(keysetColumn);
+        int keysetIndex = keysetColumn.isEmpty() ? -1 : columns.stream().map(PortableColumnEntity::getName).toList().indexOf(keysetColumn);
         long estimatedRows = getEstimatedRows(tableName);
         String insertPrefix = portableCopySqlBuilder.getInsertPrefix(targetDatabase, tableName, columns);
         boolean isMssqlIdentity = !identityColumn.isEmpty() && SqlDialect.getInstance(targetEngine).isMssql();
@@ -342,7 +343,7 @@ public final class CopyBetweenEnginesService {
             for (List<Object> row : rows) {
                 bulkInsertBuffer.add(portableCopySqlBuilder.getRowTuple(columns, row));
             }
-            dbCopyWriterJdbcRepository.executeInserts(sessionSqls, bulkInsertBuffer.takeAllStatements());
+            dbCopyWriterJdbcRepository.executeInserts(sessionSqls, bulkInsertBuffer.getStatements());
             copiedRows += rows.size();
             dbCopyProgressTracker.notifyRowsCopied(copyDatabaseDto.getCopyId(), tableName, copiedRows, estimatedRows);
             if (rows.size() < DbCopyConfigEnum.PAGE_ROWS) break;
@@ -368,8 +369,8 @@ public final class CopyBetweenEnginesService {
     private String getKeysetColumn(List<PortableColumnEntity> columns, List<String> primaryKeyColumns) {
         if (primaryKeyColumns.size() != 1) return "";
         for (PortableColumnEntity column : columns) {
-            if (column.name().equals(primaryKeyColumns.getFirst()) && DbCopyTypeFamilyEnum.INTEGER.equals(column.family()) && !column.isCastToNumber()) {
-                return column.name();
+            if (column.getName().equals(primaryKeyColumns.getFirst()) && DbCopyTypeFamilyEnum.INTEGER.equals(column.getFamily()) && !column.isCastToNumber()) {
+                return column.getName();
             }
         }
         return "";

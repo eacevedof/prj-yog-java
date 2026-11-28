@@ -10,6 +10,8 @@ import static modules.shared.application.Primitives.getTrimmedString;
 
 import static core.config.Global.__;
 
+import modules.redis.domain.enums.RedisConfigEnum;
+import modules.redis.domain.enums.RedisKeyEnum;
 import modules.redis.domain.enums.RedisMessageEnum;
 import modules.redis.infrastructure.factories.RedisRepositoryFactory;
 import modules.redis.infrastructure.repositories.AbstractRedisReaderRepository;
@@ -39,7 +41,7 @@ public final class ScanKeysService {
             );
             Map<String, Object> scannedKeys = redisReaderRepository.scanKeys(scanKeysDto.getPattern(), scanKeysDto.getCursor(), scanKeysDto.getCount());
             return ScanKeysResultDto.fromPrimitives(Primitives.merge(scannedKeys, Primitives.of(
-                "isComplete", ScanKeysDto.FIRST_CURSOR.equals(getTrimmedString(scannedKeys.get("nextCursor")))
+                "isComplete", RedisConfigEnum.SCAN_FIRST_CURSOR.equals(getTrimmedString(scannedKeys.get(RedisKeyEnum.NEXT_CURSOR)))
             )));
         }
         // el servidor contesto con un error (WRONGTYPE, sintaxis...): es de la peticion (400), no un servidor caido (503)

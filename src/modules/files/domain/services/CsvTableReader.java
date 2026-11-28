@@ -3,7 +3,10 @@ package modules.files.domain.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import modules.shared.application.Primitives;
+
 import modules.files.domain.enums.FilesFormatEnum;
+import modules.files.domain.enums.FilesKeyEnum;
 import modules.files.domain.entities.FileTableEntity;
 
 /**
@@ -53,10 +56,16 @@ public final class CsvTableReader {
             }
             rows.add(row);
         }
-        return new FileTableEntity(
-            FilesFormatEnum.CSV, String.valueOf(delimiter), textLayoutDetector.getLineSeparator(body), textLayoutDetector.hasBom(text),
-            columnNames, columnKinds, List.of(), rows
-        );
+        return FileTableEntity.fromPrimitives(Primitives.of(
+            FilesKeyEnum.FILE_FORMAT, FilesFormatEnum.CSV,
+            FilesKeyEnum.CSV_DELIMITER, String.valueOf(delimiter),
+            FilesKeyEnum.LINE_SEPARATOR, textLayoutDetector.getLineSeparator(body),
+            FilesKeyEnum.HAS_BOM, textLayoutDetector.hasBom(text),
+            FilesKeyEnum.COLUMN_NAMES, columnNames,
+            FilesKeyEnum.COLUMN_KINDS, columnKinds,
+            FilesKeyEnum.EXPLICIT_NULL_COLUMNS, List.of(),
+            FilesKeyEnum.ROWS, rows
+        ));
     }
 
     /**

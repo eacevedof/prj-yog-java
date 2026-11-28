@@ -6,6 +6,8 @@ import org.bson.Document;
 
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelClient;
 
+import modules.mongo.domain.enums.MongoKeyEnum;
+
 /**
  * Los cambios del navegador de MongoDB por el tunel HTTP, siempre por _id: update, insert y delete de runCommand.
  */
@@ -27,7 +29,7 @@ public final class MongoWriterHttpTunnelRepository extends AbstractMongoWriterRe
     @Override
     public long replaceById(String databaseName, String collectionName, Document document) {
         Document update = new Document("update", collectionName).append("updates", List.of(
-            new Document("q", new Document(ID_FIELD, document.get(ID_FIELD))).append("u", document)
+            new Document("q", new Document(MongoKeyEnum.ID, document.get(MongoKeyEnum.ID))).append("u", document)
         ));
         return getLong(mongoHttpTunnelCommands.getResponse(update, databaseName).get("n"));
     }
@@ -36,13 +38,13 @@ public final class MongoWriterHttpTunnelRepository extends AbstractMongoWriterRe
     public Object insert(String databaseName, String collectionName, Document document) {
         Document documentWithId = getWithId(document);
         mongoHttpTunnelCommands.getResponse(new Document("insert", collectionName).append("documents", List.of(documentWithId)), databaseName);
-        return documentWithId.get(ID_FIELD);
+        return documentWithId.get(MongoKeyEnum.ID);
     }
 
     @Override
     public long deleteById(String databaseName, String collectionName, Object id) {
         Document delete = new Document("delete", collectionName).append("deletes", List.of(
-            new Document("q", new Document(ID_FIELD, id)).append("limit", 1)
+            new Document("q", new Document(MongoKeyEnum.ID, id)).append("limit", 1)
         ));
         return getLong(mongoHttpTunnelCommands.getResponse(delete, databaseName).get("n"));
     }

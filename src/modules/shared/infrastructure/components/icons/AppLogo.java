@@ -41,10 +41,14 @@ public final class AppLogo {
     private AppLogo() {
     }
 
+    public static AppLogo getInstance() {
+        return new AppLogo();
+    }
+
     /**
      * El logo de size x size pixeles.
      */
-    public static Node of(double size) {
+    public Node getLogo(double size) {
         Group logo = new Group(getShapes().toArray(Node[]::new));
         double scale = size / CANVAS;
         logo.getTransforms().add(new Scale(scale, scale, 0, 0));
@@ -55,12 +59,12 @@ public final class AppLogo {
      * Los iconos de la ventana (barra de tareas, Alt+Tab): el sistema elige el tamaño que mejor le encaja. Hay que
      * llamarlo desde el hilo de JavaFX.
      */
-    public static List<Image> getWindowIcons() {
+    public List<Image> getWindowIcons() {
         List<Image> windowIcons = new ArrayList<>();
         SnapshotParameters snapshotParameters = new SnapshotParameters();
         snapshotParameters.setFill(Color.TRANSPARENT);
         for (int size : WINDOW_ICON_SIZES) {
-            WritableImage snapshot = of(size).snapshot(snapshotParameters, new WritableImage(size, size));
+            WritableImage snapshot = getLogo(size).snapshot(snapshotParameters, new WritableImage(size, size));
             // copia en memoria: la imagen de snapshot() no le vale a Windows como icono (salia el de Java)
             WritableImage windowIcon = new WritableImage(size, size);
             windowIcon.getPixelWriter().setPixels(0, 0, size, size, snapshot.getPixelReader(), 0, 0);
@@ -73,7 +77,7 @@ public final class AppLogo {
      * Pone el logo a toda ventana que se abra (principal, dialogos, alertas, visor de celda) sin tocar cada una.
      * Desde el hilo de JavaFX, una vez al arrancar.
      */
-    public static void applyToAllWindows() {
+    public void applyToAllWindows() {
         List<Image> windowIcons = getWindowIcons();
         Window.getWindows().addListener((ListChangeListener<Window>) change -> {
             while (change.next()) {
@@ -84,7 +88,7 @@ public final class AppLogo {
         });
     }
 
-    private static List<Node> getShapes() {
+    private List<Node> getShapes() {
         List<Node> shapes = new ArrayList<>();
 
         Rectangle background = new Rectangle(0, 0, CANVAS, CANVAS);

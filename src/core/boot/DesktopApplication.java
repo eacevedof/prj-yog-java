@@ -28,6 +28,9 @@ public final class DesktopApplication extends Application {
     public static final String APP_TITLE = "multi-dbs";
     public static final String PATH_STYLES = ThemeComponent.PATH_STYLES;
     private static final String PATH_MAIN_WINDOW = "/modules/workspace/infrastructure/views/main-window.fxml";
+    // tamaño inicial de la ventana principal
+    private static final double MAIN_WINDOW_WIDTH = 1200;
+    private static final double MAIN_WINDOW_HEIGHT = 760;
 
     @Override
     public void start(Stage stage) {
@@ -41,10 +44,10 @@ public final class DesktopApplication extends Application {
             throw new UncheckedIOException(e);
         }
 
-        Scene scene = new Scene(root, 1200, 760);
+        Scene scene = new Scene(root, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
         ThemeComponent.getInstance().applyTo(scene);
         stage.setTitle(APP_TITLE);
-        AppLogo.applyToAllWindows();
+        AppLogo.getInstance().applyToAllWindows();
         stage.setScene(scene);
         stage.show();
     }

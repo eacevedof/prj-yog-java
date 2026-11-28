@@ -53,11 +53,11 @@ final class SqlScriptChunkerTest extends AbstractTestCase {
         SqlScriptChunker sqlScriptChunker = SqlScriptChunker.getInstance(dbEngine);
         List<String> sqls = new ArrayList<>();
         for (int start = 0; start < script.length(); start += chunkSize) {
-            for (SqlStatementEntity statement : sqlScriptChunker.addChunk(script.substring(start, Math.min(script.length(), start + chunkSize)))) {
-                sqls.add(statement.getSql());
-            }
+            sqlScriptChunker.addChunk(script.substring(start, Math.min(script.length(), start + chunkSize)));
+            for (SqlStatementEntity statement : sqlScriptChunker.getCompleteStatements()) sqls.add(statement.getSql());
         }
-        for (SqlStatementEntity statement : sqlScriptChunker.finish()) sqls.add(statement.getSql());
+        sqlScriptChunker.finish();
+        for (SqlStatementEntity statement : sqlScriptChunker.getCompleteStatements()) sqls.add(statement.getSql());
         return sqls;
     }
 }

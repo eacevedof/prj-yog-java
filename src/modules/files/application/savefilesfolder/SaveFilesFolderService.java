@@ -13,7 +13,6 @@ import java.util.Set;
 
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.date.DateTimer;
-import static modules.shared.application.Primitives.getBool;
 import static modules.shared.application.Primitives.getTrimmedString;
 
 import static core.config.Global.__;
@@ -74,7 +73,7 @@ public final class SaveFilesFolderService {
         }
         String folder = filesReaderDiskRepository.getFolder(filesPath);
 
-        Connection pdo = TargetSessionFactory.getInstance().getSessionPdo(connectionUuid, saveFilesFolderDto.getSessionKey());
+        Connection pdo = TargetSessionFactory.getInstance().getSession(connectionUuid, saveFilesFolderDto.getSessionKey());
         WorkingTablesReaderJdbcRepository workingTablesReaderJdbcRepository = WorkingTablesReaderJdbcRepository.getInstance(pdo);
         Map<String, String> workingTablesByLowerName = new HashMap<>();
         for (String tableName : workingTablesReaderJdbcRepository.getTableNames()) workingTablesByLowerName.put(tableName.toLowerCase(Locale.ROOT), tableName);
@@ -163,13 +162,16 @@ public final class SaveFilesFolderService {
         for (int i = 0; i < savedNames.size() && i < savedKinds.size(); i++) kindsByLowerName.put(savedNames.get(i).toLowerCase(Locale.ROOT), savedKinds.get(i));
         List<String> columnKinds = new ArrayList<>();
         for (String columnName : dataColumnNames) columnKinds.add(kindsByLowerName.getOrDefault(columnName.toLowerCase(Locale.ROOT), FilesColumnKindEnum.STRING));
-        return new FileTableEntity(
-            getTrimmedString(savedTable.get(FilesKeyEnum.FILE_FORMAT)),
-            getSavedDelimiter(savedTable),
-            String.valueOf(savedTable.get(FilesKeyEnum.LINE_SEPARATOR)),
-            getBool(savedTable.get(FilesKeyEnum.HAS_BOM)),
-            dataColumnNames, columnKinds, fileTableStateBuilder.getList(savedTable.get(FilesKeyEnum.EXPLICIT_NULL_COLUMNS)), dataRows
-        );
+        return FileTableEntity.fromPrimitives(Primitives.of(
+            FilesKeyEnum.FILE_FORMAT, savedTable.get(FilesKeyEnum.FILE_FORMAT),
+            FilesKeyEnum.CSV_DELIMITER, getSavedDelimiter(savedTable),
+            FilesKeyEnum.LINE_SEPARATOR, String.valueOf(savedTable.get(FilesKeyEnum.LINE_SEPARATOR)),
+            FilesKeyEnum.HAS_BOM, savedTable.get(FilesKeyEnum.HAS_BOM),
+            FilesKeyEnum.COLUMN_NAMES, dataColumnNames,
+            FilesKeyEnum.COLUMN_KINDS, columnKinds,
+            FilesKeyEnum.EXPLICIT_NULL_COLUMNS, fileTableStateBuilder.getList(savedTable.get(FilesKeyEnum.EXPLICIT_NULL_COLUMNS)),
+            FilesKeyEnum.ROWS, dataRows
+        ));
     }
 
     /**
@@ -192,7 +194,16 @@ public final class SaveFilesFolderService {
         List<String> dataColumnNames = columnNames.subList(firstDataColumn, columnNames.size());
         List<String> columnKinds = new ArrayList<>();
         for (int i = 0; i < dataColumnNames.size(); i++) columnKinds.add(FilesColumnKindEnum.STRING);
-        return new FileTableEntity(FilesFormatEnum.CSV, NEW_FILE_DELIMITER, FilesConfigEnum.LINE_SEPARATOR_LF, false, dataColumnNames, columnKinds, List.of(), dataRows);
+        return FileTableEntity.fromPrimitives(Primitives.of(
+            FilesKeyEnum.FILE_FORMAT, FilesFormatEnum.CSV,
+            FilesKeyEnum.CSV_DELIMITER, NEW_FILE_DELIMITER,
+            FilesKeyEnum.LINE_SEPARATOR, FilesConfigEnum.LINE_SEPARATOR_LF,
+            FilesKeyEnum.HAS_BOM, false,
+            FilesKeyEnum.COLUMN_NAMES, dataColumnNames,
+            FilesKeyEnum.COLUMN_KINDS, columnKinds,
+            FilesKeyEnum.EXPLICIT_NULL_COLUMNS, List.of(),
+            FilesKeyEnum.ROWS, dataRows
+        ));
     }
 
     /**
@@ -207,11 +218,11 @@ public final class SaveFilesFolderService {
      * @throws IOException si no se puede escribir
      */
     private void writeTable(String connectionUuid, String folder, String tableName, String fileName, FileTableEntity fileTableEntity, String savedAt) throws IOException {
-        String text = FilesFormatEnum.JSON_FORMATS.contains(fileTableEntity.format())
+        String text = FilesFormatEnum.JSON_FORMATS.contains(fileTableEntity.getFormat())
             ? JsonTableConverter.getInstance().getText(fileTableEntity)
             : CsvTableWriter.getInstance().getText(fileTableEntity);
         FilesWriterDiskRepository.getInstance().writeText(folder, fileName, text);
-        String rowsDigest = TableRowsDigester.getInstance().getDigest(fileTableEntity.columnNames(), fileTableEntity.rows());
+        String rowsDigest = TableRowsDigester.getInstance().getDigest(fileTableEntity.getColumnNames(), fileTableEntity.getRows());
         FileTablesWriterSqliteRepository.getInstance().saveFileTable(FileTableStateBuilder.getInstance().getFileTableState(
             connectionUuid, tableName, fileName, fileTableEntity, FilesReaderDiskRepository.getInstance().getFileState(folder, fileName), rowsDigest, savedAt
         ));

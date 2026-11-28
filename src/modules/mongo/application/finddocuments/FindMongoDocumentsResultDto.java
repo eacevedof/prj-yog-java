@@ -3,6 +3,8 @@ package modules.mongo.application.finddocuments;
 import java.util.List;
 import java.util.Map;
 
+import modules.mongo.domain.enums.MongoKeyEnum;
+
 public final class FindMongoDocumentsResultDto {
 
     private final List<String> columns;
@@ -13,8 +15,8 @@ public final class FindMongoDocumentsResultDto {
 
     @SuppressWarnings("unchecked")
     private FindMongoDocumentsResultDto(Map<String, Object> primitives) {
-        this.columns = List.copyOf((List<String>) primitives.get("columns"));
-        this.rows = List.copyOf((List<List<String>>) primitives.get("rows"));
+        this.columns = List.copyOf((List<String>) primitives.get(MongoKeyEnum.COLUMNS));
+        this.rows = List.copyOf((List<List<String>>) primitives.get(MongoKeyEnum.ROWS));
         this.documentsJson = List.copyOf((List<String>) primitives.get("documentsJson"));
         this.totalCount = primitives.get("totalCount") instanceof Number number ? number.longValue() : -1;
         this.elapsedMs = primitives.get("elapsedMs") instanceof Number number ? number.longValue() : 0;

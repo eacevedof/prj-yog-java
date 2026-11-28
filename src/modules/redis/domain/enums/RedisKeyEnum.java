@@ -11,6 +11,13 @@ public final class RedisKeyEnum {
     public static final String TYPE = "type";
     public static final String TTL_MS = "ttl_ms";
     public static final String SIZE = "size";
+    // una vuelta de SCAN: las claves y el cursor siguiente ("0" = acabado)
+    public static final String KEYS = "keys";
+    public static final String NEXT_CURSOR = "nextCursor";
+    // el valor de una clave como tabla: columnas, filas y si es binario (no UTF-8)
+    public static final String COLUMNS = "columns";
+    public static final String ROWS = "rows";
+    public static final String IS_BINARY = "isBinary";
 
     public static final String TYPE_STRING = "string";
     public static final String TYPE_HASH = "hash";

@@ -34,6 +34,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import modules.shared.domain.enums.SessionKeyEnum;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.icons.AppIconEnum;
 import modules.shared.infrastructure.components.files.FolderOpenerComponent;
@@ -55,6 +56,7 @@ import modules.explorer.application.listdatabases.ListDatabasesService;
 import modules.workspace.domain.enums.WorkspaceKeyEnum;
 import modules.workspace.infrastructure.components.LastDirectoryComponent;
 
+import modules.dbcopy.domain.enums.DbCopyConfigEnum;
 import modules.dbcopy.domain.enums.DbCopyKeyEnum;
 import modules.dbcopy.domain.enums.DbCopyObjectTypeEnum;
 import modules.dbcopy.domain.enums.SqlDumpModeEnum;
@@ -160,7 +162,7 @@ public final class SqlDumpDialogController extends AbstractFxController {
 
     private void setup(String connectionUuid, String databaseName) {
         this.connectionUuid = connectionUuid;
-        this.dialogSessionPrefix = UuidGenerator.getInstance().getUniqueIdWithPrefix("sqldump-dialog-");
+        this.dialogSessionPrefix = UuidGenerator.getInstance().getUniqueIdWithPrefix(DbCopyConfigEnum.DUMP_DIALOG_SESSION_PREFIX);
         filePathField.textProperty().addListener((observable, oldPath, newPath) -> updateOpenFolderButton());
         updateOpenFolderButton();
         objectsTreeView.setCellFactory(CheckBoxTreeCell.forTreeView());
@@ -176,7 +178,7 @@ public final class SqlDumpDialogController extends AbstractFxController {
     private void loadDatabases(String databaseName) {
         ListDatabasesDto listDatabasesDto = ListDatabasesDto.fromPrimitives(Primitives.of(
             "connectionUuid", connectionUuid,
-            "sessionKey", dialogSessionPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "source"
+            "sessionKey", dialogSessionPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.SOURCE
         ));
         setStatus(__("Leyendo las BD..."));
         runInBackground(
@@ -196,7 +198,7 @@ public final class SqlDumpDialogController extends AbstractFxController {
         setStatus(__("Leyendo los objetos de {0}...", databaseName));
         ListCopyObjectsDto listCopyObjectsDto = ListCopyObjectsDto.fromPrimitives(Primitives.of(
             "connectionUuid", connectionUuid,
-            "sessionKey", dialogSessionPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "source",
+            "sessionKey", dialogSessionPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.SOURCE,
             "databaseName", databaseName
         ));
         runInBackground(
@@ -339,7 +341,7 @@ public final class SqlDumpDialogController extends AbstractFxController {
         for (Map<String, Object> object : exportSqlDumpResultDto.getObjects()) {
             boolean isOk = getBool(object.get(DbCopyKeyEnum.IS_OK));
             String objectType = getTrimmedString(object.get(DbCopyKeyEnum.OBJECT_TYPE));
-            summary.append(String.format("%-7s", isOk ? __("OK") : __("ERROR"))).append(getTypeLabel(objectType)).append(" ").append(getTrimmedString(object.get(DbCopyKeyEnum.OBJECT_NAME)));
+            summary.append(String.format("%-7s", isOk ? __("OK") : __("ERROR"))).append(getTypeName(objectType)).append(" ").append(getTrimmedString(object.get(DbCopyKeyEnum.OBJECT_NAME)));
             if (DbCopyObjectTypeEnum.TABLE.equals(objectType) && object.get(DbCopyKeyEnum.COPIED_ROWS) instanceof Number dumpedRows) {
                 summary.append("  ").append(__("({0} filas)", String.format("%,d", dumpedRows.longValue())));
             }
@@ -418,6 +420,20 @@ public final class SqlDumpDialogController extends AbstractFxController {
             case DbCopyObjectTypeEnum.TRIGGER -> __("Triggers");
             case DbCopyObjectTypeEnum.EVENT -> __("Eventos");
             default -> __("Tablas");
+        };
+    }
+
+    /**
+     * El tipo en singular para el resumen: "tabla customers", "vista v_active"...
+     */
+    private String getTypeName(String objectType) {
+        return switch (objectType) {
+            case DbCopyObjectTypeEnum.VIEW -> __("vista");
+            case DbCopyObjectTypeEnum.PROCEDURE -> __("procedimiento");
+            case DbCopyObjectTypeEnum.FUNCTION -> __("función");
+            case DbCopyObjectTypeEnum.TRIGGER -> __("trigger");
+            case DbCopyObjectTypeEnum.EVENT -> __("evento");
+            default -> __("tabla");
         };
     }
 

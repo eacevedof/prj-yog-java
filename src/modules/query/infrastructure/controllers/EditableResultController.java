@@ -23,7 +23,6 @@ import static core.config.Global.__;
 import modules.explorer.application.listtablecolumns.ListTableColumnsDto;
 import modules.explorer.application.listtablecolumns.ListTableColumnsService;
 
-import modules.query.domain.enums.QueryConfigEnum;
 import modules.query.infrastructure.components.ResultGridPane;
 
 /**
@@ -35,8 +34,11 @@ import modules.query.infrastructure.components.ResultGridPane;
  */
 public final class EditableResultController extends VBox {
 
+    // separacion en pixeles entre los botones de la barra de edicion del resultado
+    private static final int TOOLBAR_SPACING = 6;
+
     private final ResultGridPane resultGridPane;
-    private final HBox editBar = new HBox(QueryConfigEnum.TOOLBAR_SPACING);
+    private final HBox editBar = new HBox(TOOLBAR_SPACING);
     private final Label tableLabel = new Label();
     private final Label editStatusLabel = new Label();
     private final Button saveButton = getButton(__("Guardar (Ctrl+S)"), AppIconEnum.SAVE, this::onSave);
@@ -135,7 +137,8 @@ public final class EditableResultController extends VBox {
         };
         columnsTask.setOnSucceeded(event -> {
             TableGridEditController candidateTableGridEditController = TableGridEditController.getInstance(connectionUuid, editSessionKey, databaseName, tableName);
-            String readOnlyReason = candidateTableGridEditController.enableEditing(resultGridPane, columnNames, columnsTask.getValue(), this::updateEditStatus);
+            candidateTableGridEditController.enableEditing(resultGridPane, columnNames, columnsTask.getValue(), this::updateEditStatus);
+            String readOnlyReason = candidateTableGridEditController.getReadOnlyReason();
             if (readOnlyReason != null) {
                 resultGridPane.setReadOnlyReason(readOnlyReason);
                 setEditBarState(false, qualifiedName + " · " + readOnlyReason);

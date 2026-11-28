@@ -56,7 +56,7 @@ public final class AlterDatabaseService {
         long startNanos = System.nanoTime();
         boolean hasError = true;
         try {
-            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSessionPdo(alterDatabaseDto.getConnectionUuid(), alterDatabaseDto.getSessionKey()))
+            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSession(alterDatabaseDto.getConnectionUuid(), alterDatabaseDto.getSessionKey()))
                 .executeStatements(List.of(alterSql));
             hasError = false;
         }

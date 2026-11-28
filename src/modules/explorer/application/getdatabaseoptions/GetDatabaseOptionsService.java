@@ -46,7 +46,7 @@ public final class GetDatabaseOptionsService {
         if (!SqlDialect.MYSQL.equals(dbEngine)) {
             throw ExplorerException.badRequestCustom(__(ExplorerMessageEnum.ONLY_MYSQL_DATABASE_EDITOR_X, dbEngine));
         }
-        Connection pdo = targetSessionFactory.getSessionPdo(getDatabaseOptionsDto.getConnectionUuid(), getDatabaseOptionsDto.getSessionKey());
+        Connection pdo = targetSessionFactory.getSession(getDatabaseOptionsDto.getConnectionUuid(), getDatabaseOptionsDto.getSessionKey());
         DatabaseOptionsReaderMysqlRepository databaseOptionsReaderMysqlRepository = DatabaseOptionsReaderMysqlRepository.getInstance(pdo);
         DatabaseOptionsEntity databaseOptions = databaseOptionsReaderMysqlRepository.getDatabaseOptions(getDatabaseOptionsDto.getDatabaseName());
         if (databaseOptions == null) {

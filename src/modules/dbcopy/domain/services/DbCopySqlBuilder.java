@@ -17,19 +17,6 @@ import modules.dbcopy.domain.enums.DbCopyObjectTypeEnum;
  */
 public final class DbCopySqlBuilder {
 
-    /**
-     * Los SET que preparan la sesion destino, como hace mysqldump: sin claves foraneas (el orden de las tablas no
-     * importa), sin modo estricto (fechas cero, valores que el origen acepto) y sin que un 0 en AUTO_INCREMENT
-     * se convierta en el siguiente valor. La zona horaria a UTC en las dos sesiones: un TIMESTAMP viaja como texto.
-     */
-    public static final List<String> TARGET_SESSION_SQLS = List.of(
-        "SET FOREIGN_KEY_CHECKS = 0",
-        "SET UNIQUE_CHECKS = 0",
-        "SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO'",
-        "SET TIME_ZONE = '+00:00'"
-    );
-    public static final String SOURCE_SESSION_SQL = "SET TIME_ZONE = '+00:00'";
-
     // los tipos que se leen como bytes y se escriben en hexadecimal (X'...'): binarios y geometrias
     private static final Set<String> BINARY_DATA_TYPES = Set.of(
         "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob",

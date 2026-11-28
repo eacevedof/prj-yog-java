@@ -16,6 +16,7 @@ import modules.shared.domain.services.SqlLiteralQuoter;
 import modules.shared.infrastructure.repositories.AbstractJdbcRepository;
 import static modules.shared.application.Primitives.getTrimmedString;
 
+import modules.explorer.domain.enums.ExplorerKeyEnum;
 import modules.explorer.domain.enums.TableIndexTypeEnum;
 import modules.explorer.domain.entities.TableColumnEntity;
 import modules.explorer.domain.entities.TableDefinitionEntity;
@@ -50,8 +51,9 @@ public final class TableDefinitionReaderMysqlRepository extends AbstractJdbcRepo
     public TableDefinitionEntity getTableDefinition(String databaseName, String tableName) throws SQLException {
         boolean isMariaDb = getText(query("SELECT VERSION() AS server_version").getFirst().get("server_version")).toLowerCase(Locale.ROOT).contains("mariadb");
         List<TableColumnEntity> columns = getColumns(databaseName, tableName, isMariaDb);
-        List<String> primaryKeyColumns = new ArrayList<>();
-        List<TableIndexEntity> indexes = getIndexes(databaseName, tableName, primaryKeyColumns);
+        List<Map<String, Object>> indexRows = getIndexRows(databaseName, tableName);
+        List<String> primaryKeyColumns = getPrimaryKeyColumns(indexRows);
+        List<TableIndexEntity> indexes = getIndexes(indexRows);
         Map<String, Object> options = query("""
             -- getTableOptions
             SELECT ENGINE AS engine, TABLE_COLLATION AS table_collation, TABLE_COMMENT AS table_comment,
@@ -154,14 +156,10 @@ public final class TableDefinitionReaderMysqlRepository extends AbstractJdbcRepo
     }
 
     /**
-     * Los indices que no son la clave primaria; la PK se deja en primaryKeyColumns. Los indices sobre expresiones
-     * (MySQL 8) no se editan: no salen.
+     * Las columnas de todos los indices de la tabla, la clave primaria primero y en su orden.
      */
-    private List<TableIndexEntity> getIndexes(String databaseName, String tableName, List<String> primaryKeyColumns) throws SQLException {
-        Map<String, String> typesByIndex = new LinkedHashMap<>();
-        Map<String, List<String>> columnsByIndex = new LinkedHashMap<>();
-        List<String> expressionIndexes = new ArrayList<>();
-        for (Map<String, Object> row : query("""
+    private List<Map<String, Object>> getIndexRows(String databaseName, String tableName) throws SQLException {
+        return query("""
             -- getIndexes
             SELECT INDEX_NAME AS index_name, NON_UNIQUE AS non_unique, COLUMN_NAME AS column_name, SUB_PART AS sub_part,
                 INDEX_TYPE AS index_type
@@ -170,7 +168,26 @@ public final class TableDefinitionReaderMysqlRepository extends AbstractJdbcRepo
             AND TABLE_SCHEMA = ?
             AND TABLE_NAME = ?
             ORDER BY INDEX_NAME = 'PRIMARY' DESC, INDEX_NAME, SEQ_IN_INDEX
-            """, databaseName, tableName)) {
+            """, databaseName, tableName);
+    }
+
+    private List<String> getPrimaryKeyColumns(List<Map<String, Object>> indexRows) {
+        List<String> primaryKeyColumns = new ArrayList<>();
+        for (Map<String, Object> row : indexRows) {
+            String columnName = getText(row.get("column_name"));
+            if (ExplorerKeyEnum.PRIMARY_INDEX_NAME.equals(getText(row.get("index_name"))) && !columnName.isEmpty()) primaryKeyColumns.add(columnName);
+        }
+        return primaryKeyColumns;
+    }
+
+    /**
+     * Los indices que no son la clave primaria. Los indices sobre expresiones (MySQL 8) no se editan: no salen.
+     */
+    private List<TableIndexEntity> getIndexes(List<Map<String, Object>> indexRows) {
+        Map<String, String> typesByIndex = new LinkedHashMap<>();
+        Map<String, List<String>> columnsByIndex = new LinkedHashMap<>();
+        List<String> expressionIndexes = new ArrayList<>();
+        for (Map<String, Object> row : indexRows) {
             String indexName = getText(row.get("index_name"));
             String columnName = getText(row.get("column_name"));
             if (columnName.isEmpty()) {
@@ -178,10 +195,7 @@ public final class TableDefinitionReaderMysqlRepository extends AbstractJdbcRepo
                 continue;
             }
             String subPart = getText(row.get("sub_part"));
-            if ("PRIMARY".equals(indexName)) {
-                primaryKeyColumns.add(columnName);
-                continue;
-            }
+            if (ExplorerKeyEnum.PRIMARY_INDEX_NAME.equals(indexName)) continue;
             String indexType = getText(row.get("index_type")).toUpperCase(Locale.ROOT);
             typesByIndex.putIfAbsent(indexName, switch (indexType) {
                 case TableIndexTypeEnum.FULLTEXT -> TableIndexTypeEnum.FULLTEXT;

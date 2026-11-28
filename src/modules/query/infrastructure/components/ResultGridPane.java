@@ -50,6 +50,7 @@ import static core.config.Global.__;
 
 import modules.query.domain.enums.GridFilterOperatorEnum;
 import modules.query.domain.enums.ResultExportFormatEnum;
+import modules.query.domain.enums.TableEditRowStateEnum;
 import modules.query.domain.entities.ResultExportOptionsEntity;
 import modules.query.domain.services.ResultExportFormatter;
 
@@ -114,7 +115,7 @@ public final class ResultGridPane extends VBox {
         void filter(String columnName, String operator, String value);
     }
 
-    public ResultGridPane(List<String> columnNames, List<List<String>> rows, String searchText, Set<String> hiddenColumnNames) {
+    private ResultGridPane(List<String> columnNames, List<List<String>> rows, String searchText, Set<String> hiddenColumnNames) {
         getStyleClass().add("result-grid");
         this.columnNames = List.copyOf(columnNames);
         sourceRows = FXCollections.observableArrayList(rows);
@@ -154,6 +155,13 @@ public final class ResultGridPane extends VBox {
             onSearchChanged.accept(newText);
         });
         applySearch(searchText);
+    }
+
+    /**
+     * Una rejilla nueva por resultado. searchText NO se recorta: es lo que el usuario escribio en el buscador.
+     */
+    public static ResultGridPane getInstance(List<String> columnNames, List<List<String>> rows, String searchText, Set<String> hiddenColumnNames) {
+        return new ResultGridPane(columnNames, rows, searchText, hiddenColumnNames);
     }
 
     public void setOnSearchChanged(Consumer<String> onSearchChanged) {
@@ -279,7 +287,7 @@ public final class ResultGridPane extends VBox {
             selectedRows.add(resultTableView.getItems().get(tablePosition.getRow()));
         }
         for (List<String> row : selectedRows) {
-            if (TableEditSession.STATE_DELETED.equals(editSession.getState(row))) {
+            if (TableEditRowStateEnum.STATE_DELETED.equals(editSession.getState(row))) {
                 editSession.undeleteRow(row);
                 continue;
             }
@@ -551,7 +559,7 @@ public final class ResultGridPane extends VBox {
      */
     private void applySearch(String searchText) {
         String needle = searchText == null ? "" : searchText.trim().toLowerCase(Locale.ROOT);
-        Predicate<List<String>> searchPredicate = needle.isEmpty() ? null : row -> rowContains(row, needle);
+        Predicate<List<String>> searchPredicate = needle.isEmpty() ? null : row -> isRowContaining(row, needle);
         Predicate<List<String>> predicate = searchPredicate;
         if (columnFilterPredicate != null) predicate = searchPredicate == null ? columnFilterPredicate : searchPredicate.and(columnFilterPredicate);
         filteredRows.setPredicate(predicate);
@@ -559,7 +567,7 @@ public final class ResultGridPane extends VBox {
         rowCountLabel.setText(isFiltered ? __("{0} de {1} fila(s)", filteredRows.size(), sourceRows.size()) : __("{0} fila(s)", sourceRows.size()));
     }
 
-    private boolean rowContains(List<String> row, String needle) {
+    private boolean isRowContaining(List<String> row, String needle) {
         for (String value : row) {
             String text = value == null ? "null" : value.toLowerCase(Locale.ROOT);
             if (text.contains(needle)) return true;
@@ -576,7 +584,7 @@ public final class ResultGridPane extends VBox {
             TableColumn<List<String>, String> tableColumn = new TableColumn<>(columnName);
             tableColumn.setUserData(columnName);
             tableColumn.getProperties().put(COLUMN_INDEX_KEY, columnIndex);
-            tableColumn.setComparator(ResultGridPane::compareCellValues);
+            tableColumn.setComparator(this::compareCellValues);
             tableColumn.setPrefWidth(Math.min(300, Math.max(80, columnName.length() * 9 + 24)));
             tableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
                 columnIndex < cellData.getValue().size() ? cellData.getValue().get(columnIndex) : null
@@ -760,7 +768,7 @@ public final class ResultGridPane extends VBox {
      * Orden de una columna: NULL primero, dos numeros por su valor ("9" antes que "10") y el resto como texto sin
      * distinguir mayusculas (las fechas de MySQL ya ordenan bien como texto).
      */
-    private static int compareCellValues(String leftValue, String rightValue) {
+    private int compareCellValues(String leftValue, String rightValue) {
         if (leftValue == null || rightValue == null) {
             return leftValue == null ? (rightValue == null ? 0 : -1) : 1;
         }
@@ -889,7 +897,7 @@ public final class ResultGridPane extends VBox {
                 setGraphic(null);
                 return;
             }
-            boolean isNewRow = editSession != null && TableEditSession.STATE_NEW.equals(editSession.getState(row));
+            boolean isNewRow = editSession != null && TableEditRowStateEnum.STATE_NEW.equals(editSession.getState(row));
             setText(isNewRow ? "*" : String.valueOf(getIndex() + 1));
             setGraphic(rowCheckBox);
             refreshCheckBox();
@@ -936,7 +944,7 @@ public final class ResultGridPane extends VBox {
         public void startEdit() {
             if (editSession == null || !getTableColumn().isEditable()) return;
             List<String> row = getTableRow() == null ? null : getTableRow().getItem();
-            if (row != null && TableEditSession.STATE_DELETED.equals(editSession.getState(row))) return;
+            if (row != null && TableEditRowStateEnum.STATE_DELETED.equals(editSession.getState(row))) return;
             super.startEdit();
             if (!isEditing()) return;
             String originalValue = getItem();

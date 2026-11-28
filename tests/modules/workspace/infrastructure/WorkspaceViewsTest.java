@@ -198,7 +198,7 @@ final class WorkspaceViewsTest extends AbstractTestCase {
     void testResultGridSearchesAllColumnsAndKeepsHiddenColumns() throws Exception {
         CompletableFuture<int[]> counts = new CompletableFuture<>();
         Platform.runLater(() -> {
-            ResultGridPane resultGridPane = new ResultGridPane(
+            ResultGridPane resultGridPane = ResultGridPane.getInstance(
                 List.of("id", "email", "city"),
                 List.of(List.of("1", "ana@x.es", "Madrid"), List.of("2", "BOB@y.es", "Bilbao"), Arrays.asList("3", null, "Madrid")),
                 "madrid",

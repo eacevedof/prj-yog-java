@@ -45,7 +45,7 @@ public final class GetTableDefinitionService {
         if (!SqlDialect.MYSQL.equals(dbEngine)) {
             throw ExplorerException.badRequestCustom(__(ExplorerMessageEnum.ONLY_MYSQL_TABLE_EDITOR_X, dbEngine));
         }
-        Connection pdo = targetSessionFactory.getSessionPdo(getTableDefinitionDto.getConnectionUuid(), getTableDefinitionDto.getSessionKey());
+        Connection pdo = targetSessionFactory.getSession(getTableDefinitionDto.getConnectionUuid(), getTableDefinitionDto.getSessionKey());
         TableDefinitionReaderMysqlRepository tableDefinitionReaderMysqlRepository = TableDefinitionReaderMysqlRepository.getInstance(pdo);
         return GetTableDefinitionResultDto.fromPrimitives(Primitives.of(
             "tableDefinition", tableDefinitionReaderMysqlRepository.getTableDefinition(getTableDefinitionDto.getDatabaseName(), getTableDefinitionDto.getTableName()),

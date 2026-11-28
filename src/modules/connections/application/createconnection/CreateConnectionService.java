@@ -3,14 +3,15 @@ package modules.connections.application.createconnection;
 import java.util.List;
 
 import modules.shared.domain.enums.SharedMessageEnum;
+import modules.shared.domain.services.ErrorStackFormatter;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.date.DateTimer;
 import modules.shared.infrastructure.components.uuid.UuidGenerator;
-import modules.shared.infrastructure.traits.ErrorStackTrait;
 import modules.shared.infrastructure.exceptions.FieldsException;
 
 import static core.config.Global.__;
 
+import modules.connections.domain.enums.ConnectionsConfigEnum;
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.domain.enums.ConnectionsMessageEnum;
 import modules.connections.domain.enums.DbEngineEnum;
@@ -49,7 +50,7 @@ public final class CreateConnectionService {
         String dbEngine = createConnectionDto.getDbEngine();
         int port = createConnectionDto.getPort();
         connectionEntity = ConnectionEntity.fromPrimitives(Primitives.merge(Primitives.of(
-            ConnectionsKeyEnum.CONNECTION_UUID, UuidGenerator.getInstance().getUniqueIdWithPrefix(ConnectionEntity.CONNECTION_UUID_PREFIX),
+            ConnectionsKeyEnum.CONNECTION_UUID, UuidGenerator.getInstance().getUniqueIdWithPrefix(ConnectionsConfigEnum.CONNECTION_UUID_PREFIX),
             ConnectionsKeyEnum.CONNECTION_NAME, createConnectionDto.getConnectionName(),
             ConnectionsKeyEnum.DB_ENGINE, dbEngine.isEmpty() ? DbEngineEnum.DEFAULT : dbEngine,
             ConnectionsKeyEnum.HOST, createConnectionDto.getHost(),
@@ -60,7 +61,7 @@ public final class CreateConnectionService {
             ConnectionsKeyEnum.COLOR_HEX, createConnectionDto.getColorHex(),
             ConnectionsKeyEnum.IS_PRODUCTION, createConnectionDto.isProduction(),
             ConnectionsKeyEnum.CREATED_AT, DateTimer.getInstance().getNowDt()
-        ), TunnelFormPrimitives.getEntityPrimitives(createConnectionDto.getTunnelForm(), null)));
+        ), TunnelFormPrimitives.getInstance().getEntityPrimitives(createConnectionDto.getTunnelForm(), null)));
 
         failIfWrongFields();
         failIfNameExists();
@@ -96,7 +97,7 @@ public final class CreateConnectionService {
         List<String> errors = ConnectionFieldsValidator.getInstance().getErrors(connectionEntity);
         if (!errors.isEmpty()) {
             throw FieldsException.badRequestCustom(
-                ErrorStackTrait.getInstance().getErrorStackMessage(__(SharedMessageEnum.FIELDS_VALIDATION_ERRORS), errors),
+                ErrorStackFormatter.getInstance().getErrorStackMessage(__(SharedMessageEnum.FIELDS_VALIDATION_ERRORS), errors),
                 errors
             );
         }

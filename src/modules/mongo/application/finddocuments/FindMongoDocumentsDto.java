@@ -5,9 +5,9 @@ import java.util.Map;
 import static modules.shared.application.Primitives.getInt;
 import static modules.shared.application.Primitives.getTrimmedString;
 
-public final class FindMongoDocumentsDto {
+import modules.mongo.domain.enums.MongoConfigEnum;
 
-    public static final int DEFAULT_LIMIT = 100;
+public final class FindMongoDocumentsDto {
 
     private final String connectionUuid;
     private final String sessionKey;
@@ -27,7 +27,7 @@ public final class FindMongoDocumentsDto {
         this.sortJson = getTrimmedString(primitives.get("sortJson"));
         this.skip = Math.max(0, getInt(primitives.get("skip")));
         int limitValue = getInt(primitives.get("limit"));
-        this.limit = limitValue <= 0 ? DEFAULT_LIMIT : limitValue;
+        this.limit = limitValue <= 0 ? MongoConfigEnum.FIND_DEFAULT_LIMIT : limitValue;
     }
 
     public static FindMongoDocumentsDto fromPrimitives(Map<String, Object> primitives) {

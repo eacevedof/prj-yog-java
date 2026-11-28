@@ -4,6 +4,8 @@ import java.util.Map;
 
 import static modules.shared.application.Primitives.getInt;
 
+import modules.query.domain.services.ExportSeparatorEscaper;
+
 /**
  * Las opciones del dialogo "Exportar como" (como el Export As de SQLyog). Los separadores de CSV llegan escritos como
  * en SQLyog (\t, \n, \r\n, \\, \N) o "&lt;NONE&gt;" (vacio) y aqui ya estan convertidos a sus caracteres.
@@ -43,11 +45,12 @@ public final class ResultExportOptionsEntity {
     private final String createTableSql;
 
     private ResultExportOptionsEntity(Map<String, Object> primitives) {
-        this.fieldsTerminatedBy = getUnescaped(primitives.getOrDefault("fieldsTerminatedBy", DEFAULT_FIELDS_TERMINATED_BY));
-        this.enclosedBy = getUnescaped(primitives.getOrDefault("enclosedBy", DEFAULT_ENCLOSED_BY));
-        this.escapedBy = getUnescaped(primitives.getOrDefault("escapedBy", DEFAULT_ESCAPED_BY));
-        this.linesTerminatedBy = getUnescaped(primitives.getOrDefault("linesTerminatedBy", DEFAULT_LINES_TERMINATED_BY));
-        this.nullReplacedBy = getUnescapedNull(primitives.getOrDefault("nullReplacedBy", DEFAULT_NULL_REPLACED_BY));
+        ExportSeparatorEscaper exportSeparatorEscaper = ExportSeparatorEscaper.getInstance();
+        this.fieldsTerminatedBy = exportSeparatorEscaper.getUnescaped(primitives.getOrDefault("fieldsTerminatedBy", DEFAULT_FIELDS_TERMINATED_BY));
+        this.enclosedBy = exportSeparatorEscaper.getUnescaped(primitives.getOrDefault("enclosedBy", DEFAULT_ENCLOSED_BY));
+        this.escapedBy = exportSeparatorEscaper.getUnescaped(primitives.getOrDefault("escapedBy", DEFAULT_ESCAPED_BY));
+        this.linesTerminatedBy = exportSeparatorEscaper.getUnescaped(primitives.getOrDefault("linesTerminatedBy", DEFAULT_LINES_TERMINATED_BY));
+        this.nullReplacedBy = exportSeparatorEscaper.getUnescapedNull(primitives.getOrDefault("nullReplacedBy", DEFAULT_NULL_REPLACED_BY));
         this.isHeaderIncluded = !Boolean.FALSE.equals(primitives.get("isHeaderIncluded"));
         this.textSizeLimit = Math.max(0, getInt(primitives.getOrDefault("textSizeLimit", DEFAULT_TEXT_SIZE_LIMIT)));
         this.decimalPlaces = Math.max(0, Math.min(10, getInt(primitives.getOrDefault("decimalPlaces", DEFAULT_DECIMAL_PLACES))));
@@ -61,48 +64,6 @@ public final class ResultExportOptionsEntity {
 
     public static ResultExportOptionsEntity fromPrimitives(Map<String, Object> primitives) {
         return new ResultExportOptionsEntity(primitives);
-    }
-
-    /**
-     * "\t" -> tabulador, "\n" -> salto, "\\" -> barra, "&lt;NONE&gt;" o vacio -> nada. El resto, tal cual.
-     */
-    public static String getUnescaped(Object escapedValue) {
-        String value = escapedValue == null ? "" : String.valueOf(escapedValue);
-        if (value.isEmpty() || NONE.equalsIgnoreCase(value.trim())) return "";
-        StringBuilder unescaped = new StringBuilder();
-        for (int i = 0; i < value.length(); i++) {
-            char current = value.charAt(i);
-            if (current != '\\' || i + 1 >= value.length()) {
-                unescaped.append(current);
-                continue;
-            }
-            char next = value.charAt(++i);
-            switch (next) {
-                case 't' -> unescaped.append('\t');
-                case 'n' -> unescaped.append('\n');
-                case 'r' -> unescaped.append('\r');
-                case '0' -> unescaped.append('\0');
-                case '\\' -> unescaped.append('\\');
-                default -> unescaped.append('\\').append(next);
-            }
-        }
-        return unescaped.toString();
-    }
-
-    /**
-     * El texto de un separador para el dialogo: lo contrario de getUnescaped.
-     */
-    public static String getEscaped(String value) {
-        if (value == null || value.isEmpty()) return NONE;
-        return value.replace("\\", "\\\\").replace("\t", "\\t").replace("\n", "\\n").replace("\r", "\\r");
-    }
-
-    /**
-     * El NULL de CSV: \N se queda como \N (lo que entiende LOAD DATA), no como salto de linea.
-     */
-    private static String getUnescapedNull(Object escapedValue) {
-        String value = escapedValue == null ? "" : String.valueOf(escapedValue);
-        return "\\N".equals(value) ? value : getUnescaped(value);
     }
 
     public String getFieldsTerminatedBy() {

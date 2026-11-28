@@ -13,6 +13,7 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
 
+import modules.connections.infrastructure.components.httptunnel.HttpTunnelCellDecoder;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelResult;
 import modules.connections.infrastructure.components.httptunnel.RedisHttpTunnelSession;
 
@@ -33,8 +34,10 @@ final class RedisHttpTunnelCommands {
     private static final int CONNECTION_ERROR_CODE = 2003;
 
     private final RedisHttpTunnelSession redisHttpTunnelSession;
+    private final HttpTunnelCellDecoder httpTunnelCellDecoder;
 
     private RedisHttpTunnelCommands(RedisHttpTunnelSession redisHttpTunnelSession) {
+        this.httpTunnelCellDecoder = HttpTunnelCellDecoder.getInstance();
         this.redisHttpTunnelSession = redisHttpTunnelSession;
     }
 
@@ -128,8 +131,8 @@ final class RedisHttpTunnelCommands {
     }
 
     private Object getReply(HttpTunnelResult result) {
-        String replyType = result.columnTables().isEmpty() ? "" : result.columnTables().getFirst();
-        List<List<byte[]>> rows = result.rows();
+        String replyType = result.getColumnTables().isEmpty() ? "" : result.getColumnTables().getFirst();
+        List<List<byte[]>> rows = result.getRows();
         return switch (replyType) {
             case TYPE_NIL -> null;
             case TYPE_INTEGER -> rows.isEmpty() || rows.getFirst().isEmpty() ? 0L : getInteger(rows.getFirst().getFirst());
@@ -147,7 +150,7 @@ final class RedisHttpTunnelCommands {
      * (JedisConnectionException), no un NumberFormatException que se salte el mapeo de errores de los servicios.
      */
     private long getInteger(byte[] value) {
-        String text = value == null ? "" : HttpTunnelResult.getText(value).trim();
+        String text = value == null ? "" : httpTunnelCellDecoder.getText(value).trim();
         try {
             return Long.parseLong(text);
         }

@@ -1,9 +1,9 @@
 package modules.connections.infrastructure.repositories;
 
-import modules.shared.infrastructure.components.secrets.SecretCipherComponent;
 import modules.shared.infrastructure.repositories.AbstractSqliteRepository;
 
 import modules.connections.domain.entities.ConnectionEntity;
+import modules.connections.infrastructure.components.SecretCipherComponent;
 
 /**
  * Los opcionales vacios (password, BD, color) se guardan como NULL. Los secretos, cifrados (feature 47).

@@ -54,7 +54,7 @@ public final class RenameTableColumnService {
         long startNanos = System.nanoTime();
         boolean hasError = true;
         try {
-            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSessionPdo(renameTableColumnDto.getConnectionUuid(), renameTableColumnDto.getSessionKey()))
+            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSession(renameTableColumnDto.getConnectionUuid(), renameTableColumnDto.getSessionKey()))
                 .executeStatements(List.of(renameSql));
             hasError = false;
         }

@@ -21,6 +21,8 @@ import static modules.shared.application.Primitives.getTrimmedString;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelResult;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelSession;
 
+import modules.explorer.domain.enums.ExplorerKeyEnum;
+
 import modules.dbcopy.domain.enums.DbCopyCellKindEnum;
 import modules.dbcopy.domain.enums.DbCopyConfigEnum;
 import modules.dbcopy.domain.enums.DbCopyKeyEnum;
@@ -54,9 +56,9 @@ public final class DbCopyReaderMysqlRepository extends AbstractJdbcRepository {
     public void prepareSession(String databaseName) throws SQLException {
         pdo.setCatalog(databaseName);
         if (httpTunnelSession != null) return;
-        SqlTraceComponent.getInstance().addSql(DbCopySqlBuilder.SOURCE_SESSION_SQL);
+        SqlTraceComponent.getInstance().addSql(DbCopyConfigEnum.SOURCE_SESSION_SQL);
         try (Statement statement = pdo.createStatement()) {
-            statement.execute(DbCopySqlBuilder.SOURCE_SESSION_SQL);
+            statement.execute(DbCopyConfigEnum.SOURCE_SESSION_SQL);
         }
     }
 
@@ -131,9 +133,9 @@ public final class DbCopyReaderMysqlRepository extends AbstractJdbcRepository {
             AND TABLE_SCHEMA = ?
             ORDER BY TABLE_NAME
             """, databaseName)) {
-            String tableType = getText(row.get("table_type"));
-            if ("VIEW".equals(tableType)) views.add(getText(row.get("table_name")));
-            else if ("BASE TABLE".equals(tableType)) tables.add(getText(row.get("table_name")));
+            String tableType = getText(row.get(ExplorerKeyEnum.TABLE_TYPE));
+            if (ExplorerKeyEnum.TABLE_TYPE_VIEW.equals(tableType)) views.add(getText(row.get("table_name")));
+            else if (ExplorerKeyEnum.TABLE_TYPE_BASE_TABLE.equals(tableType)) tables.add(getText(row.get("table_name")));
         }
         List<String> procedures = new ArrayList<>();
         List<String> functions = new ArrayList<>();
@@ -298,8 +300,8 @@ public final class DbCopyReaderMysqlRepository extends AbstractJdbcRepository {
         sqlTraceComponent.addSql(sql);
         List<List<Object>> rows = new ArrayList<>();
         if (httpTunnelSession != null) {
-            HttpTunnelResult httpTunnelResult = httpTunnelSession.executeBatch(List.of(DbCopySqlBuilder.SOURCE_SESSION_SQL, sql));
-            for (List<byte[]> tunnelRow : httpTunnelResult.rows()) {
+            HttpTunnelResult httpTunnelResult = httpTunnelSession.executeBatch(List.of(DbCopyConfigEnum.SOURCE_SESSION_SQL, sql));
+            for (List<byte[]> tunnelRow : httpTunnelResult.getRows()) {
                 List<Object> row = new ArrayList<>(cellKinds.size());
                 for (int i = 0; i < cellKinds.size(); i++) {
                     byte[] cell = tunnelRow.get(i);

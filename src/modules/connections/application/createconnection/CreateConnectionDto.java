@@ -32,7 +32,7 @@ public final class CreateConnectionDto {
         this.databaseName = getTrimmedString(primitives.get("databaseName"));
         this.colorHex = getTrimmedString(primitives.get("colorHex"));
         this.isProduction = getBool(primitives.get("isProduction"));
-        this.tunnelForm = TunnelFormPrimitives.getFormValues(primitives);
+        this.tunnelForm = TunnelFormPrimitives.getInstance().getFormValues(primitives);
     }
 
     public static CreateConnectionDto fromPrimitives(Map<String, Object> primitives) {

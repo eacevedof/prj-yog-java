@@ -6,6 +6,7 @@ import modules.shared.infrastructure.components.date.DateTimer;
 import modules.connections.domain.entities.ConnectionEntity;
 import modules.connections.infrastructure.repositories.ConnectionsReaderSqliteRepository;
 
+import modules.history.domain.enums.QueryHistoryConfigEnum;
 import modules.history.domain.enums.QueryHistoryKeyEnum;
 import modules.history.infrastructure.repositories.QueryHistoryWriterSqliteRepository;
 
@@ -38,7 +39,7 @@ public final class RecordQueryHistoryService {
                 QueryHistoryKeyEnum.ROWS_COUNT, recordQueryHistoryDto.getRowsCount(),
                 QueryHistoryKeyEnum.HAS_ERROR, recordQueryHistoryDto.hasError()
             ));
-            queryHistoryWriterSqliteRepository.deleteOlderThanLast(QueryHistoryKeyEnum.MAX_HISTORY_ROWS);
+            queryHistoryWriterSqliteRepository.deleteOlderThanLast(QueryHistoryConfigEnum.MAX_HISTORY_ROWS);
         }
         catch (RuntimeException e) {
             // el historial no bloquea la operacion: se pierde esta fila. Cualquier fallo, no solo el de SQLite: se llama

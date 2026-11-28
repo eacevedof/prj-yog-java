@@ -117,7 +117,7 @@ public final class ExplorerReaderSqliteRepository extends AbstractExplorerReader
                 ExplorerKeyEnum.COLUMN_NAME, columnName,
                 ExplorerKeyEnum.COLUMN_TYPE, columnType.isEmpty() ? "(sin tipo)" : columnType.toLowerCase(Locale.ROOT),
                 ExplorerKeyEnum.IS_NULLABLE, getInt(row.get("is_not_null")) == 0 && !isPrimaryKey,
-                ExplorerKeyEnum.COLUMN_KEY, isPrimaryKey ? "PRI" : uniqueColumns.contains(columnName) ? "UNI" : "",
+                ExplorerKeyEnum.COLUMN_KEY, isPrimaryKey ? ExplorerKeyEnum.COLUMN_KEY_PRIMARY : uniqueColumns.contains(columnName) ? ExplorerKeyEnum.COLUMN_KEY_UNIQUE : "",
                 ExplorerKeyEnum.DATA_TYPE, getBaseType(columnType),
                 ExplorerKeyEnum.EXTRA, extra
             ));
@@ -138,7 +138,7 @@ public final class ExplorerReaderSqliteRepository extends AbstractExplorerReader
         if (rows.isEmpty()) return Primitives.of();
         boolean isView = "view".equals(getTrimmedString(rows.getFirst().get("table_type")));
         Map<String, Object> status = new LinkedHashMap<>();
-        status.put("table_type", isView ? "VIEW" : "BASE TABLE");
+        status.put(ExplorerKeyEnum.TABLE_TYPE, isView ? ExplorerKeyEnum.TABLE_TYPE_VIEW : ExplorerKeyEnum.TABLE_TYPE_BASE_TABLE);
         status.put("engine", "SQLite");
         if (!isView) {
             List<Map<String, Object>> countRows = query("SELECT COUNT(*) AS table_rows FROM " + getQualifiedName(databaseName, tableName));
@@ -165,18 +165,18 @@ public final class ExplorerReaderSqliteRepository extends AbstractExplorerReader
             boolean isPrimary = "pk".equals(getTrimmedString(row.get("origin")));
             hasPrimaryIndex |= isPrimary;
             indexes.add(Primitives.of(
-                "index_name", isPrimary ? "PRIMARY" : getTrimmedString(row.get("index_name")),
-                "non_unique", getInt(row.get("is_unique")) == 1 ? 0 : 1,
+                ExplorerKeyEnum.INDEX_NAME, isPrimary ? ExplorerKeyEnum.PRIMARY_INDEX_NAME : getTrimmedString(row.get("index_name")),
+                ExplorerKeyEnum.NON_UNIQUE, getInt(row.get("is_unique")) == 1 ? 0 : 1,
                 "seq_in_index", getInt(row.get("seqno")) + 1,
-                "column_name", getTrimmedString(row.get("column_name")),
-                "index_type", "btree"
+                ExplorerKeyEnum.COLUMN_NAME, getTrimmedString(row.get("column_name")),
+                ExplorerKeyEnum.INDEX_TYPE, "btree"
             ));
         }
         if (!hasPrimaryIndex) {
             List<Map<String, Object>> rowidKey = new ArrayList<>();
             int position = 1;
             for (String columnName : getPrimaryKeyColumns(databaseName, tableName)) {
-                rowidKey.add(Primitives.of("index_name", "PRIMARY", "non_unique", 0, "seq_in_index", position++, "column_name", columnName, "index_type", "rowid"));
+                rowidKey.add(Primitives.of(ExplorerKeyEnum.INDEX_NAME, ExplorerKeyEnum.PRIMARY_INDEX_NAME, ExplorerKeyEnum.NON_UNIQUE, 0, "seq_in_index", position++, ExplorerKeyEnum.COLUMN_NAME, columnName, ExplorerKeyEnum.INDEX_TYPE, "rowid"));
             }
             indexes.addAll(0, rowidKey);
         }

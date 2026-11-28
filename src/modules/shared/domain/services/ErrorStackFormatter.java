@@ -1,14 +1,17 @@
-package modules.shared.infrastructure.traits;
+package modules.shared.domain.services;
 
 import java.util.List;
 
-public final class ErrorStackTrait {
+/**
+ * Junta los errores de validacion en un solo mensaje, uno por linea.
+ */
+public final class ErrorStackFormatter {
 
-    private ErrorStackTrait() {
+    private ErrorStackFormatter() {
     }
 
-    public static ErrorStackTrait getInstance() {
-        return new ErrorStackTrait();
+    public static ErrorStackFormatter getInstance() {
+        return new ErrorStackFormatter();
     }
 
     /**

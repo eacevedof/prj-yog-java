@@ -8,6 +8,7 @@ import com.mongodb.MongoTimeoutException;
 
 import org.bson.json.JsonParseException;
 
+import modules.shared.domain.enums.SharedConfigEnum;
 import modules.shared.application.Primitives;
 
 import static core.config.Global.__;
@@ -15,7 +16,9 @@ import static core.config.Global.__;
 import modules.connections.domain.entities.ConnectionEntity;
 import modules.connections.infrastructure.repositories.ConnectionsReaderSqliteRepository;
 
+import modules.mongo.domain.enums.MongoConfigEnum;
 import modules.mongo.domain.enums.MongoMessageEnum;
+import modules.mongo.domain.enums.MongoShellCommandTypeEnum;
 import modules.mongo.domain.entities.MongoShellCommandEntity;
 import modules.mongo.domain.services.MongoDangerousCommandDetector;
 import modules.mongo.domain.services.MongoShellParser;
@@ -29,8 +32,6 @@ import modules.mongo.domain.exceptions.MongoModuleException;
  * dropDatabase...) pide confirmacion (428).
  */
 public final class ExecuteMongoCommandService {
-
-    private static final String DEFAULT_DATABASE = "test";
 
     private ExecuteMongoCommandService() {
     }
@@ -46,16 +47,16 @@ public final class ExecuteMongoCommandService {
     public ExecuteMongoCommandResultDto invoke(ExecuteMongoCommandDto executeMongoCommandDto) {
         failIfWrongInput(executeMongoCommandDto);
 
-        String databaseName = executeMongoCommandDto.getDatabaseName().isEmpty() ? DEFAULT_DATABASE : executeMongoCommandDto.getDatabaseName();
+        String databaseName = executeMongoCommandDto.getDatabaseName().isEmpty() ? MongoConfigEnum.DEFAULT_CONSOLE_DATABASE : executeMongoCommandDto.getDatabaseName();
         MongoShellCommandEntity command;
         try {
             command = MongoShellParser.getInstance().getCommand(executeMongoCommandDto.getCommandLine());
         }
         catch (IllegalArgumentException e) {
-            return getResult("(error) " + __(MongoMessageEnum.UNKNOWN_COMMAND_X, e.getMessage()), true, databaseName, 0);
+            return getResult(SharedConfigEnum.CONSOLE_ERROR_PREFIX + __(MongoMessageEnum.UNKNOWN_COMMAND_X, e.getMessage()), true, databaseName, 0);
         }
-        if (MongoShellCommandEntity.USE.equals(command.type())) {
-            return getResult("switched to db " + command.name(), false, command.name(), 0);
+        if (MongoShellCommandTypeEnum.USE.equals(command.type())) {
+            return getResult(MongoConfigEnum.SWITCHED_TO_DB_PREFIX + command.name(), false, command.name(), 0);
         }
         failIfProductionNotConfirmed(executeMongoCommandDto, command);
 
@@ -71,14 +72,14 @@ public final class ExecuteMongoCommandService {
             throw MongoModuleException.serviceUnavailableCustom(e.getMessage());
         }
         catch (MongoException | JsonParseException e) {
-            return getResult("(error) " + e.getMessage(), true, databaseName, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos));
+            return getResult(SharedConfigEnum.CONSOLE_ERROR_PREFIX + e.getMessage(), true, databaseName, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos));
         }
         catch (IllegalArgumentException e) {
             String message = String.valueOf(e.getMessage());
             String error = message.startsWith("method:") && message.length() > "method:".length() && !isKnownMethod(message.substring(7))
                 ? __(MongoMessageEnum.UNKNOWN_METHOD_X, message.substring(7))
                 : __(MongoMessageEnum.WRONG_ARGUMENTS_X, command.method().isEmpty() ? command.type() : command.method()) + " (" + message + ")";
-            return getResult("(error) " + error, true, databaseName, 0);
+            return getResult(SharedConfigEnum.CONSOLE_ERROR_PREFIX + error, true, databaseName, 0);
         }
     }
 

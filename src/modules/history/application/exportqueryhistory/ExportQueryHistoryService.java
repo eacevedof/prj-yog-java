@@ -10,7 +10,7 @@ import modules.shared.infrastructure.components.date.DateTimer;
 
 import static core.config.Global.__;
 
-import modules.history.domain.enums.QueryHistoryKeyEnum;
+import modules.history.domain.enums.QueryHistoryConfigEnum;
 import modules.history.domain.enums.QueryHistoryMessageEnum;
 import modules.history.domain.services.QueryHistorySqlScriptBuilder;
 import modules.history.infrastructure.repositories.QueryHistoryReaderSqliteRepository;
@@ -38,7 +38,7 @@ public final class ExportQueryHistoryService {
         failIfWrongInput(exportQueryHistoryDto);
         // el lector da lo mas reciente primero; el script va en orden de ejecucion
         List<Map<String, Object>> historyRows = QueryHistoryReaderSqliteRepository.getInstance().getHistory(
-            exportQueryHistoryDto.getConnectionUuid(), exportQueryHistoryDto.getSearchText(), QueryHistoryKeyEnum.MAX_HISTORY_ROWS
+            exportQueryHistoryDto.getConnectionUuid(), exportQueryHistoryDto.getSearchText(), QueryHistoryConfigEnum.MAX_HISTORY_ROWS
         ).reversed();
         String script = QueryHistorySqlScriptBuilder.getInstance(exportQueryHistoryDto.getDbEngine())
             .getScript(historyRows, DateTimer.getInstance().getNowDt());

@@ -50,6 +50,7 @@ import static core.config.Global.__;
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.infrastructure.factories.TargetSessionFactory;
 
+import modules.explorer.domain.enums.DatabaseEnvironmentEnum;
 import modules.explorer.domain.enums.ExplorerKeyEnum;
 import modules.explorer.domain.enums.ExplorerMessageEnum;
 import modules.explorer.domain.enums.ExplorerNodeTypeEnum;
@@ -91,9 +92,9 @@ public final class ExplorerTreeController extends AbstractFxController implement
     private static final String STYLE_SYSTEM_DATABASE = "explorer-db-system";
     private static final List<String> NODE_STYLE_CLASSES = List.of(
         "explorer-database", "explorer-active-database", "explorer-folder", "explorer-loading", "explorer-error",
-        "explorer-db-" + DatabaseEnvironmentResolver.PRODUCTION,
-        "explorer-db-" + DatabaseEnvironmentResolver.DEVELOPMENT,
-        "explorer-db-" + DatabaseEnvironmentResolver.LOCAL,
+        "explorer-db-" + DatabaseEnvironmentEnum.PRODUCTION,
+        "explorer-db-" + DatabaseEnvironmentEnum.DEVELOPMENT,
+        "explorer-db-" + DatabaseEnvironmentEnum.LOCAL,
         STYLE_SYSTEM_DATABASE
     );
 
@@ -128,6 +129,16 @@ public final class ExplorerTreeController extends AbstractFxController implement
     private Runnable onRefreshed = () -> { };
     private Runnable onViewChanged = () -> { };
     private Consumer<String> onStatusChanged = status -> { };
+
+    private ExplorerTreeController() {
+    }
+
+    /**
+     * Una instancia nueva por pestaña de conexion: guarda el estado de su arbol.
+     */
+    public static ExplorerTreeController getInstance() {
+        return new ExplorerTreeController();
+    }
 
     /**
      * Lo llama la pestaña de conexion al abrirse.
@@ -437,7 +448,7 @@ public final class ExplorerTreeController extends AbstractFxController implement
         databaseItem.getChildren().setAll(visibleFolderItems);
     }
 
-    private static String getNormalizedFilter(String filter) {
+    private String getNormalizedFilter(String filter) {
         return filter == null ? "" : filter.trim().toLowerCase(Locale.ROOT);
     }
 
@@ -562,7 +573,7 @@ public final class ExplorerTreeController extends AbstractFxController implement
                 List<TreeItem<Object>> columnItems = new ArrayList<>();
                 for (Map<String, Object> column : columns) {
                     columnItems.add(new TreeItem<>(ExplorerNode.ofColumn(
-                        databaseName, getTrimmedString(column.get(ExplorerKeyEnum.COLUMN_NAME)), getColumnLabel(column), "PRI".equals(getTrimmedString(column.get(ExplorerKeyEnum.COLUMN_KEY)))
+                        databaseName, getTrimmedString(column.get(ExplorerKeyEnum.COLUMN_NAME)), getColumnLabel(column), ExplorerKeyEnum.COLUMN_KEY_PRIMARY.equals(getTrimmedString(column.get(ExplorerKeyEnum.COLUMN_KEY)))
                     )));
                 }
                 tableItem.getChildren().setAll(columnItems);
@@ -771,7 +782,7 @@ public final class ExplorerTreeController extends AbstractFxController implement
         );
     }
 
-    private static boolean isPreconditionRequired(Throwable throwable) {
+    private boolean isPreconditionRequired(Throwable throwable) {
         return throwable instanceof InterfaceException interfaceException && interfaceException.getCode() == ExceptionEnum.CODE_PRECONDITION_REQUIRED;
     }
 
@@ -927,7 +938,7 @@ public final class ExplorerTreeController extends AbstractFxController implement
         });
     }
 
-    private static String getViewKey(ExplorerNode explorerNode) {
+    private String getViewKey(ExplorerNode explorerNode) {
         return explorerNode.type() + "|" + explorerNode.name();
     }
 
@@ -971,8 +982,8 @@ public final class ExplorerTreeController extends AbstractFxController implement
         StringBuilder columnLabel = new StringBuilder(getTrimmedString(column.get(ExplorerKeyEnum.COLUMN_NAME)))
             .append(", ").append(getTrimmedString(column.get(ExplorerKeyEnum.COLUMN_TYPE)));
         String columnKey = getTrimmedString(column.get(ExplorerKeyEnum.COLUMN_KEY));
-        if ("PRI".equals(columnKey)) columnLabel.append(", PK");
-        if ("UNI".equals(columnKey)) columnLabel.append(", UNIQUE");
+        if (ExplorerKeyEnum.COLUMN_KEY_PRIMARY.equals(columnKey)) columnLabel.append(", PK");
+        if (ExplorerKeyEnum.COLUMN_KEY_UNIQUE.equals(columnKey)) columnLabel.append(", UNIQUE");
         if (getBool(column.get(ExplorerKeyEnum.IS_NULLABLE))) columnLabel.append(", null");
         return columnLabel.toString();
     }
@@ -1000,12 +1011,12 @@ public final class ExplorerTreeController extends AbstractFxController implement
         return null;
     }
 
-    private static ExplorerNode getNode(TreeItem<Object> treeItem) {
+    private ExplorerNode getNode(TreeItem<Object> treeItem) {
         if (treeItem == null) return null;
         return treeItem.getValue() instanceof ExplorerNode explorerNode ? explorerNode : null;
     }
 
-    private static boolean isTableOrView(ExplorerNode explorerNode) {
+    private boolean isTableOrView(ExplorerNode explorerNode) {
         return ExplorerNodeTypeEnum.TABLE.equals(explorerNode.type()) || ExplorerNodeTypeEnum.VIEW.equals(explorerNode.type());
     }
 

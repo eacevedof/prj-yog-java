@@ -3,25 +3,32 @@ package modules.query.domain.entities;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import static modules.shared.application.Primitives.getBool;
+import static modules.shared.application.Primitives.getTrimmedString;
 
 /**
- * Una sentencia con parametros enlazados (?) y sus valores en orden (null = NULL). expectsOneRow: tiene que tocar
- * exactamente una fila (UPDATE y DELETE por clave primaria); si no, la transaccion se deshace.
+ * Una sentencia con parametros enlazados (?) y sus valores en orden (null = NULL). isOneRowExpected: tiene que tocar
+ * exactamente una fila (UPDATE y DELETE por clave primaria); si no, la transaccion se deshace. Los valores NO se
+ * recortan: son los de las celdas tal cual.
  */
 public final class PreparedSqlEntity {
 
     private final String sql;
     private final List<Object> params;
-    private final boolean expectsOneRow;
+    private final boolean isOneRowExpected;
 
-    private PreparedSqlEntity(String sql, List<Object> params, boolean expectsOneRow) {
-        this.sql = sql;
-        this.params = Collections.unmodifiableList(new ArrayList<>(params));
-        this.expectsOneRow = expectsOneRow;
+    private PreparedSqlEntity(Map<String, Object> primitives) {
+        this.sql = getTrimmedString(primitives.get("sql"));
+        this.params = primitives.get("params") instanceof List<?> list
+            ? Collections.unmodifiableList(new ArrayList<>(list))
+            : List.of();
+        this.isOneRowExpected = getBool(primitives.get("isOneRowExpected"));
     }
 
-    public static PreparedSqlEntity of(String sql, List<Object> params, boolean expectsOneRow) {
-        return new PreparedSqlEntity(sql, params, expectsOneRow);
+    public static PreparedSqlEntity fromPrimitives(Map<String, Object> primitives) {
+        return new PreparedSqlEntity(primitives);
     }
 
     public String getSql() {
@@ -32,7 +39,7 @@ public final class PreparedSqlEntity {
         return params;
     }
 
-    public boolean expectsOneRow() {
-        return expectsOneRow;
+    public boolean isOneRowExpected() {
+        return isOneRowExpected;
     }
 }

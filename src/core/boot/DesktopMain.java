@@ -34,25 +34,25 @@ public final class DesktopMain {
         RunMigrationsService.getInstance().invoke(RunMigrationsDto.fromPrimitives(Primitives.of()));
         // feature 47: las passwords que quedaran en claro de versiones anteriores se cifran ya
         EncryptStoredSecretsService.getInstance().invoke(EncryptStoredSecretsDto.fromPrimitives(Primitives.of()));
-        loadTheme();
-        loadLanguage();
+        applySavedTheme();
+        applySavedLanguage();
         Application.launch(DesktopApplication.class, args);
     }
 
     /**
      * El idioma guardado; sin preferencia, el del sistema (o ingles si la app no lo tiene).
      */
-    private void loadLanguage() {
+    private void applySavedLanguage() {
         String language = GetSettingService.getInstance().invoke(
             GetSettingDto.fromPrimitives(Primitives.of("settingKey", SettingsKeyEnum.LANGUAGE))
         ).getSettingValue();
-        Translator.getInstance().setLanguage(SettingsKeyEnum.LANGUAGE_SYSTEM.equals(language) ? Translator.getSystemLanguage() : language);
+        Translator.getInstance().setLanguage(SettingsKeyEnum.LANGUAGE_SYSTEM.equals(language) ? Translator.getInstance().getSystemLanguage() : language);
     }
 
     /**
      * El tema guardado (feature 37), antes de crear ninguna ventana.
      */
-    private void loadTheme() {
+    private void applySavedTheme() {
         String theme = GetSettingService.getInstance().invoke(
             GetSettingDto.fromPrimitives(Primitives.of("settingKey", SettingsKeyEnum.THEME))
         ).getSettingValue();

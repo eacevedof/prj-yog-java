@@ -26,7 +26,7 @@ public abstract class AbstractFxController {
             return throwable.getMessage();
         }
         if (throwable instanceof SQLException sqlException) {
-            return __(SharedMessageEnum.SQL_ERROR_X_X, SqlErrorCode.getCode(sqlException), sqlException.getMessage());
+            return __(SharedMessageEnum.SQL_ERROR_X_X, SqlErrorCode.getInstance().getCode(sqlException), sqlException.getMessage());
         }
         return __(SharedMessageEnum.UNEXPECTED_ERROR) + ": " + throwable.getClass().getSimpleName() + " " + throwable.getMessage();
     }

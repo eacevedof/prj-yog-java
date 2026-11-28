@@ -55,7 +55,6 @@ import static modules.shared.application.Primitives.getTrimmedString;
 import core.config.TranslatorResourceBundle;
 import static core.config.Global.__;
 
-import modules.connections.domain.enums.ConnectionsConfigEnum;
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.domain.enums.DbEngineEnum;
 import modules.connections.application.cloneconnection.CloneConnectionDto;
@@ -75,6 +74,10 @@ import modules.connections.infrastructure.components.EngineIconComponent;
  */
 public final class ConnectionsPanelController extends AbstractFxController {
 
+    // lo que se suma al texto mas largo del arbol al ajustar el panel: la barra de desplazamiento vertical y un respiro
+    private static final double TREE_SCROLLBAR_MARGIN = 20;
+    // el ajuste espera a que el arbol deje de cambiar (cargar una BD trae muchas filas seguidas)
+    private static final double TREE_WIDTH_DELAY_MS = 150;
     private static final String PATH_CONNECTION_DIALOG = "/modules/connections/infrastructure/views/connection-dialog.fxml";
 
     @FXML
@@ -110,7 +113,7 @@ public final class ConnectionsPanelController extends AbstractFxController {
     private BiConsumer<String, String> onFiltersChanged = (databaseFilter, objectFilter) -> { };
     private Consumer<String> onConnectionFocused = connectionUuid -> { };
     private DoubleConsumer onTreeContentWidthChanged = contentWidth -> { };
-    private final PauseTransition treeContentWidthDelay = new PauseTransition(Duration.millis(ConnectionsConfigEnum.TREE_WIDTH_DELAY_MS));
+    private final PauseTransition treeContentWidthDelay = new PauseTransition(Duration.millis(TREE_WIDTH_DELAY_MS));
 
     @FXML
     private void initialize() {
@@ -213,7 +216,7 @@ public final class ConnectionsPanelController extends AbstractFxController {
         Insets treeInsets = connectionsTreeView.getInsets();
         Insets panelInsets = panelRoot.getInsets();
         return maxRowWidth + treeInsets.getLeft() + treeInsets.getRight() + panelInsets.getLeft() + panelInsets.getRight()
-            + ConnectionsConfigEnum.TREE_SCROLLBAR_MARGIN;
+            + TREE_SCROLLBAR_MARGIN;
     }
 
     /**
@@ -513,16 +516,16 @@ public final class ConnectionsPanelController extends AbstractFxController {
         return treeHandlersByUuid.get(getConnectionUuid(getConnection(connectionItem)));
     }
 
-    private static boolean isConnectionItem(TreeItem<Object> treeItem) {
+    private boolean isConnectionItem(TreeItem<Object> treeItem) {
         return treeItem != null && treeItem.getValue() instanceof Map<?, ?>;
     }
 
     @SuppressWarnings("unchecked")
-    private static Map<String, Object> getConnection(TreeItem<Object> connectionItem) {
+    private Map<String, Object> getConnection(TreeItem<Object> connectionItem) {
         return (Map<String, Object>) connectionItem.getValue();
     }
 
-    private static String getConnectionUuid(Map<String, Object> connection) {
+    private String getConnectionUuid(Map<String, Object> connection) {
         return getTrimmedString(connection.get(ConnectionsKeyEnum.CONNECTION_UUID));
     }
 

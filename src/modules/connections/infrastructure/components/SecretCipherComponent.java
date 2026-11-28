@@ -1,4 +1,4 @@
-package modules.shared.infrastructure.components.secrets;
+package modules.connections.infrastructure.components;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -36,6 +36,7 @@ public final class SecretCipherComponent {
     private static final int AES_KEY_BYTES = 32;
     private static final int GCM_IV_BYTES = 12;
     private static final int GCM_TAG_BITS = 128;
+    private static final String AES_TRANSFORMATION = "AES/GCM/NoPadding";
 
     private final String mode;
 
@@ -103,7 +104,7 @@ public final class SecretCipherComponent {
         try {
             byte[] iv = new byte[GCM_IV_BYTES];
             new SecureRandom().nextBytes(iv);
-            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            Cipher cipher = Cipher.getInstance(AES_TRANSFORMATION);
             cipher.init(Cipher.ENCRYPT_MODE, getAesKey(), new GCMParameterSpec(GCM_TAG_BITS, iv));
             byte[] cipherBytes = cipher.doFinal(plainBytes);
             byte[] ivAndCipher = new byte[iv.length + cipherBytes.length];
@@ -118,7 +119,7 @@ public final class SecretCipherComponent {
 
     private byte[] getAesDecrypted(byte[] ivAndCipher) {
         try {
-            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            Cipher cipher = Cipher.getInstance(AES_TRANSFORMATION);
             cipher.init(Cipher.DECRYPT_MODE, getAesKey(), new GCMParameterSpec(GCM_TAG_BITS, ivAndCipher, 0, GCM_IV_BYTES));
             return cipher.doFinal(ivAndCipher, GCM_IV_BYTES, ivAndCipher.length - GCM_IV_BYTES);
         }

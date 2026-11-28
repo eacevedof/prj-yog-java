@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import modules.query.domain.enums.CompletionKindEnum;
 import modules.query.domain.enums.SqlKeywordsEnum;
 import modules.query.domain.entities.SqlCompletionContextEntity;
 import modules.query.domain.services.FuzzyMatcher;
@@ -19,13 +20,8 @@ import modules.query.domain.services.FuzzyMatcher;
  */
 public final class CompletionProvider {
 
-    public static final String KIND_COLUMN = "columna";
-    public static final String KIND_TABLE = "tabla";
-    public static final String KIND_DATABASE = "BD";
-    public static final String KIND_KEYWORD = "palabra clave";
-
     private static final int MAX_CANDIDATES = 200;
-    private static final List<String> KIND_ORDER = List.of(KIND_COLUMN, KIND_TABLE, KIND_DATABASE, KIND_KEYWORD);
+    private static final List<String> KIND_ORDER = List.of(CompletionKindEnum.KIND_COLUMN, CompletionKindEnum.KIND_TABLE, CompletionKindEnum.KIND_DATABASE, CompletionKindEnum.KIND_KEYWORD);
 
     /**
      * Un candidato: el texto que se inserta, su tipo y de donde sale (la tabla de una columna).
@@ -52,7 +48,7 @@ public final class CompletionProvider {
                 addColumns(candidates, getDatabase(table, activeDatabase), table[1], schemaCache);
             }
             else if (databaseNames != null && containsIgnoreCase(databaseNames, qualifier)) {
-                addAll(candidates, schemaCache.getTableNames(qualifier), KIND_TABLE, qualifier);
+                addAll(candidates, schemaCache.getTableNames(qualifier), CompletionKindEnum.KIND_TABLE, qualifier);
             }
             else {
                 addColumns(candidates, activeDatabase, qualifier, schemaCache);
@@ -61,8 +57,8 @@ public final class CompletionProvider {
         }
 
         if (context.isTableExpected()) {
-            addAll(candidates, schemaCache.getTableNames(activeDatabase), KIND_TABLE, activeDatabase);
-            addAll(candidates, schemaCache.getDatabaseNames(), KIND_DATABASE, "");
+            addAll(candidates, schemaCache.getTableNames(activeDatabase), CompletionKindEnum.KIND_TABLE, activeDatabase);
+            addAll(candidates, schemaCache.getDatabaseNames(), CompletionKindEnum.KIND_DATABASE, "");
             return getRanked(candidates, context.getPrefix());
         }
 
@@ -73,15 +69,15 @@ public final class CompletionProvider {
                 addColumns(candidates, database, table[1], schemaCache);
             }
         }
-        addAll(candidates, schemaCache.getTableNames(activeDatabase), KIND_TABLE, activeDatabase);
+        addAll(candidates, schemaCache.getTableNames(activeDatabase), CompletionKindEnum.KIND_TABLE, activeDatabase);
         for (String keyword : SqlKeywordsEnum.KEYWORDS) {
-            candidates.add(new Candidate(keyword.toUpperCase(Locale.ROOT), KIND_KEYWORD, "", 0));
+            candidates.add(new Candidate(keyword.toUpperCase(Locale.ROOT), CompletionKindEnum.KIND_KEYWORD, "", 0));
         }
         return getRanked(candidates, context.getPrefix());
     }
 
     private void addColumns(List<Candidate> candidates, String databaseName, String tableName, SchemaCacheComponent schemaCache) {
-        addAll(candidates, schemaCache.getColumnNames(databaseName, tableName), KIND_COLUMN, tableName);
+        addAll(candidates, schemaCache.getColumnNames(databaseName, tableName), CompletionKindEnum.KIND_COLUMN, tableName);
     }
 
     private void addAll(List<Candidate> candidates, List<String> names, String kind, String detail) {

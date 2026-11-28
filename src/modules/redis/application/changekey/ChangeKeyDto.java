@@ -4,6 +4,7 @@ import java.util.Map;
 
 import static modules.shared.application.Primitives.getBool;
 import static modules.shared.application.Primitives.getTrimmedString;
+import static modules.shared.application.Primitives.getUntrimmedString;
 
 /**
  * Un cambio del navegador: operation (RedisKeyEnum.OP_*) sobre key; field, value, score, ttlSeconds, newKey e index
@@ -26,23 +27,19 @@ public final class ChangeKeyDto {
     private ChangeKeyDto(Map<String, Object> primitives) {
         this.connectionUuid = getTrimmedString(primitives.get("connectionUuid"));
         this.sessionKey = getTrimmedString(primitives.get("sessionKey"));
-        this.key = getRaw(primitives.get("key"));
+        this.key = getUntrimmedString(primitives.get("key"));
         this.operation = getTrimmedString(primitives.get("operation"));
-        this.field = getRaw(primitives.get("field"));
-        this.value = getRaw(primitives.get("value"));
+        this.field = getUntrimmedString(primitives.get("field"));
+        this.value = getUntrimmedString(primitives.get("value"));
         this.score = getTrimmedString(primitives.get("score"));
         this.ttlSeconds = getTrimmedString(primitives.get("ttlSeconds"));
-        this.newKey = getRaw(primitives.get("newKey"));
+        this.newKey = getUntrimmedString(primitives.get("newKey"));
         this.index = getTrimmedString(primitives.get("index"));
         this.isConfirmed = getBool(primitives.get("isConfirmed"));
     }
 
     public static ChangeKeyDto fromPrimitives(Map<String, Object> primitives) {
         return new ChangeKeyDto(primitives);
-    }
-
-    private static String getRaw(Object value) {
-        return value == null ? "" : String.valueOf(value);
     }
 
     public String getConnectionUuid() {

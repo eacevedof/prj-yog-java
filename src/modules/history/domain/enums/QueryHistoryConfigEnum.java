@@ -28,6 +28,9 @@ public final class QueryHistoryConfigEnum {
     public static final String NOT_REPLAYED_OPERATION = " · not a statement, not replayed";
     public static final String DATABASE_CHANGE_X = "/* database: %s */";
 
+    // el historial se queda con las ultimas N ejecuciones
+    public static final int MAX_HISTORY_ROWS = 5000;
+
     private QueryHistoryConfigEnum() {
     }
 }

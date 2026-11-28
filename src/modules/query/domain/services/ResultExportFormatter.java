@@ -43,6 +43,13 @@ public final class ResultExportFormatter {
      * tableName: la tabla de los INSERT del formato SQL y la hoja de Excel.
      * @throws IllegalArgumentException si el formato no es de ResultExportFormatEnum
      */
+    /**
+     * La extension del fichero: el formato, salvo Excel XML, que se guarda como .xml.
+     */
+    public String getExtension(String format) {
+        return ResultExportFormatEnum.EXCEL_XML.equals(format) ? ResultExportFormatEnum.XML : format;
+    }
+
     public String getFormatted(String format, String tableName, List<String> columnNames, List<List<String>> rows) {
         return getFormatted(format, columnNames, rows, ResultExportOptionsEntity.fromPrimitives(Map.of("tableName", tableName)));
     }

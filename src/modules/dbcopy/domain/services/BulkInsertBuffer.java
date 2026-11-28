@@ -47,13 +47,12 @@ public final class BulkInsertBuffer {
     }
 
     /**
-     * Saca todas las sentencias, tambien la que esta a medias, y deja el buffer vacio.
+     * Todas las sentencias, tambien la que esta a medias; no cambia el buffer.
      */
-    public List<String> takeAllStatements() {
-        if (!currentStatement.isEmpty()) closeCurrentStatement();
-        List<String> statements = List.copyOf(closedStatements);
-        closedStatements.clear();
-        return statements;
+    public List<String> getStatements() {
+        List<String> statements = new ArrayList<>(closedStatements);
+        if (!currentStatement.isEmpty()) statements.add(currentStatement.toString());
+        return List.copyOf(statements);
     }
 
     private void closeCurrentStatement() {

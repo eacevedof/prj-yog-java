@@ -36,6 +36,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import modules.shared.domain.enums.ExceptionEnum;
+import modules.shared.domain.enums.SessionKeyEnum;
+import modules.shared.domain.enums.SharedConfigEnum;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.icons.AppIconEnum;
 import modules.shared.infrastructure.components.icons.AppIcon;
@@ -51,13 +53,12 @@ import static core.config.Global.__;
 
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.infrastructure.factories.RedisSessionFactory;
-import modules.connections.infrastructure.factories.TargetSessionFactory;
 
+import modules.redis.domain.enums.RedisConfigEnum;
 import modules.redis.domain.enums.RedisKeyEnum;
 import modules.redis.application.changekey.ChangeKeyDto;
 import modules.redis.application.createkey.CreateKeyDto;
 import modules.redis.application.executecommand.ExecuteRedisCommandDto;
-import modules.redis.application.executecommand.ExecuteRedisCommandResultDto;
 import modules.redis.application.getkeyvalue.GetKeyValueDto;
 import modules.redis.application.getkeyvalue.GetKeyValueResultDto;
 import modules.redis.application.scankeys.ScanKeysDto;
@@ -139,7 +140,7 @@ public final class RedisTabController extends AbstractFxController implements Co
     private final ExecutorService consoleExecutor = getSessionExecutor("redis-console");
     private String consoleSessionKey = "";
     private final List<Map<String, Object>> loadedKeys = new ArrayList<>();
-    private String nextCursor = ScanKeysDto.FIRST_CURSOR;
+    private String nextCursor = RedisConfigEnum.SCAN_FIRST_CURSOR;
     private GetKeyValueResultDto currentValue;
     private final List<String> consoleHistory = new ArrayList<>();
     private int consoleHistoryIndex;
@@ -162,8 +163,8 @@ public final class RedisTabController extends AbstractFxController implements Co
     public void setup(Map<String, Object> connection) {
         connectionUuid = getTrimmedString(connection.get(ConnectionsKeyEnum.CONNECTION_UUID));
         tabUuid = UuidGenerator.getInstance().getUniqueIdWithPrefix(TAB_PREFIX);
-        browserSessionKey = tabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + "redis-browser";
-        consoleSessionKey = tabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + "redis-console";
+        browserSessionKey = tabUuid + SessionKeyEnum.SEPARATOR + SessionKeyEnum.REDIS_BROWSER;
+        consoleSessionKey = tabUuid + SessionKeyEnum.SEPARATOR + SessionKeyEnum.REDIS_CONSOLE;
         String databaseName = getTrimmedString(connection.get(ConnectionsKeyEnum.DATABASE_NAME));
         consolePromptLabel.setText("db" + (databaseName.isEmpty() ? "0" : databaseName) + ">");
         onScan();
@@ -190,7 +191,7 @@ public final class RedisTabController extends AbstractFxController implements Co
     @FXML
     private void onScan() {
         loadedKeys.clear();
-        nextCursor = ScanKeysDto.FIRST_CURSOR;
+        nextCursor = RedisConfigEnum.SCAN_FIRST_CURSOR;
         keysTreeView.getRoot().getChildren().clear();
         loadKeys();
     }
@@ -297,10 +298,10 @@ public final class RedisTabController extends AbstractFxController implements Co
                 isComplete = scanKeysResultDto.isComplete();
                 if (isComplete) break;
             }
-            return Primitives.of("keys", keys, "cursor", cursor, "isComplete", isComplete);
+            return Primitives.of(RedisKeyEnum.KEYS, keys, "cursor", cursor, "isComplete", isComplete);
         }, scannedKeys -> {
             @SuppressWarnings("unchecked")
-            List<Map<String, Object>> keys = (List<Map<String, Object>>) scannedKeys.get("keys");
+            List<Map<String, Object>> keys = (List<Map<String, Object>>) scannedKeys.get(RedisKeyEnum.KEYS);
             loadedKeys.addAll(keys);
             nextCursor = String.valueOf(scannedKeys.get("cursor"));
             boolean isComplete = getBool(scannedKeys.get("isComplete"));
@@ -484,7 +485,7 @@ public final class RedisTabController extends AbstractFxController implements Co
     private void onSetTtl() {
         if (currentValue == null) return;
         String key = currentValue.getKey();
-        TextInputDialog ttlInputDialog = new TextInputDialog(currentValue.getTtlMs() > 0 ? String.valueOf(currentValue.getTtlMs() / 1000) : "");
+        TextInputDialog ttlInputDialog = new TextInputDialog(currentValue.getTtlMs() > 0 ? String.valueOf(TimeUnit.MILLISECONDS.toSeconds(currentValue.getTtlMs())) : "");
         ThemeComponent.getInstance().applyTo(ttlInputDialog);
         ttlInputDialog.setTitle(__("Caducidad"));
         ttlInputDialog.setHeaderText(__("Segundos hasta que {0} caduque (vacío = no caduca nunca)", key));
@@ -585,7 +586,7 @@ public final class RedisTabController extends AbstractFxController implements Co
                     runCommand(commandLine, true);
                     return;
                 }
-                appendConsole(commandLine, "(error) " + getErrorMessage(throwable));
+                appendConsole(commandLine, SharedConfigEnum.CONSOLE_ERROR_PREFIX + getErrorMessage(throwable));
             },
             consoleExecutor
         );
@@ -614,7 +615,7 @@ public final class RedisTabController extends AbstractFxController implements Co
 
     private String getTtlText(long ttlMs) {
         if (ttlMs < 0) return __("sin caducidad");
-        long seconds = ttlMs / 1000;
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(ttlMs);
         if (seconds < 120) return __("caduca en {0} s", seconds);
         if (seconds < 7200) return __("caduca en {0} min", seconds / 60);
         return __("caduca en {0} h", seconds / 3600);

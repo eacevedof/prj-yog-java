@@ -15,9 +15,6 @@ public final class QueryHistoryKeyEnum {
     public static final String ROWS_COUNT = "rows_count";
     public static final String HAS_ERROR = "has_error";
 
-    // el historial se queda con las ultimas N ejecuciones
-    public static final int MAX_HISTORY_ROWS = 5000;
-
     private QueryHistoryKeyEnum() {
     }
 }

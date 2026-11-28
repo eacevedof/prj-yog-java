@@ -53,7 +53,7 @@ public final class RenameTableService {
         long startNanos = System.nanoTime();
         boolean hasError = true;
         try {
-            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSessionPdo(renameTableDto.getConnectionUuid(), renameTableDto.getSessionKey()))
+            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSession(renameTableDto.getConnectionUuid(), renameTableDto.getSessionKey()))
                 .executeStatements(List.of(renameSql));
             hasError = false;
         }

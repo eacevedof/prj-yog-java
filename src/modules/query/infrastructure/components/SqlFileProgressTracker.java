@@ -3,8 +3,6 @@ package modules.query.infrastructure.components;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import modules.query.domain.services.SqlFileProgressListener;
-
 /**
  * Une el servicio que ejecuta un fichero .sql (en su hilo) con el dialogo que lo pinta, por el id de la ejecucion.
  */

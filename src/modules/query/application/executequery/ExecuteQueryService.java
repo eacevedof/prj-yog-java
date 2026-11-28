@@ -67,7 +67,7 @@ public final class ExecuteQueryService {
         runningStatementsComponent.startRun(sessionKey);
         long startNanos = System.nanoTime();
 
-        Connection pdo = TargetSessionFactory.getInstance().getSessionPdo(executeQueryDto.getConnectionUuid(), sessionKey);
+        Connection pdo = TargetSessionFactory.getInstance().getSession(executeQueryDto.getConnectionUuid(), sessionKey);
         QueryExecutorJdbcRepository queryExecutorJdbcRepository = QueryExecutorJdbcRepository.getInstance(pdo, SqlDialect.getInstance(dbEngine));
         List<Map<String, Object>> results = getResults(queryExecutorJdbcRepository, executeQueryDto, statements, dbEngine);
         ExecuteQueryResultDto executeQueryResultDto = getResultDto(queryExecutorJdbcRepository, results, executeQueryDto, startNanos);
@@ -182,7 +182,7 @@ public final class ExecuteQueryService {
      * Como SQLyog: "Error Code: 1146 - Table 'x.y' doesn't exist". Una sentencia cortada por Cancelar lo dice.
      */
     private Map<String, Object> getErrorResult(String sql, SQLException e) {
-        String errorMessage = __(QueryMessageEnum.ERROR_CODE_X_X, SqlErrorCode.getCode(e), e.getMessage());
+        String errorMessage = __(QueryMessageEnum.ERROR_CODE_X_X, SqlErrorCode.getInstance().getCode(e), e.getMessage());
         return Primitives.of(
             QueryKeyEnum.SQL, sql,
             QueryKeyEnum.HAS_RESULT_SET, false,

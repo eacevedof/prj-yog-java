@@ -14,8 +14,7 @@ import java.util.Map;
 
 import modules.shared.application.Primitives;
 
-import modules.connections.domain.enums.DbEngineEnum;
-
+import modules.files.domain.enums.FilesFormatEnum;
 import modules.files.domain.enums.FilesKeyEnum;
 
 /**
@@ -68,7 +67,7 @@ public final class FilesReaderDiskRepository {
     }
 
     private boolean isDataFile(File file) {
-        return file.isFile() && DbEngineEnum.FILES_EXTENSIONS.contains(getExtension(file.getName()));
+        return file.isFile() && FilesFormatEnum.FORMATS_BY_EXTENSION.containsKey(getExtension(file.getName()));
     }
 
     /**

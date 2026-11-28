@@ -25,6 +25,7 @@ import modules.history.domain.enums.QueryHistoryConfigEnum;
 import modules.history.application.recordqueryhistory.RecordQueryHistoryDto;
 import modules.history.application.recordqueryhistory.RecordQueryHistoryService;
 
+import modules.query.domain.enums.QueryKeyEnum;
 import modules.query.domain.enums.QueryMessageEnum;
 import modules.query.domain.entities.SqlStatementEntity;
 import modules.query.domain.services.SqlScriptChunker;
@@ -88,7 +89,7 @@ public final class ExecuteSqlFileService {
         // la sesion y el USE van dentro: si fallan, el historial tambien lo apunta (como ExecuteQueryService)
         runState.isAborted = true;
         try {
-            Connection pdo = TargetSessionFactory.getInstance().getSessionPdo(executeSqlFileDto.getConnectionUuid(), sessionKey);
+            Connection pdo = TargetSessionFactory.getInstance().getSession(executeSqlFileDto.getConnectionUuid(), sessionKey);
             QueryExecutorJdbcRepository queryExecutorJdbcRepository = QueryExecutorJdbcRepository.getInstance(pdo, SqlDialect.getInstance(connectionEntity.getDbEngine()));
             if (!executeSqlFileDto.getDatabaseName().isEmpty()) queryExecutorJdbcRepository.useDatabase(executeSqlFileDto.getDatabaseName());
             runState.isAborted = false;
@@ -133,9 +134,14 @@ public final class ExecuteSqlFileService {
             long readChars = 0;
             while (!runState.isStopped()) {
                 String chunk = sqlFileReaderComponent.readChunk();
-                List<SqlStatementEntity> statements = chunk == null ? sqlScriptChunker.finish() : sqlScriptChunker.addChunk(chunk);
-                if (chunk != null) readChars += chunk.length();
-                executeStatements(queryExecutorJdbcRepository, executeSqlFileDto, statements, runState);
+                if (chunk == null) {
+                    sqlScriptChunker.finish();
+                }
+                else {
+                    sqlScriptChunker.addChunk(chunk);
+                    readChars += chunk.length();
+                }
+                executeStatements(queryExecutorJdbcRepository, executeSqlFileDto, sqlScriptChunker.getCompleteStatements(), runState);
                 sqlFileProgressTracker.notifyProgress(executeSqlFileDto.getSessionKey(), Math.min(readChars, totalChars), totalChars, runState.executedCount, runState.getErrorCount());
                 if (chunk == null) break;
             }
@@ -236,7 +242,7 @@ public final class ExecuteSqlFileService {
                 return;
             }
             String shortSql = sql.length() > ERROR_SQL_CHARS ? sql.substring(0, ERROR_SQL_CHARS) + "..." : sql;
-            errors.add(Primitives.of("sql", shortSql, "message", message == null ? "" : message));
+            errors.add(Primitives.of(QueryKeyEnum.SQL, shortSql, QueryKeyEnum.MESSAGE, message == null ? "" : message));
         }
     }
 }

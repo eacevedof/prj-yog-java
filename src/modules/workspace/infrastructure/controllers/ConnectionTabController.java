@@ -32,6 +32,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
 
+import modules.shared.domain.enums.SessionKeyEnum;
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.domain.services.SystemDatabaseDetector;
 import modules.shared.application.Primitives;
@@ -74,6 +75,7 @@ import modules.files.application.syncfilesfolder.SyncFilesFolderResultDto;
 import modules.files.application.savefilesfolder.SaveFilesFolderService;
 import modules.files.application.syncfilesfolder.SyncFilesFolderService;
 
+import modules.workspace.domain.enums.WorkspaceConfigEnum;
 import modules.workspace.domain.enums.WorkspaceKeyEnum;
 import modules.workspace.application.getquerytabs.GetQueryTabsDto;
 import modules.workspace.application.getquerytabs.GetQueryTabsResultDto;
@@ -92,14 +94,12 @@ public final class ConnectionTabController extends AbstractFxController implemen
     private static final String PATH_TABLE_DATA_TAB = "/modules/query/infrastructure/views/table-data-tab.fxml";
     private static final String CONNECTION_TAB_PREFIX = "ctab-";
     private static final String PGSQL_INITIAL_SCHEMA = "public";
-    private static final String EXPLORER_SESSION = "explorer";
-    private static final String FILES_SESSION_SUFFIX = "files";
     private static final String STYLE_SYSTEM_DATABASE = "active-database-system";
     private static final String STYLE_SYSTEM_DATABASE_ITEM = "explorer-db-system";
     // las pestañas se guardan un poco despues del ultimo cambio, no a cada tecla
     private static final double SAVE_STATE_DELAY_MS = 1500;
 
-    private final ExplorerTreeController explorerTreeController = new ExplorerTreeController();
+    private final ExplorerTreeController explorerTreeController = ExplorerTreeController.getInstance();
     @FXML
     private TabPane queryTabPane;
     @FXML
@@ -143,7 +143,7 @@ public final class ConnectionTabController extends AbstractFxController implemen
         if (DbEngineEnum.PGSQL.equals(dbEngine)) setActiveDatabase(PGSQL_INITIAL_SCHEMA);
         else if (DbEngineEnum.SQLITE.equals(dbEngine) || DbEngineEnum.FILES.equals(dbEngine)) setActiveDatabase(SqlDialect.SQLITE_MAIN);
         else setActiveDatabase(getTrimmedString(connection.get(ConnectionsKeyEnum.DATABASE_NAME)));
-        schemaCache = new SchemaCacheComponent(connectionUuid, connectionTabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + "completion");
+        schemaCache = SchemaCacheComponent.getInstance(connectionUuid, connectionTabUuid + SessionKeyEnum.SEPARATOR + SessionKeyEnum.COMPLETION);
 
         explorerTreeController.setup(
             connectionUuid,
@@ -254,7 +254,7 @@ public final class ConnectionTabController extends AbstractFxController implemen
     }
 
     private String getFilesSessionKey() {
-        return connectionTabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + FILES_SESSION_SUFFIX;
+        return connectionTabUuid + SessionKeyEnum.SEPARATOR + SessionKeyEnum.FILES;
     }
 
     private void setFilesStatus(String status) {
@@ -413,7 +413,7 @@ public final class ConnectionTabController extends AbstractFxController implemen
         TableDataTabController tableDataTabController = fxmlLoader.getController();
         tableDataTabController.setup(
             connectionUuid,
-            connectionTabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + "data-" + queryTabCounter,
+            connectionTabUuid + SessionKeyEnum.SEPARATOR + SessionKeyEnum.DATA_PREFIX + queryTabCounter,
             databaseName,
             tableName
         );
@@ -435,7 +435,7 @@ public final class ConnectionTabController extends AbstractFxController implemen
     }
 
     private String getExplorerSessionKey() {
-        return connectionTabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + EXPLORER_SESSION;
+        return connectionTabUuid + SessionKeyEnum.SEPARATOR + SessionKeyEnum.EXPLORER;
     }
 
     /**
@@ -542,7 +542,7 @@ public final class ConnectionTabController extends AbstractFxController implemen
         }
 
         queryTabCounter++;
-        String queryTabKey = connectionTabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + "query-" + queryTabCounter;
+        String queryTabKey = connectionTabUuid + SessionKeyEnum.SEPARATOR + SessionKeyEnum.QUERY_PREFIX + queryTabCounter;
         Tab queryTab = new Tab();
         Label queryTabLabel = new Label(title.isEmpty() ? __("Query {0}", queryTabCounter) : title);
         queryTabLabel.setMnemonicParsing(false);
@@ -717,7 +717,7 @@ public final class ConnectionTabController extends AbstractFxController implemen
     private String getQueryTabTitle(Tab queryTab, int queryTabPosition) {
         String title = queryTab.getGraphic() instanceof Label queryTabLabel ? queryTabLabel.getText().trim() : "";
         if (title.isEmpty()) return __("Query {0}", queryTabPosition);
-        return title.length() > WorkspaceKeyEnum.MAX_TAB_TITLE_LENGTH ? title.substring(0, WorkspaceKeyEnum.MAX_TAB_TITLE_LENGTH) : title;
+        return title.length() > WorkspaceConfigEnum.MAX_TAB_TITLE_LENGTH ? title.substring(0, WorkspaceConfigEnum.MAX_TAB_TITLE_LENGTH) : title;
     }
 
     private void insertTextInSelectedQueryTab(String text) {

@@ -56,7 +56,7 @@ public final class ExplorerReaderMysqlRepository extends AbstractExplorerReaderR
         List<String> views = new ArrayList<>();
         for (Map<String, Object> row : query(sql, databaseName)) {
             String tableName = getTrimmedString(row.get("table_name"));
-            if (getTrimmedString(row.get("table_type")).contains("VIEW")) {
+            if (getTrimmedString(row.get(ExplorerKeyEnum.TABLE_TYPE)).contains(ExplorerKeyEnum.TABLE_TYPE_VIEW)) {
                 views.add(tableName);
                 continue;
             }

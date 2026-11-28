@@ -9,6 +9,18 @@ import java.util.Locale;
  */
 public final class FuzzyMatcher {
 
+    // de mas a menos: igual, empieza por lo escrito, lo escrito empieza una palabra (tras "_"), lo contiene; las
+    // letras sueltas en orden puntuan por debajo de CONTAINS_SCORE
+    private static final int EXACT_SCORE = 400;
+    private static final int PREFIX_SCORE = 300;
+    private static final int WORD_PREFIX_SCORE = 200;
+    private static final int CONTAINS_SCORE = 100;
+    private static final int NO_MATCH_SCORE = -1;
+    private static final int LETTER_SCORE = 1;
+    private static final int CONSECUTIVE_BONUS = 3;
+    private static final int WORD_START_BONUS = 5;
+    private static final char WORD_SEPARATOR = '_';
+
     private FuzzyMatcher() {
     }
 
@@ -20,10 +32,10 @@ public final class FuzzyMatcher {
         if (typed.isEmpty()) return 0;
         String lowerCandidate = candidate.toLowerCase(Locale.ROOT);
         String lowerTyped = typed.toLowerCase(Locale.ROOT);
-        if (lowerCandidate.equals(lowerTyped)) return 400;
-        if (lowerCandidate.startsWith(lowerTyped)) return 300;
-        if (lowerCandidate.contains("_" + lowerTyped)) return 200;
-        if (lowerCandidate.contains(lowerTyped)) return 100;
+        if (lowerCandidate.equals(lowerTyped)) return EXACT_SCORE;
+        if (lowerCandidate.startsWith(lowerTyped)) return PREFIX_SCORE;
+        if (lowerCandidate.contains(WORD_SEPARATOR + lowerTyped)) return WORD_PREFIX_SCORE;
+        if (lowerCandidate.contains(lowerTyped)) return CONTAINS_SCORE;
         return getSubsequenceScore(lowerCandidate, lowerTyped);
     }
 
@@ -36,13 +48,13 @@ public final class FuzzyMatcher {
         int previousMatch = -2;
         for (char typedChar : typed.toCharArray()) {
             int found = candidate.indexOf(typedChar, candidateIndex);
-            if (found == -1) return -1;
-            if (found == previousMatch + 1) score += 3;
-            if (found == 0 || candidate.charAt(found - 1) == '_') score += 5;
-            score += 1;
+            if (found == -1) return NO_MATCH_SCORE;
+            if (found == previousMatch + 1) score += CONSECUTIVE_BONUS;
+            if (found == 0 || candidate.charAt(found - 1) == WORD_SEPARATOR) score += WORD_START_BONUS;
+            score += LETTER_SCORE;
             previousMatch = found;
             candidateIndex = found + 1;
         }
-        return Math.min(99, score);
+        return Math.min(CONTAINS_SCORE - 1, score);
     }
 }

@@ -199,6 +199,6 @@ final class FilesIntegrationTest extends AbstractTestCase {
     }
 
     private Connection getPdo() {
-        return TargetSessionFactory.getInstance().getSessionPdo(connectionUuid, SESSION);
+        return TargetSessionFactory.getInstance().getSession(connectionUuid, SESSION);
     }
 }

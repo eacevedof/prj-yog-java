@@ -53,7 +53,7 @@ public final class ApplyTableChangesService {
         String tableName = applyTableChangesDto.getTableName();
         String dbEngine = TargetSessionFactory.getInstance().getDbEngine(applyTableChangesDto.getConnectionUuid());
         TableChangesWriterJdbcRepository tableChangesWriterJdbcRepository = TableChangesWriterJdbcRepository.getInstance(
-            TargetSessionFactory.getInstance().getSessionPdo(applyTableChangesDto.getConnectionUuid(), applyTableChangesDto.getSessionKey()),
+            TargetSessionFactory.getInstance().getSession(applyTableChangesDto.getConnectionUuid(), applyTableChangesDto.getSessionKey()),
             SqlDialect.getInstance(dbEngine)
         );
         Set<String> primaryKeyColumns = ExplorerReaderRepositoryFactory.getInstance()

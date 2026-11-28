@@ -10,6 +10,7 @@ import modules.shared.infrastructure.repositories.AbstractJdbcRepository;
 
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelSession;
 
+import modules.dbcopy.domain.enums.DbCopyConfigEnum;
 import modules.dbcopy.domain.enums.DbCopyObjectTypeEnum;
 import modules.dbcopy.domain.services.BulkInsertBuffer;
 import modules.dbcopy.domain.services.DbCopySqlBuilder;
@@ -55,7 +56,7 @@ public final class DbCopyWriterMysqlRepository extends AbstractJdbcRepository {
         pdo.setCatalog(databaseName);
         if (httpTunnelSession != null) return;
         try (Statement statement = pdo.createStatement()) {
-            for (String sessionSql : DbCopySqlBuilder.TARGET_SESSION_SQLS) {
+            for (String sessionSql : DbCopyConfigEnum.TARGET_SESSION_SQLS) {
                 statement.execute(sessionSql);
             }
         }
@@ -109,7 +110,7 @@ public final class DbCopyWriterMysqlRepository extends AbstractJdbcRepository {
         for (List<Object> row : rows) {
             bulkInsertBuffer.add(dbCopySqlBuilder.getRowTuple(row));
         }
-        executeInSession(bulkInsertBuffer.takeAllStatements());
+        executeInSession(bulkInsertBuffer.getStatements());
     }
 
     /**
@@ -119,7 +120,7 @@ public final class DbCopyWriterMysqlRepository extends AbstractJdbcRepository {
     private void executeInSession(List<String> statements) throws SQLException {
         if (statements.isEmpty()) return;
         if (httpTunnelSession != null) {
-            List<String> script = new ArrayList<>(DbCopySqlBuilder.TARGET_SESSION_SQLS);
+            List<String> script = new ArrayList<>(DbCopyConfigEnum.TARGET_SESSION_SQLS);
             script.addAll(statements);
             httpTunnelSession.executeBatch(script);
             return;

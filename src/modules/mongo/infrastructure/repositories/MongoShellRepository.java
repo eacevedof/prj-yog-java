@@ -15,6 +15,7 @@ import com.mongodb.client.result.UpdateResult;
 
 import org.bson.Document;
 
+import modules.mongo.domain.enums.MongoShellCommandTypeEnum;
 import modules.mongo.domain.entities.MongoShellCommandEntity;
 
 /**
@@ -37,17 +38,17 @@ public final class MongoShellRepository extends AbstractMongoShellRepository {
     public String execute(MongoShellCommandEntity command, String databaseName) {
         MongoDatabase database = mongoClient.getDatabase(databaseName);
         return switch (command.type()) {
-            case MongoShellCommandEntity.SHOW_DATABASES -> getShowDatabasesText();
-            case MongoShellCommandEntity.SHOW_COLLECTIONS -> String.join("\n", database.listCollectionNames().into(new ArrayList<>()));
-            case MongoShellCommandEntity.DROP_DATABASE -> {
+            case MongoShellCommandTypeEnum.SHOW_DATABASES -> getShowDatabasesText();
+            case MongoShellCommandTypeEnum.SHOW_COLLECTIONS -> String.join("\n", database.listCollectionNames().into(new ArrayList<>()));
+            case MongoShellCommandTypeEnum.DROP_DATABASE -> {
                 database.drop();
                 yield mongoDocumentFormatter.getPrettyJson(new Document("ok", 1).append("dropped", databaseName));
             }
-            case MongoShellCommandEntity.RUN_COMMAND -> {
+            case MongoShellCommandTypeEnum.RUN_COMMAND -> {
                 MongoDatabase target = "adminCommand".equals(command.name()) ? mongoClient.getDatabase(ADMIN_DATABASE) : database;
                 yield mongoDocumentFormatter.getPrettyJson(target.runCommand(getDocument(command.arguments(), 0)));
             }
-            case MongoShellCommandEntity.COLLECTION_METHOD -> executeCollectionMethod(database.getCollection(command.name()), command);
+            case MongoShellCommandTypeEnum.COLLECTION_METHOD -> executeCollectionMethod(database.getCollection(command.name()), command);
             default -> throw new IllegalArgumentException(command.type());
         };
     }

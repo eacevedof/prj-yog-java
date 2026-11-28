@@ -19,9 +19,12 @@ import org.bson.json.JsonMode;
 import org.bson.json.JsonParseException;
 import org.bson.json.JsonWriterSettings;
 
+import modules.shared.application.Primitives;
+
 import modules.files.domain.enums.FilesColumnKindEnum;
 import modules.files.domain.enums.FilesConfigEnum;
 import modules.files.domain.enums.FilesFormatEnum;
+import modules.files.domain.enums.FilesKeyEnum;
 import modules.files.domain.entities.FileTableEntity;
 import modules.files.domain.services.ColumnNamesBuilder;
 import modules.files.domain.services.TextLayoutDetector;
@@ -86,18 +89,24 @@ public final class JsonTableConverter {
             }
             rows.add(row);
         }
-        return new FileTableEntity(
-            isArray ? FilesFormatEnum.JSON_ARRAY : FilesFormatEnum.JSON_LINES, "", textLayoutDetector.getLineSeparator(text), textLayoutDetector.hasBom(text),
-            columnNames, columnKinds, explicitNullColumns, rows
-        );
+        return FileTableEntity.fromPrimitives(Primitives.of(
+            FilesKeyEnum.FILE_FORMAT, isArray ? FilesFormatEnum.JSON_ARRAY : FilesFormatEnum.JSON_LINES,
+            FilesKeyEnum.CSV_DELIMITER, "",
+            FilesKeyEnum.LINE_SEPARATOR, textLayoutDetector.getLineSeparator(text),
+            FilesKeyEnum.HAS_BOM, textLayoutDetector.hasBom(text),
+            FilesKeyEnum.COLUMN_NAMES, columnNames,
+            FilesKeyEnum.COLUMN_KINDS, columnKinds,
+            FilesKeyEnum.EXPLICIT_NULL_COLUMNS, explicitNullColumns,
+            FilesKeyEnum.ROWS, rows
+        ));
     }
 
     /**
      * La tabla de vuelta a JSON en su formato: el array con un objeto por bloque indentado; JSON Lines, uno por linea.
      */
     public String getText(FileTableEntity fileTableEntity) {
-        String lineSeparator = fileTableEntity.lineSeparator();
-        boolean isArray = FilesFormatEnum.JSON_ARRAY.equals(fileTableEntity.format());
+        String lineSeparator = fileTableEntity.getLineSeparator();
+        boolean isArray = FilesFormatEnum.JSON_ARRAY.equals(fileTableEntity.getFormat());
         JsonWriterSettings jsonWriterSettings = JsonWriterSettings.builder()
             .outputMode(JsonMode.RELAXED)
             .indent(isArray)
@@ -105,13 +114,13 @@ public final class JsonTableConverter {
             .newLineCharacters(lineSeparator)
             .build();
         List<String> documentTexts = new ArrayList<>();
-        for (List<Object> row : fileTableEntity.rows()) {
+        for (List<Object> row : fileTableEntity.getRows()) {
             BsonDocument document = new BsonDocument();
-            for (int columnIndex = 0; columnIndex < fileTableEntity.columnNames().size(); columnIndex++) {
-                String columnName = fileTableEntity.columnNames().get(columnIndex);
+            for (int columnIndex = 0; columnIndex < fileTableEntity.getColumnNames().size(); columnIndex++) {
+                String columnName = fileTableEntity.getColumnNames().get(columnIndex);
                 Object value = columnIndex < row.size() ? row.get(columnIndex) : null;
-                if (value == null && !fileTableEntity.explicitNullColumns().contains(columnName)) continue;
-                document.put(columnName, getBsonValue(value, fileTableEntity.columnKinds().get(columnIndex)));
+                if (value == null && !fileTableEntity.getExplicitNullColumns().contains(columnName)) continue;
+                document.put(columnName, getBsonValue(value, fileTableEntity.getColumnKinds().get(columnIndex)));
             }
             documentTexts.add(document.toJson(jsonWriterSettings));
         }

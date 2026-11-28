@@ -10,6 +10,7 @@ import modules.shared.application.Primitives;
 
 import modules.connections.infrastructure.components.httptunnel.RedisHttpTunnelSession;
 
+import modules.redis.domain.enums.RedisConfigEnum;
 import modules.redis.domain.enums.RedisKeyEnum;
 import modules.redis.domain.services.RedisReplyFormatter;
 
@@ -19,11 +20,11 @@ import modules.redis.domain.services.RedisReplyFormatter;
  */
 public final class RedisReaderHttpTunnelRepository extends AbstractRedisReaderRepository {
 
-    private static final int SCAN_PAGE = 1000;
-
     private final RedisHttpTunnelCommands redisHttpTunnelCommands;
+    private final RedisReplyFormatter redisReplyFormatter;
 
     private RedisReaderHttpTunnelRepository(RedisHttpTunnelSession redisHttpTunnelSession) {
+        this.redisReplyFormatter = RedisReplyFormatter.getInstance();
         this.redisHttpTunnelCommands = RedisHttpTunnelCommands.getInstance(redisHttpTunnelSession);
     }
 
@@ -55,7 +56,7 @@ public final class RedisReaderHttpTunnelRepository extends AbstractRedisReaderRe
                 RedisKeyEnum.TTL_MS, redisHttpTunnelCommands.getLong(replies.get(i * 2 + 1))
             ));
         }
-        return Primitives.of("keys", keys, "nextCursor", nextCursor);
+        return Primitives.of(RedisKeyEnum.KEYS, keys, RedisKeyEnum.NEXT_CURSOR, nextCursor);
     }
 
     @Override
@@ -78,8 +79,8 @@ public final class RedisReaderHttpTunnelRepository extends AbstractRedisReaderRe
             case RedisKeyEnum.TYPE_STRING -> {
                 Object reply = redisHttpTunnelCommands.getReply("GET", key);
                 byte[] bytes = reply instanceof byte[] raw ? raw : new byte[0];
-                String text = RedisReplyFormatter.getUtf8OrNull(bytes);
-                keyValue.put("isBinary", text == null);
+                String text = redisReplyFormatter.getUtf8OrNull(bytes);
+                keyValue.put(RedisKeyEnum.IS_BINARY, text == null);
                 keyValue.put("stringValue", text == null ? "0x" + HexFormat.of().formatHex(bytes) : text);
                 size = bytes.length;
             }
@@ -125,9 +126,9 @@ public final class RedisReaderHttpTunnelRepository extends AbstractRedisReaderRe
             }
         }
         keyValue.put(RedisKeyEnum.SIZE, size);
-        keyValue.put("columns", columns);
-        keyValue.put("rows", rows);
-        keyValue.putIfAbsent("isBinary", false);
+        keyValue.put(RedisKeyEnum.COLUMNS, columns);
+        keyValue.put(RedisKeyEnum.ROWS, rows);
+        keyValue.putIfAbsent(RedisKeyEnum.IS_BINARY, false);
         keyValue.putIfAbsent("stringValue", "");
         return keyValue;
     }
@@ -140,7 +141,7 @@ public final class RedisReaderHttpTunnelRepository extends AbstractRedisReaderRe
         String cursor = "0";
         do {
             List<String> page = redisHttpTunnelCommands.getTexts(
-                redisHttpTunnelCommands.getReply(command, key, cursor, "COUNT", String.valueOf(Math.min(maxItems, SCAN_PAGE)))
+                redisHttpTunnelCommands.getReply(command, key, cursor, "COUNT", String.valueOf(Math.min(maxItems, RedisConfigEnum.ITEMS_SCAN_COUNT)))
             );
             if (page.isEmpty()) break;
             cursor = page.getFirst();

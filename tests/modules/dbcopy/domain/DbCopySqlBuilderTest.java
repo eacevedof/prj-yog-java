@@ -92,19 +92,20 @@ final class DbCopySqlBuilderTest extends AbstractTestCase {
         bulkBuffer.add("(3, 'cccc')");
         assertEquals(
             List.of("INSERT INTO `t` VALUES (1, 'aaaa'), (2, 'bbbb')", "INSERT INTO `t` VALUES (3, 'cccc')"),
-            bulkBuffer.takeAllStatements()
+            bulkBuffer.getStatements()
         );
-        assertEquals(List.of(), bulkBuffer.takeAllStatements());
+        // leerlas no cambia el buffer
+        assertEquals(2, bulkBuffer.getStatements().size());
 
         // una fila mayor que el tope va sola
         BulkInsertBuffer tinyBuffer = BulkInsertBuffer.getBulkInstance("INSERT INTO `t` VALUES ", 10);
         tinyBuffer.add("(1, 'aaaa')");
         tinyBuffer.add("(2, 'bbbb')");
-        assertEquals(List.of("INSERT INTO `t` VALUES (1, 'aaaa')", "INSERT INTO `t` VALUES (2, 'bbbb')"), tinyBuffer.takeAllStatements());
+        assertEquals(List.of("INSERT INTO `t` VALUES (1, 'aaaa')", "INSERT INTO `t` VALUES (2, 'bbbb')"), tinyBuffer.getStatements());
 
         BulkInsertBuffer rowByRowBuffer = BulkInsertBuffer.getRowByRowInstance("INSERT INTO `t` VALUES ");
         rowByRowBuffer.add("(1, 'aaaa')");
         rowByRowBuffer.add("(2, 'bbbb')");
-        assertEquals(List.of("INSERT INTO `t` VALUES (1, 'aaaa')", "INSERT INTO `t` VALUES (2, 'bbbb')"), rowByRowBuffer.takeAllStatements());
+        assertEquals(List.of("INSERT INTO `t` VALUES (1, 'aaaa')", "INSERT INTO `t` VALUES (2, 'bbbb')"), rowByRowBuffer.getStatements());
     }
 }

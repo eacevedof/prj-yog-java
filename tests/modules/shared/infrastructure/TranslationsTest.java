@@ -64,6 +64,16 @@ final class TranslationsTest extends AbstractTestCase {
     }
 
     @Test
+    void testPlaceholdersAreReplacedInOnePass() {
+        // un argumento con "{1}" no lo pisa el siguiente; "$" y "\" van tal cual; un {n} sin argumento se queda
+        assertEquals("a {1} - b", __("{0} - {1}", "a {1}", "b"));
+        assertEquals("$1 \\x", __("{0} {1}", "$1", "\\x"));
+        assertEquals("b a b", __("{1} {0} {1}", "a", "b"));
+        assertEquals("a {2}", __("{0} {2}", "a", "b"));
+        assertEquals("{0} sin args", __("{0} sin args"));
+    }
+
+    @Test
     void testEveryPoEntryKeepsItsPlaceholders() throws IOException {
         List<String> broken = new ArrayList<>();
         try (Stream<Path> poFiles = Files.walk(Path.of("src/modules"))) {

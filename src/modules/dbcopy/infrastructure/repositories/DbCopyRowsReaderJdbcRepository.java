@@ -15,7 +15,7 @@ import modules.shared.infrastructure.repositories.AbstractJdbcRepository;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelResult;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelSession;
 
-import modules.dbcopy.domain.services.DbCopySqlBuilder;
+import modules.dbcopy.domain.enums.DbCopyConfigEnum;
 
 /**
  * Copia entre motores: las filas del origen (cualquier motor SQL) por paginas, sobre una sesion propia. Cada celda
@@ -43,9 +43,9 @@ public final class DbCopyRowsReaderJdbcRepository extends AbstractJdbcRepository
      */
     public void prepareSession() throws SQLException {
         if (!isMysql || httpTunnelSession != null) return;
-        SqlTraceComponent.getInstance().addSql(DbCopySqlBuilder.SOURCE_SESSION_SQL);
+        SqlTraceComponent.getInstance().addSql(DbCopyConfigEnum.SOURCE_SESSION_SQL);
         try (Statement statement = pdo.createStatement()) {
-            statement.execute(DbCopySqlBuilder.SOURCE_SESSION_SQL);
+            statement.execute(DbCopyConfigEnum.SOURCE_SESSION_SQL);
         }
     }
 
@@ -57,9 +57,9 @@ public final class DbCopyRowsReaderJdbcRepository extends AbstractJdbcRepository
         sqlTraceComponent.addSql(selectSql);
         List<List<Object>> rows = new ArrayList<>();
         if (httpTunnelSession != null) {
-            List<String> batch = isMysql ? List.of(DbCopySqlBuilder.SOURCE_SESSION_SQL, selectSql) : List.of(selectSql);
+            List<String> batch = isMysql ? List.of(DbCopyConfigEnum.SOURCE_SESSION_SQL, selectSql) : List.of(selectSql);
             HttpTunnelResult httpTunnelResult = httpTunnelSession.executeBatch(batch);
-            for (List<byte[]> tunnelRow : httpTunnelResult.rows()) {
+            for (List<byte[]> tunnelRow : httpTunnelResult.getRows()) {
                 List<Object> row = new ArrayList<>(binaryColumns.length);
                 for (int i = 0; i < binaryColumns.length; i++) {
                     byte[] cell = tunnelRow.get(i);

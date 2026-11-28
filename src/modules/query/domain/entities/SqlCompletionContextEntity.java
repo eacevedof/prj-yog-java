@@ -2,6 +2,10 @@ package modules.query.domain.entities;
 
 import java.util.Map;
 
+import static modules.shared.application.Primitives.getBool;
+import static modules.shared.application.Primitives.getInt;
+import static modules.shared.application.Primitives.getTrimmedString;
+
 /**
  * Donde esta el cursor para el autocompletado: lo que se esta escribiendo (prefix), lo que va antes del punto si lo hay
  * (qualifier: alias, tabla o BD), las tablas que nombra la sentencia (alias en minusculas => [bd, tabla]) y si lo
@@ -15,16 +19,19 @@ public final class SqlCompletionContextEntity {
     private final Map<String, String[]> tablesByAlias;
     private final boolean isTableExpected;
 
-    private SqlCompletionContextEntity(String prefix, int rawPrefixLength, String qualifier, Map<String, String[]> tablesByAlias, boolean isTableExpected) {
-        this.prefix = prefix;
-        this.rawPrefixLength = rawPrefixLength;
-        this.qualifier = qualifier;
-        this.tablesByAlias = Map.copyOf(tablesByAlias);
-        this.isTableExpected = isTableExpected;
+    @SuppressWarnings("unchecked")
+    private SqlCompletionContextEntity(Map<String, Object> primitives) {
+        this.prefix = getTrimmedString(primitives.get("prefix"));
+        this.rawPrefixLength = getInt(primitives.get("rawPrefixLength"));
+        this.qualifier = getTrimmedString(primitives.get("qualifier"));
+        this.tablesByAlias = primitives.get("tablesByAlias") instanceof Map<?, ?> map
+            ? Map.copyOf((Map<String, String[]>) map)
+            : Map.of();
+        this.isTableExpected = getBool(primitives.get("isTableExpected"));
     }
 
-    public static SqlCompletionContextEntity of(String prefix, int rawPrefixLength, String qualifier, Map<String, String[]> tablesByAlias, boolean isTableExpected) {
-        return new SqlCompletionContextEntity(prefix, rawPrefixLength, qualifier, tablesByAlias, isTableExpected);
+    public static SqlCompletionContextEntity fromPrimitives(Map<String, Object> primitives) {
+        return new SqlCompletionContextEntity(primitives);
     }
 
     public String getPrefix() {

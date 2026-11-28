@@ -273,7 +273,7 @@ public final class TableDataTabController extends AbstractFxController {
         for (List<String> row : (List<List<String>>) result.get(QueryKeyEnum.ROWS)) {
             rows.add(new ArrayList<>(row));
         }
-        resultGridPane = new ResultGridPane(columnNames, rows, gridSearchText, hiddenColumnNames);
+        resultGridPane = ResultGridPane.getInstance(columnNames, rows, gridSearchText, hiddenColumnNames);
         resultGridPane.setOnSearchChanged(searchText -> gridSearchText = searchText);
         resultGridPane.setOnSaveRequested(this::onSave);
         resultGridPane.setOnDiscardRequested(this::onDiscard);
@@ -289,7 +289,8 @@ public final class TableDataTabController extends AbstractFxController {
         statusLabel.setText(__("{0} fila(s)", rows.size()) + truncatedText + " · " + executeQueryResultDto.getElapsedMs() + " ms");
 
         tableGridEditController = TableGridEditController.getInstance(connectionUuid, sessionKey, databaseName, tableName);
-        String readOnlyReason = tableGridEditController.enableEditing(resultGridPane, columnNames, loadedData.tableColumns(), this::updateEditStatus);
+        tableGridEditController.enableEditing(resultGridPane, columnNames, loadedData.tableColumns(), this::updateEditStatus);
+        String readOnlyReason = tableGridEditController.getReadOnlyReason();
         gridContainer.getChildren().setAll(resultGridPane);
         if (readOnlyReason != null) {
             tableGridEditController = null;

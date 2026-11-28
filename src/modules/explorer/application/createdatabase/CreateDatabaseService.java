@@ -64,7 +64,7 @@ public final class CreateDatabaseService {
         long startNanos = System.nanoTime();
         boolean hasError = true;
         try {
-            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSessionPdo(createDatabaseDto.getConnectionUuid(), createDatabaseDto.getSessionKey()))
+            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSession(createDatabaseDto.getConnectionUuid(), createDatabaseDto.getSessionKey()))
                 .executeStatements(List.of(createSql));
             hasError = false;
         }

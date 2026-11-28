@@ -30,6 +30,7 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import modules.shared.domain.enums.ExceptionEnum;
+import modules.shared.domain.enums.SessionKeyEnum;
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.icons.AppIconEnum;
@@ -45,7 +46,6 @@ import static core.config.Global.__;
 
 import modules.connections.infrastructure.factories.TargetSessionFactory;
 
-import modules.query.domain.enums.QueryConfigEnum;
 import modules.query.domain.enums.QueryKeyEnum;
 import modules.query.domain.entities.SelectSourceTableEntity;
 import modules.query.domain.entities.SqlStatementEntity;
@@ -128,7 +128,7 @@ public final class QueryTabController extends AbstractFxController {
         sqlCodeArea.addEventFilter(KeyEvent.KEY_PRESSED, this::onEditorKeyPressed);
         installDropFromTree();
         editorContainer.getChildren().add(new VirtualizedScrollPane<>(sqlCodeArea));
-        new CompletionPopupComponent(sqlCodeArea, () -> schemaCache, () -> activeDatabaseSupplier.get(), () -> dbEngine).install();
+        CompletionPopupComponent.getInstance(sqlCodeArea, () -> schemaCache, () -> activeDatabaseSupplier.get(), () -> dbEngine).install();
         historyTab.selectedProperty().addListener((observable, wasSelected, isSelected) -> {
             if (isSelected) queryHistoryController.refresh();
         });
@@ -532,7 +532,7 @@ public final class QueryTabController extends AbstractFxController {
         for (List<String> row : rows) {
             gridRows.add(new ArrayList<>(row));
         }
-        ResultGridPane resultGridPane = new ResultGridPane(columnNames, gridRows, gridSearchText, hiddenColumnNames);
+        ResultGridPane resultGridPane = ResultGridPane.getInstance(columnNames, gridRows, gridSearchText, hiddenColumnNames);
         resultGridPane.setOnSearchChanged(searchText -> gridSearchText = searchText);
         resultGridPane.setOnHiddenColumnsChanged(this::updateHiddenColumnNames);
         resultGridPane.setDefaultSupported(!SqlDialect.SQLITE.equals(dbEngine));
@@ -544,7 +544,7 @@ public final class QueryTabController extends AbstractFxController {
             String databaseName = selectSourceTableEntity.getDatabaseName();
             if (databaseName.isEmpty()) databaseName = getTrimmedString(currentDatabase);
             if (databaseName.isEmpty()) databaseName = getTrimmedString(activeDatabaseSupplier.get());
-            String editSessionKey = sessionKey + TargetSessionFactory.SESSION_KEY_SEPARATOR + QueryConfigEnum.EDIT_SESSION_SUFFIX;
+            String editSessionKey = sessionKey + SessionKeyEnum.SEPARATOR + SessionKeyEnum.EDIT;
             editableResultController.enableEditingFor(connectionUuid, editSessionKey, databaseName, selectSourceTableEntity.getTableName(), columnNames);
         }
 

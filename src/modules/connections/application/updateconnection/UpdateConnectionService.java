@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import modules.shared.domain.enums.SharedMessageEnum;
+import modules.shared.domain.services.ErrorStackFormatter;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.date.DateTimer;
-import modules.shared.infrastructure.traits.ErrorStackTrait;
 import modules.shared.infrastructure.exceptions.FieldsException;
 import static modules.shared.application.Primitives.getBool;
 
@@ -15,6 +15,7 @@ import static core.config.Global.__;
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.domain.enums.ConnectionsMessageEnum;
 import modules.connections.domain.enums.DbEngineEnum;
+import modules.connections.domain.enums.TunnelFormKeyEnum;
 import modules.connections.domain.entities.ConnectionEntity;
 import modules.connections.domain.services.ConnectionFieldsValidator;
 import modules.connections.application.TunnelFormPrimitives;
@@ -69,7 +70,7 @@ public final class UpdateConnectionService {
             ConnectionsKeyEnum.COLOR_HEX, updateConnectionDto.getColorHex(),
             ConnectionsKeyEnum.IS_PRODUCTION, updateConnectionDto.isProduction(),
             ConnectionsKeyEnum.UPDATED_AT, DateTimer.getInstance().getNowDt()
-        ), TunnelFormPrimitives.getEntityPrimitives(updateConnectionDto.getTunnelForm(), savedConnectionEntity)));
+        ), TunnelFormPrimitives.getInstance().getEntityPrimitives(updateConnectionDto.getTunnelForm(), savedConnectionEntity)));
 
         failIfWrongFields();
         failIfNameExists();
@@ -92,8 +93,8 @@ public final class UpdateConnectionService {
         connectionsWriterSqliteRepository.updateConnectionAndChangedSecretsById(
             connectionEntity,
             updateConnectionDto.isPasswordChanged(),
-            getBool(tunnelForm.get("isSshSecretsChanged")),
-            getBool(tunnelForm.get("isHttpUrlChanged"))
+            getBool(tunnelForm.get(TunnelFormKeyEnum.IS_SSH_SECRETS_CHANGED)),
+            getBool(tunnelForm.get(TunnelFormKeyEnum.IS_HTTP_URL_CHANGED))
         );
     }
 
@@ -119,7 +120,7 @@ public final class UpdateConnectionService {
         List<String> errors = ConnectionFieldsValidator.getInstance().getErrors(connectionEntity);
         if (!errors.isEmpty()) {
             throw FieldsException.badRequestCustom(
-                ErrorStackTrait.getInstance().getErrorStackMessage(__(SharedMessageEnum.FIELDS_VALIDATION_ERRORS), errors),
+                ErrorStackFormatter.getInstance().getErrorStackMessage(__(SharedMessageEnum.FIELDS_VALIDATION_ERRORS), errors),
                 errors
             );
         }

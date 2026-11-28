@@ -16,6 +16,7 @@ import modules.shared.application.Primitives;
 
 import static core.config.Global.__;
 
+import modules.mongo.domain.enums.MongoKeyEnum;
 import modules.mongo.domain.enums.MongoMessageEnum;
 import modules.mongo.infrastructure.components.MongoDocumentFormatter;
 import modules.mongo.infrastructure.factories.MongoRepositoryFactory;
@@ -64,8 +65,8 @@ public final class FindMongoDocumentsService {
             }
             Map<String, Object> documentsTable = mongoDocumentFormatter.getTable(documents);
             return FindMongoDocumentsResultDto.fromPrimitives(Primitives.of(
-                "columns", documentsTable.get("columns"),
-                "rows", documentsTable.get("rows"),
+                MongoKeyEnum.COLUMNS, documentsTable.get(MongoKeyEnum.COLUMNS),
+                MongoKeyEnum.ROWS, documentsTable.get(MongoKeyEnum.ROWS),
                 "documentsJson", documents.stream().map(mongoDocumentFormatter::getPrettyJson).toList(),
                 "totalCount", totalCount,
                 "elapsedMs", elapsedMs

@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import modules.mongo.domain.enums.MongoShellCommandTypeEnum;
 import modules.mongo.domain.entities.MongoShellCommandEntity;
 
 /**
@@ -44,17 +45,17 @@ public final class MongoShellParser {
 
         String lowerLine = line.toLowerCase(Locale.ROOT).replaceAll("\\s+", " ");
         if (lowerLine.equals("show dbs") || lowerLine.equals("show databases")) {
-            return new MongoShellCommandEntity(MongoShellCommandEntity.SHOW_DATABASES, "", "", List.of(), List.of());
+            return new MongoShellCommandEntity(MongoShellCommandTypeEnum.SHOW_DATABASES, "", "", List.of(), List.of());
         }
         if (lowerLine.equals("show collections") || lowerLine.equals("show tables")) {
-            return new MongoShellCommandEntity(MongoShellCommandEntity.SHOW_COLLECTIONS, "", "", List.of(), List.of());
+            return new MongoShellCommandEntity(MongoShellCommandTypeEnum.SHOW_COLLECTIONS, "", "", List.of(), List.of());
         }
         Matcher useMatcher = USE_PATTERN.matcher(line);
         if (useMatcher.matches()) {
-            return new MongoShellCommandEntity(MongoShellCommandEntity.USE, useMatcher.group(1), "", List.of(), List.of());
+            return new MongoShellCommandEntity(MongoShellCommandTypeEnum.USE, useMatcher.group(1), "", List.of(), List.of());
         }
         if (line.startsWith("{")) {
-            return new MongoShellCommandEntity(MongoShellCommandEntity.RUN_COMMAND, "", "", List.of(line), List.of());
+            return new MongoShellCommandEntity(MongoShellCommandTypeEnum.RUN_COMMAND, "", "", List.of(line), List.of());
         }
 
         Matcher dbMethodMatcher = DB_METHOD_PATTERN.matcher(line);
@@ -63,10 +64,10 @@ public final class MongoShellParser {
             failIfTrailing(line, argumentsEnd);
             List<String> arguments = getArguments(line.substring(dbMethodMatcher.end(), argumentsEnd));
             if ("dropDatabase".equals(dbMethodMatcher.group(1))) {
-                return new MongoShellCommandEntity(MongoShellCommandEntity.DROP_DATABASE, "", "", List.of(), List.of());
+                return new MongoShellCommandEntity(MongoShellCommandTypeEnum.DROP_DATABASE, "", "", List.of(), List.of());
             }
             if (arguments.size() != 1) throw new IllegalArgumentException("runCommand expects one document");
-            return new MongoShellCommandEntity(MongoShellCommandEntity.RUN_COMMAND, dbMethodMatcher.group(1), "", arguments, List.of());
+            return new MongoShellCommandEntity(MongoShellCommandTypeEnum.RUN_COMMAND, dbMethodMatcher.group(1), "", arguments, List.of());
         }
 
         String collectionName;
@@ -90,7 +91,7 @@ public final class MongoShellParser {
         int argumentsEnd = getClosingParenthesis(line, argumentsStart - 1);
         List<String> arguments = getArguments(line.substring(argumentsStart, argumentsEnd));
         List<List<String>> modifiers = getModifiers(line, argumentsEnd + 1);
-        return new MongoShellCommandEntity(MongoShellCommandEntity.COLLECTION_METHOD, collectionName, method, arguments, modifiers);
+        return new MongoShellCommandEntity(MongoShellCommandTypeEnum.COLLECTION_METHOD, collectionName, method, arguments, modifiers);
     }
 
     /**

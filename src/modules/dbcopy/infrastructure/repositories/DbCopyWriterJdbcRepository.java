@@ -12,7 +12,6 @@ import modules.shared.infrastructure.repositories.AbstractJdbcRepository;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelSession;
 
 import modules.dbcopy.domain.enums.DbCopyConfigEnum;
-import modules.dbcopy.domain.services.DbCopySqlBuilder;
 
 /**
  * Copia entre motores: las escrituras en el destino (cualquier motor SQL) sobre una sesion propia. El SQL lo compone
@@ -44,7 +43,7 @@ public final class DbCopyWriterJdbcRepository extends AbstractJdbcRepository {
     public void prepareSession() throws SQLException {
         if (!isMysql || httpTunnelSession != null) return;
         try (Statement statement = pdo.createStatement()) {
-            for (String sessionSql : DbCopySqlBuilder.TARGET_SESSION_SQLS) {
+            for (String sessionSql : DbCopyConfigEnum.TARGET_SESSION_SQLS) {
                 statement.execute(sessionSql);
             }
         }
@@ -76,7 +75,7 @@ public final class DbCopyWriterJdbcRepository extends AbstractJdbcRepository {
     public void executeInserts(List<String> sessionSqls, List<String> statements) throws SQLException {
         if (statements.isEmpty()) return;
         if (httpTunnelSession != null) {
-            List<String> script = new ArrayList<>(isMysql ? DbCopySqlBuilder.TARGET_SESSION_SQLS : List.of());
+            List<String> script = new ArrayList<>(isMysql ? DbCopyConfigEnum.TARGET_SESSION_SQLS : List.of());
             script.addAll(sessionSqls);
             script.addAll(statements);
             httpTunnelSession.executeBatch(script);

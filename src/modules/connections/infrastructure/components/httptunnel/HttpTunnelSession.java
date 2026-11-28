@@ -5,10 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.math.BigDecimal;
-import java.nio.ByteBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.CodingErrorAction;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,14 +52,17 @@ public final class HttpTunnelSession {
         this.currentDatabase = database.isEmpty() && sqlDialect.isPgsql() ? DbEngineEnum.PGSQL_DEFAULT_DATABASE : database;
     }
 
+    public static HttpTunnelSession getInstance(HttpTunnelClient httpTunnelClient, String dbEngine, String initialDatabase) {
+        return new HttpTunnelSession(httpTunnelClient, dbEngine, initialDatabase);
+    }
+
     /**
      * La sesion como java.sql.Connection. unwrap(HttpTunnelSession.class) devuelve esta sesion. En PostgreSQL y SQLite
      * la BD que viaja en cada peticion es siempre la de la conexion: alli USE y el cambio de esquema no se recuerdan
      * (el tunel no guarda search_path entre peticiones), y el esquema activo es el de por defecto (public).
      */
-    public static Connection getConnection(HttpTunnelClient httpTunnelClient, String dbEngine, String initialDatabase) {
-        HttpTunnelSession httpTunnelSession = new HttpTunnelSession(httpTunnelClient, dbEngine, initialDatabase);
-        return getProxy(Connection.class, httpTunnelSession.new ConnectionHandler());
+    public Connection getConnection() {
+        return getProxy(Connection.class, new ConnectionHandler());
     }
 
     public String getCurrentDatabase() {
@@ -112,7 +111,7 @@ public final class HttpTunnelSession {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T getProxy(Class<T> jdbcInterface, Object handler) {
+    private <T> T getProxy(Class<T> jdbcInterface, Object handler) {
         return (T) Proxy.newProxyInstance(
             HttpTunnelSession.class.getClassLoader(),
             new Class<?>[]{jdbcInterface},
@@ -268,7 +267,7 @@ public final class HttpTunnelSession {
 
         public int executeUpdate(String sql) throws SQLException {
             run(sql);
-            return results.isEmpty() ? 0 : (int) results.getFirst().affectedRows();
+            return results.isEmpty() ? 0 : (int) results.getFirst().getAffectedRows();
         }
 
         public int executeUpdate() throws SQLException {
@@ -282,7 +281,7 @@ public final class HttpTunnelSession {
 
         public int getUpdateCount() {
             if (resultIndex >= results.size() || results.get(resultIndex).hasResultSet()) return -1;
-            return (int) results.get(resultIndex).affectedRows();
+            return (int) results.get(resultIndex).getAffectedRows();
         }
 
         public boolean getMoreResults() {
@@ -384,7 +383,7 @@ public final class HttpTunnelSession {
         }
     }
 
-    public static final class ResultSetHandler {
+    public final class ResultSetHandler {
 
         private final HttpTunnelResult result;
         private final List<List<byte[]>> rows;
@@ -392,13 +391,15 @@ public final class HttpTunnelSession {
         private int rowIndex = -1;
         private boolean wasNull;
         private boolean isResultSetClosed;
+        private final HttpTunnelCellDecoder httpTunnelCellDecoder;
 
         ResultSetHandler(HttpTunnelResult result, int maxRows) {
+            this.httpTunnelCellDecoder = HttpTunnelCellDecoder.getInstance();
             this.result = result;
-            this.rows = maxRows > 0 && result.rows().size() > maxRows ? result.rows().subList(0, maxRows) : result.rows();
-            this.sqlTypes = new int[result.columnNames().size()];
+            this.rows = maxRows > 0 && result.getRows().size() > maxRows ? result.getRows().subList(0, maxRows) : result.getRows();
+            this.sqlTypes = new int[result.getColumnNames().size()];
             for (int i = 0; i < sqlTypes.length; i++) {
-                sqlTypes[i] = getSqlType(result.columnTypes().get(i), i);
+                sqlTypes[i] = getSqlType(result.getColumnTypes().get(i), i);
             }
         }
 
@@ -412,7 +413,7 @@ public final class HttpTunnelSession {
         }
 
         public String getString(int columnIndex) throws SQLException {
-            return HttpTunnelResult.getText(getCell(columnIndex));
+            return httpTunnelCellDecoder.getText(getCell(columnIndex));
         }
 
         public String getString(String columnLabel) throws SQLException {
@@ -435,7 +436,7 @@ public final class HttpTunnelSession {
             if (cell == null) return null;
             int sqlType = sqlTypes[columnIndex - 1];
             if (sqlType == Types.BINARY || sqlType == Types.VARBINARY || sqlType == Types.LONGVARBINARY) return cell;
-            String text = HttpTunnelResult.getText(cell);
+            String text = httpTunnelCellDecoder.getText(cell);
             if (sqlType == Types.TINYINT || sqlType == Types.SMALLINT || sqlType == Types.INTEGER || sqlType == Types.BIGINT) {
                 try {
                     return Long.parseLong(text);
@@ -457,7 +458,7 @@ public final class HttpTunnelSession {
         public long getLong(int columnIndex) throws SQLException {
             byte[] cell = getCell(columnIndex);
             if (cell == null) return 0;
-            String text = HttpTunnelResult.getText(cell).trim();
+            String text = httpTunnelCellDecoder.getText(cell).trim();
             try {
                 return new BigDecimal(text).longValue();
             }
@@ -490,8 +491,8 @@ public final class HttpTunnelSession {
         }
 
         public int findColumn(String columnLabel) throws SQLException {
-            for (int i = 0; i < result.columnNames().size(); i++) {
-                if (result.columnNames().get(i).equalsIgnoreCase(columnLabel)) return i + 1;
+            for (int i = 0; i < result.getColumnNames().size(); i++) {
+                if (result.getColumnNames().get(i).equalsIgnoreCase(columnLabel)) return i + 1;
             }
             throw new SQLException("column not found: " + columnLabel);
         }
@@ -550,22 +551,9 @@ public final class HttpTunnelSession {
         private boolean isUtf8Column(int columnIndex) {
             for (List<byte[]> row : rows) {
                 byte[] cell = columnIndex < row.size() ? row.get(columnIndex) : null;
-                if (cell != null && !isUtf8(cell)) return false;
+                if (cell != null && !httpTunnelCellDecoder.isUtf8(cell)) return false;
             }
             return true;
-        }
-
-        private static boolean isUtf8(byte[] bytes) {
-            try {
-                StandardCharsets.UTF_8.newDecoder()
-                    .onMalformedInput(CodingErrorAction.REPORT)
-                    .onUnmappableCharacter(CodingErrorAction.REPORT)
-                    .decode(ByteBuffer.wrap(bytes));
-                return true;
-            }
-            catch (CharacterCodingException e) {
-                return false;
-            }
         }
     }
 
@@ -584,7 +572,7 @@ public final class HttpTunnelSession {
         }
 
         public String getColumnLabel(int columnIndex) {
-            return result.columnNames().get(columnIndex - 1);
+            return result.getColumnNames().get(columnIndex - 1);
         }
 
         public String getColumnName(int columnIndex) {
@@ -596,7 +584,7 @@ public final class HttpTunnelSession {
         }
 
         public String getColumnTypeName(int columnIndex) {
-            return result.columnTypes().get(columnIndex - 1).toUpperCase(Locale.ROOT);
+            return result.getColumnTypes().get(columnIndex - 1).toUpperCase(Locale.ROOT);
         }
 
         public int isNullable(int columnIndex) {

@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import modules.shared.domain.enums.SessionKeyEnum;
 import modules.shared.domain.enums.SharedConfigEnum;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.date.DateTimer;
@@ -91,12 +92,12 @@ public final class ExportSqlDumpService {
         long startNanos = System.nanoTime();
         String nowDt = DateTimer.getInstance().getNowDt();
         Path filePath = getFilePath(nowDt);
-        String sessionKeyPrefix = UuidGenerator.getInstance().getUniqueIdWithPrefix(DbCopyConfigEnum.SESSION_PREFIX + "dump-");
+        String sessionKeyPrefix = UuidGenerator.getInstance().getUniqueIdWithPrefix(DbCopyConfigEnum.DUMP_SESSION_PREFIX);
         List<Map<String, Object>> objectResults = new ArrayList<>();
         boolean isCancelled = false;
         try {
-            dbCopyReaderMysqlRepository = DbCopyReaderMysqlRepository.getInstance(targetSessionFactory.getSessionPdo(
-                connectionEntity.getConnectionUuid(), sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "source"
+            dbCopyReaderMysqlRepository = DbCopyReaderMysqlRepository.getInstance(targetSessionFactory.getSession(
+                connectionEntity.getConnectionUuid(), sessionKeyPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.SOURCE
             ));
             String databaseName = exportSqlDumpDto.getDatabaseName();
             dbCopyReaderMysqlRepository.prepareSession(databaseName);
@@ -113,7 +114,7 @@ public final class ExportSqlDumpService {
                     Map<String, Object> charset = dbCopyReaderMysqlRepository.getDatabaseCharset(databaseName);
                     dumpFile.write(dbCopySqlBuilder.getCreateDatabaseSql(
                         databaseName, getTrimmedString(charset.get(DbCopyKeyEnum.CHARACTER_SET)), getTrimmedString(charset.get(DbCopyKeyEnum.COLLATION))
-                    ) + ";" + SqlDumpScriptBuilder.NEW_LINE);
+                    ) + ";" + DbCopyConfigEnum.NEW_LINE);
                 }
                 if (exportSqlDumpDto.isUseIncluded() || exportSqlDumpDto.isCreateDatabaseIncluded()) dumpFile.write(sqlDumpScriptBuilder.getUseSql(databaseName));
                 for (int i = 0; i < dumpItems.size(); i++) {
@@ -278,7 +279,7 @@ public final class ExportSqlDumpService {
                 sqlDumpFileComponent.write(sqlDumpScriptBuilder.getSectionComment(getSectionLabel(objectType), objectName));
                 String createSql = getCreateSqlOrFail(dumpItem);
                 if (exportSqlDumpDto.isDropIncluded()) {
-                    sqlDumpFileComponent.write(dbCopySqlBuilder.getDropSql(objectType, objectName) + ";" + SqlDumpScriptBuilder.NEW_LINE);
+                    sqlDumpFileComponent.write(dbCopySqlBuilder.getDropSql(objectType, objectName) + ";" + DbCopyConfigEnum.NEW_LINE);
                 }
                 else if (isTable) {
                     createSql = dbCopySqlBuilder.getCreateTableIfNotExists(createSql);
@@ -363,7 +364,7 @@ public final class ExportSqlDumpService {
                 ? BulkInsertBuffer.getBulkInstance(insertPrefix, DbCopyConfigEnum.JDBC_MAX_STATEMENT_CHARS)
                 : BulkInsertBuffer.getRowByRowInstance(insertPrefix);
             for (List<Object> row : rows) bulkInsertBuffer.add(dbCopySqlBuilder.getRowTuple(row));
-            for (String insertSql : bulkInsertBuffer.takeAllStatements()) sqlDumpFileComponent.write(insertSql + ";" + SqlDumpScriptBuilder.NEW_LINE);
+            for (String insertSql : bulkInsertBuffer.getStatements()) sqlDumpFileComponent.write(insertSql + ";" + DbCopyConfigEnum.NEW_LINE);
             dumpedRows += rows.size();
             dbCopyProgressTracker.notifyRowsCopied(exportSqlDumpDto.getDumpId(), tableName, dumpedRows, estimatedRows);
             if (rows.size() < DbCopyConfigEnum.PAGE_ROWS) return DumpOutcome.ok(dumpedRows);

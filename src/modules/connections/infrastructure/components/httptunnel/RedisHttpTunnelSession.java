@@ -1,8 +1,5 @@
 package modules.connections.infrastructure.components.httptunnel;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,10 +13,12 @@ import java.util.List;
 public final class RedisHttpTunnelSession {
 
     private final HttpTunnelClient httpTunnelClient;
+    private final HttpTunnelCellDecoder httpTunnelCellDecoder;
     private volatile String currentDatabase;
 
     private RedisHttpTunnelSession(HttpTunnelClient httpTunnelClient, String initialDatabase) {
         this.httpTunnelClient = httpTunnelClient;
+        this.httpTunnelCellDecoder = HttpTunnelCellDecoder.getInstance();
         this.currentDatabase = initialDatabase == null || initialDatabase.isBlank() ? "0" : initialDatabase.trim();
     }
 
@@ -65,7 +64,7 @@ public final class RedisHttpTunnelSession {
      * La linea de redis-cli: cada argumento entre comillas dobles con \" \\ \n \r \t y \xHH (lo que no es UTF-8 o es
      * un control); asi un argumento con espacios, comillas o bytes binarios llega igual.
      */
-    public static String getCommandLine(List<byte[]> arguments) {
+    private String getCommandLine(List<byte[]> arguments) {
         StringBuilder line = new StringBuilder();
         for (byte[] argument : arguments) {
             if (!line.isEmpty()) line.append(' ');
@@ -74,8 +73,8 @@ public final class RedisHttpTunnelSession {
         return line.toString();
     }
 
-    private static String getQuoted(byte[] argument) {
-        boolean isUtf8 = isUtf8(argument);
+    private String getQuoted(byte[] argument) {
+        boolean isUtf8 = httpTunnelCellDecoder.isUtf8(argument);
         StringBuilder quoted = new StringBuilder("\"");
         for (byte value : argument) {
             int unsigned = value & 0xFF;
@@ -94,18 +93,5 @@ public final class RedisHttpTunnelSession {
         // los bytes UTF-8 se han puesto uno a uno como char: se recomponen en su texto
         String quotedLatin = quoted.append('"').toString();
         return isUtf8 ? new String(quotedLatin.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8) : quotedLatin;
-    }
-
-    private static boolean isUtf8(byte[] bytes) {
-        try {
-            StandardCharsets.UTF_8.newDecoder()
-                .onMalformedInput(CodingErrorAction.REPORT)
-                .onUnmappableCharacter(CodingErrorAction.REPORT)
-                .decode(ByteBuffer.wrap(bytes));
-            return true;
-        }
-        catch (CharacterCodingException e) {
-            return false;
-        }
     }
 }

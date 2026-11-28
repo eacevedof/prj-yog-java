@@ -15,6 +15,7 @@ public final class SqlScriptChunker {
     private final SqlStatementSplitter sqlStatementSplitter;
     private final StringBuilder pendingText = new StringBuilder();
     private String delimiter = ";";
+    private List<SqlStatementEntity> completeStatements = List.of();
 
     private SqlScriptChunker(String dbEngine) {
         this.sqlStatementSplitter = SqlStatementSplitter.getInstance(dbEngine);
@@ -25,25 +26,34 @@ public final class SqlScriptChunker {
     }
 
     /**
-     * Las sentencias completas con lo leido hasta ahora (todas menos la ultima, que puede no haber acabado).
+     * Junta la parte con lo pendiente y deja en getCompleteStatements las sentencias ya completas (todas menos la
+     * ultima, que puede no haber acabado).
      */
-    public List<SqlStatementEntity> addChunk(String chunk) {
+    public void addChunk(String chunk) {
         pendingText.append(chunk);
         List<SqlStatementEntity> statements = sqlStatementSplitter.getStatements(pendingText.toString(), delimiter);
-        if (statements.size() < 2) return List.of();
-        List<SqlStatementEntity> completeStatements = List.copyOf(statements.subList(0, statements.size() - 1));
+        if (statements.size() < 2) {
+            completeStatements = List.of();
+            return;
+        }
+        completeStatements = List.copyOf(statements.subList(0, statements.size() - 1));
         SqlStatementEntity lastComplete = completeStatements.getLast();
         delimiter = lastComplete.getDelimiter();
         pendingText.delete(0, lastComplete.getEndIndex());
-        return completeStatements;
     }
 
     /**
-     * Al acabar el fichero: lo que queda, sea como sea su final.
+     * Al acabar el fichero: deja en getCompleteStatements lo que queda, sea como sea su final.
      */
-    public List<SqlStatementEntity> finish() {
-        List<SqlStatementEntity> statements = sqlStatementSplitter.getStatements(pendingText.toString(), delimiter);
+    public void finish() {
+        completeStatements = sqlStatementSplitter.getStatements(pendingText.toString(), delimiter);
         pendingText.setLength(0);
-        return statements;
+    }
+
+    /**
+     * Las sentencias que completo el ultimo addChunk o finish.
+     */
+    public List<SqlStatementEntity> getCompleteStatements() {
+        return completeStatements;
     }
 }

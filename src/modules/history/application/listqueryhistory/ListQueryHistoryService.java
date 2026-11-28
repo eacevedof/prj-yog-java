@@ -2,7 +2,7 @@ package modules.history.application.listqueryhistory;
 
 import modules.shared.application.Primitives;
 
-import modules.history.domain.enums.QueryHistoryKeyEnum;
+import modules.history.domain.enums.QueryHistoryConfigEnum;
 import modules.history.infrastructure.repositories.QueryHistoryReaderSqliteRepository;
 
 /**
@@ -11,7 +11,7 @@ import modules.history.infrastructure.repositories.QueryHistoryReaderSqliteRepos
 public final class ListQueryHistoryService {
 
     // sin limite pedido, todo lo que guarda el historial: asi ordenar por id ascendente llega a lo mas antiguo
-    private static final int DEFAULT_LIMIT = QueryHistoryKeyEnum.MAX_HISTORY_ROWS;
+    private static final int DEFAULT_LIMIT = QueryHistoryConfigEnum.MAX_HISTORY_ROWS;
 
     private ListQueryHistoryService() {
     }

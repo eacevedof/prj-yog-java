@@ -6,6 +6,7 @@ import java.util.List;
 import modules.shared.domain.enums.SharedConfigEnum;
 import modules.shared.domain.services.SqlIdentifierQuoter;
 
+import modules.dbcopy.domain.enums.DbCopyConfigEnum;
 import modules.dbcopy.domain.enums.DbCopyObjectTypeEnum;
 
 /**
@@ -15,7 +16,6 @@ import modules.dbcopy.domain.enums.DbCopyObjectTypeEnum;
  */
 public final class SqlDumpScriptBuilder {
 
-    public static final String NEW_LINE = "\n";
     private static final String ROUTINE_DELIMITER = ";;";
 
     private final SqlIdentifierQuoter sqlIdentifierQuoter = SqlIdentifierQuoter.getInstance();
@@ -49,7 +49,7 @@ public final class SqlDumpScriptBuilder {
             "/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;"
         ));
         if (isForeignKeyChecksOff) lines.add("/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;");
-        return String.join(NEW_LINE, lines) + NEW_LINE + NEW_LINE;
+        return String.join(DbCopyConfigEnum.NEW_LINE, lines) + DbCopyConfigEnum.NEW_LINE + DbCopyConfigEnum.NEW_LINE;
     }
 
     public String getFooter(boolean isForeignKeyChecksOff) {
@@ -61,32 +61,32 @@ public final class SqlDumpScriptBuilder {
             "/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;",
             "/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;"
         ));
-        return NEW_LINE + String.join(NEW_LINE, lines) + NEW_LINE;
+        return DbCopyConfigEnum.NEW_LINE + String.join(DbCopyConfigEnum.NEW_LINE, lines) + DbCopyConfigEnum.NEW_LINE;
     }
 
     public String getUseSql(String databaseName) {
-        return "USE " + sqlIdentifierQuoter.getQuoted(databaseName) + ";" + NEW_LINE + NEW_LINE;
+        return "USE " + sqlIdentifierQuoter.getQuoted(databaseName) + ";" + DbCopyConfigEnum.NEW_LINE + DbCopyConfigEnum.NEW_LINE;
     }
 
     /**
      * "-- Tabla `clientes`" con una linea en blanco antes.
      */
     public String getSectionComment(String label, String objectName) {
-        return NEW_LINE + getCommentLine(label + " " + sqlIdentifierQuoter.getQuoted(objectName)) + NEW_LINE + NEW_LINE;
+        return DbCopyConfigEnum.NEW_LINE + getCommentLine(label + " " + sqlIdentifierQuoter.getQuoted(objectName)) + DbCopyConfigEnum.NEW_LINE + DbCopyConfigEnum.NEW_LINE;
     }
 
     /**
      * "-- Datos de `clientes`" con una linea en blanco antes: abre los INSERT de una tabla. La etiqueta llega ya traducida.
      */
     public String getDataComment(String label, String tableName) {
-        return NEW_LINE + getCommentLine(label + " " + sqlIdentifierQuoter.getQuoted(tableName)) + NEW_LINE;
+        return DbCopyConfigEnum.NEW_LINE + getCommentLine(label + " " + sqlIdentifierQuoter.getQuoted(tableName)) + DbCopyConfigEnum.NEW_LINE;
     }
 
     /**
      * "-- ERROR `vista`: mensaje": un objeto que no se pudo volcar.
      */
     public String getErrorComment(String objectName, String message) {
-        return getCommentLine("ERROR " + sqlIdentifierQuoter.getQuoted(objectName) + ": " + message) + NEW_LINE;
+        return getCommentLine("ERROR " + sqlIdentifierQuoter.getQuoted(objectName) + ": " + message) + DbCopyConfigEnum.NEW_LINE;
     }
 
     /**
@@ -102,8 +102,8 @@ public final class SqlDumpScriptBuilder {
      */
     public String getStatement(String objectType, String sql) {
         String trimmedSql = sql.strip();
-        if (!isRoutineLike(objectType)) return trimmedSql + ";" + NEW_LINE;
-        return "DELIMITER " + ROUTINE_DELIMITER + NEW_LINE + trimmedSql + ROUTINE_DELIMITER + NEW_LINE + "DELIMITER ;" + NEW_LINE;
+        if (!isRoutineLike(objectType)) return trimmedSql + ";" + DbCopyConfigEnum.NEW_LINE;
+        return "DELIMITER " + ROUTINE_DELIMITER + DbCopyConfigEnum.NEW_LINE + trimmedSql + ROUTINE_DELIMITER + DbCopyConfigEnum.NEW_LINE + "DELIMITER ;" + DbCopyConfigEnum.NEW_LINE;
     }
 
     private boolean isRoutineLike(String objectType) {

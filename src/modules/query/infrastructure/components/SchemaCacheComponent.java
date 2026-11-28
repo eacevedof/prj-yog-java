@@ -37,9 +37,16 @@ public final class SchemaCacheComponent {
     private volatile List<String> databaseNames;
     private volatile Runnable onLoaded = () -> { };
 
-    public SchemaCacheComponent(String connectionUuid, String sessionKey) {
-        this.connectionUuid = connectionUuid;
-        this.sessionKey = sessionKey;
+    private SchemaCacheComponent(String connectionUuid, String sessionKey) {
+        this.connectionUuid = connectionUuid.trim();
+        this.sessionKey = sessionKey.trim();
+    }
+
+    /**
+     * Una cache nueva por pestaña de conexion (su sesion propia de autocompletado).
+     */
+    public static SchemaCacheComponent getInstance(String connectionUuid, String sessionKey) {
+        return new SchemaCacheComponent(connectionUuid, sessionKey);
     }
 
     public void setOnLoaded(Runnable onLoaded) {

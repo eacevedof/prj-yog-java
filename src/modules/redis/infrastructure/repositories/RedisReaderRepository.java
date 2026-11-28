@@ -17,6 +17,7 @@ import redis.clients.jedis.resps.Tuple;
 
 import modules.shared.application.Primitives;
 
+import modules.redis.domain.enums.RedisConfigEnum;
 import modules.redis.domain.enums.RedisKeyEnum;
 import modules.redis.domain.services.RedisReplyFormatter;
 
@@ -27,8 +28,10 @@ import modules.redis.domain.services.RedisReplyFormatter;
 public final class RedisReaderRepository extends AbstractRedisReaderRepository {
 
     private final Jedis jedis;
+    private final RedisReplyFormatter redisReplyFormatter;
 
     private RedisReaderRepository(Jedis jedis) {
+        this.redisReplyFormatter = RedisReplyFormatter.getInstance();
         this.jedis = jedis;
     }
 
@@ -63,7 +66,7 @@ public final class RedisReaderRepository extends AbstractRedisReaderRepository {
                 RedisKeyEnum.TTL_MS, ttls.get(i).get()
             ));
         }
-        return Primitives.of("keys", keys, "nextCursor", scanResult.getCursor());
+        return Primitives.of(RedisKeyEnum.KEYS, keys, RedisKeyEnum.NEXT_CURSOR, scanResult.getCursor());
     }
 
     @Override
@@ -89,8 +92,8 @@ public final class RedisReaderRepository extends AbstractRedisReaderRepository {
         switch (type) {
             case RedisKeyEnum.TYPE_STRING -> {
                 byte[] bytes = jedis.get(keyBytes);
-                String text = bytes == null ? "" : RedisReplyFormatter.getUtf8OrNull(bytes);
-                keyValue.put("isBinary", text == null);
+                String text = bytes == null ? "" : redisReplyFormatter.getUtf8OrNull(bytes);
+                keyValue.put(RedisKeyEnum.IS_BINARY, text == null);
                 keyValue.put("stringValue", text == null ? getHexText(bytes) : text);
                 size = bytes == null ? 0 : bytes.length;
             }
@@ -99,7 +102,7 @@ public final class RedisReaderRepository extends AbstractRedisReaderRepository {
                 size = jedis.hlen(keyBytes);
                 String cursor = ScanParams.SCAN_POINTER_START;
                 do {
-                    ScanResult<Map.Entry<byte[], byte[]>> page = jedis.hscan(keyBytes, cursor.getBytes(StandardCharsets.UTF_8), new ScanParams().count(Math.min(limit, 1000)));
+                    ScanResult<Map.Entry<byte[], byte[]>> page = jedis.hscan(keyBytes, cursor.getBytes(StandardCharsets.UTF_8), new ScanParams().count(Math.min(limit, RedisConfigEnum.ITEMS_SCAN_COUNT)));
                     for (Map.Entry<byte[], byte[]> entry : page.getResult()) {
                         if (rows.size() >= limit) break;
                         rows.add(List.of(getDisplayText(entry.getKey()), getDisplayText(entry.getValue())));
@@ -118,7 +121,7 @@ public final class RedisReaderRepository extends AbstractRedisReaderRepository {
                 size = jedis.scard(keyBytes);
                 String cursor = ScanParams.SCAN_POINTER_START;
                 do {
-                    ScanResult<byte[]> page = jedis.sscan(keyBytes, cursor.getBytes(StandardCharsets.UTF_8), new ScanParams().count(Math.min(limit, 1000)));
+                    ScanResult<byte[]> page = jedis.sscan(keyBytes, cursor.getBytes(StandardCharsets.UTF_8), new ScanParams().count(Math.min(limit, RedisConfigEnum.ITEMS_SCAN_COUNT)));
                     for (byte[] member : page.getResult()) {
                         if (rows.size() >= limit) break;
                         rows.add(List.of(getDisplayText(member)));
@@ -145,9 +148,9 @@ public final class RedisReaderRepository extends AbstractRedisReaderRepository {
             }
         }
         keyValue.put(RedisKeyEnum.SIZE, size);
-        keyValue.put("columns", columns);
-        keyValue.put("rows", rows);
-        keyValue.putIfAbsent("isBinary", false);
+        keyValue.put(RedisKeyEnum.COLUMNS, columns);
+        keyValue.put(RedisKeyEnum.ROWS, rows);
+        keyValue.putIfAbsent(RedisKeyEnum.IS_BINARY, false);
         keyValue.putIfAbsent("stringValue", "");
         return keyValue;
     }
@@ -157,7 +160,7 @@ public final class RedisReaderRepository extends AbstractRedisReaderRepository {
      * como String, Jedis lo decodifica con caracteres de reemplazo y se ve, y se reescribe, cambiado).
      */
     private String getDisplayText(byte[] bytes) {
-        String text = RedisReplyFormatter.getUtf8OrNull(bytes);
+        String text = redisReplyFormatter.getUtf8OrNull(bytes);
         return text == null ? getHexText(bytes) : text;
     }
 

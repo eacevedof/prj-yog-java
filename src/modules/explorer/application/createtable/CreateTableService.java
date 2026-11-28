@@ -59,7 +59,7 @@ public final class CreateTableService {
         long startNanos = System.nanoTime();
         boolean hasError = true;
         try {
-            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSessionPdo(createTableDto.getConnectionUuid(), createTableDto.getSessionKey()))
+            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSession(createTableDto.getConnectionUuid(), createTableDto.getSessionKey()))
                 .executeStatements(statements);
             hasError = false;
         }

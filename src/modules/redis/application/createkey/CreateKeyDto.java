@@ -3,6 +3,7 @@ package modules.redis.application.createkey;
 import java.util.Map;
 
 import static modules.shared.application.Primitives.getTrimmedString;
+import static modules.shared.application.Primitives.getUntrimmedString;
 
 /**
  * Una clave nueva del navegador: su tipo (RedisKeyEnum.TYPE_*) y el primer elemento (campo en un hash, score en un
@@ -22,20 +23,16 @@ public final class CreateKeyDto {
     private CreateKeyDto(Map<String, Object> primitives) {
         this.connectionUuid = getTrimmedString(primitives.get("connectionUuid"));
         this.sessionKey = getTrimmedString(primitives.get("sessionKey"));
-        this.key = getRaw(primitives.get("key"));
+        this.key = getUntrimmedString(primitives.get("key"));
         this.type = getTrimmedString(primitives.get("type"));
-        this.field = getRaw(primitives.get("field"));
-        this.value = getRaw(primitives.get("value"));
+        this.field = getUntrimmedString(primitives.get("field"));
+        this.value = getUntrimmedString(primitives.get("value"));
         this.score = getTrimmedString(primitives.get("score"));
         this.ttlSeconds = getTrimmedString(primitives.get("ttlSeconds"));
     }
 
     public static CreateKeyDto fromPrimitives(Map<String, Object> primitives) {
         return new CreateKeyDto(primitives);
-    }
-
-    private static String getRaw(Object value) {
-        return value == null ? "" : String.valueOf(value);
     }
 
     public String getConnectionUuid() {

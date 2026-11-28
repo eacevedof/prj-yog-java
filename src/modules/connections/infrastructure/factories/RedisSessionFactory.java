@@ -9,6 +9,8 @@ import com.jcraft.jsch.JSchException;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisException;
 
+import modules.shared.domain.enums.SessionKeyEnum;
+
 import static core.config.Global.__;
 
 import modules.connections.domain.enums.ConnectionsMessageEnum;
@@ -119,13 +121,13 @@ public final class RedisSessionFactory {
      */
     public void closeSessions(String sessionKeyPrefix) {
         List<String> sessionKeys = SESSIONS_BY_KEY.keySet().stream()
-            .filter(sessionKey -> sessionKey.equals(sessionKeyPrefix) || sessionKey.startsWith(sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR))
+            .filter(sessionKey -> sessionKey.equals(sessionKeyPrefix) || sessionKey.startsWith(sessionKeyPrefix + SessionKeyEnum.SEPARATOR))
             .toList();
         for (String sessionKey : sessionKeys) {
             closeQuietly(SESSIONS_BY_KEY.remove(sessionKey));
             closeTunnel(sessionKey);
         }
-        TUNNEL_SESSIONS_BY_KEY.keySet().removeIf(sessionKey -> sessionKey.equals(sessionKeyPrefix) || sessionKey.startsWith(sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR));
+        TUNNEL_SESSIONS_BY_KEY.keySet().removeIf(sessionKey -> sessionKey.equals(sessionKeyPrefix) || sessionKey.startsWith(sessionKeyPrefix + SessionKeyEnum.SEPARATOR));
     }
 
     public void closeAll() {

@@ -11,6 +11,7 @@ import testcase.AbstractTestCase;
 
 import modules.query.domain.enums.ResultExportFormatEnum;
 import modules.query.domain.entities.ResultExportOptionsEntity;
+import modules.query.domain.services.ExportSeparatorEscaper;
 import modules.query.domain.services.ResultExportFormatter;
 
 /**
@@ -41,8 +42,8 @@ final class ResultExportFormatterTest extends AbstractTestCase {
         assertEquals("a\\\tb\tNULL\r\nx;y\tit's\r\n", resultExportFormatter.getFormatted(ResultExportFormatEnum.CSV, COLUMNS, rows, tabOptions));
         assertEquals("id;name\n'x;y';'it\\'s'\n", resultExportFormatter.getFormatted(ResultExportFormatEnum.CSV, COLUMNS, rows.subList(1, 2), ownEscapeOptions));
         assertEquals("\\N", ResultExportOptionsEntity.fromPrimitives(Primitives.of()).getNullReplacedBy());
-        assertEquals("\\t", ResultExportOptionsEntity.getEscaped("\t"));
-        assertEquals("<NONE>", ResultExportOptionsEntity.getEscaped(""));
+        assertEquals("\\t", ExportSeparatorEscaper.getInstance().getEscaped("\t"));
+        assertEquals("<NONE>", ExportSeparatorEscaper.getInstance().getEscaped(""));
     }
 
     @Test
@@ -64,7 +65,7 @@ final class ResultExportFormatterTest extends AbstractTestCase {
             "INSERT INTO `users` (`id`, `name`) VALUES \n('1.5', '08001'),\n('2', NULL);\nINSERT INTO `users` (`id`, `name`) VALUES \n('3', 'c');\n",
             sql
         );
-        assertEquals("xml", ResultExportFormatEnum.getExtension(ResultExportFormatEnum.EXCEL_XML));
+        assertEquals("xml", ResultExportFormatter.getInstance().getExtension(ResultExportFormatEnum.EXCEL_XML));
     }
 
     @Test

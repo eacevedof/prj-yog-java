@@ -6,6 +6,7 @@ import modules.shared.infrastructure.components.uuid.UuidGenerator;
 
 import static core.config.Global.__;
 
+import modules.connections.domain.enums.ConnectionsConfigEnum;
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.domain.enums.ConnectionsMessageEnum;
 import modules.connections.domain.entities.ConnectionEntity;
@@ -42,7 +43,7 @@ public final class CloneConnectionService {
             throw ConnectionsException.notFoundCustom(__(ConnectionsMessageEnum.CONNECTION_X_NOT_FOUND, cloneConnectionDto.getConnectionUuid()));
         }
 
-        String newConnectionUuid = UuidGenerator.getInstance().getUniqueIdWithPrefix(ConnectionEntity.CONNECTION_UUID_PREFIX);
+        String newConnectionUuid = UuidGenerator.getInstance().getUniqueIdWithPrefix(ConnectionsConfigEnum.CONNECTION_UUID_PREFIX);
         ConnectionEntity clonedConnectionEntity = ConnectionEntity.fromPrimitives(Primitives.merge(sourceConnectionEntity.toPrimitivesWithPassword(), Primitives.of(
             ConnectionsKeyEnum.ID, null,
             ConnectionsKeyEnum.CONNECTION_UUID, newConnectionUuid,

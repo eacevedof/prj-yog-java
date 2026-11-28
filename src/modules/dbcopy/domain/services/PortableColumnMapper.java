@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import modules.shared.domain.services.SqlDialect;
+import modules.shared.application.Primitives;
 
 import modules.dbcopy.domain.enums.DbCopyTypeFamilyEnum;
 import modules.dbcopy.domain.entities.PortableColumnEntity;
@@ -51,6 +52,15 @@ public final class PortableColumnMapper {
     private static final int MSSQL_MAX_VARBINARY = 8000;
     private static final int MSSQL_INDEXED_NVARCHAR = 450;
     private static final int MSSQL_INDEXED_VARBINARY = 900;
+    // money y smallmoney de SQL Server: decimal(19,4)
+    private static final int MONEY_PRECISION = 19;
+    private static final int MONEY_SCALE = 4;
+    // bit(64) de MySQL: el unico que no cabe en un bigint con signo
+    private static final int MYSQL_BIT_MAX_LENGTH = 64;
+    // decimales de segundo: el tope de MySQL y PostgreSQL, el de SQL Server (datetime2, time) y el de su datetime
+    private static final int MAX_FRACTION = 6;
+    private static final int MSSQL_MAX_FRACTION = 7;
+    private static final int MSSQL_DATETIME_FRACTION = 3;
 
     private PortableColumnMapper() {
     }
@@ -79,7 +89,7 @@ public final class PortableColumnMapper {
 
         if (sourceDialect.isMysql() && "bit".equals(baseType)) {
             if (firstArgument <= 1) return getColumn(name, DbCopyTypeFamilyEnum.BOOLEAN, 0, 0, false, false, isNullable, false, true);
-            return getColumn(name, DbCopyTypeFamilyEnum.INTEGER, 8, 0, firstArgument == 64, false, isNullable, false, true);
+            return getColumn(name, DbCopyTypeFamilyEnum.INTEGER, 8, 0, firstArgument == MYSQL_BIT_MAX_LENGTH, false, isNullable, false, true);
         }
         if (sourceDialect.isMysql() && "year".equals(baseType)) {
             return getColumn(name, DbCopyTypeFamilyEnum.INTEGER, 2, 0, false, false, isNullable, false, true);
@@ -96,7 +106,7 @@ public final class PortableColumnMapper {
             return getColumn(name, DbCopyTypeFamilyEnum.INTEGER, integerSize, 0, isUnsigned, false, isNullable, isAutoIncrement, false);
         }
         if (DECIMAL_TYPES.contains(baseType)) {
-            if (baseType.contains("money")) return getColumn(name, DbCopyTypeFamilyEnum.DECIMAL, 19, 4, false, false, isNullable, false, false);
+            if (baseType.contains("money")) return getColumn(name, DbCopyTypeFamilyEnum.DECIMAL, MONEY_PRECISION, MONEY_SCALE, false, false, isNullable, false, false);
             return getColumn(name, DbCopyTypeFamilyEnum.DECIMAL, firstArgument, secondArgument, false, false, isNullable, false, false);
         }
         int floatSize = getFloatSize(sourceDialect, baseType, firstArgument);
@@ -122,7 +132,7 @@ public final class PortableColumnMapper {
             boolean isFixed = Set.of("char", "nchar", "bpchar", "character").contains(baseType);
             return getColumn(name, DbCopyTypeFamilyEnum.TEXT, isSized ? firstArgument : 0, 0, false, isFixed && isSized, isNullable, false, false);
         }
-        if ("tinytext".equals(baseType)) return getColumn(name, DbCopyTypeFamilyEnum.TEXT, 255, 0, false, false, isNullable, false, false);
+        if ("tinytext".equals(baseType)) return getColumn(name, DbCopyTypeFamilyEnum.TEXT, MYSQL_MAX_VARCHAR, 0, false, false, isNullable, false, false);
         if (sourceDialect.isSqlite() && (baseType.contains("real") || baseType.contains("floa") || baseType.contains("doub"))) {
             return getColumn(name, DbCopyTypeFamilyEnum.FLOAT, 8, 0, false, false, isNullable, false, false);
         }
@@ -138,20 +148,20 @@ public final class PortableColumnMapper {
      */
     public String getTargetType(String targetEngine, PortableColumnEntity column, boolean isIndexed, boolean isIdentity) {
         SqlDialect targetDialect = SqlDialect.getInstance(targetEngine);
-        return switch (column.family()) {
+        return switch (column.getFamily()) {
             case DbCopyTypeFamilyEnum.INTEGER -> getIntegerType(targetDialect, column, isIdentity);
-            case DbCopyTypeFamilyEnum.DECIMAL -> getDecimalType(targetDialect, column.size(), column.scale());
-            case DbCopyTypeFamilyEnum.FLOAT -> getFloatType(targetDialect, column.size());
+            case DbCopyTypeFamilyEnum.DECIMAL -> getDecimalType(targetDialect, column.getSize(), column.getScale());
+            case DbCopyTypeFamilyEnum.FLOAT -> getFloatType(targetDialect, column.getSize());
             case DbCopyTypeFamilyEnum.BOOLEAN -> getByDialect(targetDialect, "tinyint(1)", "boolean", "bit", "BOOLEAN");
             case DbCopyTypeFamilyEnum.JSON -> getByDialect(targetDialect, "json", "jsonb", "nvarchar(max)", "TEXT");
             case DbCopyTypeFamilyEnum.UUID -> getByDialect(targetDialect, "char(36)", "uuid", "uniqueidentifier", "TEXT");
             case DbCopyTypeFamilyEnum.DATE -> getByDialect(targetDialect, "date", "date", "date", "DATE");
             case DbCopyTypeFamilyEnum.TIME -> getByDialect(
-                targetDialect, "time" + getFraction(column.size(), 6), "time" + getFraction(column.size(), 6), "time" + getFraction(column.size(), 7), "TIME"
+                targetDialect, "time" + getFraction(column.getSize(), MAX_FRACTION), "time" + getFraction(column.getSize(), MAX_FRACTION), "time" + getFraction(column.getSize(), MSSQL_MAX_FRACTION), "TIME"
             );
             case DbCopyTypeFamilyEnum.DATETIME -> getByDialect(
-                targetDialect, "datetime" + getFraction(column.size(), 6), "timestamp" + getFraction(column.size(), 6),
-                "datetime2" + getFraction(column.size(), 7), "DATETIME"
+                targetDialect, "datetime" + getFraction(column.getSize(), MAX_FRACTION), "timestamp" + getFraction(column.getSize(), MAX_FRACTION),
+                "datetime2" + getFraction(column.getSize(), MSSQL_MAX_FRACTION), "DATETIME"
             );
             case DbCopyTypeFamilyEnum.BINARY -> getBinaryType(targetDialect, column, isIndexed);
             default -> getTextType(targetDialect, column, isIndexed);
@@ -160,7 +170,7 @@ public final class PortableColumnMapper {
 
     private String getIntegerType(SqlDialect targetDialect, PortableColumnEntity column, boolean isIdentity) {
         if (targetDialect.isSqlite()) return "INTEGER";
-        int size = column.size();
+        int size = column.getSize();
         boolean isUnsigned = column.isUnsigned();
         if (targetDialect.isMysql()) {
             String mysqlType = switch (size) {
@@ -200,7 +210,7 @@ public final class PortableColumnMapper {
     }
 
     private String getTextType(SqlDialect targetDialect, PortableColumnEntity column, boolean isIndexed) {
-        int length = column.size();
+        int length = column.getSize();
         if (targetDialect.isSqlite()) return "TEXT";
         if (targetDialect.isPgsql()) {
             if (length == 0) return "text";
@@ -222,7 +232,7 @@ public final class PortableColumnMapper {
     }
 
     private String getBinaryType(SqlDialect targetDialect, PortableColumnEntity column, boolean isIndexed) {
-        int length = column.size();
+        int length = column.getSize();
         if (targetDialect.isSqlite()) return "BLOB";
         if (targetDialect.isPgsql()) return "bytea";
         if (targetDialect.isMssql()) {
@@ -283,11 +293,11 @@ public final class PortableColumnMapper {
      * Los decimales de segundo cuando el tipo no los dice: MySQL 0, PostgreSQL 6, SQL Server datetime 3 y datetime2/time 7.
      */
     private int getDefaultFraction(SqlDialect sourceDialect, String baseType) {
-        if (sourceDialect.isPgsql() || sourceDialect.isSqlite()) return 6;
+        if (sourceDialect.isPgsql() || sourceDialect.isSqlite()) return MAX_FRACTION;
         if (sourceDialect.isMssql()) {
-            if ("datetime".equals(baseType)) return 3;
+            if ("datetime".equals(baseType)) return MSSQL_DATETIME_FRACTION;
             if ("smalldatetime".equals(baseType)) return 0;
-            return 7;
+            return MSSQL_MAX_FRACTION;
         }
         return 0;
     }
@@ -296,6 +306,16 @@ public final class PortableColumnMapper {
         String name, String family, int size, int scale, boolean isUnsigned, boolean isFixedLength, boolean isNullable,
         boolean isAutoIncrement, boolean isCastToNumber
     ) {
-        return new PortableColumnEntity(name, family, size, scale, isUnsigned, isFixedLength, isNullable, isAutoIncrement, isCastToNumber);
+        return PortableColumnEntity.fromPrimitives(Primitives.of(
+            "name", name,
+            "family", family,
+            "size", size,
+            "scale", scale,
+            "isUnsigned", isUnsigned,
+            "isFixedLength", isFixedLength,
+            "isNullable", isNullable,
+            "isAutoIncrement", isAutoIncrement,
+            "isCastToNumber", isCastToNumber
+        ));
     }
 }

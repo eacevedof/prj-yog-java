@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import testcase.AbstractTestCase;
 
+import modules.explorer.domain.enums.DatabaseEnvironmentEnum;
 import modules.explorer.domain.services.DatabaseEnvironmentResolver;
 
 /**
@@ -16,28 +17,28 @@ final class DatabaseEnvironmentResolverTest extends AbstractTestCase {
 
     @Test
     void testPrefixesAndSuffixesAreDetected() {
-        assertEquals(DatabaseEnvironmentResolver.PRODUCTION, resolver.getEnvironment("prod-shop"));
-        assertEquals(DatabaseEnvironmentResolver.PRODUCTION, resolver.getEnvironment("shop_production"));
-        assertEquals(DatabaseEnvironmentResolver.PRODUCTION, resolver.getEnvironment("PROD"));
-        assertEquals(DatabaseEnvironmentResolver.DEVELOPMENT, resolver.getEnvironment("dev-shop"));
-        assertEquals(DatabaseEnvironmentResolver.DEVELOPMENT, resolver.getEnvironment("shop_develop"));
-        assertEquals(DatabaseEnvironmentResolver.LOCAL, resolver.getEnvironment("loc-crm"));
-        assertEquals(DatabaseEnvironmentResolver.LOCAL, resolver.getEnvironment("local_crm"));
-        assertEquals(DatabaseEnvironmentResolver.LOCAL, resolver.getEnvironment("crm.local"));
+        assertEquals(DatabaseEnvironmentEnum.PRODUCTION, resolver.getEnvironment("prod-shop"));
+        assertEquals(DatabaseEnvironmentEnum.PRODUCTION, resolver.getEnvironment("shop_production"));
+        assertEquals(DatabaseEnvironmentEnum.PRODUCTION, resolver.getEnvironment("PROD"));
+        assertEquals(DatabaseEnvironmentEnum.DEVELOPMENT, resolver.getEnvironment("dev-shop"));
+        assertEquals(DatabaseEnvironmentEnum.DEVELOPMENT, resolver.getEnvironment("shop_develop"));
+        assertEquals(DatabaseEnvironmentEnum.LOCAL, resolver.getEnvironment("loc-crm"));
+        assertEquals(DatabaseEnvironmentEnum.LOCAL, resolver.getEnvironment("local_crm"));
+        assertEquals(DatabaseEnvironmentEnum.LOCAL, resolver.getEnvironment("crm.local"));
     }
 
     @Test
     void testWordsInsideOtherWordsDoNotCount() {
-        assertEquals(DatabaseEnvironmentResolver.NONE, resolver.getEnvironment("products"));
-        assertEquals(DatabaseEnvironmentResolver.NONE, resolver.getEnvironment("devices"));
-        assertEquals(DatabaseEnvironmentResolver.NONE, resolver.getEnvironment("location"));
-        assertEquals(DatabaseEnvironmentResolver.NONE, resolver.getEnvironment("shop"));
-        assertEquals(DatabaseEnvironmentResolver.NONE, resolver.getEnvironment(""));
+        assertEquals(DatabaseEnvironmentEnum.NONE, resolver.getEnvironment("products"));
+        assertEquals(DatabaseEnvironmentEnum.NONE, resolver.getEnvironment("devices"));
+        assertEquals(DatabaseEnvironmentEnum.NONE, resolver.getEnvironment("location"));
+        assertEquals(DatabaseEnvironmentEnum.NONE, resolver.getEnvironment("shop"));
+        assertEquals(DatabaseEnvironmentEnum.NONE, resolver.getEnvironment(""));
     }
 
     @Test
     void testFirstWordWins() {
-        assertEquals(DatabaseEnvironmentResolver.DEVELOPMENT, resolver.getEnvironment("dev-copy-of-prod"));
-        assertEquals(DatabaseEnvironmentResolver.PRODUCTION, resolver.getEnvironment("prod-backup-dev"));
+        assertEquals(DatabaseEnvironmentEnum.DEVELOPMENT, resolver.getEnvironment("dev-copy-of-prod"));
+        assertEquals(DatabaseEnvironmentEnum.PRODUCTION, resolver.getEnvironment("prod-backup-dev"));
     }
 }

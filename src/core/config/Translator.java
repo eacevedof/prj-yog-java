@@ -42,7 +42,7 @@ public final class Translator {
     /**
      * El idioma del sistema si la app lo tiene; si no, ingles.
      */
-    public static String getSystemLanguage() {
+    public String getSystemLanguage() {
         String systemLanguage = Locale.getDefault().getLanguage().toLowerCase(Locale.ROOT);
         return LanguageEnum.VALUES.contains(systemLanguage) ? systemLanguage : LanguageEnum.DEFAULT;
     }

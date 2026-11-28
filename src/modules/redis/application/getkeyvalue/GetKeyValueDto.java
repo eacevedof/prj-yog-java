@@ -4,10 +4,11 @@ import java.util.Map;
 
 import static modules.shared.application.Primitives.getInt;
 import static modules.shared.application.Primitives.getTrimmedString;
+import static modules.shared.application.Primitives.getUntrimmedString;
+
+import modules.redis.domain.enums.RedisConfigEnum;
 
 public final class GetKeyValueDto {
-
-    public static final int DEFAULT_LIMIT = 1000;
 
     private final String connectionUuid;
     private final String sessionKey;
@@ -18,10 +19,9 @@ public final class GetKeyValueDto {
         this.connectionUuid = getTrimmedString(primitives.get("connectionUuid"));
         this.sessionKey = getTrimmedString(primitives.get("sessionKey"));
         // la clave no se recorta: un espacio puede ser parte de ella
-        Object keyValue = primitives.get("key");
-        this.key = keyValue == null ? "" : String.valueOf(keyValue);
+        this.key = getUntrimmedString(primitives.get("key"));
         int limitValue = getInt(primitives.get("limit"));
-        this.limit = limitValue <= 0 ? DEFAULT_LIMIT : limitValue;
+        this.limit = limitValue <= 0 ? RedisConfigEnum.KEY_VALUE_DEFAULT_LIMIT : limitValue;
     }
 
     public static GetKeyValueDto fromPrimitives(Map<String, Object> primitives) {

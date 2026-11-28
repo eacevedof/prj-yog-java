@@ -63,7 +63,7 @@ public final class DuplicateTableService {
         Set<String> primaryKeyColumns = SqlDialect.MSSQL.equals(dbEngine) ? explorerReaderRepository.getPrimaryKeyColumns(databaseName, tableName) : Set.of();
         List<String> statements = tableDuplicateSqlBuilder.getStatements(databaseName, tableName, copyTableName, sqliteCreateSql, primaryKeyColumns);
 
-        Connection pdo = targetSessionFactory.getSessionPdo(connectionUuid, sessionKey);
+        Connection pdo = targetSessionFactory.getSession(connectionUuid, sessionKey);
         ExplorerWriterJdbcRepository explorerWriterJdbcRepository = ExplorerWriterJdbcRepository.getInstance(pdo);
         long startNanos = System.nanoTime();
         boolean hasError = true;

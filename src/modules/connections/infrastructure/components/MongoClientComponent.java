@@ -15,6 +15,7 @@ import org.bson.Document;
 
 import modules.shared.domain.enums.SharedConfigEnum;
 
+import modules.connections.domain.enums.ConnectionsConfigEnum;
 import modules.connections.domain.enums.DbEngineEnum;
 import modules.connections.domain.entities.ConnectionEntity;
 
@@ -78,7 +79,7 @@ public final class MongoClientComponent {
     }
 
     public boolean isConnectionString(String host) {
-        return host.startsWith("mongodb://") || host.startsWith("mongodb+srv://");
+        return host.startsWith(ConnectionsConfigEnum.MONGODB_URI_PREFIX) || host.startsWith(ConnectionsConfigEnum.MONGODB_SRV_URI_PREFIX);
     }
 
     public int getTestSocketTimeoutMs() {

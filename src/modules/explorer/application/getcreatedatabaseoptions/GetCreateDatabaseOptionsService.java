@@ -14,6 +14,7 @@ import modules.connections.infrastructure.factories.TargetSessionFactory;
 
 import modules.history.application.recordqueryhistory.QueryHistoryTracer;
 
+import modules.explorer.domain.enums.ExplorerKeyEnum;
 import modules.explorer.domain.enums.ExplorerMessageEnum;
 import modules.explorer.domain.services.DatabaseCreateSqlBuilder;
 import modules.explorer.infrastructure.repositories.DatabaseOptionsReaderMssqlRepository;
@@ -53,7 +54,7 @@ public final class GetCreateDatabaseOptionsService {
         if (!DatabaseCreateSqlBuilder.getInstance(dbEngine).isSupported()) {
             throw ExplorerException.badRequestCustom(__(ExplorerMessageEnum.CREATE_DATABASE_NOT_SUPPORTED_X, dbEngine));
         }
-        Connection pdo = targetSessionFactory.getSessionPdo(getCreateDatabaseOptionsDto.getConnectionUuid(), getCreateDatabaseOptionsDto.getSessionKey());
+        Connection pdo = targetSessionFactory.getSession(getCreateDatabaseOptionsDto.getConnectionUuid(), getCreateDatabaseOptionsDto.getSessionKey());
         return switch (dbEngine) {
             case SqlDialect.MYSQL -> getMysqlResult(pdo);
             case SqlDialect.PGSQL -> getPgsqlResult(pdo);
@@ -67,8 +68,8 @@ public final class GetCreateDatabaseOptionsService {
         List<String> schemataColumnNames = databaseOptionsReaderMysqlRepository.getSchemataColumnNames();
         return GetCreateDatabaseOptionsResultDto.fromPrimitives(Primitives.of(
             "dbEngine", SqlDialect.MYSQL,
-            "defaultCharacterSet", serverDefaults.get("characterSet"),
-            "defaultCollation", serverDefaults.get("collation"),
+            "defaultCharacterSet", serverDefaults.get(ExplorerKeyEnum.CHARACTER_SET),
+            "defaultCollation", serverDefaults.get(ExplorerKeyEnum.COLLATION),
             "collationsByCharacterSet", databaseOptionsReaderMysqlRepository.getCollationsByCharacterSet(),
             "isEncryptionSupported", schemataColumnNames.contains(COLUMN_DEFAULT_ENCRYPTION),
             "isCommentSupported", schemataColumnNames.contains(COLUMN_SCHEMA_COMMENT)

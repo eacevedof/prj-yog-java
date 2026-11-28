@@ -12,6 +12,7 @@ import static modules.shared.application.Primitives.getTrimmedString;
 
 import testcase.AbstractTestCase;
 
+import modules.workspace.domain.enums.WorkspaceConfigEnum;
 import modules.workspace.domain.enums.WorkspaceKeyEnum;
 import modules.workspace.application.getquerytabs.GetQueryTabsDto;
 import modules.workspace.application.getquerytabs.GetQueryTabsResultDto;
@@ -55,7 +56,7 @@ final class WorkspaceStateServicesTest extends AbstractTestCase {
     void testRejectsUnknownKeysAndTooLongValues() {
         assertThrows(WorkspaceException.class, () -> saveState("panel.font", "x"));
         assertThrows(WorkspaceException.class, () -> saveState(WorkspaceKeyEnum.ACTIVE_DATABASE_PREFIX, "x"));
-        assertThrows(WorkspaceException.class, () -> saveState(WorkspaceKeyEnum.OBJECT_FILTER, "x".repeat(WorkspaceKeyEnum.MAX_STATE_VALUE_LENGTH + 1)));
+        assertThrows(WorkspaceException.class, () -> saveState(WorkspaceKeyEnum.OBJECT_FILTER, "x".repeat(WorkspaceConfigEnum.MAX_STATE_VALUE_LENGTH + 1)));
         assertThrows(WorkspaceException.class, () -> getState("panel.font"));
     }
 

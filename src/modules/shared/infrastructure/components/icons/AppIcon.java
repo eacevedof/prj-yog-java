@@ -64,7 +64,7 @@ public final class AppIcon extends Pane {
         getChildren().setAll(getShapes(this.name));
     }
 
-    private static Node[] getShapes(String name) {
+    private Node[] getShapes(String name) {
         return switch (name) {
             case AppIconEnum.CONNECT -> new Node[]{getPlug()};
             case AppIconEnum.CONNECTION_NEW -> new Node[]{getPlug(), getPlusBadge()};
@@ -200,7 +200,7 @@ public final class AppIcon extends Pane {
     /**
      * Enchufe verde inclinado: abrir una conexion (el papel del "Connect" de SQLyog).
      */
-    private static Node getPlug() {
+    private Node getPlug() {
         return getPlug(GREEN, GREEN_DARK);
     }
 
@@ -209,22 +209,26 @@ public final class AppIcon extends Pane {
      */
     public static AppIcon ofPlug(String colorHex) {
         AppIcon appIcon = new AppIcon();
-        if (colorHex == null || colorHex.isBlank()) {
-            appIcon.setName(AppIconEnum.CONNECT);
-            return appIcon;
-        }
-        appIcon.name = AppIconEnum.CONNECT;
-        Color fill = Color.web(colorHex);
-        appIcon.getChildren().setAll(getPlug(getHex(fill), getHex(fill.darker())));
+        appIcon.setPlugColor(colorHex);
         return appIcon;
     }
 
-    private static String getHex(Color color) {
+    private void setPlugColor(String colorHex) {
+        if (colorHex == null || colorHex.isBlank()) {
+            setName(AppIconEnum.CONNECT);
+            return;
+        }
+        name = AppIconEnum.CONNECT;
+        Color fill = Color.web(colorHex);
+        getChildren().setAll(getPlug(getHex(fill), getHex(fill.darker())));
+    }
+
+    private String getHex(Color color) {
         return String.format("#%02x%02x%02x",
             (int) Math.round(color.getRed() * 255), (int) Math.round(color.getGreen() * 255), (int) Math.round(color.getBlue() * 255));
     }
 
-    private static Node getPlug(String fill, String stroke) {
+    private Node getPlug(String fill, String stroke) {
         Group plug = new Group(
             getStroked("M6 1 V5 M10 1 V5", stroke, 1.6),
             getFilled("M3.5 5 H12.5 V8 Q12.5 12 8 12 Q3.5 12 3.5 8 Z", fill, stroke),
@@ -237,14 +241,14 @@ public final class AppIcon extends Pane {
     /**
      * Circulo verde con un + abajo a la derecha: "nuevo".
      */
-    private static Node getPlusBadge() {
+    private Node getPlusBadge() {
         return new Group(
             getFilled("M15.8 12 A3.8 3.8 0 1 1 8.2 12 A3.8 3.8 0 1 1 15.8 12 Z", GREEN_DARK, WHITE),
             getStroked("M12 10 V14 M10 12 H14", WHITE, 1.4)
         );
     }
 
-    private static Node[] getDatabase() {
+    private Node[] getDatabase() {
         return new Node[]{
             getFilled("M2 4 V12 A6 2.6 0 0 0 14 12 V4 Z", BLUE, BLUE_DARK),
             getStroked("M2 8 A6 2.6 0 0 0 14 8", BLUE_LIGHT, 1),
@@ -256,14 +260,14 @@ public final class AppIcon extends Pane {
      * Circulo verde con una flecha abajo a la derecha: hacia abajo, sacar (volcar a .sql); hacia arriba, meter (ejecutar
      * un .sql), como los iconos de SQLyog.
      */
-    private static Node getArrowBadge(boolean isDown) {
+    private Node getArrowBadge(boolean isDown) {
         return new Group(
             getFilled("M15.8 12 A3.8 3.8 0 1 1 8.2 12 A3.8 3.8 0 1 1 15.8 12 Z", GREEN_DARK, WHITE),
             getStroked(isDown ? "M12 8.8 V15 M9.6 12.6 L12 15 L14.4 12.6" : "M12 15.2 V9 M9.6 11.4 L12 9 L14.4 11.4", WHITE, 1.5)
         );
     }
 
-    private static Node[] getGrid(String headerColor) {
+    private Node[] getGrid(String headerColor) {
         return new Node[]{
             getFilled("M1.5 2.5 H14.5 V13.5 H1.5 Z", WHITE, SLATE),
             getFilled("M1.5 2.5 H14.5 V5.5 H1.5 Z", headerColor, SLATE),
@@ -271,18 +275,18 @@ public final class AppIcon extends Pane {
         };
     }
 
-    private static Node[] getSheet(String lineColor) {
+    private Node[] getSheet(String lineColor) {
         return new Node[]{
             getFilled("M3 1.5 H10 L13 4.5 V14.5 H3 Z", WHITE, SLATE),
             getStroked("M5 7 H11 M5 9.5 H11 M5 12 H9", lineColor, 1.2),
         };
     }
 
-    private static Node getCircle(String fill, String stroke) {
+    private Node getCircle(String fill, String stroke) {
         return getFilled("M14.5 8 A6.5 6.5 0 1 1 1.5 8 A6.5 6.5 0 1 1 14.5 8 Z", fill, stroke);
     }
 
-    private static SVGPath getFilled(String content, String fill, String stroke) {
+    private SVGPath getFilled(String content, String fill, String stroke) {
         SVGPath svgPath = new SVGPath();
         svgPath.setContent(content);
         svgPath.setFill(Color.web(fill));
@@ -294,7 +298,7 @@ public final class AppIcon extends Pane {
         return svgPath;
     }
 
-    private static SVGPath getStroked(String content, String stroke, double strokeWidth) {
+    private SVGPath getStroked(String content, String stroke, double strokeWidth) {
         SVGPath svgPath = new SVGPath();
         svgPath.setContent(content);
         svgPath.setFill(null);
@@ -305,14 +309,14 @@ public final class AppIcon extends Pane {
         return svgPath;
     }
 
-    private static Text getText(String value, double fontSize, String fill, double x, double y) {
+    private Text getText(String value, double fontSize, String fill, double x, double y) {
         Text text = new Text(x, y, value);
         text.setFont(Font.font("Georgia", FontWeight.BOLD, FontPosture.ITALIC, fontSize));
         text.setFill(Color.web(fill));
         return text;
     }
 
-    private static Node[] append(Node[] nodes, Node extraNode) {
+    private Node[] append(Node[] nodes, Node extraNode) {
         Node[] allNodes = new Node[nodes.length + 1];
         System.arraycopy(nodes, 0, allNodes, 0, nodes.length);
         allNodes[nodes.length] = extraNode;

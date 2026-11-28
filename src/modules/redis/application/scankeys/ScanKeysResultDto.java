@@ -6,6 +6,8 @@ import java.util.Map;
 import static modules.shared.application.Primitives.getBool;
 import static modules.shared.application.Primitives.getTrimmedString;
 
+import modules.redis.domain.enums.RedisKeyEnum;
+
 public final class ScanKeysResultDto {
 
     private final List<Map<String, Object>> keys;
@@ -14,8 +16,8 @@ public final class ScanKeysResultDto {
 
     @SuppressWarnings("unchecked")
     private ScanKeysResultDto(Map<String, Object> primitives) {
-        this.keys = List.copyOf((List<Map<String, Object>>) primitives.get("keys"));
-        this.nextCursor = getTrimmedString(primitives.get("nextCursor"));
+        this.keys = List.copyOf((List<Map<String, Object>>) primitives.get(RedisKeyEnum.KEYS));
+        this.nextCursor = getTrimmedString(primitives.get(RedisKeyEnum.NEXT_CURSOR));
         this.isComplete = getBool(primitives.get("isComplete"));
     }
 

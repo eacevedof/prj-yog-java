@@ -7,6 +7,7 @@ import static modules.shared.application.Primitives.getBool;
 import static modules.shared.application.Primitives.getInt;
 import static modules.shared.application.Primitives.getTrimmedString;
 
+import modules.connections.domain.enums.ConnectionsConfigEnum;
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 
 /**
@@ -14,10 +15,6 @@ import modules.connections.domain.enums.ConnectionsKeyEnum;
  * son "" aqui (neutro de string).
  */
 public final class ConnectionEntity {
-
-    public static final String CONNECTION_UUID_PREFIX = "conn-";
-    public static final int DEFAULT_SSH_PORT = 22;
-    public static final int DEFAULT_HTTP_TIMEOUT_S = 30;
 
     private final Integer id;
     private final String connectionUuid;
@@ -59,7 +56,7 @@ public final class ConnectionEntity {
         this.isSshEnabled = getBool(primitives.get(ConnectionsKeyEnum.SSH_ENABLED));
         this.sshHost = getTrimmedString(primitives.get(ConnectionsKeyEnum.SSH_HOST));
         int savedSshPort = getInt(primitives.get(ConnectionsKeyEnum.SSH_PORT));
-        this.sshPort = savedSshPort == 0 ? DEFAULT_SSH_PORT : savedSshPort;
+        this.sshPort = savedSshPort == 0 ? ConnectionsConfigEnum.DEFAULT_SSH_PORT : savedSshPort;
         this.sshUser = getTrimmedString(primitives.get(ConnectionsKeyEnum.SSH_USER));
         Object savedSshPassword = primitives.get(ConnectionsKeyEnum.SSH_PASSWORD);
         this.sshPassword = savedSshPassword == null ? "" : String.valueOf(savedSshPassword);
@@ -69,7 +66,7 @@ public final class ConnectionEntity {
         this.isHttpEnabled = getBool(primitives.get(ConnectionsKeyEnum.HTTP_ENABLED));
         this.httpUrl = getTrimmedString(primitives.get(ConnectionsKeyEnum.HTTP_URL));
         int savedHttpTimeoutS = getInt(primitives.get(ConnectionsKeyEnum.HTTP_TIMEOUT_S));
-        this.httpTimeoutS = savedHttpTimeoutS == 0 ? DEFAULT_HTTP_TIMEOUT_S : savedHttpTimeoutS;
+        this.httpTimeoutS = savedHttpTimeoutS == 0 ? ConnectionsConfigEnum.DEFAULT_HTTP_TIMEOUT_S : savedHttpTimeoutS;
         this.createdAt = getTrimmedString(primitives.get(ConnectionsKeyEnum.CREATED_AT));
         this.updatedAt = getTrimmedString(primitives.get(ConnectionsKeyEnum.UPDATED_AT));
     }

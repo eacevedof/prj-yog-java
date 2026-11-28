@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import modules.shared.application.Primitives;
-import modules.shared.infrastructure.components.secrets.SecretCipherComponent;
 import modules.shared.infrastructure.factories.DbFactory;
 
 import testcase.AbstractTestCase;
@@ -21,6 +20,7 @@ import modules.connections.application.encryptstoredsecrets.EncryptStoredSecrets
 import modules.connections.application.renameconnection.RenameConnectionService;
 import modules.connections.application.updateconnection.UpdateConnectionService;
 import modules.connections.application.mothers.ConnectionPrimitivesMother;
+import modules.connections.infrastructure.components.SecretCipherComponent;
 import modules.connections.infrastructure.repositories.ConnectionsReaderSqliteRepository;
 
 /**

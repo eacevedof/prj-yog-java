@@ -26,7 +26,7 @@ public final class ListDatabaseObjectsResultDto {
     }
 
     @SuppressWarnings("unchecked")
-    private static List<String> getNames(Map<String, Object> primitives, String key) {
+    private List<String> getNames(Map<String, Object> primitives, String key) {
         Object names = primitives.get(key);
         return names == null ? List.of() : List.copyOf((List<String>) names);
     }

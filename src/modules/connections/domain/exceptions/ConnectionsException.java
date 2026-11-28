@@ -7,7 +7,7 @@ public final class ConnectionsException extends RuntimeException implements Inte
 
     private final int code;
 
-    public ConnectionsException(String message, int code) {
+    private ConnectionsException(String message, int code) {
         super(message);
         this.code = code;
     }

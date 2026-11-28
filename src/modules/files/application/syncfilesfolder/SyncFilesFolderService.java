@@ -79,7 +79,7 @@ public final class SyncFilesFolderService {
         }
         String folder = filesReaderDiskRepository.getFolder(filesPath);
 
-        Connection pdo = TargetSessionFactory.getInstance().getSessionPdo(connectionUuid, syncFilesFolderDto.getSessionKey());
+        Connection pdo = TargetSessionFactory.getInstance().getSession(connectionUuid, syncFilesFolderDto.getSessionKey());
         WorkingTablesReaderJdbcRepository workingTablesReaderJdbcRepository = WorkingTablesReaderJdbcRepository.getInstance(pdo);
         WorkingTablesWriterJdbcRepository workingTablesWriterJdbcRepository = WorkingTablesWriterJdbcRepository.getInstance(pdo);
         FileTablesWriterSqliteRepository fileTablesWriterSqliteRepository = FileTablesWriterSqliteRepository.getInstance();
@@ -136,8 +136,8 @@ public final class SyncFilesFolderService {
                 continue;
             }
             List<String> sqlTypes = new ArrayList<>();
-            for (String columnKind : fileTableEntity.columnKinds()) sqlTypes.add(FilesColumnKindEnum.SQLITE_TYPES.get(columnKind));
-            workingTablesWriterJdbcRepository.replaceTable(tableName, FilesConfigEnum.ROW_COLUMN, fileTableEntity.columnNames(), sqlTypes, fileTableEntity.rows());
+            for (String columnKind : fileTableEntity.getColumnKinds()) sqlTypes.add(FilesColumnKindEnum.SQLITE_TYPES.get(columnKind));
+            workingTablesWriterJdbcRepository.replaceTable(tableName, FilesConfigEnum.ROW_COLUMN, fileTableEntity.getColumnNames(), sqlTypes, fileTableEntity.getRows());
 
             fileTablesWriterSqliteRepository.saveFileTable(FileTableStateBuilder.getInstance().getFileTableState(
                 connectionUuid, tableName, fileName, fileTableEntity, dataFile, getRowsDigest(workingTablesReaderJdbcRepository, tableName), loadedAt

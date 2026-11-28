@@ -472,9 +472,9 @@ public final class TableEditorDialogController extends AbstractFxController {
             for (String originalName : original.primaryKeyColumns()) primaryKeyColumns.add(newNamesByOriginal.getOrDefault(originalName, originalName));
         }
         List<TableIndexEntity> indexes = new ArrayList<>();
-        for (IndexRow indexRow : indexesTableView.getItems()) indexes.add(indexRow.toEntity());
+        for (IndexRow indexRow : indexesTableView.getItems()) indexes.add(getIndexEntity(indexRow));
         List<TableForeignKeyEntity> foreignKeys = new ArrayList<>();
-        for (ForeignKeyRow foreignKeyRow : foreignKeysTableView.getItems()) foreignKeys.add(foreignKeyRow.toEntity());
+        for (ForeignKeyRow foreignKeyRow : foreignKeysTableView.getItems()) foreignKeys.add(getForeignKeyEntity(foreignKeyRow));
         return new TableDefinitionEntity(
             tableNameField.getText().trim(),
             columns,
@@ -538,7 +538,19 @@ public final class TableEditorDialogController extends AbstractFxController {
         return tableColumn;
     }
 
-    private static List<String> getList(String commaSeparated) {
+    private TableIndexEntity getIndexEntity(IndexRow indexRow) {
+        return new TableIndexEntity(indexRow.originalName, indexRow.name.get().trim(), indexRow.indexType.get(), getList(indexRow.columns.get()));
+    }
+
+    private TableForeignKeyEntity getForeignKeyEntity(ForeignKeyRow foreignKeyRow) {
+        return new TableForeignKeyEntity(
+            foreignKeyRow.originalName, foreignKeyRow.name.get().trim(), getList(foreignKeyRow.columns.get()),
+            foreignKeyRow.referencedTable.get().trim(), getList(foreignKeyRow.referencedColumns.get()),
+            foreignKeyRow.onDelete.get(), foreignKeyRow.onUpdate.get()
+        );
+    }
+
+    private List<String> getList(String commaSeparated) {
         List<String> values = new ArrayList<>();
         for (String value : commaSeparated.split(",")) {
             if (!value.isBlank()) values.add(value.trim());
@@ -683,10 +695,6 @@ public final class TableEditorDialogController extends AbstractFxController {
         private static IndexRow of(TableIndexEntity index) {
             return new IndexRow(index.originalName(), index.name(), index.indexType(), String.join(", ", index.columns()));
         }
-
-        private TableIndexEntity toEntity() {
-            return new TableIndexEntity(originalName, name.get().trim(), indexType.get(), getList(columns.get()));
-        }
     }
 
     private static final class ForeignKeyRow {
@@ -713,13 +721,6 @@ public final class TableEditorDialogController extends AbstractFxController {
             return new ForeignKeyRow(
                 foreignKey.originalName(), foreignKey.name(), String.join(", ", foreignKey.columns()), foreignKey.referencedTable(),
                 String.join(", ", foreignKey.referencedColumns()), foreignKey.onDelete(), foreignKey.onUpdate()
-            );
-        }
-
-        private TableForeignKeyEntity toEntity() {
-            return new TableForeignKeyEntity(
-                originalName, name.get().trim(), getList(columns.get()), referencedTable.get().trim(), getList(referencedColumns.get()),
-                onDelete.get(), onUpdate.get()
             );
         }
     }

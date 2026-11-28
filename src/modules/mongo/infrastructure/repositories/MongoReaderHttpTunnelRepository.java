@@ -13,13 +13,13 @@ import modules.shared.application.Primitives;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelClient;
 
 import modules.mongo.domain.enums.MongoConfigEnum;
+import modules.mongo.domain.enums.MongoKeyEnum;
 
 /**
  * El navegador de MongoDB por el tunel HTTP: lo mismo que MongoReaderRepository, con documentos de runCommand. Los
  * recuentos de todas las colecciones van en un lote (una peticion).
  */
 public final class MongoReaderHttpTunnelRepository extends AbstractMongoReaderRepository {
-
 
     private final MongoHttpTunnelCommands mongoHttpTunnelCommands;
 
@@ -65,10 +65,10 @@ public final class MongoReaderHttpTunnelRepository extends AbstractMongoReaderRe
         for (int i = 0; i < collectionNames.size(); i++) {
             List<Document> countResponse = i < counts.size() ? counts.get(i) : List.of();
             long count = countResponse.isEmpty() ? -1 : getLong(countResponse.getFirst().get("n"));
-            collections.add(Primitives.of("name", collectionNames.get(i), "count", count));
+            collections.add(Primitives.of(MongoKeyEnum.NAME, collectionNames.get(i), MongoKeyEnum.COUNT, count));
         }
-        for (String viewName : viewNames) collections.add(Primitives.of("name", viewName, "count", -1L));
-        collections.sort((left, right) -> String.valueOf(left.get("name")).compareTo(String.valueOf(right.get("name"))));
+        for (String viewName : viewNames) collections.add(Primitives.of(MongoKeyEnum.NAME, viewName, MongoKeyEnum.COUNT, -1L));
+        collections.sort((left, right) -> String.valueOf(left.get(MongoKeyEnum.NAME)).compareTo(String.valueOf(right.get(MongoKeyEnum.NAME))));
         return collections;
     }
 

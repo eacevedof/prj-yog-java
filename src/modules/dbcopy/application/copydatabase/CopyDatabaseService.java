@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import modules.shared.domain.enums.SessionKeyEnum;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.uuid.UuidGenerator;
 import static modules.shared.application.Primitives.getBool;
@@ -105,15 +106,15 @@ public final class CopyDatabaseService {
         List<Map<String, Object>> objectResults = new ArrayList<>();
         boolean isCancelled = false;
         try {
-            dbCopyReaderMysqlRepository = DbCopyReaderMysqlRepository.getInstance(targetSessionFactory.getSessionPdo(
-                sourceConnectionEntity.getConnectionUuid(), sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "source"
+            dbCopyReaderMysqlRepository = DbCopyReaderMysqlRepository.getInstance(targetSessionFactory.getSession(
+                sourceConnectionEntity.getConnectionUuid(), sessionKeyPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.SOURCE
             ));
-            String targetSessionKey = sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "target";
+            String targetSessionKey = sessionKeyPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.TARGET;
             DbCopyReaderMysqlRepository targetDbCopyReaderMysqlRepository = DbCopyReaderMysqlRepository.getInstance(
-                targetSessionFactory.getSessionPdo(targetConnectionEntity.getConnectionUuid(), targetSessionKey)
+                targetSessionFactory.getSession(targetConnectionEntity.getConnectionUuid(), targetSessionKey)
             );
             dbCopyWriterMysqlRepository = DbCopyWriterMysqlRepository.getInstance(
-                targetSessionFactory.getSessionPdo(targetConnectionEntity.getConnectionUuid(), targetSessionKey)
+                targetSessionFactory.getSession(targetConnectionEntity.getConnectionUuid(), targetSessionKey)
             );
             // dos conexiones guardadas distintas pueden llegar al mismo servidor: copiar una BD sobre si misma la borraria
             if (isSameDatabaseName && dbCopyReaderMysqlRepository.getServerIdentity().equals(targetDbCopyReaderMysqlRepository.getServerIdentity())) {
@@ -124,6 +125,7 @@ public final class CopyDatabaseService {
                     DbCopyMessageEnum.TARGET_IS_PRODUCTION_X_X, targetConnectionEntity.getConnectionName(), copyDatabaseDto.getTargetDatabase()
                 ));
             }
+            dbCopyReaderMysqlRepository.prepareSession(copyDatabaseDto.getSourceDatabase());
             List<CopyItem> copyItems = getCopyItems();
             prepareTarget(targetDbCopyReaderMysqlRepository);
             maxStatementChars = targetDbCopyReaderMysqlRepository.getMaxStatementChars();
@@ -232,7 +234,6 @@ public final class CopyDatabaseService {
      * tambien los triggers de las tablas marcadas aunque su carpeta no lo este.
      */
     private List<CopyItem> getCopyItems() throws SQLException {
-        dbCopyReaderMysqlRepository.prepareSession(copyDatabaseDto.getSourceDatabase());
         Set<String> triggerNames = new LinkedHashSet<>(copyDatabaseDto.getObjectNames(DbCopyObjectTypeEnum.TRIGGER));
         if (copyDatabaseDto.isCopyAssociatedTriggers() && !copyDatabaseDto.getObjectNames(DbCopyObjectTypeEnum.TABLE).isEmpty()) {
             Set<String> tableNames = new HashSet<>(copyDatabaseDto.getObjectNames(DbCopyObjectTypeEnum.TABLE));

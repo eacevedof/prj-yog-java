@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import modules.shared.domain.enums.ExceptionEnum;
+import modules.shared.domain.enums.SessionKeyEnum;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.files.FolderOpenerComponent;
 import modules.shared.infrastructure.components.theme.ThemeComponent;
@@ -41,11 +42,14 @@ import modules.workspace.domain.enums.WorkspaceKeyEnum;
 import modules.workspace.infrastructure.components.LastDirectoryComponent;
 import modules.workspace.infrastructure.components.LastFileComponent;
 
-import modules.query.domain.services.SqlFileProgressListener;
+import modules.query.domain.enums.QueryConfigEnum;
+import modules.query.domain.enums.QueryKeyEnum;
+import modules.query.application.cancelquery.CancelQueryDto;
 import modules.query.application.executesqlfile.ExecuteSqlFileDto;
 import modules.query.application.executesqlfile.ExecuteSqlFileResultDto;
+import modules.query.application.cancelquery.CancelQueryService;
 import modules.query.application.executesqlfile.ExecuteSqlFileService;
-import modules.query.infrastructure.components.RunningStatementsComponent;
+import modules.query.infrastructure.components.SqlFileProgressListener;
 import modules.query.infrastructure.components.SqlFileProgressTracker;
 
 /**
@@ -116,7 +120,7 @@ public final class ExecuteSqlFileDialogController extends AbstractFxController {
     private void setup(String connectionUuid, String databaseName) {
         this.connectionUuid = connectionUuid;
         this.databaseName = databaseName == null ? "" : databaseName;
-        this.sessionKey = UuidGenerator.getInstance().getUniqueIdWithPrefix("sqlfile-") + TargetSessionFactory.SESSION_KEY_SEPARATOR + "run";
+        this.sessionKey = UuidGenerator.getInstance().getUniqueIdWithPrefix(QueryConfigEnum.SQL_FILE_SESSION_PREFIX) + SessionKeyEnum.SEPARATOR + SessionKeyEnum.RUN;
         databaseLabel.setText(this.databaseName.isEmpty() ? __("(la de la conexión)") : this.databaseName);
         // el ultimo fichero ejecutado (tambien de otras sesiones), si sigue existiendo
         File lastFile = LastFileComponent.getInstance(WorkspaceKeyEnum.SQL_FILE_LAST_FILE).getFile();
@@ -164,9 +168,9 @@ public final class ExecuteSqlFileDialogController extends AbstractFxController {
             executeButton.setDisable(true);
             setStatus(__("Parando..."));
             try {
-                RunningStatementsComponent.getInstance().cancel(sessionKey);
+                CancelQueryService.getInstance().invoke(CancelQueryDto.fromPrimitives(Primitives.of("sessionKey", sessionKey)));
             }
-            catch (SQLException e) {
+            catch (SQLException | RuntimeException e) {
                 setStatus(getErrorMessage(e));
             }
             return;
@@ -236,8 +240,8 @@ public final class ExecuteSqlFileDialogController extends AbstractFxController {
         if (executeSqlFileResultDto == null) return;
         StringBuilder errors = new StringBuilder();
         for (Map<String, Object> error : executeSqlFileResultDto.getErrors()) {
-            errors.append(getTrimmedString(error.get("message"))).append("\n    ")
-                .append(getTrimmedString(error.get("sql")).replace("\n", "\n    ")).append("\n\n");
+            errors.append(getTrimmedString(error.get(QueryKeyEnum.MESSAGE))).append("\n    ")
+                .append(getTrimmedString(error.get(QueryKeyEnum.SQL)).replace("\n", "\n    ")).append("\n\n");
         }
         long notShown = executeSqlFileResultDto.getErrorCount() - executeSqlFileResultDto.getErrors().size();
         if (notShown > 0) errors.append(__("... y {0} error(es) más", notShown)).append("\n");

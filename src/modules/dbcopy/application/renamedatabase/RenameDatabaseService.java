@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import modules.shared.domain.enums.SessionKeyEnum;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.uuid.UuidGenerator;
 import static modules.shared.application.Primitives.getTrimmedString;
@@ -24,6 +25,7 @@ import modules.history.domain.enums.QueryHistoryConfigEnum;
 import modules.history.application.recordqueryhistory.RecordQueryHistoryDto;
 import modules.history.application.recordqueryhistory.RecordQueryHistoryService;
 
+import modules.query.domain.enums.QueryKeyEnum;
 import modules.query.application.executesqlfile.ExecuteSqlFileDto;
 import modules.query.application.executesqlfile.ExecuteSqlFileResultDto;
 import modules.query.application.executesqlfile.ExecuteSqlFileService;
@@ -87,10 +89,10 @@ public final class RenameDatabaseService {
         String databaseName = renameDatabaseDto.getDatabaseName();
         String newDatabaseName = renameDatabaseDto.getNewDatabaseName();
         String connectionUuid = connectionEntity.getConnectionUuid();
-        String sessionKeyPrefix = UuidGenerator.getInstance().getUniqueIdWithPrefix(DbCopyConfigEnum.SESSION_PREFIX + "rename-");
+        String sessionKeyPrefix = UuidGenerator.getInstance().getUniqueIdWithPrefix(DbCopyConfigEnum.RENAME_SESSION_PREFIX);
         try {
             DbCopyReaderMysqlRepository dbCopyReaderMysqlRepository = DbCopyReaderMysqlRepository.getInstance(
-                targetSessionFactory.getSessionPdo(connectionUuid, sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "check")
+                targetSessionFactory.getSession(connectionUuid, sessionKeyPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.CHECK)
             );
             failIfDatabasesAreWrong(dbCopyReaderMysqlRepository, databaseName, newDatabaseName);
             Map<String, Object> originalObjects = dbCopyReaderMysqlRepository.getObjects(databaseName);
@@ -101,7 +103,7 @@ public final class RenameDatabaseService {
 
             dbCopyProgressTracker.notifyPhaseStarted(renameId, RenameDatabasePhaseEnum.CREATE);
             DbCopyWriterMysqlRepository dbCopyWriterMysqlRepository = DbCopyWriterMysqlRepository.getInstance(
-                targetSessionFactory.getSessionPdo(connectionUuid, sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "write")
+                targetSessionFactory.getSession(connectionUuid, sessionKeyPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.WRITE)
             );
             dbCopyWriterMysqlRepository.createDatabase(
                 newDatabaseName, getTrimmedString(charset.get(DbCopyKeyEnum.CHARACTER_SET)), getTrimmedString(charset.get(DbCopyKeyEnum.COLLATION))
@@ -116,11 +118,14 @@ public final class RenameDatabaseService {
                 }
 
                 dbCopyProgressTracker.notifyPhaseStarted(renameId, RenameDatabasePhaseEnum.VERIFY);
-                List<String> mismatches = new ArrayList<>();
-                rowCount = getRowCountOrMismatches(dbCopyReaderMysqlRepository, databaseName, newDatabaseName, originalObjects, mismatches);
+                Map<String, Object> newObjects = dbCopyReaderMysqlRepository.getObjects(newDatabaseName);
+                Map<String, Long> originalRowsByTable = getRowsByTable(dbCopyReaderMysqlRepository, databaseName, originalObjects, originalObjects);
+                Map<String, Long> newRowsByTable = getRowsByTable(dbCopyReaderMysqlRepository, newDatabaseName, originalObjects, newObjects);
+                List<String> mismatches = getMismatches(originalObjects, newObjects, originalRowsByTable, newRowsByTable);
                 if (!mismatches.isEmpty()) {
                     throw DbCopyException.badRequestCustom(__(DbCopyMessageEnum.RENAME_MISMATCH_X_X, newDatabaseName, String.join("; ", mismatches)));
                 }
+                rowCount = getRowCount(newRowsByTable);
             }
             catch (SQLException | RuntimeException exception) {
                 dropHalfLoadedDatabase(dbCopyWriterMysqlRepository, newDatabaseName, exception);
@@ -199,7 +204,7 @@ public final class RenameDatabaseService {
     private String loadDump(String connectionUuid, String sessionKeyPrefix, String newDatabaseName, String filePath) throws SQLException {
         ExecuteSqlFileResultDto executeSqlFileResultDto = ExecuteSqlFileService.getInstance().invoke(ExecuteSqlFileDto.fromPrimitives(Primitives.of(
             "connectionUuid", connectionUuid,
-            "sessionKey", sessionKeyPrefix + TargetSessionFactory.SESSION_KEY_SEPARATOR + "load",
+            "sessionKey", sessionKeyPrefix + SessionKeyEnum.SEPARATOR + SessionKeyEnum.LOAD,
             "databaseName", newDatabaseName,
             "filePath", filePath,
             "isAbortOnError", true,
@@ -207,39 +212,58 @@ public final class RenameDatabaseService {
         )));
         if (executeSqlFileResultDto.getErrorCount() == 0 && !executeSqlFileResultDto.isAborted() && !executeSqlFileResultDto.isCancelled()) return "";
         if (executeSqlFileResultDto.getErrors().isEmpty()) return "cancelled";
-        return getTrimmedString(executeSqlFileResultDto.getErrors().getFirst().get("message"));
+        return getTrimmedString(executeSqlFileResultDto.getErrors().getFirst().get(QueryKeyEnum.MESSAGE));
     }
 
     /**
-     * Mismos objetos de cada tipo y mismas filas (COUNT) en cada tabla; lo que no cuadra va a mismatches. Devuelve las
-     * filas que tiene la nueva.
+     * Las filas (COUNT) de cada tabla del original en esa BD; -1 si alli no esta.
      */
-    private long getRowCountOrMismatches(
+    private Map<String, Long> getRowsByTable(
         DbCopyReaderMysqlRepository dbCopyReaderMysqlRepository,
         String databaseName,
-        String newDatabaseName,
         Map<String, Object> originalObjects,
-        List<String> mismatches
+        Map<String, Object> objects
     ) throws SQLException {
-        Map<String, Object> newObjects = dbCopyReaderMysqlRepository.getObjects(newDatabaseName);
+        List<String> tableNames = getNames(objects, DbCopyObjectTypeEnum.TABLE);
+        Map<String, Long> rowsByTable = new LinkedHashMap<>();
+        for (String tableName : getNames(originalObjects, DbCopyObjectTypeEnum.TABLE)) {
+            rowsByTable.put(tableName, tableNames.contains(tableName) ? dbCopyReaderMysqlRepository.getExactRowCount(databaseName, tableName) : -1L);
+        }
+        return rowsByTable;
+    }
+
+    /**
+     * Lo que no cuadra entre el original y la nueva: objetos de cada tipo y filas de cada tabla.
+     */
+    private List<String> getMismatches(
+        Map<String, Object> originalObjects,
+        Map<String, Object> newObjects,
+        Map<String, Long> originalRowsByTable,
+        Map<String, Long> newRowsByTable
+    ) {
+        List<String> mismatches = new ArrayList<>();
         for (String objectType : DbCopyObjectTypeEnum.VALUES) {
             List<String> originalNames = getNames(originalObjects, objectType);
             List<String> newNames = getNames(newObjects, objectType);
             if (!originalNames.equals(newNames)) mismatches.add(objectType + ": " + originalNames.size() + " -> " + newNames.size());
         }
-        long rowCount = 0;
-        for (String tableName : getNames(originalObjects, DbCopyObjectTypeEnum.TABLE)) {
-            long originalRows = dbCopyReaderMysqlRepository.getExactRowCount(databaseName, tableName);
-            long newRows = getNames(newObjects, DbCopyObjectTypeEnum.TABLE).contains(tableName)
-                ? dbCopyReaderMysqlRepository.getExactRowCount(newDatabaseName, tableName)
-                : -1;
-            if (originalRows != newRows) mismatches.add(tableName + ": " + originalRows + " -> " + newRows);
-            rowCount += Math.max(newRows, 0);
+        for (Map.Entry<String, Long> entry : originalRowsByTable.entrySet()) {
+            long newRows = newRowsByTable.get(entry.getKey());
+            if (entry.getValue() != newRows) mismatches.add(entry.getKey() + ": " + entry.getValue() + " -> " + newRows);
         }
+        return mismatches;
+    }
+
+    /**
+     * Las filas que tiene la nueva.
+     */
+    private long getRowCount(Map<String, Long> newRowsByTable) {
+        long rowCount = 0;
+        for (long newRows : newRowsByTable.values()) rowCount += Math.max(newRows, 0);
         return rowCount;
     }
 
-    private static List<String> getNames(Map<String, Object> objects, String objectType) {
+    private List<String> getNames(Map<String, Object> objects, String objectType) {
         List<String> names = new ArrayList<>();
         if (objects.get(OBJECTS_KEY_BY_TYPE.get(objectType)) instanceof List<?> rawNames) {
             for (Object rawName : rawNames) names.add(getTrimmedString(rawName));
@@ -247,7 +271,7 @@ public final class RenameDatabaseService {
         return names;
     }
 
-    private static int getObjectCount(Map<String, Object> objects) {
+    private int getObjectCount(Map<String, Object> objects) {
         int objectCount = 0;
         for (String objectType : DbCopyObjectTypeEnum.VALUES) objectCount += getNames(objects, objectType).size();
         return objectCount;

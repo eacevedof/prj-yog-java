@@ -3,9 +3,9 @@ package modules.connections.application.renameconnection;
 import java.util.List;
 
 import modules.shared.domain.enums.SharedMessageEnum;
+import modules.shared.domain.services.ErrorStackFormatter;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.date.DateTimer;
-import modules.shared.infrastructure.traits.ErrorStackTrait;
 import modules.shared.infrastructure.exceptions.FieldsException;
 
 import static core.config.Global.__;
@@ -65,7 +65,7 @@ public final class RenameConnectionService {
         List<String> errors = ConnectionFieldsValidator.getInstance().getErrors(connectionEntity);
         if (!errors.isEmpty()) {
             throw FieldsException.badRequestCustom(
-                ErrorStackTrait.getInstance().getErrorStackMessage(__(SharedMessageEnum.FIELDS_VALIDATION_ERRORS), errors),
+                ErrorStackFormatter.getInstance().getErrorStackMessage(__(SharedMessageEnum.FIELDS_VALIDATION_ERRORS), errors),
                 errors
             );
         }

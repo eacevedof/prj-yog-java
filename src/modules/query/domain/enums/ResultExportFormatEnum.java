@@ -32,8 +32,4 @@ public final class ResultExportFormatEnum {
 
     private ResultExportFormatEnum() {
     }
-
-    public static String getExtension(String format) {
-        return EXCEL_XML.equals(format) ? XML : format;
-    }
 }

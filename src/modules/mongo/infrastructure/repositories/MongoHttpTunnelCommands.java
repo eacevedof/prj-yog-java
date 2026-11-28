@@ -20,6 +20,7 @@ import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
 
 import modules.connections.domain.enums.DbEngineEnum;
+import modules.connections.infrastructure.components.httptunnel.HttpTunnelCellDecoder;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelClient;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelResult;
 
@@ -42,8 +43,10 @@ final class MongoHttpTunnelCommands {
     private static final JsonWriterSettings EXTENDED_JSON = JsonWriterSettings.builder().outputMode(JsonMode.EXTENDED).build();
 
     private final HttpTunnelClient httpTunnelClient;
+    private final HttpTunnelCellDecoder httpTunnelCellDecoder;
 
     private MongoHttpTunnelCommands(HttpTunnelClient httpTunnelClient) {
+        this.httpTunnelCellDecoder = HttpTunnelCellDecoder.getInstance();
         this.httpTunnelClient = httpTunnelClient;
     }
 
@@ -106,8 +109,8 @@ final class MongoHttpTunnelCommands {
 
     private List<Document> getDocuments(HttpTunnelResult result) {
         List<Document> documents = new ArrayList<>();
-        for (List<byte[]> row : result.rows()) {
-            String json = row.isEmpty() ? null : HttpTunnelResult.getText(row.getFirst());
+        for (List<byte[]> row : result.getRows()) {
+            String json = row.isEmpty() ? null : httpTunnelCellDecoder.getText(row.getFirst());
             if (json != null && !json.isBlank()) documents.add(Document.parse(json));
         }
         return documents;

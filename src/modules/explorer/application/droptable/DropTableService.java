@@ -48,7 +48,7 @@ public final class DropTableService {
         long startNanos = System.nanoTime();
         boolean hasError = true;
         try {
-            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSessionPdo(dropTableDto.getConnectionUuid(), dropTableDto.getSessionKey()))
+            ExplorerWriterJdbcRepository.getInstance(targetSessionFactory.getSession(dropTableDto.getConnectionUuid(), dropTableDto.getSessionKey()))
                 .executeStatements(List.of(dropSql));
             hasError = false;
         }

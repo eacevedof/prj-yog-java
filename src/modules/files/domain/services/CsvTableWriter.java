@@ -22,13 +22,13 @@ public final class CsvTableWriter {
     }
 
     public String getText(FileTableEntity fileTableEntity) {
-        String delimiter = fileTableEntity.csvDelimiter();
-        String lineSeparator = fileTableEntity.lineSeparator();
+        String delimiter = fileTableEntity.getCsvDelimiter();
+        String lineSeparator = fileTableEntity.getLineSeparator();
         ColumnKindResolver columnKindResolver = ColumnKindResolver.getInstance();
         StringBuilder text = new StringBuilder();
         if (fileTableEntity.hasBom()) text.append(FilesConfigEnum.UTF8_BOM);
-        text.append(getLine(fileTableEntity.columnNames(), delimiter)).append(lineSeparator);
-        for (List<Object> row : fileTableEntity.rows()) {
+        text.append(getLine(fileTableEntity.getColumnNames(), delimiter)).append(lineSeparator);
+        for (List<Object> row : fileTableEntity.getRows()) {
             List<String> fields = new ArrayList<>();
             for (Object value : row) fields.add(columnKindResolver.getText(value));
             text.append(getLine(fields, delimiter)).append(lineSeparator);

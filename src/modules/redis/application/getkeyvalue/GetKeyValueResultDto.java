@@ -26,9 +26,9 @@ public final class GetKeyValueResultDto {
         this.ttlMs = primitives.get(RedisKeyEnum.TTL_MS) instanceof Number number ? number.longValue() : -1;
         this.size = primitives.get(RedisKeyEnum.SIZE) instanceof Number number ? number.longValue() : 0;
         this.stringValue = String.valueOf(primitives.getOrDefault("stringValue", ""));
-        this.isBinary = getBool(primitives.get("isBinary"));
-        this.columns = List.copyOf((List<String>) primitives.getOrDefault("columns", List.of()));
-        this.rows = List.copyOf((List<List<String>>) primitives.getOrDefault("rows", List.of()));
+        this.isBinary = getBool(primitives.get(RedisKeyEnum.IS_BINARY));
+        this.columns = List.copyOf((List<String>) primitives.getOrDefault(RedisKeyEnum.COLUMNS, List.of()));
+        this.rows = List.copyOf((List<List<String>>) primitives.getOrDefault(RedisKeyEnum.ROWS, List.of()));
     }
 
     public static GetKeyValueResultDto fromPrimitives(Map<String, Object> primitives) {

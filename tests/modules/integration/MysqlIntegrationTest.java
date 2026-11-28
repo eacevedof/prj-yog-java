@@ -40,6 +40,7 @@ import modules.explorer.application.listdatabaseobjects.ListDatabaseObjectsServi
 import modules.explorer.application.listdatabases.ListDatabasesService;
 import modules.explorer.application.listtablecolumns.ListTableColumnsService;
 
+import modules.query.domain.enums.CompletionKindEnum;
 import modules.query.domain.enums.QueryKeyEnum;
 import modules.query.domain.enums.TableChangeKeyEnum;
 import modules.query.domain.entities.SqlCompletionContextEntity;
@@ -373,7 +374,7 @@ final class MysqlIntegrationTest extends AbstractTestCase {
         catch (IllegalStateException e) {
             // ya arrancado
         }
-        SchemaCacheComponent schemaCache = new SchemaCacheComponent(connectionUuid, "ctab-it:completion");
+        SchemaCacheComponent schemaCache = SchemaCacheComponent.getInstance(connectionUuid, "ctab-it:completion");
         String sql = "SELECT c.mai FROM customers c WHERE c.";
 
         SqlCompletionContextEntity aliasContext = SqlCompletionAnalyzer.getInstance().getContext(sql, sql.indexOf("mai") + 3);
@@ -391,7 +392,7 @@ final class MysqlIntegrationTest extends AbstractTestCase {
 
         assertTrue(first.isEmpty());
         assertEquals("email", columns.getFirst().text());
-        assertEquals(CompletionProvider.KIND_COLUMN, columns.getFirst().kind());
+        assertEquals(CompletionKindEnum.KIND_COLUMN, columns.getFirst().kind());
         assertEquals("customers", tables.getFirst().text());
     }
 

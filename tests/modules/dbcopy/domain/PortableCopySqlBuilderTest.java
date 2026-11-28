@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import modules.shared.application.Primitives;
+
 import testcase.AbstractTestCase;
 
 import modules.dbcopy.domain.enums.DbCopyTypeFamilyEnum;
@@ -182,6 +184,6 @@ final class PortableCopySqlBuilderTest extends AbstractTestCase {
     }
 
     private PortableColumnEntity getColumn(String family) {
-        return new PortableColumnEntity("c", family, 0, 0, false, false, true, false, false);
+        return PortableColumnEntity.fromPrimitives(Primitives.of("name", "c", "family", family, "isNullable", true));
     }
 }

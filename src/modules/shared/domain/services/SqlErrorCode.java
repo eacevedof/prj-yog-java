@@ -11,7 +11,11 @@ public final class SqlErrorCode {
     private SqlErrorCode() {
     }
 
-    public static String getCode(SQLException sqlException) {
+    public static SqlErrorCode getInstance() {
+        return new SqlErrorCode();
+    }
+
+    public String getCode(SQLException sqlException) {
         if (sqlException.getErrorCode() != 0) return String.valueOf(sqlException.getErrorCode());
         String sqlState = sqlException.getSQLState();
         return sqlState == null || sqlState.isBlank() ? "0" : sqlState;

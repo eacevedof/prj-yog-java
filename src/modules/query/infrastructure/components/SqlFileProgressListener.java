@@ -1,4 +1,4 @@
-package modules.query.domain.services;
+package modules.query.infrastructure.components;
 
 /**
  * El progreso de ejecutar un fichero .sql: caracteres leidos de los totales (aprox. bytes) y sentencias ejecutadas.

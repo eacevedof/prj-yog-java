@@ -54,6 +54,14 @@ public final class Primitives {
     }
 
     /**
+     * (string) $value SIN trim, para lo que el blanco importa (contraseñas, claves y valores de Redis, separadores):
+     * null -> "", el resto su texto.
+     */
+    public static String getUntrimmedString(Object value) {
+        return value == null ? "" : String.valueOf(value);
+    }
+
+    /**
      * (int) $value: "12" -> 12, "12abc" -> 12, "abc" -> 0, 3.9 -> 3, true -> 1, null -> 0.
      */
     public static int getInt(Object value) {

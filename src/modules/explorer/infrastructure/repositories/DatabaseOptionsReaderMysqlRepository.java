@@ -12,6 +12,7 @@ import java.util.Map;
 import modules.shared.infrastructure.repositories.AbstractJdbcRepository;
 import static modules.shared.application.Primitives.getTrimmedString;
 
+import modules.explorer.domain.enums.ExplorerKeyEnum;
 import modules.explorer.domain.entities.DatabaseOptionsEntity;
 
 /**
@@ -89,7 +90,7 @@ public final class DatabaseOptionsReaderMysqlRepository extends AbstractJdbcRepo
             -- getServerDefaults
             SELECT @@character_set_server AS character_set, @@collation_server AS collation_name
             """).getFirst();
-        return Map.of("characterSet", getText(row.get("character_set")), "collation", getText(row.get("collation_name")));
+        return Map.of(ExplorerKeyEnum.CHARACTER_SET, getText(row.get("character_set")), ExplorerKeyEnum.COLLATION, getText(row.get("collation_name")));
     }
 
     /**
@@ -132,7 +133,7 @@ public final class DatabaseOptionsReaderMysqlRepository extends AbstractJdbcRepo
         }
     }
 
-    private static Map<String, Object> getUpperCaseKeys(Map<String, Object> row) {
+    private Map<String, Object> getUpperCaseKeys(Map<String, Object> row) {
         Map<String, Object> upperCaseRow = new LinkedHashMap<>();
         for (Map.Entry<String, Object> entry : row.entrySet()) upperCaseRow.put(entry.getKey().toUpperCase(Locale.ROOT), entry.getValue());
         return upperCaseRow;
@@ -141,7 +142,7 @@ public final class DatabaseOptionsReaderMysqlRepository extends AbstractJdbcRepo
     /**
      * information_schema por el tunel puede llegar en bytes.
      */
-    private static String getText(Object value) {
+    private String getText(Object value) {
         if (value instanceof byte[] bytes) return new String(bytes, StandardCharsets.UTF_8);
         return getTrimmedString(value);
     }

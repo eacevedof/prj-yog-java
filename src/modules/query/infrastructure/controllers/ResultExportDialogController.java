@@ -38,8 +38,12 @@ import static core.config.Global.__;
 import modules.workspace.domain.enums.WorkspaceKeyEnum;
 import modules.workspace.infrastructure.components.LastDirectoryComponent;
 
+import modules.query.domain.enums.ResultExportCharsetEnum;
 import modules.query.domain.enums.ResultExportFormatEnum;
 import modules.query.domain.entities.ResultExportOptionsEntity;
+import modules.query.domain.services.ExportSeparatorEscaper;
+import modules.query.domain.services.ResultExportFormatter;
+import modules.query.infrastructure.components.ResultExportChoicesComponent;
 import modules.query.infrastructure.components.ResultExportComponent;
 
 /**
@@ -49,9 +53,13 @@ import modules.query.infrastructure.components.ResultExportComponent;
  */
 public final class ResultExportDialogController extends AbstractFxController {
 
-    private static final Map<String, Object> lastChoices = new HashMap<>();
     private static final String STYLE_MESSAGE_OK = "form-message-ok";
     private static final String STYLE_MESSAGE_ERROR = "form-message-error";
+
+    private final ResultExportChoicesComponent resultExportChoicesComponent = ResultExportChoicesComponent.getInstance();
+    private final ResultExportComponent resultExportComponent = ResultExportComponent.getInstance();
+    private final ResultExportFormatter resultExportFormatter = ResultExportFormatter.getInstance();
+    private final ExportSeparatorEscaper exportSeparatorEscaper = ExportSeparatorEscaper.getInstance();
 
     @FXML
     private ToggleGroup formatToggleGroup;
@@ -117,7 +125,7 @@ public final class ResultExportDialogController extends AbstractFxController {
         this.createTableSqlLoader = createTableSqlLoader;
         this.mappedTableName = createTableSqlLoader == null ? "" : tableName;
 
-        String initialFormat = preselectedFormat != null ? preselectedFormat : getLastChoice("format", ResultExportFormatEnum.CSV);
+        String initialFormat = preselectedFormat != null ? preselectedFormat : resultExportChoicesComponent.getLastChoice("format", ResultExportFormatEnum.CSV);
         for (String format : ResultExportFormatEnum.VALUES) {
             RadioButton formatRadio = new RadioButton(ResultExportFormatEnum.LABELS.get(format));
             formatRadio.setUserData(format);
@@ -130,17 +138,17 @@ public final class ResultExportDialogController extends AbstractFxController {
             onFormatChanged();
         });
 
-        fieldsTerminatedByField.setText(getLastChoice("fieldsTerminatedBy", ResultExportOptionsEntity.getEscaped(ResultExportOptionsEntity.DEFAULT_FIELDS_TERMINATED_BY)));
-        enclosedByField.setText(getLastChoice("enclosedBy", ResultExportOptionsEntity.getEscaped(ResultExportOptionsEntity.DEFAULT_ENCLOSED_BY)));
-        escapedByField.setText(getLastChoice("escapedBy", ResultExportOptionsEntity.getEscaped(ResultExportOptionsEntity.DEFAULT_ESCAPED_BY)));
-        linesTerminatedByField.setText(getLastChoice("linesTerminatedBy", ResultExportOptionsEntity.getEscaped(ResultExportOptionsEntity.DEFAULT_LINES_TERMINATED_BY)));
-        nullReplacedByField.setText(getLastChoice("nullReplacedBy", ResultExportOptionsEntity.DEFAULT_NULL_REPLACED_BY));
-        textSizeLimitField.setText(getLastChoice("textSizeLimit", String.valueOf(ResultExportOptionsEntity.DEFAULT_TEXT_SIZE_LIMIT)));
-        decimalPlacesField.setText(getLastChoice("decimalPlaces", String.valueOf(ResultExportOptionsEntity.DEFAULT_DECIMAL_PLACES)));
-        rowsPerInsertField.setText(getLastChoice("rowsPerInsert", String.valueOf(ResultExportOptionsEntity.DEFAULT_ROWS_PER_INSERT)));
+        fieldsTerminatedByField.setText(resultExportChoicesComponent.getLastChoice("fieldsTerminatedBy", exportSeparatorEscaper.getEscaped(ResultExportOptionsEntity.DEFAULT_FIELDS_TERMINATED_BY)));
+        enclosedByField.setText(resultExportChoicesComponent.getLastChoice("enclosedBy", exportSeparatorEscaper.getEscaped(ResultExportOptionsEntity.DEFAULT_ENCLOSED_BY)));
+        escapedByField.setText(resultExportChoicesComponent.getLastChoice("escapedBy", exportSeparatorEscaper.getEscaped(ResultExportOptionsEntity.DEFAULT_ESCAPED_BY)));
+        linesTerminatedByField.setText(resultExportChoicesComponent.getLastChoice("linesTerminatedBy", exportSeparatorEscaper.getEscaped(ResultExportOptionsEntity.DEFAULT_LINES_TERMINATED_BY)));
+        nullReplacedByField.setText(resultExportChoicesComponent.getLastChoice("nullReplacedBy", ResultExportOptionsEntity.DEFAULT_NULL_REPLACED_BY));
+        textSizeLimitField.setText(resultExportChoicesComponent.getLastChoice("textSizeLimit", String.valueOf(ResultExportOptionsEntity.DEFAULT_TEXT_SIZE_LIMIT)));
+        decimalPlacesField.setText(resultExportChoicesComponent.getLastChoice("decimalPlaces", String.valueOf(ResultExportOptionsEntity.DEFAULT_DECIMAL_PLACES)));
+        rowsPerInsertField.setText(resultExportChoicesComponent.getLastChoice("rowsPerInsert", String.valueOf(ResultExportOptionsEntity.DEFAULT_ROWS_PER_INSERT)));
         tableNameField.setText(tableName);
-        headerCheckBox.setSelected(!"false".equals(getLastChoice("isHeaderIncluded", "true")));
-        createTableCheckBox.setSelected(createTableSqlLoader != null && "true".equals(getLastChoice("isCreateTableIncluded", "false")));
+        headerCheckBox.setSelected(!"false".equals(resultExportChoicesComponent.getLastChoice("isHeaderIncluded", "true")));
+        createTableCheckBox.setSelected(createTableSqlLoader != null && "true".equals(resultExportChoicesComponent.getLastChoice("isCreateTableIncluded", "false")));
         tableNameField.textProperty().addListener((observable, oldText, newText) -> updateCreateTableCheckBox());
 
         columnsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -151,13 +159,13 @@ public final class ResultExportDialogController extends AbstractFxController {
         selectedRowsRadio.setText(__("Solo las marcadas ({0})", markedRows.size()));
         selectedRowsRadio.setDisable(markedRows.isEmpty());
 
-        charsetComboBox.getItems().setAll(ResultExportComponent.CHARSET_LABELS);
-        charsetComboBox.setValue(getLastChoice("charset", ResultExportComponent.CHARSET_LABELS.getFirst()));
+        charsetComboBox.getItems().setAll(ResultExportCharsetEnum.CHARSET_LABELS);
+        charsetComboBox.setValue(resultExportChoicesComponent.getLastChoice("charset", ResultExportCharsetEnum.CHARSET_LABELS.getFirst()));
 
         File initialDirectory = LastDirectoryComponent.getInstance(WorkspaceKeyEnum.RESULT_EXPORT_DIRECTORY).getDirectory();
         filePathField.textProperty().addListener((observable, oldPath, newPath) -> updateOpenFolderButton());
         String baseName = tableName.isBlank() ? "export" : tableName;
-        filePathField.setText(new File(initialDirectory, baseName + "." + ResultExportFormatEnum.getExtension(getFormat())).getPath());
+        filePathField.setText(new File(initialDirectory, baseName + "." + resultExportFormatter.getExtension(getFormat())).getPath());
         updateCreateTableCheckBox();
         onFormatChanged();
     }
@@ -176,7 +184,7 @@ public final class ResultExportDialogController extends AbstractFxController {
     private void onChooseFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(__("Exportar como"));
-        String extension = ResultExportFormatEnum.getExtension(getFormat());
+        String extension = resultExportFormatter.getExtension(getFormat());
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
             ResultExportFormatEnum.LABELS.get(getFormat()) + " (*." + extension + ")", "*." + extension
         ));
@@ -244,7 +252,7 @@ public final class ResultExportDialogController extends AbstractFxController {
             "decimalPlaces", choices.get("decimalPlaces"),
             "tableName", tableNameField.getText().trim(),
             "rowsPerInsert", choices.get("rowsPerInsert"),
-            "charset", ResultExportComponent.getDeclaredCharset(charsetLabel)
+            "charset", resultExportComponent.getDeclaredCharset(charsetLabel)
         );
         boolean isCreateTableIncluded = ResultExportFormatEnum.SQL.equals(format) && isCreateTableAvailable() && createTableCheckBox.isSelected();
         Path exportPath = Path.of(filePath).toAbsolutePath();
@@ -261,7 +269,7 @@ public final class ResultExportDialogController extends AbstractFxController {
                     primitives.put("createTableSql", createTableSqlLoader.call());
                 }
                 updateMessage(__("Exportando {0} fila(s) a {1}...", rowCount, exportPath));
-                ResultExportComponent.getInstance().write(exportPath, format, exportColumnNames, exportRows, ResultExportOptionsEntity.fromPrimitives(primitives), charsetLabel);
+                resultExportComponent.write(exportPath, format, exportColumnNames, exportRows, ResultExportOptionsEntity.fromPrimitives(primitives), charsetLabel);
                 return null;
             }
         };
@@ -269,7 +277,7 @@ public final class ResultExportDialogController extends AbstractFxController {
         exportTask.setOnSucceeded(event -> {
             setExporting(false);
             progressBar.setProgress(1);
-            lastChoices.putAll(choices);
+            resultExportChoicesComponent.saveChoices(choices);
             LastDirectoryComponent.getInstance(WorkspaceKeyEnum.RESULT_EXPORT_DIRECTORY).saveDirectoryOf(exportPath.toFile());
             updateOpenFolderButton();
             String doneMessage = __("Exportadas {0} fila(s) y {1} campo(s) a {2}", rowCount, columnCount, exportPath);
@@ -350,7 +358,7 @@ public final class ResultExportDialogController extends AbstractFxController {
         int dotIndex = filePath.lastIndexOf('.');
         int separatorIndex = Math.max(filePath.lastIndexOf('/'), filePath.lastIndexOf('\\'));
         String basePath = dotIndex > separatorIndex ? filePath.substring(0, dotIndex) : filePath;
-        filePathField.setText(basePath + "." + ResultExportFormatEnum.getExtension(format));
+        filePathField.setText(basePath + "." + resultExportFormatter.getExtension(format));
     }
 
     private String getFormat() {
@@ -371,12 +379,7 @@ public final class ResultExportDialogController extends AbstractFxController {
             "decimalPlaces", decimalPlacesField.getText().trim(),
             "rowsPerInsert", rowsPerInsertField.getText().trim(),
             "isCreateTableIncluded", String.valueOf(createTableCheckBox.isSelected()),
-            "charset", charsetLabel == null ? ResultExportComponent.CHARSET_LABELS.getFirst() : charsetLabel
+            "charset", charsetLabel == null ? ResultExportCharsetEnum.CHARSET_LABELS.getFirst() : charsetLabel
         );
-    }
-
-    private static String getLastChoice(String key, String defaultValue) {
-        Object value = lastChoices.get(key);
-        return value == null ? defaultValue : String.valueOf(value);
     }
 }

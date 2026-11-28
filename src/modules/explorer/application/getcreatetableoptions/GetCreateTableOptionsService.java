@@ -49,7 +49,7 @@ public final class GetCreateTableOptionsService {
         }
         return QueryHistoryTracer.getInstance(getCreateTableOptionsDto.getConnectionUuid(), getCreateTableOptionsDto.getDatabaseName()).getTraced(() -> {
             TableDefinitionReaderMysqlRepository tableDefinitionReaderMysqlRepository = TableDefinitionReaderMysqlRepository.getInstance(
-                targetSessionFactory.getSessionPdo(getCreateTableOptionsDto.getConnectionUuid(), getCreateTableOptionsDto.getSessionKey())
+                targetSessionFactory.getSession(getCreateTableOptionsDto.getConnectionUuid(), getCreateTableOptionsDto.getSessionKey())
             );
             return GetCreateTableOptionsResultDto.fromPrimitives(Primitives.of(
                 "dbEngine", dbEngine,

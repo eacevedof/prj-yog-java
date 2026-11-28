@@ -14,6 +14,7 @@ import static core.config.Global.__;
 import modules.connections.domain.entities.ConnectionEntity;
 import modules.connections.infrastructure.repositories.ConnectionsReaderSqliteRepository;
 
+import modules.mongo.domain.enums.MongoKeyEnum;
 import modules.mongo.domain.enums.MongoMessageEnum;
 import modules.mongo.infrastructure.components.MongoDocumentFormatter;
 import modules.mongo.infrastructure.factories.MongoRepositoryFactory;
@@ -25,8 +26,6 @@ import modules.mongo.domain.exceptions.MongoModuleException;
  * produccion pide confirmacion (428), como la rejilla editable de SQL.
  */
 public final class SaveMongoDocumentService {
-
-    private static final String ID_FIELD = "_id";
 
     private SaveMongoDocumentService() {
     }
@@ -49,7 +48,7 @@ public final class SaveMongoDocumentService {
         catch (JsonParseException e) {
             throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.INVALID_JSON_X_X, "document", e.getMessage()));
         }
-        if (!saveMongoDocumentDto.isNew() && !document.containsKey(ID_FIELD)) {
+        if (!saveMongoDocumentDto.isNew() && !document.containsKey(MongoKeyEnum.ID)) {
             throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.DOCUMENT_WITHOUT_ID));
         }
         failIfProductionNotConfirmed(saveMongoDocumentDto);
@@ -65,7 +64,7 @@ public final class SaveMongoDocumentService {
                 id = mongoWriterRepository.insert(databaseName, collectionName, document);
             }
             else {
-                id = document.get(ID_FIELD);
+                id = document.get(MongoKeyEnum.ID);
                 long affected = saveMongoDocumentDto.isDelete()
                     ? mongoWriterRepository.deleteById(databaseName, collectionName, id)
                     : mongoWriterRepository.replaceById(databaseName, collectionName, document);

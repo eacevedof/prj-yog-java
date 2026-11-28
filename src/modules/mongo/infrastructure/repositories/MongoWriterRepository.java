@@ -8,12 +8,13 @@ import com.mongodb.client.result.UpdateResult;
 
 import org.bson.Document;
 
+import modules.mongo.domain.enums.MongoKeyEnum;
+
 /**
  * Los cambios del navegador de MongoDB, siempre por _id: guardar (reemplazar) un documento, insertar uno nuevo y
  * borrar uno.
  */
 public final class MongoWriterRepository extends AbstractMongoWriterRepository {
-
 
     private final MongoClient mongoClient;
 
@@ -30,7 +31,7 @@ public final class MongoWriterRepository extends AbstractMongoWriterRepository {
      */
     @Override
     public long replaceById(String databaseName, String collectionName, Document document) {
-        UpdateResult updateResult = getCollection(databaseName, collectionName).replaceOne(Filters.eq(ID_FIELD, document.get(ID_FIELD)), document);
+        UpdateResult updateResult = getCollection(databaseName, collectionName).replaceOne(Filters.eq(MongoKeyEnum.ID, document.get(MongoKeyEnum.ID)), document);
         return updateResult.getMatchedCount();
     }
 
@@ -41,12 +42,12 @@ public final class MongoWriterRepository extends AbstractMongoWriterRepository {
     public Object insert(String databaseName, String collectionName, Document document) {
         Document documentWithId = getWithId(document);
         getCollection(databaseName, collectionName).insertOne(documentWithId);
-        return documentWithId.get(ID_FIELD);
+        return documentWithId.get(MongoKeyEnum.ID);
     }
 
     @Override
     public long deleteById(String databaseName, String collectionName, Object id) {
-        DeleteResult deleteResult = getCollection(databaseName, collectionName).deleteOne(Filters.eq(ID_FIELD, id));
+        DeleteResult deleteResult = getCollection(databaseName, collectionName).deleteOne(Filters.eq(MongoKeyEnum.ID, id));
         return deleteResult.getDeletedCount();
     }
 

@@ -21,6 +21,18 @@ public final class ExplorerKeyEnum {
     public static final String INDEX_TYPE = "index_type";
     public static final String NON_UNIQUE = "non_unique";
     public static final String TABLE_ROWS = "table_rows";
+    public static final String TABLE_TYPE = "table_type";
+
+    // valores de MySQL que los repositorios de los demas motores imitan: tipo de tabla, column_key e indice de la PK
+    public static final String TABLE_TYPE_VIEW = "VIEW";
+    public static final String TABLE_TYPE_BASE_TABLE = "BASE TABLE";
+    public static final String COLUMN_KEY_PRIMARY = "PRI";
+    public static final String COLUMN_KEY_UNIQUE = "UNI";
+    public static final String PRIMARY_INDEX_NAME = "PRIMARY";
+
+    // el juego de caracteres y la collation por defecto del servidor (DatabaseOptionsReaderMysqlRepository)
+    public static final String CHARACTER_SET = "characterSet";
+    public static final String COLLATION = "collation";
 
     private ExplorerKeyEnum() {
     }

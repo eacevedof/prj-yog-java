@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import testcase.AbstractTestCase;
 
+import modules.mongo.domain.enums.MongoShellCommandTypeEnum;
 import modules.mongo.domain.entities.MongoShellCommandEntity;
 import modules.mongo.domain.services.MongoDangerousCommandDetector;
 import modules.mongo.domain.services.MongoShellParser;
@@ -24,7 +25,7 @@ final class MongoDomainTest extends AbstractTestCase {
         MongoShellCommandEntity getCollection = mongoShellParser.getCommand("db.getCollection('my-coll').countDocuments()");
         MongoShellCommandEntity update = mongoShellParser.getCommand("db.users.updateMany({}, {$set: {tags: [1, 2]}})");
 
-        assertEquals(MongoShellCommandEntity.COLLECTION_METHOD, find.type());
+        assertEquals(MongoShellCommandTypeEnum.COLLECTION_METHOD, find.type());
         assertEquals("users", find.name());
         assertEquals("find", find.method());
         assertEquals(List.of("{age: {$gt: 18}, name: \"a, b)\"}", "{name: 1}"), find.arguments());
@@ -36,12 +37,12 @@ final class MongoDomainTest extends AbstractTestCase {
 
     @Test
     void testShellCommandsAndRunCommand() {
-        assertEquals(MongoShellCommandEntity.SHOW_DATABASES, mongoShellParser.getCommand("show  dbs").type());
-        assertEquals(MongoShellCommandEntity.SHOW_COLLECTIONS, mongoShellParser.getCommand("show collections;").type());
+        assertEquals(MongoShellCommandTypeEnum.SHOW_DATABASES, mongoShellParser.getCommand("show  dbs").type());
+        assertEquals(MongoShellCommandTypeEnum.SHOW_COLLECTIONS, mongoShellParser.getCommand("show collections;").type());
         assertEquals("shop", mongoShellParser.getCommand("use shop").name());
         assertEquals(List.of("{ping: 1}"), mongoShellParser.getCommand("db.runCommand({ping: 1})").arguments());
         assertEquals(List.of("{buildInfo: 1}"), mongoShellParser.getCommand("{buildInfo: 1}").arguments());
-        assertEquals(MongoShellCommandEntity.DROP_DATABASE, mongoShellParser.getCommand("db.dropDatabase()").type());
+        assertEquals(MongoShellCommandTypeEnum.DROP_DATABASE, mongoShellParser.getCommand("db.dropDatabase()").type());
         assertThrows(IllegalArgumentException.class, () -> mongoShellParser.getCommand("db.users.find({a: 1}"));
         assertThrows(IllegalArgumentException.class, () -> mongoShellParser.getCommand("select * from users"));
     }

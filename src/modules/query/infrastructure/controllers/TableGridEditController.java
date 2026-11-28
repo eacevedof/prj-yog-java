@@ -45,6 +45,7 @@ public final class TableGridEditController extends AbstractFxController {
     private final String databaseName;
     private final String tableName;
     private TableEditSession tableEditSession;
+    private String readOnlyReason;
     private boolean isSaving;
 
     /**
@@ -67,10 +68,10 @@ public final class TableGridEditController extends AbstractFxController {
     }
 
     /**
-     * Hace editable la rejilla si se puede. null si quedo editable; si no, el motivo (para ensenarlo).
+     * Hace editable la rejilla si se puede; si no, deja el motivo en getReadOnlyReason.
      * tableColumns: las de ListTableColumnsService, con las claves de ExplorerKeyEnum.
      */
-    public String enableEditing(ResultGridPane resultGridPane, List<String> columnNames, List<Map<String, Object>> tableColumns, Runnable onEdited) {
+    public void enableEditing(ResultGridPane resultGridPane, List<String> columnNames, List<Map<String, Object>> tableColumns, Runnable onEdited) {
         tableEditSession = null;
         Set<String> tableColumnNames = new HashSet<>();
         Set<String> primaryKeyColumns = new LinkedHashSet<>();
@@ -86,16 +87,22 @@ public final class TableGridEditController extends AbstractFxController {
             if (isReadOnlyType || extra.contains(TableColumnMetaEnum.EXTRA_GENERATED)) readOnlyColumns.add(columnName);
         }
 
-        String readOnlyReason = getReadOnlyReason(columnNames, tableColumnNames, primaryKeyColumns, readOnlyColumns);
-        if (readOnlyReason != null) return readOnlyReason;
+        readOnlyReason = getReadOnlyReason(columnNames, tableColumnNames, primaryKeyColumns, readOnlyColumns);
+        if (readOnlyReason != null) return;
 
         Set<Integer> readOnlyColumnIndexes = new HashSet<>();
         for (int i = 0; i < columnNames.size(); i++) {
             if (readOnlyColumns.contains(columnNames.get(i))) readOnlyColumnIndexes.add(i);
         }
-        tableEditSession = new TableEditSession(columnNames, primaryKeyColumns, autoIncrementColumns);
+        tableEditSession = TableEditSession.getInstance(columnNames, primaryKeyColumns, autoIncrementColumns);
         resultGridPane.enableEditing(tableEditSession, readOnlyColumnIndexes, onEdited);
-        return null;
+    }
+
+    /**
+     * Tras enableEditing: null si la rejilla quedo editable; si no, el motivo (para ensenarlo).
+     */
+    public String getReadOnlyReason() {
+        return readOnlyReason;
     }
 
     private String getReadOnlyReason(List<String> columnNames, Set<String> tableColumnNames, Set<String> primaryKeyColumns, Set<String> readOnlyColumns) {

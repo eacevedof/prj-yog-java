@@ -19,6 +19,7 @@ public final class FilesKeyEnum {
     public static final String FILE_SIZE = "file_size";
     public static final String ROWS_DIGEST = "rows_digest";
     public static final String LOADED_AT = "loaded_at";
+    public static final String ROWS = "rows";
 
     private FilesKeyEnum() {
     }

@@ -24,6 +24,7 @@ import modules.shared.infrastructure.components.theme.ThemeComponent;
 
 import static core.config.Global.__;
 
+import modules.query.domain.enums.CompletionKindEnum;
 import modules.query.domain.enums.SqlKeywordsEnum;
 import modules.query.domain.entities.SqlCompletionContextEntity;
 import modules.query.domain.entities.SqlStatementEntity;
@@ -48,7 +49,7 @@ public final class CompletionPopupComponent {
     private final ListView<CompletionProvider.Candidate> candidatesListView = new ListView<>();
     private SqlCompletionContextEntity currentContext;
 
-    public CompletionPopupComponent(
+    private CompletionPopupComponent(
         CodeArea sqlCodeArea,
         Supplier<SchemaCacheComponent> schemaCacheSupplier,
         Supplier<String> activeDatabaseSupplier,
@@ -68,6 +69,18 @@ public final class CompletionPopupComponent {
         });
         popup.getContent().add(candidatesListView);
         popup.setAutoHide(true);
+    }
+
+    /**
+     * Un popup nuevo por editor: guarda el contexto de lo que se esta escribiendo.
+     */
+    public static CompletionPopupComponent getInstance(
+        CodeArea sqlCodeArea,
+        Supplier<SchemaCacheComponent> schemaCacheSupplier,
+        Supplier<String> activeDatabaseSupplier,
+        Supplier<String> dbEngineSupplier
+    ) {
+        return new CompletionPopupComponent(sqlCodeArea, schemaCacheSupplier, activeDatabaseSupplier, dbEngineSupplier);
     }
 
     public void install() {
@@ -181,7 +194,7 @@ public final class CompletionPopupComponent {
         CompletionProvider.Candidate candidate = candidatesListView.getSelectionModel().getSelectedItem();
         popup.hide();
         if (candidate == null || currentContext == null) return;
-        String text = CompletionProvider.KIND_KEYWORD.equals(candidate.kind()) ? candidate.text() : getInsertableName(candidate.text());
+        String text = CompletionKindEnum.KIND_KEYWORD.equals(candidate.kind()) ? candidate.text() : getInsertableName(candidate.text());
         int caret = sqlCodeArea.getCaretPosition();
         sqlCodeArea.replaceText(Math.max(0, caret - currentContext.getRawPrefixLength()), caret, text);
     }

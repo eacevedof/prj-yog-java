@@ -12,6 +12,7 @@ import java.util.Set;
 import modules.shared.application.Primitives;
 
 import modules.query.domain.enums.TableChangeKeyEnum;
+import modules.query.domain.enums.TableEditRowStateEnum;
 
 /**
  * Lo editado en la rejilla de la pestaña Datos (feature 6) hasta que se guarda: que filas son nuevas, cuales se han
@@ -19,10 +20,6 @@ import modules.query.domain.enums.TableChangeKeyEnum;
  * identidad (la misma List), asi que se pueden editar en sitio. Sin JavaFX: se prueba sola.
  */
 public final class TableEditSession {
-
-    public static final String STATE_NEW = "new";
-    public static final String STATE_MODIFIED = "modified";
-    public static final String STATE_DELETED = "deleted";
 
     private final List<String> columnNames;
     private final Set<String> primaryKeyColumns;
@@ -33,10 +30,17 @@ public final class TableEditSession {
     // celdas puestas a DEFAULT (menu "Poner DEFAULT"): se ven como (DEFAULT) y van como DEFAULT en el SQL
     private final Map<List<String>, Set<Integer>> defaultColumnsByRow = new IdentityHashMap<>();
 
-    public TableEditSession(List<String> columnNames, Set<String> primaryKeyColumns, Set<String> autoIncrementColumns) {
+    private TableEditSession(List<String> columnNames, Set<String> primaryKeyColumns, Set<String> autoIncrementColumns) {
         this.columnNames = List.copyOf(columnNames);
         this.primaryKeyColumns = primaryKeyColumns;
         this.autoIncrementColumns = autoIncrementColumns;
+    }
+
+    /**
+     * Una sesion de edicion nueva por rejilla: guarda los cambios pendientes de sus filas.
+     */
+    public static TableEditSession getInstance(List<String> columnNames, Set<String> primaryKeyColumns, Set<String> autoIncrementColumns) {
+        return new TableEditSession(columnNames, primaryKeyColumns, autoIncrementColumns);
     }
 
     /**
@@ -63,7 +67,7 @@ public final class TableEditSession {
      * La celda queda como DEFAULT: el servidor pone el valor por defecto de la columna al guardar.
      */
     public void setDefault(List<String> row, int columnIndex) {
-        if (STATE_DELETED.equals(statesByRow.get(row))) return;
+        if (TableEditRowStateEnum.STATE_DELETED.equals(statesByRow.get(row))) return;
         row.set(columnIndex, null);
         defaultColumnsByRow.computeIfAbsent(row, defaultRow -> new HashSet<>()).add(columnIndex);
         updateLoadedRowState(row);
@@ -78,7 +82,7 @@ public final class TableEditSession {
      * Una fila del servidor esta cambiada si algun valor difiere del original o tiene alguna celda a DEFAULT.
      */
     private void updateLoadedRowState(List<String> row) {
-        if (STATE_NEW.equals(statesByRow.get(row)) || STATE_DELETED.equals(statesByRow.get(row))) return;
+        if (TableEditRowStateEnum.STATE_NEW.equals(statesByRow.get(row)) || TableEditRowStateEnum.STATE_DELETED.equals(statesByRow.get(row))) return;
         List<String> originalValues = originalValuesByRow.get(row);
         if (originalValues == null) return;
         Set<Integer> defaultColumns = defaultColumnsByRow.get(row);
@@ -86,7 +90,7 @@ public final class TableEditSession {
             statesByRow.remove(row);
             return;
         }
-        statesByRow.put(row, STATE_MODIFIED);
+        statesByRow.put(row, TableEditRowStateEnum.STATE_MODIFIED);
     }
 
     /**
@@ -97,7 +101,7 @@ public final class TableEditSession {
         for (int i = 0; i < columnNames.size(); i++) {
             row.add(null);
         }
-        statesByRow.put(row, STATE_NEW);
+        statesByRow.put(row, TableEditRowStateEnum.STATE_NEW);
         newRowsInOrder.add(row);
         return row;
     }
@@ -117,7 +121,7 @@ public final class TableEditSession {
      * true: la fila era nueva y desaparece sin mas (la rejilla la quita); false: queda marcada para borrar.
      */
     public boolean deleteRow(List<String> row) {
-        if (STATE_NEW.equals(statesByRow.get(row))) {
+        if (TableEditRowStateEnum.STATE_NEW.equals(statesByRow.get(row))) {
             statesByRow.remove(row);
             newRowsInOrder.remove(row);
             defaultColumnsByRow.remove(row);
@@ -128,13 +132,13 @@ public final class TableEditSession {
             row.clear();
             row.addAll(originalValuesByRow.get(row));
             defaultColumnsByRow.remove(row);
-            statesByRow.put(row, STATE_DELETED);
+            statesByRow.put(row, TableEditRowStateEnum.STATE_DELETED);
         }
         return false;
     }
 
     public void undeleteRow(List<String> row) {
-        if (STATE_DELETED.equals(statesByRow.get(row))) statesByRow.remove(row);
+        if (TableEditRowStateEnum.STATE_DELETED.equals(statesByRow.get(row))) statesByRow.remove(row);
     }
 
     public int getChangeCount() {
@@ -149,7 +153,7 @@ public final class TableEditSession {
      * Las filas del servidor marcadas para borrar: se confirma antes de guardar.
      */
     public int getDeletedCount() {
-        return (int) statesByRow.values().stream().filter(STATE_DELETED::equals).count();
+        return (int) statesByRow.values().stream().filter(TableEditRowStateEnum.STATE_DELETED::equals).count();
     }
 
     /**
@@ -161,10 +165,10 @@ public final class TableEditSession {
         List<Map<String, Object>> updates = new ArrayList<>();
         for (Map.Entry<List<String>, String> entry : statesByRow.entrySet()) {
             List<String> row = entry.getKey();
-            if (STATE_DELETED.equals(entry.getValue())) {
+            if (TableEditRowStateEnum.STATE_DELETED.equals(entry.getValue())) {
                 deletes.add(getChange(TableChangeKeyEnum.TYPE_DELETE, getKeyValues(row), Map.of(), List.of()));
             }
-            else if (STATE_MODIFIED.equals(entry.getValue())) {
+            else if (TableEditRowStateEnum.STATE_MODIFIED.equals(entry.getValue())) {
                 updates.add(getChange(TableChangeKeyEnum.TYPE_UPDATE, getKeyValues(row), getModifiedValues(row), getDefaultColumnNames(row)));
             }
         }

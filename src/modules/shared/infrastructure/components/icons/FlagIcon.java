@@ -22,7 +22,11 @@ public final class FlagIcon {
     private FlagIcon() {
     }
 
-    public static Node of(String language) {
+    public static FlagIcon getInstance() {
+        return new FlagIcon();
+    }
+
+    public Node getFlag(String language) {
         Group flag = switch (language) {
             case LanguageEnum.ES -> getSpain();
             case LanguageEnum.NL -> getNetherlands();
@@ -40,14 +44,14 @@ public final class FlagIcon {
         return new Group(flag, border);
     }
 
-    private static Group getSpain() {
+    private Group getSpain() {
         return new Group(
             getRect(0, 0, WIDTH, HEIGHT, Color.web("#c60b1e")),
             getRect(0, HEIGHT / 4, WIDTH, HEIGHT / 2, Color.web("#ffc400"))
         );
     }
 
-    private static Group getNetherlands() {
+    private Group getNetherlands() {
         return new Group(
             getRect(0, 0, WIDTH, HEIGHT / 3, Color.web("#ae1c28")),
             getRect(0, HEIGHT / 3, WIDTH, HEIGHT / 3, Color.WHITE),
@@ -58,7 +62,7 @@ public final class FlagIcon {
     /**
      * Azul con una franja amarilla por debajo del centro y dos estrellas blancas arriba a la izquierda.
      */
-    private static Group getCuracao() {
+    private Group getCuracao() {
         return new Group(
             getRect(0, 0, WIDTH, HEIGHT, Color.web("#002b7f")),
             getRect(0, HEIGHT * 5 / 8, WIDTH, HEIGHT / 8, Color.web("#f9e814")),
@@ -67,7 +71,7 @@ public final class FlagIcon {
         );
     }
 
-    private static Group getUnitedKingdom() {
+    private Group getUnitedKingdom() {
         Group flag = new Group(getRect(0, 0, WIDTH, HEIGHT, Color.web("#012169")));
         flag.getChildren().addAll(getStripe(0, 0, WIDTH, HEIGHT, 3, Color.WHITE), getStripe(0, HEIGHT, WIDTH, 0, 3, Color.WHITE));
         flag.getChildren().addAll(getStripe(0, 0, WIDTH, HEIGHT, 1, Color.web("#c8102e")), getStripe(0, HEIGHT, WIDTH, 0, 1, Color.web("#c8102e")));
@@ -80,13 +84,13 @@ public final class FlagIcon {
         return flag;
     }
 
-    private static Rectangle getRect(double x, double y, double width, double height, Color color) {
+    private Rectangle getRect(double x, double y, double width, double height, Color color) {
         Rectangle rect = new Rectangle(x, y, width, height);
         rect.setFill(color);
         return rect;
     }
 
-    private static Line getStripe(double startX, double startY, double endX, double endY, double width, Color color) {
+    private Line getStripe(double startX, double startY, double endX, double endY, double width, Color color) {
         Line stripe = new Line(startX, startY, endX, endY);
         stripe.setStroke(color);
         stripe.setStrokeWidth(width);
@@ -97,7 +101,7 @@ public final class FlagIcon {
     /**
      * Estrella de cinco puntas blanca, centrada en (centerX, centerY).
      */
-    private static SVGPath getStar(double centerX, double centerY, double radius) {
+    private SVGPath getStar(double centerX, double centerY, double radius) {
         StringBuilder path = new StringBuilder();
         for (int i = 0; i < 10; i++) {
             double pointRadius = i % 2 == 0 ? radius : radius * 0.42;

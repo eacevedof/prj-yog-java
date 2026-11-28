@@ -28,6 +28,9 @@ public final class ConnectionsKeyEnum {
     public static final String HTTP_TIMEOUT_S = "http_timeout_s";
     public static final String CREATED_AT = "created_at";
     public static final String UPDATED_AT = "updated_at";
+    // las columnas de cada tunel empiezan asi (los errores de validacion llevan delante la columna)
+    public static final String SSH_PREFIX = "ssh_";
+    public static final String HTTP_PREFIX = "http_";
 
     private ConnectionsKeyEnum() {
     }

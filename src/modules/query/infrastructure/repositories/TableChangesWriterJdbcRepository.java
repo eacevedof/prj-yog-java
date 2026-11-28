@@ -13,6 +13,7 @@ import modules.shared.domain.services.SqlDialect;
 import modules.shared.domain.services.SqlLiteralQuoter;
 import modules.shared.infrastructure.repositories.AbstractJdbcRepository;
 
+import modules.connections.infrastructure.components.httptunnel.HttpTunnelCellDecoder;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelResult;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelSession;
 
@@ -33,9 +34,11 @@ public final class TableChangesWriterJdbcRepository extends AbstractJdbcReposito
     private static final String ROW_GONE_MESSAGE = "Expected 1 row: a row was deleted or its key changed meanwhile";
 
     private final SqlDialect sqlDialect;
+    private final HttpTunnelCellDecoder httpTunnelCellDecoder;
 
     private TableChangesWriterJdbcRepository(Connection pdo, SqlDialect sqlDialect) {
         super(pdo);
+        this.httpTunnelCellDecoder = HttpTunnelCellDecoder.getInstance();
         this.sqlDialect = sqlDialect;
     }
 
@@ -54,7 +57,7 @@ public final class TableChangesWriterJdbcRepository extends AbstractJdbcReposito
             int affectedRows = 0;
             for (PreparedSqlEntity statement : statements) {
                 int statementRows = executeUpdate(statement);
-                if (statement.expectsOneRow() && statementRows != 1) {
+                if (statement.isOneRowExpected() && statementRows != 1) {
                     throw new SQLException("Expected 1 row, affected " + statementRows + ": " + statement.getSql());
                 }
                 affectedRows += statementRows;
@@ -74,7 +77,7 @@ public final class TableChangesWriterJdbcRepository extends AbstractJdbcReposito
         List<String> script = new ArrayList<>(List.of("START TRANSACTION"));
         for (PreparedSqlEntity statement : statements) {
             String inlinedSql = sqlLiteralQuoter.getInlined(statement.getSql(), statement.getParams());
-            if (!statement.expectsOneRow()) {
+            if (!statement.isOneRowExpected()) {
                 script.add(inlinedSql);
                 continue;
             }
@@ -106,7 +109,7 @@ public final class TableChangesWriterJdbcRepository extends AbstractJdbcReposito
         SqlLiteralQuoter sqlLiteralQuoter = SqlLiteralQuoter.getInstance();
         List<String> script = new ArrayList<>(List.of("START TRANSACTION", "SET @jy_rows = 0"));
         for (PreparedSqlEntity statement : statements) {
-            if (statement.expectsOneRow()) {
+            if (statement.isOneRowExpected()) {
                 script.add("SET @jy_found = (SELECT COUNT(*) FROM " + getKeyLookup(statement) + ")");
                 script.add(MYSQL_TUNNEL_ROW_GUARD);
                 script.add(sqlLiteralQuoter.getInlined(statement.getSql(), statement.getParams()));
@@ -120,8 +123,8 @@ public final class TableChangesWriterJdbcRepository extends AbstractJdbcReposito
         script.add("SELECT @jy_rows");
         try {
             HttpTunnelResult result = httpTunnelSession.executeBatch(script);
-            if (result.rows().isEmpty()) return 0;
-            return Integer.parseInt(HttpTunnelResult.getText(result.rows().getFirst().getFirst()));
+            if (result.getRows().isEmpty()) return 0;
+            return Integer.parseInt(httpTunnelCellDecoder.getText(result.getRows().getFirst().getFirst()));
         }
         catch (SQLException e) {
             if (e.getErrorCode() == ER_SUBQUERY_NO_1_ROW) throw new SQLException(ROW_GONE_MESSAGE, e);
