@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import modules.shared.infrastructure.components.icons.AppIcon?>
+
+<!-- el "Alter Table" de SQLyog (MySQL/MariaDB): el nombre arriba y una pestaña por cosa que cambia un ALTER TABLE:
+     columnas, indices, claves foraneas, opciones avanzadas y el SQL que se va a ejecutar -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefWidth="1000" prefHeight="600" spacing="8"
+      styleClass="copy-dialog" fx:controller="modules.explorer.infrastructure.controllers.TableEditorDialogController">
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <AppIcon name="table"/>
+        <Label text="%Tabla" styleClass="copy-section"/>
+        <TextField fx:id="tableNameField" prefWidth="320"/>
+        <Label fx:id="databaseLabel" styleClass="query-status"/>
+    </HBox>
+    <TabPane fx:id="editorTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <Tab text="%1 Columnas">
+            <VBox spacing="6" styleClass="copy-dialog">
+                <HBox spacing="6">
+                    <Button text="%Añadir columna" onAction="#onAddColumn"><graphic><AppIcon name="add-row"/></graphic></Button>
+                    <Button text="%Insertar encima" onAction="#onInsertColumn"/>
+                    <Button text="%Borrar" onAction="#onDeleteColumn"><graphic><AppIcon name="delete"/></graphic></Button>
+                    <Button text="%Subir" onAction="#onMoveColumnUp"/>
+                    <Button text="%Bajar" onAction="#onMoveColumnDown"/>
+                    <Label text="%Default es SQL: 'texto', 0, NULL, CURRENT_TIMESTAMP (vacío = sin DEFAULT)" styleClass="query-status"/>
+                </HBox>
+                <TableView fx:id="columnsTableView" editable="true" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </Tab>
+        <Tab text="%2 Índices">
+            <VBox spacing="6" styleClass="copy-dialog">
+                <HBox spacing="6">
+                    <Button text="%Añadir índice" onAction="#onAddIndex"><graphic><AppIcon name="key"/></graphic></Button>
+                    <Button text="%Borrar" onAction="#onDeleteIndex"><graphic><AppIcon name="delete"/></graphic></Button>
+                    <Label text="%Columnas separadas por comas; nombre(10) indexa solo 10 caracteres. La clave primaria va en la pestaña Columnas." styleClass="query-status"/>
+                </HBox>
+                <TableView fx:id="indexesTableView" editable="true" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </Tab>
+        <Tab text="%3 Claves foráneas">
+            <VBox spacing="6" styleClass="copy-dialog">
+                <HBox spacing="6">
+                    <Button text="%Añadir clave foránea" onAction="#onAddForeignKey"><graphic><AppIcon name="key"/></graphic></Button>
+                    <Button text="%Borrar" onAction="#onDeleteForeignKey"><graphic><AppIcon name="delete"/></graphic></Button>
+                    <Label text="%Columnas separadas por comas, en el mismo orden en las dos tablas." styleClass="query-status"/>
+                </HBox>
+                <TableView fx:id="foreignKeysTableView" editable="true" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </Tab>
+        <Tab text="%4 Avanzado">
+            <GridPane hgap="10" vgap="8" styleClass="copy-dialog">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="160"/>
+                    <ColumnConstraints prefWidth="320"/>
+                </columnConstraints>
+                <Label text="%Motor" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="engineComboBox" editable="true" maxWidth="Infinity" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="%Cotejamiento" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="collationComboBox" editable="true" maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="%Comentario" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="commentField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="%Siguiente AUTO_INCREMENT" mnemonicParsing="false" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="autoIncrementField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="%Formato de fila" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="rowFormatComboBox" editable="true" maxWidth="Infinity" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </GridPane>
+        </Tab>
+        <Tab fx:id="sqlTab" text="%5 SQL">
+            <TextArea fx:id="sqlTextArea" editable="false" styleClass="result-text"/>
+        </Tab>
+    </TabPane>
+    <Label fx:id="statusLabel" wrapText="true" styleClass="query-status"/>
+    <HBox styleClass="toolbar-buttons" alignment="CENTER_RIGHT">
+        <Button fx:id="saveButton" text="%Guardar" defaultButton="true" onAction="#onSave">
+            <graphic><AppIcon name="save"/></graphic>
+        </Button>
+        <Button fx:id="closeButton" text="%Cancelar" cancelButton="true" onAction="#onClose"/>
+    </HBox>
+</VBox>

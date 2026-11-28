@@ -1,0 +1,28 @@
+# motor "Ficheros": mensajes del dominio (msgid en ingles)
+
+msgid "{0} is required"
+msgstr "{0} is required"
+
+msgid "Connection {0} not found"
+msgstr "Connection {0} not found"
+
+msgid "Connection {0} is not a files connection"
+msgstr "Connection {0} is not a files connection"
+
+msgid "Folder or data file not found: {0}"
+msgstr "Folder or data file not found: {0}"
+
+msgid "{0} is not a list of objects (an array of objects or one object per line)"
+msgstr "{0} is not a list of objects (an array of objects or one object per line)"
+
+msgid "{0} is not valid JSON: {1}"
+msgstr "{0} is not valid JSON: {1}"
+
+msgid "Could not read {0}: {1}"
+msgstr "Could not read {0}: {1}"
+
+msgid "{0} is not valid JSON at line {1}: {2}"
+msgstr "{0} is not valid JSON at line {1}: {2}"
+
+msgid "{0} is not UTF-8 text (save it as UTF-8)"
+msgstr "{0} is not UTF-8 text (save it as UTF-8)"

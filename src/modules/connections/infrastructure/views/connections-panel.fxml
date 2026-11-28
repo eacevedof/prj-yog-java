@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import modules.shared.infrastructure.components.icons.AppIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- conexiones guardadas en arbol: al abrir una, sus BD, tablas y columnas cuelgan debajo (como el Object Browser) -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" minWidth="160"
+      fx:controller="modules.connections.infrastructure.controllers.ConnectionsPanelController">
+    <!-- FlowPane: si el panel es estrecho, los botones pasan a otra linea en vez de cortarse -->
+    <FlowPane styleClass="toolbar-buttons" hgap="4" vgap="4">
+        <!-- dos grupos: lo que afecta a la conexion y lo que afecta a sus BD (conectar, en el menu del boton derecho o doble clic) -->
+        <HBox styleClass="toolbar-group" alignment="CENTER_LEFT">
+            <Label text="%Conexión" styleClass="toolbar-group-label"/>
+            <Button text="%Nueva" minWidth="-Infinity" onAction="#onNewConnection"><graphic><AppIcon name="connection-new"/></graphic><tooltip><Tooltip text="%Nueva conexión"/></tooltip></Button>
+            <Button fx:id="editButton" text="%Editar" minWidth="-Infinity" onAction="#onEditConnection"><graphic><AppIcon name="edit"/></graphic><tooltip><Tooltip text="%Editar la conexión"/></tooltip></Button>
+            <Button fx:id="cloneButton" text="%Clonar" minWidth="-Infinity" contentDisplay="GRAPHIC_ONLY" onAction="#onCloneConnection"><graphic><AppIcon name="copy"/></graphic><tooltip><Tooltip text="%Clonar la conexión"/></tooltip></Button>
+            <Button fx:id="deleteButton" text="%Borrar" minWidth="-Infinity" contentDisplay="GRAPHIC_ONLY" onAction="#onDeleteConnection"><graphic><AppIcon name="delete"/></graphic><tooltip><Tooltip text="%Borrar la conexión"/></tooltip></Button>
+            <Button fx:id="disconnectButton" text="%Desconectar" minWidth="-Infinity" contentDisplay="GRAPHIC_ONLY" onAction="#onDisconnectConnection"><graphic><AppIcon name="disconnect"/></graphic><tooltip><Tooltip text="%Desconectar la conexión elegida (cierra su pestaña)"/></tooltip></Button>
+        </HBox>
+        <HBox styleClass="toolbar-group" alignment="CENTER_LEFT">
+            <Label text="%BD" styleClass="toolbar-group-label"/>
+            <Button fx:id="createDatabaseButton" text="%Nueva BD" minWidth="-Infinity" disable="true" onAction="#onCreateDatabase"><graphic><AppIcon name="database-new"/></graphic><tooltip><Tooltip text="%Crear una BD en la conexión elegida (CREATE DATABASE)"/></tooltip></Button>
+            <Button fx:id="refreshButton" text="%Refrescar" minWidth="-Infinity" contentDisplay="GRAPHIC_ONLY" onAction="#onRefresh"><graphic><AppIcon name="refresh"/></graphic><tooltip><Tooltip text="%Refrescar las BD de la conexión elegida (F5)"/></tooltip></Button>
+        </HBox>
+    </FlowPane>
+    <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+        <TextField fx:id="databaseFilterField" promptText="%Filtrar BD" HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="objectFilterField" promptText="%Filtrar tablas..." HBox.hgrow="ALWAYS"/>
+        <Button fx:id="clearFiltersButton" text="%Limpiar filtros" minWidth="-Infinity" contentDisplay="GRAPHIC_ONLY" onAction="#onClearFilters"><graphic><AppIcon name="clear-filter"/></graphic><tooltip><Tooltip text="%Limpiar filtros"/></tooltip></Button>
+    </HBox>
+    <TreeView fx:id="connectionsTreeView" showRoot="false" VBox.vgrow="ALWAYS"/>
+    <Label fx:id="treeStatusLabel" styleClass="explorer-status"/>
+</VBox>

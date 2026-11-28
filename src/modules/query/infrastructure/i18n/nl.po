@@ -1,0 +1,569 @@
+# multidbs · módulo query · nl (neerlandés)
+# clave = texto fuente (español en la interfaz, inglés en los mensajes de dominio)
+
+msgid "Añadir fila"
+msgstr "Rij toevoegen"
+
+msgid "BD"
+msgstr "DB"
+
+msgid "Borrar (Supr)"
+msgstr "Verwijderen (Del)"
+
+msgid "Buscar en el SQL"
+msgstr "Zoeken in de SQL"
+
+msgid "Cancelar"
+msgstr "Annuleren"
+
+msgid "Cerrar"
+msgstr "Sluiten"
+
+msgid "Conexión"
+msgstr "Verbinding"
+
+msgid "Copiar"
+msgstr "Kopiëren"
+
+msgid "Descartar"
+msgstr "Verwerpen"
+
+msgid "Duplicar"
+msgstr "Dupliceren"
+
+msgid "Ejecutar (Ctrl+Enter)"
+msgstr "Uitvoeren (Ctrl+Enter)"
+
+msgid "Ejecutar todo (Ctrl+F9)"
+msgstr "Alles uitvoeren (Ctrl+F9)"
+
+msgid "Fecha"
+msgstr "Datum"
+
+msgid "Filas que se leen como mucho de cada resultado (0 = todas)"
+msgstr "Maximaal aantal rijen per resultaat (0 = alle)"
+
+msgid "Filas"
+msgstr "Rijen"
+
+msgid "Guardar (Ctrl+S)"
+msgstr "Opslaan (Ctrl+S)"
+
+msgid "Historial (Ctrl+H)"
+msgstr "Geschiedenis (Ctrl+H)"
+
+msgid "La sentencia donde está el cursor, o lo seleccionado (Ctrl+Enter o F9)"
+msgstr "De statement bij de cursor, of de selectie (Ctrl+Enter of F9)"
+
+msgid "Límite"
+msgstr "Limiet"
+
+msgid "Mensajes"
+msgstr "Berichten"
+
+msgid "Máx. filas"
+msgstr "Max. rijen"
+
+msgid "ORDER BY"
+msgstr "ORDER BY"
+
+msgid "Pegar en el editor"
+msgstr "In de editor plakken"
+
+msgid "Poner NULL"
+msgstr "NULL invullen"
+
+msgid "Refrescar (F5)"
+msgstr "Vernieuwen (F5)"
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "Solo esta conexión"
+msgstr "Alleen deze verbinding"
+
+msgid "Texto"
+msgstr "Tekst"
+
+msgid "WHERE"
+msgstr "WHERE"
+
+msgid "id > 10 AND estado = 'activo'"
+msgstr "id > 10 AND status = 'actief'"
+
+msgid "id DESC"
+msgstr "id DESC"
+
+msgid "ms"
+msgstr "ms"
+
+msgid "JSON formateado"
+msgstr "Opgemaakte JSON"
+
+msgid "{0} caracteres"
+msgstr "{0} tekens"
+
+msgid "Valor de {0}"
+msgstr "Waarde van {0}"
+
+msgid "columna"
+msgstr "kolom"
+
+msgid "tabla"
+msgstr "tabel"
+
+msgid "palabra clave"
+msgstr "trefwoord"
+
+msgid "Exportar {0} fila(s)"
+msgstr "{0} rij(en) exporteren"
+
+msgid "No se pudo escribir {0}: {1}"
+msgstr "Kon {0} niet schrijven: {1}"
+
+msgid "Buscar en todas las columnas"
+msgstr "Zoeken in alle kolommen"
+
+msgid "{0} de {1} fila(s)"
+msgstr "{0} van {1} rij(en)"
+
+msgid "{0} fila(s)"
+msgstr "{0} rij(en)"
+
+msgid "Filtro"
+msgstr "Filter"
+
+msgid "Ver valor"
+msgstr "Waarde bekijken"
+
+msgid "Insertar fila nueva"
+msgstr "Nieuwe rij invoegen"
+
+msgid "Guardar cambios (Ctrl+S)"
+msgstr "Wijzigingen opslaan (Ctrl+S)"
+
+msgid "Borrar / recuperar fila(s) seleccionada(s) (Supr)"
+msgstr "Geselecteerde rij(en) verwijderen / herstellen (Del)"
+
+msgid "Cancelar cambios"
+msgstr "Wijzigingen annuleren"
+
+msgid "Poner cadena vacía"
+msgstr "Lege tekenreeks invullen"
+
+msgid "Poner DEFAULT"
+msgstr "DEFAULT invullen"
+
+msgid "Quitar orden"
+msgstr "Sortering verwijderen"
+
+msgid "Exportar las filas como... (Ctrl+Shift+E)"
+msgstr "Rijen exporteren als... (Ctrl+Shift+E)"
+
+msgid "Celdas seleccionadas (Ctrl+C)"
+msgstr "Geselecteerde cellen (Ctrl+C)"
+
+msgid "Filas seleccionadas"
+msgstr "Geselecteerde rijen"
+
+msgid "Todas las filas con tabuladores y cabecera"
+msgstr "Alle rijen tab-gescheiden, met koptekst"
+
+msgid "Nombre de la columna"
+msgstr "Kolomnaam"
+
+msgid "Duplicar fila actual"
+msgstr "Huidige rij dupliceren"
+
+msgid "Quitar filtro"
+msgstr "Filter verwijderen"
+
+msgid "Seleccionar todo"
+msgstr "Alles selecteren"
+
+msgid "Exportar como CSV..."
+msgstr "Exporteren als CSV..."
+
+msgid "Exportar como INSERTs (SQL)..."
+msgstr "Exporteren als INSERTs (SQL)..."
+
+msgid "Exportar como JSON..."
+msgstr "Exporteren als JSON..."
+
+msgid "Exportar como XML..."
+msgstr "Exporteren als XML..."
+
+msgid "Exportar como HTML..."
+msgstr "Exporteren als HTML..."
+
+msgid "Copiar todo con tabuladores y cabecera"
+msgstr "Alles tab-gescheiden kopiëren, met koptekst"
+
+msgid "Borrar / recuperar fila(s) (Supr)"
+msgstr "Rij(en) verwijderen / herstellen (Del)"
+
+msgid "Duplicar fila"
+msgstr "Rij dupliceren"
+
+msgid "Copiar fila(s)"
+msgstr "Rij(en) kopiëren"
+
+msgid "{0} ejecución(es)"
+msgstr "{0} uitvoering(en)"
+
+msgid "Cancelando..."
+msgstr "Annuleren..."
+
+msgid "No ejecutado"
+msgstr "Niet uitgevoerd"
+
+msgid "Error"
+msgstr "Fout"
+
+msgid "Ejecutando..."
+msgstr "Uitvoeren..."
+
+msgid "Ejecutar en producción"
+msgstr "Uitvoeren in productie"
+
+msgid "Conexión de producción"
+msgstr "Productieverbinding"
+
+msgid "Sentencias destructivas en PRODUCCIÓN"
+msgstr "Destructieve statements in PRODUCTIE"
+
+msgid "{0} fila(s) devueltas"
+msgstr "{0} rij(en) teruggegeven"
+
+msgid "(cortado en Máx. filas)"
+msgstr "(afgekapt op Max. rijen)"
+
+msgid "{0} fila(s) afectadas"
+msgstr "{0} rij(en) gewijzigd"
+
+msgid "Tiempo: {0} ms"
+msgstr "Tijd: {0} ms"
+
+msgid "Cancelado por el usuario"
+msgstr "Geannuleerd door de gebruiker"
+
+msgid "Cancelado"
+msgstr "Geannuleerd"
+
+msgid "Resultado"
+msgstr "Resultaat"
+
+msgid "Resultado {0}"
+msgstr "Resultaat {0}"
+
+msgid "Hay {0} cambio(s) sin guardar. ¿Descartarlos y recargar?"
+msgstr "Er zijn {0} niet-opgeslagen wijziging(en). Verwerpen en opnieuw laden?"
+
+msgid "Cargando..."
+msgstr "Laden..."
+
+msgid "Guarda o cancela los cambios antes de filtrar"
+msgstr "Sla de wijzigingen op of annuleer ze voordat je filtert"
+
+msgid "Guardado: {0} fila(s)"
+msgstr "Opgeslagen: {0} rij(en)"
+
+msgid "Guardando..."
+msgstr "Opslaan..."
+
+msgid "Sin resultado"
+msgstr "Geen resultaat"
+
+msgid "(límite alcanzado)"
+msgstr "(limiet bereikt)"
+
+msgid "Solo lectura: vista o tabla sin clave primaria"
+msgstr "Alleen-lezen: view of tabel zonder primaire sleutel"
+
+msgid "Solo lectura: el resultado no trae toda la clave primaria"
+msgstr "Alleen-lezen: het resultaat bevat niet de hele primaire sleutel"
+
+msgid "Solo lectura: la clave primaria es binaria"
+msgstr "Alleen-lezen: de primaire sleutel is binair"
+
+msgid "Editable: doble clic, F2 o Enter"
+msgstr "Bewerkbaar: dubbelklik, F2 of Enter"
+
+msgid "{0} cambio(s) sin guardar"
+msgstr "{0} niet-opgeslagen wijziging(en)"
+
+msgid "Guardar en producción"
+msgstr "Opslaan in productie"
+
+msgid "Cambios en PRODUCCIÓN"
+msgstr "Wijzigingen in PRODUCTIE"
+
+msgid "{0} is required"
+msgstr "{0} is verplicht"
+
+msgid "Nothing to execute: the editor has no statements"
+msgstr "Niets uit te voeren: de editor bevat geen statements"
+
+msgid "Error Code: {0} - {1}"
+msgstr "Foutcode: {0} - {1}"
+
+msgid "Cancelled by the user"
+msgstr "Geannuleerd door de gebruiker"
+
+msgid "{0} is a production connection. Confirm these statements:\n\n{1}"
+msgstr "{0} is een productieverbinding. Bevestig deze statements:\n\n{1}"
+
+msgid "{0} is a production connection. Save {1} change(s)?"
+msgstr "{0} is een productieverbinding. {1} wijziging(en) opslaan?"
+
+msgid "Table {0} has no primary key: its data cannot be edited"
+msgstr "Tabel {0} heeft geen primaire sleutel: de gegevens kunnen niet worden bewerkt"
+
+msgid "Changes not saved (rolled back): {0}"
+msgstr "Wijzigingen niet opgeslagen (teruggedraaid): {0}"
+
+msgid "There are no changes to save"
+msgstr "Er zijn geen wijzigingen om op te slaan"
+
+msgid "Elige el formato en el que quieres exportar los datos"
+msgstr "Kies het formaat waarin je de gegevens wilt exporteren"
+
+msgid "Opciones de CSV"
+msgstr "CSV-opties"
+
+msgid "Campos terminados por"
+msgstr "Velden gescheiden door"
+
+msgid "Entre comillas"
+msgstr "Omsloten door"
+
+msgid "Escapados con"
+msgstr "Escape-teken"
+
+msgid "Líneas terminadas por"
+msgstr "Regels beëindigd door"
+
+msgid "NULL se escribe como"
+msgstr "NULL vervangen door"
+
+msgid "\\t tabulador · \\n salto de línea · <NONE> nada"
+msgstr "\\t tab · \\n regeleinde · <NONE> niets"
+
+msgid "Opciones de Excel"
+msgstr "Excel-opties"
+
+msgid "Ancho máximo de texto"
+msgstr "Maximale tekstbreedte"
+
+msgid "Decimales"
+msgstr "Decimalen"
+
+msgid "Opciones de SQL"
+msgstr "SQL-opties"
+
+msgid "Tabla"
+msgstr "Tabel"
+
+msgid "Filas por INSERT"
+msgstr "Rijen per INSERT"
+
+msgid "Nombres de columna en la primera fila"
+msgstr "Kolomnamen in de eerste rij"
+
+msgid "Campos a exportar"
+msgstr "Te exporteren velden"
+
+msgid "Quitar todo"
+msgstr "Alles deselecteren"
+
+msgid "Juego de caracteres"
+msgstr "Tekenset"
+
+msgid "Guardar en"
+msgstr "Opslaan in"
+
+msgid "Exportar"
+msgstr "Exporteren"
+
+msgid "Exportar como"
+msgstr "Exporteren als"
+
+msgid "Todas ({0})"
+msgstr "Alle ({0})"
+
+msgid "Solo las marcadas ({0})"
+msgstr "Alleen aangevinkte ({0})"
+
+msgid "Elige al menos un campo"
+msgstr "Kies minstens één veld"
+
+msgid "Falta el fichero"
+msgstr "Bestand ontbreekt"
+
+msgid "Exportadas {0} fila(s) y {1} campo(s) a {2}"
+msgstr "{0} rij(en) en {1} veld(en) geëxporteerd naar {2}"
+
+msgid "Exportar como Excel XML..."
+msgstr "Exporteren als Excel XML..."
+
+msgid "Ejecuta las sentencias de un fichero .sql sin cargarlo en el editor (volcados grandes)."
+msgstr "Voert de opdrachten van een .sql-bestand uit zonder het in de editor te laden (grote dumps)."
+
+msgid "Ejecutar fichero SQL"
+msgstr "SQL-bestand uitvoeren"
+
+msgid "Ejecutar un fichero .sql en la BD activa (importar)"
+msgstr "Een .sql-bestand uitvoeren in de actieve database (importeren)"
+
+msgid "Fichero a ejecutar"
+msgstr "Uit te voeren bestand"
+
+msgid "Parar en el primer error"
+msgstr "Stoppen bij de eerste fout"
+
+msgid "Ver errores..."
+msgstr "Fouten tonen..."
+
+msgid "Ejecutar fichero SQL..."
+msgstr "SQL-bestand uitvoeren..."
+
+msgid "(la de la conexión)"
+msgstr "(die van de verbinding)"
+
+msgid "¿Ejecutar igualmente?"
+msgstr "Toch uitvoeren?"
+
+msgid "Parada en un error."
+msgstr "Gestopt bij een fout."
+
+msgid "{0} sentencias ejecutadas"
+msgstr "{0} opdrachten uitgevoerd"
+
+msgid "... y {0} error(es) más"
+msgstr "... en nog {0} fout(en)"
+
+msgid "Errores al ejecutar el fichero"
+msgstr "Fouten bij het uitvoeren van het bestand"
+
+msgid "Ejecutando... {0} sentencias"
+msgstr "Uitvoeren... {0} opdrachten"
+
+msgid "Parando..."
+msgstr "Stoppen..."
+
+msgid "{0} is a production connection: the whole file {1} will be executed"
+msgstr "{0} is een productieverbinding: het hele bestand {1} wordt uitgevoerd"
+
+msgid "Cannot read {0}: {1}"
+msgstr "Kan {0} niet lezen: {1}"
+
+msgid "Incluir CREATE TABLE"
+msgstr "CREATE TABLE opnemen"
+
+msgid "Leyendo el CREATE TABLE de {0}..."
+msgstr "CREATE TABLE van {0} lezen..."
+
+msgid "Exportando {0} fila(s) a {1}..."
+msgstr "{0} rij(en) exporteren naar {1}..."
+
+msgid "Exportación terminada"
+msgstr "Export voltooid"
+
+msgid "Solo cuando la rejilla es de una tabla (pestaña Datos)"
+msgstr "Alleen als het raster bij een tabel hoort (tabblad Gegevens)"
+
+msgid "Pone delante de los INSERT el CREATE TABLE de {0}"
+msgstr "Zet de CREATE TABLE van {0} vóór de INSERTs"
+
+msgid "Solo con la tabla {0}: los INSERT van a otra"
+msgstr "Alleen met tabel {0}: de INSERTs gaan naar een andere"
+
+msgid "Abrir la carpeta"
+msgstr "De map openen"
+
+msgid "No existe la carpeta de {0}"
+msgstr "De map van {0} bestaat niet"
+
+msgid "Solo lectura: para editar, Ver datos de la tabla (F11)"
+msgstr "Alleen-lezen: om te bewerken, Gegevens van de tabel bekijken (F11)"
+
+msgid "Solo lectura: no se encuentra la tabla {0}"
+msgstr "Alleen-lezen: tabel {0} niet gevonden"
+
+msgid "Solo lectura: hay columnas repetidas"
+msgstr "Alleen-lezen: er zijn dubbele kolommen"
+
+msgid "Solo lectura: hay columnas que no son de la tabla"
+msgstr "Alleen-lezen: sommige kolommen zijn niet van de tabel"
+
+msgid "No"
+msgstr "Nee"
+
+msgid "Se borran {0} fila(s) de {1}. ¿Seguir?"
+msgstr "{0} rij(en) van {1} worden verwijderd. Doorgaan?"
+
+msgid "Borrar filas"
+msgstr "Rijen verwijderen"
+
+msgid "Insertar fila"
+msgstr "Rij invoegen"
+
+msgid "Solo lectura: el resultado no es de una sola tabla (sin JOIN, GROUP BY ni expresiones)"
+msgstr "Alleen-lezen: het resultaat komt niet uit één tabel (geen JOIN, GROUP BY of expressies)"
+
+msgid "Comprobando si {0} se puede editar..."
+msgstr "Controleren of {0} bewerkt kan worden..."
+
+msgid "Solo lectura: no se pudieron leer las columnas de {0}"
+msgstr "Alleen-lezen: de kolommen van {0} konden niet worden gelezen"
+
+msgid "El resultado tiene {0} cambio(s) sin guardar. ¿Descartarlos y ejecutar?"
+msgstr "Het resultaat heeft {0} niet-opgeslagen wijziging(en). Verwerpen en uitvoeren?"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Historial"
+msgstr "Geschiedenis"
+
+msgid "Limpiar historial"
+msgstr "Geschiedenis wissen"
+
+msgid "¿Borrar el historial de TODAS las conexiones?"
+msgstr "De geschiedenis van ALLE verbindingen wissen?"
+
+msgid "¿Borrar el historial de esta conexión?"
+msgstr "De geschiedenis van deze verbinding wissen?"
+
+msgid "Historial limpio: {0} ejecución(es) borradas"
+msgstr "Geschiedenis gewist: {0} uitvoering(en) verwijderd"
+
+msgid "Exportar SQL"
+msgstr "SQL exporteren"
+
+msgid "Lo que se ve, en orden de ejecución, para volver a lanzarlo con Importar"
+msgstr "Wat je ziet, in uitvoeringsvolgorde, om het opnieuw uit te voeren met Importeren"
+
+msgid "Exportar el historial a SQL"
+msgstr "De geschiedenis naar SQL exporteren"
+
+msgid "Script SQL"
+msgstr "SQL-script"
+
+msgid "Exportadas {0} ejecución(es) a {1}"
+msgstr "{0} uitvoering(en) geëxporteerd naar {1}"
+
+msgid "No se pudo escribir {0}: {1}"
+msgstr "Kon {0} niet schrijven: {1}"
+
+msgid "Limpiar"
+msgstr "Wissen"
+
+msgid "Vacía el editor de esta pestaña (Ctrl+Z lo recupera)"
+msgstr "Maakt de editor van dit tabblad leeg (Ctrl+Z haalt het terug)"
+
+msgid "Refrescar"
+msgstr "Vernieuwen"
+
+msgid "Volver a leer el historial (F5): lo lanzado desde el árbol (DROP, duplicar...) aparece al refrescar"
+msgstr "Geschiedenis opnieuw lezen (F5): wat vanuit de boom is uitgevoerd (DROP, dupliceren...) verschijnt na vernieuwen"

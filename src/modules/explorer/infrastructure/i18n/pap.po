@@ -1,0 +1,473 @@
+# multidbs - modulo explorer - papiamento (Curazao) (pap)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Cargando bases de datos..."
+msgstr "Kargando base di dato..."
+
+msgid "{0} BD"
+msgstr "{0} BD"
+
+msgid "Error: {0}"
+msgstr "Eror: {0}"
+
+msgid "Cargando..."
+msgstr "Kargando..."
+
+msgid "Tablas"
+msgstr "Tabelnan"
+
+msgid "Vistas"
+msgstr "Vistanan"
+
+msgid "Procedimientos"
+msgstr "Prosedimentunan"
+
+msgid "Funciones"
+msgstr "Funshonnan"
+
+msgid "Triggers"
+msgstr "Triggernan"
+
+msgid "Copiar BD a otro servidor/BD..."
+msgstr "Kopia BD na otro server/BD..."
+
+msgid "Usar esta BD"
+msgstr "Usa e BD aki"
+
+msgid "Ver datos (F11)"
+msgstr "Mira dato (F11)"
+
+msgid "SELECT en pestaña nueva"
+msgstr "SELECT den tab nobo"
+
+msgid "Info: DDL, índices y tamaño"
+msgstr "Info: DDL, indisenan i tamaño"
+
+msgid "Insertar nombre en el editor"
+msgstr "Inserta nòmber den editor"
+
+msgid "Copiar tabla a otro servidor/BD..."
+msgstr "Kopia tabel na otro server/BD..."
+
+msgid "Copiar nombre"
+msgstr "Kopia nòmber"
+
+msgid "Refrescar (F5)"
+msgstr "Renová (F5)"
+
+msgid "Ver definición"
+msgstr "Mira definishon"
+
+msgid "Vista"
+msgstr "Vista"
+
+msgid "Tabla"
+msgstr "Tabel"
+
+msgid "Filas (aprox.)"
+msgstr "Fila (aprox.)"
+
+msgid "Datos"
+msgstr "Dato"
+
+msgid "Índices"
+msgstr "Indisenan"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Cotejamiento"
+msgstr "Kolashon"
+
+msgid "Creada"
+msgstr "Kreá"
+
+msgid "Modificada"
+msgstr "Modifiká"
+
+msgid "Comentario"
+msgstr "Komentario"
+
+msgid "(sin índices)"
+msgstr "(sin indisenan)"
+
+msgid "{0} is required"
+msgstr "{0} ta obligatorio"
+
+msgid "Duplicar tabla"
+msgstr "Dupliká tabel"
+
+msgid "Duplicando {0}..."
+msgstr "Ta dupliká {0}..."
+
+msgid "Tabla duplicada: {0}"
+msgstr "Tabel duplicá: {0}"
+
+msgid "Nombre de la copia de {0}"
+msgstr "Nòmber di e kopia di {0}"
+
+msgid "Invalid table name {0}: only letters, digits and _ (no spaces), not starting with a digit"
+msgstr "Nòmber di tabel no ta bálido {0}: solamente lèter, sifra i _ (sin espasio), no por kuminsá ku un sifra"
+
+msgid "1 Columnas"
+msgstr "1 Kolòm"
+
+msgid "2 Índices"
+msgstr "2 Indise"
+
+msgid "3 Claves foráneas"
+msgstr "3 Yabi stranhero"
+
+msgid "4 Avanzado"
+msgstr "4 Avansá"
+
+msgid "5 SQL"
+msgstr "5 SQL"
+
+msgid "Añadir clave foránea"
+msgstr "Añadí yabi stranhero"
+
+msgid "Añadir columna"
+msgstr "Añadí kolòm"
+
+msgid "Añadir índice"
+msgstr "Añadí indise"
+
+msgid "Bajar"
+msgstr "Baha"
+
+msgid "Subir"
+msgstr "Subi"
+
+msgid "Insertar encima"
+msgstr "Inserta ariba"
+
+msgid "Columnas separadas por comas, en el mismo orden en las dos tablas."
+msgstr "Kolòmnan separá pa koma, den e mesun òrdu den e dos tabelnan."
+
+msgid "Columnas separadas por comas; nombre(10) indexa solo 10 caracteres. La clave primaria va en la pestaña Columnas."
+msgstr "Kolòmnan separá pa koma; nòmber(10) ta indeksá solamente 10 karakter. E yabi primario ta den e pèstaña Kolòm."
+
+msgid "Default es SQL: 'texto', 0, NULL, CURRENT_TIMESTAMP (vacío = sin DEFAULT)"
+msgstr "Default ta SQL: 'teksto', 0, NULL, CURRENT_TIMESTAMP (bashí = sin DEFAULT)"
+
+msgid "Formato de fila"
+msgstr "Formato di fila"
+
+msgid "Siguiente AUTO_INCREMENT"
+msgstr "Siguiente AUTO_INCREMENT"
+
+msgid "Editar tabla {0}"
+msgstr "Edita tabel {0}"
+
+msgid "en {0}"
+msgstr "den {0}"
+
+msgid "Leyendo la tabla..."
+msgstr "Ta lesa e tabel..."
+
+msgid "Tipo"
+msgstr "Tipo"
+
+msgid "Longitud/valores"
+msgstr "Largura/balor"
+
+msgid "Default"
+msgstr "Default"
+
+msgid "No nulo"
+msgstr "No nulo"
+
+msgid "Sin signo"
+msgstr "Sin seña"
+
+msgid "Auto incr."
+msgstr "Auto inkr."
+
+msgid "Ceros"
+msgstr "Sero"
+
+msgid "Columnas"
+msgstr "Kolòmnan"
+
+msgid "Tabla referida"
+msgstr "Tabel referí"
+
+msgid "Columnas referidas"
+msgstr "Kolòmnan referí"
+
+msgid "¿Borrar la columna {0}? Se pierden sus datos al guardar."
+msgstr "Kita kolòm {0}? Su datonan ta pèrdè ora di warda."
+
+msgid "¿Guardar igualmente?"
+msgstr "Warda tòg?"
+
+msgid "No se puede guardar:"
+msgstr "No por warda:"
+
+msgid "Sin cambios"
+msgstr "Sin kambio"
+
+msgid "Editar tabla (columnas, índices...)"
+msgstr "Edita tabel (kolòm, indise...)"
+
+msgid "Tabla guardada: {0}"
+msgstr "Tabel wardá: {0}"
+
+msgid "Invalid column name {0}: only letters, digits and _ (no spaces), not starting with a digit"
+msgstr "Nòmber di kolòm no bálido {0}: solamente lèter, sifra i _ (sin espasio), no por kuminsá ku sifra"
+
+msgid "Invalid index or key name {0}: only letters, digits and _ (no spaces)"
+msgstr "Nòmber di indise òf yabi no bálido {0}: solamente lèter, sifra i _ (sin espasio)"
+
+msgid "The table needs at least one column"
+msgstr "E tabel mester tin por lo ménos un kolòm"
+
+msgid "Column {0} is repeated"
+msgstr "Kolòm {0} ta ripití"
+
+msgid "Index {0} is repeated"
+msgstr "Indise {0} ta ripití"
+
+msgid "Column {0} has no data type"
+msgstr "Kolòm {0} no tin tipo"
+
+msgid "Index {0} has no columns"
+msgstr "Indise {0} no tin kolòm"
+
+msgid "Unknown column {0} in {1}"
+msgstr "Kolòm deskonosí {0} den {1}"
+
+msgid "Foreign key {0} needs the same number of columns on both sides and a referenced table"
+msgstr "Yabi stranhero {0} mester tin e mesun kantidat di kolòm na tur dos banda i un tabel referí"
+
+msgid "Editing tables only works with MySQL/MariaDB for now: the connection is {0}"
+msgstr "Edita tabel ta traha solamente ku MySQL/MariaDB pa awor: e konekshon ta {0}"
+
+msgid "There is nothing to change"
+msgstr "No tin nada pa kambia"
+
+msgid "{0} is a production connection: table {1} will be altered"
+msgstr "{0} ta un konekshon di produkshon: tabel {1} lo kambia"
+
+msgid "Eliminar tabla..."
+msgstr "Eliminá tabel..."
+
+msgid "¿Eliminar la tabla {0} de {1}? Se borran también sus datos y no se puede deshacer."
+msgstr "Eliminá tabel {0} di {1}? Su datonan tambe ta bai i esaki no por wòrdu deshasí."
+
+msgid "Eliminando {0}..."
+msgstr "Ta eliminá {0}..."
+
+msgid "Tabla eliminada: {0}"
+msgstr "Tabel eliminá: {0}"
+
+msgid "Escribe {0} para confirmar"
+msgstr "Skirbi {0} pa konfirmá"
+
+msgid "{0} is a production connection: table {1} will be dropped with all its data"
+msgstr "{0} ta un konekshon di produkshon: tabel {1} lo wòrdu eliminá ku tur su datonan"
+
+msgid "Alterar BD (juego de caracteres, solo lectura...)"
+msgstr "Kambia BD (set di karakter, solamente lesa...)"
+
+msgid "Renombrar BD..."
+msgstr "Kambia nòmber di BD..."
+
+msgid "BD guardada: {0}"
+msgstr "BD warda: {0}"
+
+msgid "Alterar BD {0}"
+msgstr "Kambia BD {0}"
+
+msgid "Leyendo la BD..."
+msgstr "Ta lesa e BD..."
+
+msgid "Este servidor no tiene esta opción"
+msgstr "E server aki no tin e opshon aki"
+
+msgid "No hay nada que cambiar"
+msgstr "No tin nada pa kambia"
+
+msgid "Cifrado por defecto"
+msgstr "Sifrado standard"
+
+msgid "Tablas nuevas cifradas (ENCRYPTION)"
+msgstr "Tabelnan nobo sifrá (ENCRYPTION)"
+
+msgid "Solo lectura"
+msgstr "Solamente lesa"
+
+msgid "Nadie puede escribir en la BD (READ ONLY)"
+msgstr "Ningun hende por skirbi den e BD (READ ONLY)"
+
+msgid "El juego de caracteres y el cotejamiento son los de las tablas nuevas: las que ya existen no cambian."
+msgstr "E set di karakter i e kolashon ta pa tabelnan nobo: esnan ku ta eksistí kaba no ta kambia."
+
+msgid "SQL que se va a ejecutar"
+msgstr "SQL ku lo wòrdu ehekutá"
+
+msgid "Altering databases only works with MySQL/MariaDB for now: the connection is {0}"
+msgstr "Kambia BD ta funshoná solamente ku MySQL/MariaDB pa awor: e konekshon ta {0}"
+
+msgid "Database {0} not found"
+msgstr "No a haña BD {0}"
+
+msgid "{0} is a production connection: database {1} will be altered"
+msgstr "{0} ta un konekshon di produkshon: BD {1} lo kambia"
+
+msgid "Wrong character set or collation: {0}"
+msgstr "Set di karakter òf kolashon robes: {0}"
+
+msgid "Eliminar tabla... (Supr)"
+msgstr "Eliminá tabel... (Supr)"
+
+msgid "Cambiar nombre"
+msgstr "Kambia nòmber"
+
+msgid "Cambiar nombre... (F2)"
+msgstr "Kambia nòmber... (F2)"
+
+msgid "Nombre nuevo de {0}"
+msgstr "Nòmber nobo di {0}"
+
+msgid "Nombre nuevo de {0}.{1}"
+msgstr "Nòmber nobo di {0}.{1}"
+
+msgid "Renombrando {0}..."
+msgstr "Kambiando nòmber di {0}..."
+
+msgid "Tabla renombrada: {0} -> {1}"
+msgstr "Tabel ku nòmber nobo: {0} -> {1}"
+
+msgid "Columna renombrada: {0} -> {1}"
+msgstr "Kolom ku nòmber nobo: {0} -> {1}"
+
+msgid "{0} is a production connection: {1} will be renamed to {2}"
+msgstr "{0} ta un konekshon di produkshon: {1} lo yama {2}"
+
+msgid "Renaming cannot move the table to another schema: {0}"
+msgstr "Kambia nòmber no por move e tabel na otro esquema: {0}"
+
+msgid "Renombrar BD... (F2)"
+msgstr "Kambia nòmber di BD... (F2)"
+
+msgid "Duplicar BD..."
+msgstr "Duplicá BD..."
+
+msgid "Crear BD en"
+msgstr "Krea BD riba"
+
+msgid "Propietario"
+msgstr "Doño"
+
+msgid "Solo si no existe (IF NOT EXISTS)"
+msgstr "Solamente si e no ta eksistí (IF NOT EXISTS)"
+
+msgid "Crear"
+msgstr "Krea"
+
+msgid "Nueva BD"
+msgstr "BD nobo"
+
+msgid "Crear una BD en la conexión elegida (CREATE DATABASE)"
+msgstr "Krea un BD riba e konekshon skohí (CREATE DATABASE)"
+
+msgid "Crear BD"
+msgstr "Krea BD"
+
+msgid "Leyendo las opciones del servidor..."
+msgstr "Lesando e opshonnan di e sirbidó..."
+
+msgid "Esquema"
+msgstr "Skema"
+
+msgid "Escribe el nombre de la BD"
+msgstr "Skirbi e nòmber di e BD"
+
+msgid "¿Crear igualmente?"
+msgstr "Krea tòg?"
+
+msgid "Lo que diga el servidor"
+msgstr "Loke e sirbidó bisa"
+
+msgid "BD creada: {0}"
+msgstr "BD kreá: {0}"
+
+msgid "Crear BD..."
+msgstr "Krea BD..."
+
+msgid "El juego de caracteres y el cotejamiento son los que toman las tablas nuevas de la BD."
+msgstr "E set di karakter i e kolashon ta esnan ku e tabelnan nobo di e BD lo tuma."
+
+msgid "En PostgreSQL cada BD del árbol es un esquema de la base de datos de la conexión: se crea con CREATE SCHEMA."
+msgstr "Den PostgreSQL kada BD den e palu ta un skema di e base di datos di e konekshon: e ta kreá ku CREATE SCHEMA."
+
+msgid "Los ficheros de datos y de log van a la carpeta por defecto del servidor."
+msgstr "E archivonan di datos i di log ta bai den e mapa standard di e sirbidó."
+
+msgid "Sí: tablas nuevas cifradas (ENCRYPTION 'Y')"
+msgstr "Si: tabelnan nobo sifrá (ENCRYPTION 'Y')"
+
+msgid "No (ENCRYPTION 'N')"
+msgstr "No (ENCRYPTION 'N')"
+
+msgid "Creating databases only works with MySQL/MariaDB, PostgreSQL and SQL Server: the connection is {0}"
+msgstr "Krea BD ta funshoná solamente ku MySQL/MariaDB, PostgreSQL i SQL Server: e konekshon ta {0}"
+
+msgid "Wrong database name or option: {0}"
+msgstr "Nòmber òf opshon di BD robes: {0}"
+
+msgid "{0} is a production connection: database {1} will be created"
+msgstr "{0} ta un konekshon di produkshon: e BD {1} lo wòrdu kreá"
+
+msgid "BD de sistema del servidor: cuidado al escribir en ella"
+msgstr "BD di sistema di e sirbidó: tene kuidou ora di skirbi den dje"
+
+msgid "Eliminar BD..."
+msgstr "Eliminá BD..."
+
+msgid "Se elimina la BD {0} con todas sus tablas, vistas, rutinas y datos. No se puede deshacer."
+msgstr "E BD {0} lo wòrdu eliminá ku tur su tabelnan, vistanan, rutinanan i datos. Esaki no por wòrdu deshasí."
+
+msgid "BD eliminada: {0}"
+msgstr "BD eliminá: {0}"
+
+msgid "Dropping databases only works with MySQL/MariaDB, PostgreSQL and SQL Server: the connection is {0}"
+msgstr "Eliminá BD ta funshoná solamente ku MySQL/MariaDB, PostgreSQL i SQL Server: e konekshon ta {0}"
+
+msgid "{0} is a system database of the server: it cannot be dropped from here"
+msgstr "{0} ta un BD di sistema di e sirbidó: e no por wòrdu eliminá for di aki"
+
+msgid "{0} is a production connection: database {1} will be dropped with all its tables and data"
+msgstr "{0} ta un konekshon di produkshon: e BD {1} lo wòrdu eliminá ku tur su tabelnan i datos"
+
+msgid "The edited database {1} is not the original {0}"
+msgstr "E BD editá {1} no ta e original {0}"
+
+msgid "Crear tabla..."
+msgstr "Krea tabel..."
+
+msgid "Crear tabla en {0}"
+msgstr "Krea tabel den {0}"
+
+msgid "Tabla creada: {0}"
+msgstr "Tabel kreá: {0}"
+
+msgid "Leyendo motores y cotejamientos..."
+msgstr "Lesando motor i kolashon..."
+
+msgid "{0} is a production connection: table {1} will be created"
+msgstr "{0} ta un konekshon di produkshon: tabel {1} lo wòrdu kreá"
+
+msgid "Creating tables only works with MySQL/MariaDB, PostgreSQL, SQLite and SQL Server: the connection is {0}"
+msgstr "Krea tabel ta funshoná só ku MySQL/MariaDB, PostgreSQL, SQLite i SQL Server: e konekshon ta {0}"
+
+msgid "{0} is not available in {1}"
+msgstr "{0} no ta disponibel den {1}"
+
+msgid "In SQLite only a single INTEGER primary key can auto-increment: {0}"
+msgstr "Den SQLite só un yabi primario di un solo kolumna INTEGER por outo-inkrementá: {0}"
+
+msgid "Column {0} cannot auto-increment and have a DEFAULT"
+msgstr "Kolumna {0} no por outo-inkrementá i tin un DEFAULT"

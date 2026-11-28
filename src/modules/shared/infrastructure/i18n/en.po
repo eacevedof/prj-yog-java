@@ -1,0 +1,2 @@
+# multidbs - modulo shared - ingles (en)
+# clave = el texto tal cual en el codigo o el FXML

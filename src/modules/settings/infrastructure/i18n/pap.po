@@ -1,0 +1,8 @@
+# multidbs - modulo settings - pap (papiamento (Curazao))
+# clave = texto fuente (FXML %... o __(...) en Java)
+
+msgid "Unknown setting {0}"
+msgstr "Preferensia deskonosí {0}"
+
+msgid "Invalid value {0} for {1}, allowed: {2}"
+msgstr "Balor no válido {0} pa {1}, permití: {2}"

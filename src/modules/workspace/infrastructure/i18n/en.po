@@ -1,0 +1,122 @@
+# multidbs - modulo workspace - ingles (en)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Archivo"
+msgstr "File"
+
+msgid "Salir"
+msgstr "Exit"
+
+msgid "Ver"
+msgstr "View"
+
+msgid "Tema oscuro"
+msgstr "Dark theme"
+
+msgid "Abre una conexión (doble clic o botón Abrir) para ver sus objetos y escribir SQL"
+msgstr "Open a connection (double-click or the Open button) to see its objects and write SQL"
+
+msgid "BD activa:"
+msgstr "Active database:"
+
+msgid "Cambiar el idioma cierra las conexiones abiertas. ¿Seguir?"
+msgstr "Changing the language closes the open connections. Continue?"
+
+msgid "Cargando..."
+msgstr "Loading..."
+
+msgid "Info: {0}"
+msgstr "Info: {0}"
+
+msgid "Datos: {0}"
+msgstr "Data: {0}"
+
+msgid "La pestaña tiene cambios sin guardar. ¿Cerrarla y perderlos?"
+msgstr "The tab has unsaved changes. Close it and lose them?"
+
+msgid "(ninguna)"
+msgstr "(none)"
+
+msgid "Query {0}"
+msgstr "Query {0}"
+
+msgid "Renombrar pestaña"
+msgstr "Rename tab"
+
+msgid "Nombre:"
+msgstr "Name:"
+
+msgid "Exportar"
+msgstr "Export"
+
+msgid "Importar"
+msgstr "Import"
+
+msgid "Elegir la BD activa (escribe para buscar)"
+msgstr "Choose the active database (type to search)"
+
+msgid "Cerrar (Ctrl+W)"
+msgstr "Close (Ctrl+W)"
+
+msgid "Cerrar las demás"
+msgstr "Close other tabs"
+
+msgid "Cerrar todas"
+msgstr "Close all tabs"
+
+msgid "Cerrar las no modificadas"
+msgstr "Close unmodified tabs"
+
+msgid "Cerrar las de la derecha"
+msgstr "Close tabs to the right"
+
+msgid "Renombrar... (doble clic)"
+msgstr "Rename... (double click)"
+
+msgid "Restablecer espacio de trabajo…"
+msgstr "Reset workspace…"
+
+msgid "Se borran los filtros, la BD activa de cada conexión, las carpetas y el último fichero recordados y las pestañas de query guardadas. Las conexiones, el tema, el idioma y el historial se quedan."
+msgstr "Clears the panel filters, the active database of each connection, the remembered folders and last file and the saved query tabs. Connections, theme, language and history are kept."
+
+msgid "Se cierran las conexiones abiertas."
+msgstr "Open connections are closed."
+
+msgid "¿Restablecer el espacio de trabajo?"
+msgstr "Reset the workspace?"
+
+msgid "Guardar en ficheros"
+msgstr "Save to files"
+
+msgid "Recargar ficheros"
+msgstr "Reload files"
+
+msgid "Escribe en su fichero cada tabla que ha cambiado; una tabla nueva, como .csv"
+msgstr "Writes each changed table to its file; a new table, as .csv"
+
+msgid "Vuelve a leer todos los ficheros de la carpeta (se pierde lo no guardado)"
+msgstr "Reads every file in the folder again (unsaved changes are lost)"
+
+msgid "Cargando ficheros..."
+msgstr "Loading files..."
+
+msgid "{0} fichero(s) cargado(s), {1} sin cambios"
+msgstr "{0} file(s) loaded, {1} unchanged"
+
+msgid "Guardando ficheros..."
+msgstr "Saving files..."
+
+msgid "Nada que guardar: los ficheros ya están al día"
+msgstr "Nothing to save: the files are up to date"
+
+msgid "Guardado: {0}"
+msgstr "Saved: {0}"
+
+msgid "¿Volver a leer todos los ficheros de la carpeta? Se pierde lo que no hayas guardado."
+msgstr "Read every file in the folder again? Unsaved changes will be lost."
+
+msgid "BD de sistema"
+msgstr "System DB"
+
+msgid "La BD activa es del propio servidor: cuidado al escribir en ella"
+msgstr "The active database belongs to the server itself: be careful writing to it"

@@ -1,0 +1,329 @@
+/* base de multidbs: Modena con fuente de sistema; el tema oscuro (feature 37) ira aqui como hoja aparte */
+.root {
+    -fx-font-size: 13px;
+}
+
+.toolbar-buttons {
+    -fx-padding: 6;
+    -fx-spacing: 4;
+}
+
+/* botones agrupados por a que afectan (la conexion, sus BD): un marco fino y una etiqueta pequena delante */
+.toolbar-group {
+    -fx-spacing: 4;
+    -fx-padding: 2 4 2 4;
+    -fx-border-color: derive(-fx-base, -25%);
+    -fx-border-radius: 4;
+}
+
+.toolbar-group-label {
+    -fx-font-size: 11px;
+    -fx-opacity: 0.7;
+}
+
+.connection-color {
+    -fx-stroke: #00000033;
+}
+
+.production-badge {
+    -fx-background-color: #c62828;
+    -fx-text-fill: white;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 1 5 1 5;
+    -fx-background-radius: 3;
+}
+
+/* sin alto minimo, un VBox de alto fijo encoge la barra a 0 px y no se ve (copia, volcado, ejecutar fichero) */
+.progress-bar {
+    -fx-min-height: 18px;
+}
+
+.dialog-form {
+    -fx-padding: 16;
+    -fx-hgap: 10;
+    -fx-vgap: 8;
+}
+
+.form-message-error {
+    -fx-text-fill: #c62828;
+}
+
+.form-message-ok {
+    -fx-text-fill: #2e7d32;
+}
+
+/* espacio de trabajo: pestañas de conexion, arbol y editor */
+.workspace-placeholder {
+    -fx-text-fill: #888888;
+}
+
+.active-database-bar {
+    -fx-padding: 4 8 4 8;
+    -fx-spacing: 6;
+}
+
+.active-database {
+    -fx-font-weight: bold;
+}
+
+.explorer-active-database {
+    -fx-font-weight: bold;
+}
+
+/* BD de sistema (mysql, information_schema, pg_catalog, master...): apagadas, para no confundirlas con las propias */
+.explorer-db-system {
+    -fx-text-fill: #9e9e9e;
+}
+
+.explorer-db-system .app-icon {
+    -fx-opacity: 0.45;
+}
+
+/* la BD activa es de sistema: el selector en naranja y el aviso al lado */
+.combo-box.active-database-system,
+.combo-box.active-database-system .text-field {
+    -fx-background-color: #ffb74d;
+    -fx-font-weight: bold;
+}
+
+.combo-box.active-database-system {
+    -fx-background-color: #e65100, #ffb74d;
+    -fx-background-insets: 0, 1;
+}
+
+.system-database-warning {
+    -fx-text-fill: #e65100;
+    -fx-font-weight: bold;
+}
+
+.connection-open {
+    -fx-font-weight: bold;
+}
+
+/* una conexion guardada que no esta abierta: el nombre apagado y "sin conexion" detras */
+.connection-closed {
+    -fx-text-fill: #616161;
+}
+
+.connection-state {
+    -fx-text-fill: #9e9e9e;
+    -fx-font-size: 0.85em;
+    -fx-font-style: italic;
+}
+
+.explorer-folder {
+    -fx-text-fill: #555555;
+}
+
+/* BD por entorno, por la palabra de su nombre (DatabaseEnvironmentResolver) */
+.explorer-db-prod {
+    -fx-text-fill: #c62828;
+}
+
+.explorer-db-dev {
+    -fx-text-fill: #d96c00;
+}
+
+.explorer-db-local {
+    -fx-text-fill: #2e7d32;
+}
+
+.explorer-loading {
+    -fx-text-fill: #888888;
+    -fx-font-style: italic;
+}
+
+.explorer-status, .query-status {
+    -fx-text-fill: #666666;
+    -fx-padding: 2 6 2 6;
+}
+
+/* el estado al acabar (copia de BD): en rojo si algo fallo, en verde si todo fue bien */
+.query-status.form-message-error {
+    -fx-text-fill: #c62828;
+    -fx-font-weight: bold;
+}
+
+.query-status.form-message-ok {
+    -fx-text-fill: #2e7d32;
+}
+
+/* la familia del editor la fija QueryTabController en linea (SQL_EDITOR_FONT_STYLE): la hoja code-area.css que
+   RichTextFX pone en el propio nodo manda sobre esta y dejaria "monospace" (Courier en Windows) */
+.sql-editor {
+    -fx-font-size: 13px;
+}
+
+.sql-editor .lineno {
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: #999999;
+}
+
+.sql-keyword {
+    -fx-fill: #0033b3;
+    -fx-font-weight: bold;
+}
+
+.sql-string {
+    -fx-fill: #067d17;
+}
+
+.sql-identifier {
+    -fx-fill: #871094;
+}
+
+.sql-number {
+    -fx-fill: #1750eb;
+}
+
+.sql-comment {
+    -fx-fill: #8c8c8c;
+    -fx-font-style: italic;
+}
+
+.result-text {
+    -fx-font-family: "JetBrains Mono", "Consolas", "DejaVu Sans Mono", "Menlo", monospace;
+}
+
+.null-cell {
+    -fx-text-fill: #9e9e9e;
+    -fx-font-style: italic;
+}
+
+.result-grid-bar {
+    -fx-padding: 4 6 4 6;
+}
+
+/* numero de fila con su casilla (como SQLyog): gris como la cabecera; cada clic añade o quita la fila de la seleccion */
+.row-number-cell {
+    -fx-background-color: #eceff1;
+    -fx-text-fill: #78909c;
+    -fx-alignment: CENTER-LEFT;
+    -fx-graphic-text-gap: 6;
+    -fx-padding: 0 4 0 4;
+    -fx-cursor: hand;
+}
+
+.row-number-cell:hover {
+    -fx-background-color: #d6e4f0;
+}
+
+.json-cell {
+    -fx-text-fill: #871094;
+}
+
+.history-error .table-cell {
+    -fx-text-fill: #c62828;
+}
+
+/* rejilla editable (feature 6) */
+.row-new {
+    -fx-background-color: #e8f5e9;
+}
+
+.row-modified {
+    -fx-background-color: #fff8e1;
+}
+
+.row-deleted {
+    -fx-background-color: #ffebee;
+}
+
+.row-deleted .table-cell .text {
+    -fx-strikethrough: true;
+    -fx-fill: #9e9e9e;
+}
+
+.row-new:selected, .row-modified:selected, .row-deleted:selected {
+    -fx-background-color: -fx-selection-bar;
+}
+
+/* autocompletado (features 14 y 41) */
+.completion-list {
+    -fx-font-family: "JetBrains Mono", "Consolas", "DejaVu Sans Mono", "Menlo", monospace;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 8, 0, 0, 2);
+}
+
+.completion-kind {
+    -fx-text-fill: #8c8c8c;
+    -fx-font-size: 11px;
+}
+
+/* dialogo de conexion: el mensaje (errores, prueba) va fuera de las pestañas */
+.dialog-message {
+    -fx-padding: 4 16 0 16;
+}
+
+/* motor de la conexion en la lista (PG, SQLITE...): MySQL no lleva marca */
+.engine-badge {
+    -fx-background-color: #546e7a;
+    -fx-text-fill: white;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 1 5 1 5;
+    -fx-background-radius: 3;
+}
+
+/* silueta del motor de cada conexion (delfin, elefante, cubo...): un solo color, el del texto */
+.engine-icon {
+    -fx-fill: #455a64;
+}
+
+/* feature 29: dialogo de copia de BD */
+.copy-dialog {
+    -fx-padding: 12 16 12 16;
+}
+
+.copy-section {
+    -fx-font-weight: bold;
+}
+
+/* la BD de origen, en azul para ver de un vistazo que se copia */
+.copy-source-name {
+    -fx-text-fill: #1a5fb4;
+    -fx-font-weight: bold;
+}
+
+/* esquina de la rejilla (fila y columna): elige todo; clic derecho, exportar */
+.row-number-corner {
+    -fx-alignment: CENTER;
+    -fx-cursor: hand;
+}
+
+/* barra de arriba: el menu ocupa todo y el selector de idioma (banderas) queda a la derecha con el mismo fondo */
+.top-bar {
+    -fx-background-color: -fx-base;
+}
+
+.top-bar .menu-bar {
+    -fx-background-color: transparent;
+}
+
+.language-menu-button {
+    -fx-background-color: transparent;
+    -fx-padding: 2 8 2 8;
+}
+
+.language-menu-button:hover {
+    -fx-background-color: -fx-hover-base;
+}
+
+/* la pestaña activa de cualquier barra (conexiones, query, resultado), en negrita */
+.tab-pane > .tab-header-area > .headers-region > .tab:selected .tab-label {
+    -fx-font-weight: bold;
+}
+
+.status-footer {
+    -fx-background-color: -fx-base;
+    -fx-padding: 1 8 1 8;
+}
+
+.status-footer-label {
+    -fx-text-fill: #666666;
+    -fx-font-size: 0.9em;
+}
+
+.explorer-error {
+    -fx-text-fill: #c62828;
+}

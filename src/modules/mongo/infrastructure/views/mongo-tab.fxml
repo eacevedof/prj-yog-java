@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import modules.shared.infrastructure.components.icons.AppIcon?>
+
+<!-- una conexion MongoDB abierta: BDs y colecciones a la izquierda; documentos y consola a la derecha -->
+<SplitPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" dividerPositions="0.25"
+           fx:controller="modules.mongo.infrastructure.controllers.MongoTabController">
+    <VBox minWidth="200">
+        <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+            <Label text="%BDs y colecciones" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+            <Button text="%Refrescar" minWidth="-Infinity" onAction="#onRefresh"><graphic><AppIcon name="refresh"/></graphic></Button>
+        </HBox>
+        <TreeView fx:id="databasesTreeView" showRoot="false" VBox.vgrow="ALWAYS"/>
+        <Label fx:id="treeStatusLabel" styleClass="explorer-status"/>
+    </VBox>
+    <TabPane fx:id="mongoTabPane" tabClosingPolicy="UNAVAILABLE">
+        <Tab fx:id="documentsTab" text="%Documentos">
+            <graphic><AppIcon name="table"/></graphic>
+            <VBox>
+                <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+                    <Label fx:id="collectionLabel" styleClass="active-database" text="%(elige una colección)"/>
+                    <Label text="%filtro"/>
+                    <TextField fx:id="filterField" promptText="%{age: {$gte: 18}}" HBox.hgrow="ALWAYS" onAction="#onFind"/>
+                    <Label text="%orden"/>
+                    <TextField fx:id="sortField" promptText="%{age: -1}" prefColumnCount="10" onAction="#onFind"/>
+                    <Label text="%salto"/>
+                    <TextField fx:id="skipField" text="0" prefColumnCount="4" onAction="#onFind"/>
+                    <Label text="%límite"/>
+                    <TextField fx:id="limitField" text="100" prefColumnCount="4" onAction="#onFind"/>
+                    <Button fx:id="findButton" text="%Buscar" minWidth="-Infinity" onAction="#onFind" disable="true"><graphic><AppIcon name="search"/></graphic></Button>
+                </HBox>
+                <SplitPane orientation="VERTICAL" dividerPositions="0.6" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="documentsTableView"/>
+                    <VBox>
+                        <TextArea fx:id="documentArea" styleClass="result-text" VBox.vgrow="ALWAYS"
+                                  promptText="%El documento elegido, en JSON de mongosh: se edita aquí y se guarda"/>
+                        <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+                            <Button fx:id="saveDocumentButton" text="%Guardar" minWidth="-Infinity" onAction="#onSaveDocument" disable="true">
+                                <graphic><AppIcon name="save"/></graphic>
+                                <tooltip><Tooltip text="%Reemplaza el documento con ese _id"/></tooltip>
+                            </Button>
+                            <Button fx:id="insertDocumentButton" text="%Insertar como nuevo" minWidth="-Infinity" onAction="#onInsertDocument" disable="true">
+                                <graphic><AppIcon name="add-row"/></graphic>
+                                <tooltip><Tooltip text="%Inserta el JSON del cuadro (sin _id, se crea uno)"/></tooltip>
+                            </Button>
+                            <Button fx:id="deleteDocumentButton" text="%Borrar" minWidth="-Infinity" onAction="#onDeleteDocument" disable="true"><graphic><AppIcon name="delete"/></graphic></Button>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label fx:id="documentsStatusLabel" styleClass="query-status"/>
+                        </HBox>
+                    </VBox>
+                </SplitPane>
+            </VBox>
+        </Tab>
+        <Tab fx:id="consoleTab" text="%Consola">
+            <graphic><AppIcon name="query"/></graphic>
+            <VBox>
+                <TextArea fx:id="consoleOutputArea" editable="false" styleClass="result-text" VBox.vgrow="ALWAYS"/>
+                <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+                    <Label fx:id="consolePromptLabel" styleClass="result-text" text="%test&gt;"/>
+                    <TextField fx:id="consoleInputField" styleClass="result-text" promptText="%db.users.find({age: {$gt: 18}}).sort({age: -1}).limit(10) · show collections · use x · ↑ ↓ historial" HBox.hgrow="ALWAYS" onAction="#onRunCommand"/>
+                    <Button fx:id="runCommandButton" text="%Ejecutar" minWidth="-Infinity" onAction="#onRunCommand"><graphic><AppIcon name="execute"/></graphic></Button>
+                </HBox>
+            </VBox>
+        </Tab>
+    </TabPane>
+</SplitPane>

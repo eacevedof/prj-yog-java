@@ -1,0 +1,35 @@
+# modulo mongo - es (español)
+# Solo las claves en ingles (MongoMessageEnum); las claves en español se ven tal cual.
+
+msgid "{0} is required"
+msgstr "{0} es obligatorio"
+
+msgid "Could not read {0}: {1}"
+msgstr "No se pudo leer {0}: {1}"
+
+msgid "Could not save in {0}: {1}"
+msgstr "No se pudo guardar en {0}: {1}"
+
+msgid "Invalid JSON in {0}: {1}"
+msgstr "JSON no válido en {0}: {1}"
+
+msgid "The document has no _id: use New to insert it"
+msgstr "El documento no tiene _id: usa Insertar como nuevo"
+
+msgid "Document {0} not found (deleted or its _id changed)"
+msgstr "No se encuentra el documento {0} (se borró o cambió su _id)"
+
+msgid "Nothing to execute"
+msgstr "No hay nada que ejecutar"
+
+msgid "Unknown command: {0}"
+msgstr "Orden desconocida: {0}"
+
+msgid "Unsupported method {0} (find, findOne, countDocuments, distinct, aggregate, insertOne, insertMany, updateOne, updateMany, replaceOne, deleteOne, deleteMany, getIndexes, createIndex, dropIndex, drop)"
+msgstr "Método no soportado {0} (find, findOne, countDocuments, distinct, aggregate, insertOne, insertMany, updateOne, updateMany, replaceOne, deleteOne, deleteMany, getIndexes, createIndex, dropIndex, drop)"
+
+msgid "Wrong arguments for {0}"
+msgstr "Argumentos incorrectos para {0}"
+
+msgid "Production connection {0}: confirm before running {1}"
+msgstr "Conexión de producción {0}: confirma antes de ejecutar {1}"

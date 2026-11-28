@@ -1,0 +1,470 @@
+# multidbs - modulo explorer - ingles (en)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Cargando bases de datos..."
+msgstr "Loading databases..."
+
+msgid "{0} BD"
+msgstr "{0} DB"
+
+msgid "Error: {0}"
+msgstr "Error: {0}"
+
+msgid "Cargando..."
+msgstr "Loading..."
+
+msgid "Tablas"
+msgstr "Tables"
+
+msgid "Vistas"
+msgstr "Views"
+
+msgid "Procedimientos"
+msgstr "Procedures"
+
+msgid "Funciones"
+msgstr "Functions"
+
+msgid "Triggers"
+msgstr "Triggers"
+
+msgid "Copiar BD a otro servidor/BD..."
+msgstr "Copy database to another server/database..."
+
+msgid "Usar esta BD"
+msgstr "Use this database"
+
+msgid "Ver datos (F11)"
+msgstr "View data (F11)"
+
+msgid "SELECT en pestaña nueva"
+msgstr "SELECT in new tab"
+
+msgid "Info: DDL, índices y tamaño"
+msgstr "Info: DDL, indexes and size"
+
+msgid "Insertar nombre en el editor"
+msgstr "Insert name into editor"
+
+msgid "Copiar tabla a otro servidor/BD..."
+msgstr "Copy table to another server/database..."
+
+msgid "Copiar nombre"
+msgstr "Copy name"
+
+msgid "Refrescar (F5)"
+msgstr "Refresh (F5)"
+
+msgid "Ver definición"
+msgstr "View definition"
+
+msgid "Vista"
+msgstr "View"
+
+msgid "Tabla"
+msgstr "Table"
+
+msgid "Filas (aprox.)"
+msgstr "Rows (approx.)"
+
+msgid "Datos"
+msgstr "Data"
+
+msgid "Índices"
+msgstr "Indexes"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Cotejamiento"
+msgstr "Collation"
+
+msgid "Creada"
+msgstr "Created"
+
+msgid "Modificada"
+msgstr "Modified"
+
+msgid "Comentario"
+msgstr "Comment"
+
+msgid "(sin índices)"
+msgstr "(no indexes)"
+
+msgid "Duplicar tabla"
+msgstr "Duplicate table"
+
+msgid "Duplicando {0}..."
+msgstr "Duplicating {0}..."
+
+msgid "Tabla duplicada: {0}"
+msgstr "Table duplicated: {0}"
+
+msgid "Nombre de la copia de {0}"
+msgstr "Name of the copy of {0}"
+
+msgid "Invalid table name {0}: only letters, digits and _ (no spaces), not starting with a digit"
+msgstr "Invalid table name {0}: only letters, digits and _ (no spaces), not starting with a digit"
+
+msgid "1 Columnas"
+msgstr "1 Columns"
+
+msgid "2 Índices"
+msgstr "2 Indexes"
+
+msgid "3 Claves foráneas"
+msgstr "3 Foreign keys"
+
+msgid "4 Avanzado"
+msgstr "4 Advanced"
+
+msgid "5 SQL"
+msgstr "5 SQL"
+
+msgid "Añadir clave foránea"
+msgstr "Add foreign key"
+
+msgid "Añadir columna"
+msgstr "Add column"
+
+msgid "Añadir índice"
+msgstr "Add index"
+
+msgid "Bajar"
+msgstr "Move down"
+
+msgid "Subir"
+msgstr "Move up"
+
+msgid "Insertar encima"
+msgstr "Insert above"
+
+msgid "Columnas separadas por comas, en el mismo orden en las dos tablas."
+msgstr "Columns separated by commas, in the same order in both tables."
+
+msgid "Columnas separadas por comas; nombre(10) indexa solo 10 caracteres. La clave primaria va en la pestaña Columnas."
+msgstr "Columns separated by commas; name(10) indexes only 10 characters. The primary key is set in the Columns tab."
+
+msgid "Default es SQL: 'texto', 0, NULL, CURRENT_TIMESTAMP (vacío = sin DEFAULT)"
+msgstr "Default is SQL: 'text', 0, NULL, CURRENT_TIMESTAMP (empty = no DEFAULT)"
+
+msgid "Formato de fila"
+msgstr "Row format"
+
+msgid "Siguiente AUTO_INCREMENT"
+msgstr "Next AUTO_INCREMENT"
+
+msgid "Editar tabla {0}"
+msgstr "Edit table {0}"
+
+msgid "en {0}"
+msgstr "in {0}"
+
+msgid "Leyendo la tabla..."
+msgstr "Reading the table..."
+
+msgid "Tipo"
+msgstr "Type"
+
+msgid "Longitud/valores"
+msgstr "Length/values"
+
+msgid "Default"
+msgstr "Default"
+
+msgid "No nulo"
+msgstr "Not null"
+
+msgid "Sin signo"
+msgstr "Unsigned"
+
+msgid "Auto incr."
+msgstr "Auto incr."
+
+msgid "Ceros"
+msgstr "Zerofill"
+
+msgid "Columnas"
+msgstr "Columns"
+
+msgid "Tabla referida"
+msgstr "Referenced table"
+
+msgid "Columnas referidas"
+msgstr "Referenced columns"
+
+msgid "¿Borrar la columna {0}? Se pierden sus datos al guardar."
+msgstr "Delete column {0}? Its data is lost when saving."
+
+msgid "¿Guardar igualmente?"
+msgstr "Save anyway?"
+
+msgid "No se puede guardar:"
+msgstr "Cannot save:"
+
+msgid "Sin cambios"
+msgstr "No changes"
+
+msgid "Editar tabla (columnas, índices...)"
+msgstr "Edit table (columns, indexes...)"
+
+msgid "Tabla guardada: {0}"
+msgstr "Table saved: {0}"
+
+msgid "Invalid column name {0}: only letters, digits and _ (no spaces), not starting with a digit"
+msgstr "Invalid column name {0}: only letters, digits and _ (no spaces), not starting with a digit"
+
+msgid "Invalid index or key name {0}: only letters, digits and _ (no spaces)"
+msgstr "Invalid index or key name {0}: only letters, digits and _ (no spaces)"
+
+msgid "The table needs at least one column"
+msgstr "The table needs at least one column"
+
+msgid "Column {0} is repeated"
+msgstr "Column {0} is repeated"
+
+msgid "Index {0} is repeated"
+msgstr "Index {0} is repeated"
+
+msgid "Column {0} has no data type"
+msgstr "Column {0} has no data type"
+
+msgid "Index {0} has no columns"
+msgstr "Index {0} has no columns"
+
+msgid "Unknown column {0} in {1}"
+msgstr "Unknown column {0} in {1}"
+
+msgid "Foreign key {0} needs the same number of columns on both sides and a referenced table"
+msgstr "Foreign key {0} needs the same number of columns on both sides and a referenced table"
+
+msgid "Editing tables only works with MySQL/MariaDB for now: the connection is {0}"
+msgstr "Editing tables only works with MySQL/MariaDB for now: the connection is {0}"
+
+msgid "There is nothing to change"
+msgstr "There is nothing to change"
+
+msgid "{0} is a production connection: table {1} will be altered"
+msgstr "{0} is a production connection: table {1} will be altered"
+
+msgid "Eliminar tabla..."
+msgstr "Drop table..."
+
+msgid "¿Eliminar la tabla {0} de {1}? Se borran también sus datos y no se puede deshacer."
+msgstr "Drop table {0} from {1}? Its data is deleted too and this cannot be undone."
+
+msgid "Eliminando {0}..."
+msgstr "Dropping {0}..."
+
+msgid "Tabla eliminada: {0}"
+msgstr "Table dropped: {0}"
+
+msgid "Escribe {0} para confirmar"
+msgstr "Type {0} to confirm"
+
+msgid "{0} is a production connection: table {1} will be dropped with all its data"
+msgstr "{0} is a production connection: table {1} will be dropped with all its data"
+
+msgid "Alterar BD (juego de caracteres, solo lectura...)"
+msgstr "Alter database (character set, read only...)"
+
+msgid "Renombrar BD..."
+msgstr "Rename database..."
+
+msgid "BD guardada: {0}"
+msgstr "Database saved: {0}"
+
+msgid "Alterar BD {0}"
+msgstr "Alter database {0}"
+
+msgid "Leyendo la BD..."
+msgstr "Reading the database..."
+
+msgid "Este servidor no tiene esta opción"
+msgstr "This server does not have this option"
+
+msgid "No hay nada que cambiar"
+msgstr "There is nothing to change"
+
+msgid "Cifrado por defecto"
+msgstr "Default encryption"
+
+msgid "Tablas nuevas cifradas (ENCRYPTION)"
+msgstr "New tables encrypted (ENCRYPTION)"
+
+msgid "Solo lectura"
+msgstr "Read only"
+
+msgid "Nadie puede escribir en la BD (READ ONLY)"
+msgstr "Nobody can write to the database (READ ONLY)"
+
+msgid "El juego de caracteres y el cotejamiento son los de las tablas nuevas: las que ya existen no cambian."
+msgstr "The character set and collation are those of new tables: existing tables do not change."
+
+msgid "SQL que se va a ejecutar"
+msgstr "SQL to be executed"
+
+msgid "Altering databases only works with MySQL/MariaDB for now: the connection is {0}"
+msgstr "Altering databases only works with MySQL/MariaDB for now: the connection is {0}"
+
+msgid "Database {0} not found"
+msgstr "Database {0} not found"
+
+msgid "{0} is a production connection: database {1} will be altered"
+msgstr "{0} is a production connection: database {1} will be altered"
+
+msgid "Wrong character set or collation: {0}"
+msgstr "Wrong character set or collation: {0}"
+
+msgid "Eliminar tabla... (Supr)"
+msgstr "Drop table... (Del)"
+
+msgid "Cambiar nombre"
+msgstr "Rename"
+
+msgid "Cambiar nombre... (F2)"
+msgstr "Rename... (F2)"
+
+msgid "Nombre nuevo de {0}"
+msgstr "New name for {0}"
+
+msgid "Nombre nuevo de {0}.{1}"
+msgstr "New name for {0}.{1}"
+
+msgid "Renombrando {0}..."
+msgstr "Renaming {0}..."
+
+msgid "Tabla renombrada: {0} -> {1}"
+msgstr "Table renamed: {0} -> {1}"
+
+msgid "Columna renombrada: {0} -> {1}"
+msgstr "Column renamed: {0} -> {1}"
+
+msgid "{0} is a production connection: {1} will be renamed to {2}"
+msgstr "{0} is a production connection: {1} will be renamed to {2}"
+
+msgid "Renaming cannot move the table to another schema: {0}"
+msgstr "Renaming cannot move the table to another schema: {0}"
+
+msgid "Renombrar BD... (F2)"
+msgstr "Rename database... (F2)"
+
+msgid "Duplicar BD..."
+msgstr "Duplicate database..."
+
+msgid "Crear BD en"
+msgstr "Create database on"
+
+msgid "Propietario"
+msgstr "Owner"
+
+msgid "Solo si no existe (IF NOT EXISTS)"
+msgstr "Only if it does not exist (IF NOT EXISTS)"
+
+msgid "Crear"
+msgstr "Create"
+
+msgid "Nueva BD"
+msgstr "New DB"
+
+msgid "Crear una BD en la conexión elegida (CREATE DATABASE)"
+msgstr "Create a database on the chosen connection (CREATE DATABASE)"
+
+msgid "Crear BD"
+msgstr "Create database"
+
+msgid "Leyendo las opciones del servidor..."
+msgstr "Reading the server options..."
+
+msgid "Esquema"
+msgstr "Schema"
+
+msgid "Escribe el nombre de la BD"
+msgstr "Type the database name"
+
+msgid "¿Crear igualmente?"
+msgstr "Create anyway?"
+
+msgid "Lo que diga el servidor"
+msgstr "Server default"
+
+msgid "BD creada: {0}"
+msgstr "Database created: {0}"
+
+msgid "Crear BD..."
+msgstr "Create database..."
+
+msgid "El juego de caracteres y el cotejamiento son los que toman las tablas nuevas de la BD."
+msgstr "The character set and collation are the ones new tables in the database will take."
+
+msgid "En PostgreSQL cada BD del árbol es un esquema de la base de datos de la conexión: se crea con CREATE SCHEMA."
+msgstr "In PostgreSQL each database in the tree is a schema of the connection database: it is created with CREATE SCHEMA."
+
+msgid "Los ficheros de datos y de log van a la carpeta por defecto del servidor."
+msgstr "The data and log files go to the server default folder."
+
+msgid "Sí: tablas nuevas cifradas (ENCRYPTION 'Y')"
+msgstr "Yes: new tables encrypted (ENCRYPTION 'Y')"
+
+msgid "No (ENCRYPTION 'N')"
+msgstr "No (ENCRYPTION 'N')"
+
+msgid "Creating databases only works with MySQL/MariaDB, PostgreSQL and SQL Server: the connection is {0}"
+msgstr "Creating databases only works with MySQL/MariaDB, PostgreSQL and SQL Server: the connection is {0}"
+
+msgid "Wrong database name or option: {0}"
+msgstr "Wrong database name or option: {0}"
+
+msgid "{0} is a production connection: database {1} will be created"
+msgstr "{0} is a production connection: database {1} will be created"
+
+msgid "BD de sistema del servidor: cuidado al escribir en ella"
+msgstr "Server system database: be careful writing to it"
+
+msgid "Eliminar BD..."
+msgstr "Drop database..."
+
+msgid "Se elimina la BD {0} con todas sus tablas, vistas, rutinas y datos. No se puede deshacer."
+msgstr "Database {0} will be dropped with all its tables, views, routines and data. This cannot be undone."
+
+msgid "BD eliminada: {0}"
+msgstr "Database dropped: {0}"
+
+msgid "Dropping databases only works with MySQL/MariaDB, PostgreSQL and SQL Server: the connection is {0}"
+msgstr "Dropping databases only works with MySQL/MariaDB, PostgreSQL and SQL Server: the connection is {0}"
+
+msgid "{0} is a system database of the server: it cannot be dropped from here"
+msgstr "{0} is a system database of the server: it cannot be dropped from here"
+
+msgid "{0} is a production connection: database {1} will be dropped with all its tables and data"
+msgstr "{0} is a production connection: database {1} will be dropped with all its tables and data"
+
+msgid "The edited database {1} is not the original {0}"
+msgstr "The edited database {1} is not the original {0}"
+
+msgid "Crear tabla..."
+msgstr "Create table..."
+
+msgid "Crear tabla en {0}"
+msgstr "Create table in {0}"
+
+msgid "Tabla creada: {0}"
+msgstr "Table created: {0}"
+
+msgid "Leyendo motores y cotejamientos..."
+msgstr "Reading engines and collations..."
+
+msgid "{0} is a production connection: table {1} will be created"
+msgstr "{0} is a production connection: table {1} will be created"
+
+msgid "Creating tables only works with MySQL/MariaDB, PostgreSQL, SQLite and SQL Server: the connection is {0}"
+msgstr "Creating tables only works with MySQL/MariaDB, PostgreSQL, SQLite and SQL Server: the connection is {0}"
+
+msgid "{0} is not available in {1}"
+msgstr "{0} is not available in {1}"
+
+msgid "In SQLite only a single INTEGER primary key can auto-increment: {0}"
+msgstr "In SQLite only a single INTEGER primary key can auto-increment: {0}"
+
+msgid "Column {0} cannot auto-increment and have a DEFAULT"
+msgstr "Column {0} cannot auto-increment and have a DEFAULT"

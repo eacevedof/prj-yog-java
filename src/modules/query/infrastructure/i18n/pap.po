@@ -1,0 +1,569 @@
+# multidbs · módulo query · pap (papiamento (Curazao))
+# clave = texto fuente (español en la interfaz, inglés en los mensajes de dominio)
+
+msgid "Añadir fila"
+msgstr "Agregá liña"
+
+msgid "BD"
+msgstr "BD"
+
+msgid "Borrar (Supr)"
+msgstr "Borra (Del)"
+
+msgid "Buscar en el SQL"
+msgstr "Buska den e SQL"
+
+msgid "Cancelar"
+msgstr "Kanselá"
+
+msgid "Cerrar"
+msgstr "Sera"
+
+msgid "Conexión"
+msgstr "Konekshon"
+
+msgid "Copiar"
+msgstr "Kopiá"
+
+msgid "Descartar"
+msgstr "Deskartá"
+
+msgid "Duplicar"
+msgstr "Duplicá"
+
+msgid "Ejecutar (Ctrl+Enter)"
+msgstr "Ehekutá (Ctrl+Enter)"
+
+msgid "Ejecutar todo (Ctrl+F9)"
+msgstr "Ehekutá tur (Ctrl+F9)"
+
+msgid "Fecha"
+msgstr "Fecha"
+
+msgid "Filas que se leen como mucho de cada resultado (0 = todas)"
+msgstr "Máksimo liñanan ku ta lesa di kada resultado (0 = tur)"
+
+msgid "Filas"
+msgstr "Liñanan"
+
+msgid "Guardar (Ctrl+S)"
+msgstr "Warda (Ctrl+S)"
+
+msgid "Historial (Ctrl+H)"
+msgstr "Historia (Ctrl+H)"
+
+msgid "La sentencia donde está el cursor, o lo seleccionado (Ctrl+Enter o F9)"
+msgstr "E sentensia kaminda e kursor ta, of loke ta selektá (Ctrl+Enter of F9)"
+
+msgid "Límite"
+msgstr "Límite"
+
+msgid "Mensajes"
+msgstr "Mensahenan"
+
+msgid "Máx. filas"
+msgstr "Máks. liñanan"
+
+msgid "ORDER BY"
+msgstr "ORDER BY"
+
+msgid "Pegar en el editor"
+msgstr "Pega den e editor"
+
+msgid "Poner NULL"
+msgstr "Pone NULL"
+
+msgid "Refrescar (F5)"
+msgstr "Refreská (F5)"
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "Solo esta conexión"
+msgstr "Solamente e konekshon aki"
+
+msgid "Texto"
+msgstr "Teksto"
+
+msgid "WHERE"
+msgstr "WHERE"
+
+msgid "id > 10 AND estado = 'activo'"
+msgstr "id > 10 AND estado = 'aktivo'"
+
+msgid "id DESC"
+msgstr "id DESC"
+
+msgid "ms"
+msgstr "ms"
+
+msgid "JSON formateado"
+msgstr "JSON formatá"
+
+msgid "{0} caracteres"
+msgstr "{0} karakter"
+
+msgid "Valor de {0}"
+msgstr "Balor di {0}"
+
+msgid "columna"
+msgstr "kolòm"
+
+msgid "tabla"
+msgstr "tabel"
+
+msgid "palabra clave"
+msgstr "palabra klave"
+
+msgid "Exportar {0} fila(s)"
+msgstr "Eksportá {0} liña(nan)"
+
+msgid "No se pudo escribir {0}: {1}"
+msgstr "No por a skirbi {0}: {1}"
+
+msgid "Buscar en todas las columnas"
+msgstr "Buska den tur kolòm"
+
+msgid "{0} de {1} fila(s)"
+msgstr "{0} di {1} liña(nan)"
+
+msgid "{0} fila(s)"
+msgstr "{0} liña(nan)"
+
+msgid "Filtro"
+msgstr "Filter"
+
+msgid "Ver valor"
+msgstr "Mira balor"
+
+msgid "Insertar fila nueva"
+msgstr "Inserta liña nobo"
+
+msgid "Guardar cambios (Ctrl+S)"
+msgstr "Warda kambionan (Ctrl+S)"
+
+msgid "Borrar / recuperar fila(s) seleccionada(s) (Supr)"
+msgstr "Borra / rekuperá liña(nan) selektá (Del)"
+
+msgid "Cancelar cambios"
+msgstr "Kanselá kambionan"
+
+msgid "Poner cadena vacía"
+msgstr "Pone teksto bashí"
+
+msgid "Poner DEFAULT"
+msgstr "Pone DEFAULT"
+
+msgid "Quitar orden"
+msgstr "Kita òrdu"
+
+msgid "Exportar las filas como... (Ctrl+Shift+E)"
+msgstr "Eksportá e liñanan komo... (Ctrl+Shift+E)"
+
+msgid "Celdas seleccionadas (Ctrl+C)"
+msgstr "Seldanan selektá (Ctrl+C)"
+
+msgid "Filas seleccionadas"
+msgstr "Liñanan selektá"
+
+msgid "Todas las filas con tabuladores y cabecera"
+msgstr "Tur liña ku tab i kabesera"
+
+msgid "Nombre de la columna"
+msgstr "Nòmber di e kolòm"
+
+msgid "Duplicar fila actual"
+msgstr "Duplicá e liña aktual"
+
+msgid "Quitar filtro"
+msgstr "Kita filter"
+
+msgid "Seleccionar todo"
+msgstr "Selektá tur"
+
+msgid "Exportar como CSV..."
+msgstr "Eksportá komo CSV..."
+
+msgid "Exportar como INSERTs (SQL)..."
+msgstr "Eksportá komo INSERTs (SQL)..."
+
+msgid "Exportar como JSON..."
+msgstr "Eksportá komo JSON..."
+
+msgid "Exportar como XML..."
+msgstr "Eksportá komo XML..."
+
+msgid "Exportar como HTML..."
+msgstr "Eksportá komo HTML..."
+
+msgid "Copiar todo con tabuladores y cabecera"
+msgstr "Kopiá tur ku tab i kabesera"
+
+msgid "Borrar / recuperar fila(s) (Supr)"
+msgstr "Borra / rekuperá liña(nan) (Del)"
+
+msgid "Duplicar fila"
+msgstr "Duplicá liña"
+
+msgid "Copiar fila(s)"
+msgstr "Kopiá liña(nan)"
+
+msgid "{0} ejecución(es)"
+msgstr "{0} ehekushon(nan)"
+
+msgid "Cancelando..."
+msgstr "Ta kanselá..."
+
+msgid "No ejecutado"
+msgstr "No a ehekutá"
+
+msgid "Error"
+msgstr "Eror"
+
+msgid "Ejecutando..."
+msgstr "Ta ehekutá..."
+
+msgid "Ejecutar en producción"
+msgstr "Ehekutá den produkshon"
+
+msgid "Conexión de producción"
+msgstr "Konekshon di produkshon"
+
+msgid "Sentencias destructivas en PRODUCCIÓN"
+msgstr "Sentensianan destruktivo den PRODUKSHON"
+
+msgid "{0} fila(s) devueltas"
+msgstr "{0} liña(nan) bek"
+
+msgid "(cortado en Máx. filas)"
+msgstr "(kortá na Máks. liñanan)"
+
+msgid "{0} fila(s) afectadas"
+msgstr "{0} liña(nan) afektá"
+
+msgid "Tiempo: {0} ms"
+msgstr "Tempu: {0} ms"
+
+msgid "Cancelado por el usuario"
+msgstr "Kanselá pa e usuario"
+
+msgid "Cancelado"
+msgstr "Kanselá"
+
+msgid "Resultado"
+msgstr "Resultado"
+
+msgid "Resultado {0}"
+msgstr "Resultado {0}"
+
+msgid "Hay {0} cambio(s) sin guardar. ¿Descartarlos y recargar?"
+msgstr "Tin {0} kambio(nan) ku no a warda. Deskartá nan i karga di nobo?"
+
+msgid "Cargando..."
+msgstr "Ta karga..."
+
+msgid "Guarda o cancela los cambios antes de filtrar"
+msgstr "Warda of kanselá e kambionan promé ku filtrá"
+
+msgid "Guardado: {0} fila(s)"
+msgstr "Wardá: {0} liña(nan)"
+
+msgid "Guardando..."
+msgstr "Ta warda..."
+
+msgid "Sin resultado"
+msgstr "Sin resultado"
+
+msgid "(límite alcanzado)"
+msgstr "(límite yegá)"
+
+msgid "Solo lectura: vista o tabla sin clave primaria"
+msgstr "Solamente lesa: vista of tabel sin klave primario"
+
+msgid "Solo lectura: el resultado no trae toda la clave primaria"
+msgstr "Solamente lesa: e resultado no ta trese henter e klave primario"
+
+msgid "Solo lectura: la clave primaria es binaria"
+msgstr "Solamente lesa: e klave primario ta binario"
+
+msgid "Editable: doble clic, F2 o Enter"
+msgstr "Editabel: dobel klek, F2 of Enter"
+
+msgid "{0} cambio(s) sin guardar"
+msgstr "{0} kambio(nan) ku no a warda"
+
+msgid "Guardar en producción"
+msgstr "Warda den produkshon"
+
+msgid "Cambios en PRODUCCIÓN"
+msgstr "Kambionan den PRODUKSHON"
+
+msgid "{0} is required"
+msgstr "{0} ta obligatorio"
+
+msgid "Nothing to execute: the editor has no statements"
+msgstr "Nada pa ehekutá: e editor no tin sentensia"
+
+msgid "Error Code: {0} - {1}"
+msgstr "Kódigo di eror: {0} - {1}"
+
+msgid "Cancelled by the user"
+msgstr "Kanselá pa e usuario"
+
+msgid "{0} is a production connection. Confirm these statements:\n\n{1}"
+msgstr "{0} ta un konekshon di produkshon. Konfirmá e sentensianan aki:\n\n{1}"
+
+msgid "{0} is a production connection. Save {1} change(s)?"
+msgstr "{0} ta un konekshon di produkshon. Warda {1} kambio(nan)?"
+
+msgid "Table {0} has no primary key: its data cannot be edited"
+msgstr "Tabel {0} no tin klave primario: su datonan no por wòrdu editá"
+
+msgid "Changes not saved (rolled back): {0}"
+msgstr "Kambionan no a wòrdu wardá (a bolbe atras): {0}"
+
+msgid "There are no changes to save"
+msgstr "No tin kambio pa warda"
+
+msgid "Elige el formato en el que quieres exportar los datos"
+msgstr "Skohe e formato den kua bo ke eksportá e datonan"
+
+msgid "Opciones de CSV"
+msgstr "Opshonnan di CSV"
+
+msgid "Campos terminados por"
+msgstr "Kampunan ta kaba ku"
+
+msgid "Entre comillas"
+msgstr "Entre komiya"
+
+msgid "Escapados con"
+msgstr "Eskapá ku"
+
+msgid "Líneas terminadas por"
+msgstr "Liñanan ta kaba ku"
+
+msgid "NULL se escribe como"
+msgstr "NULL ta skirbi komo"
+
+msgid "\\t tabulador · \\n salto de línea · <NONE> nada"
+msgstr "\\t tab · \\n kambio di liña · <NONE> nada"
+
+msgid "Opciones de Excel"
+msgstr "Opshonnan di Excel"
+
+msgid "Ancho máximo de texto"
+msgstr "Anchura máksimo di teksto"
+
+msgid "Decimales"
+msgstr "Desimal"
+
+msgid "Opciones de SQL"
+msgstr "Opshonnan di SQL"
+
+msgid "Tabla"
+msgstr "Tabel"
+
+msgid "Filas por INSERT"
+msgstr "Fila pa INSERT"
+
+msgid "Nombres de columna en la primera fila"
+msgstr "Nòmber di kolòm den promé fila"
+
+msgid "Campos a exportar"
+msgstr "Kampunan pa eksportá"
+
+msgid "Quitar todo"
+msgstr "Kita tur"
+
+msgid "Juego de caracteres"
+msgstr "Set di karakter"
+
+msgid "Guardar en"
+msgstr "Warda den"
+
+msgid "Exportar"
+msgstr "Eksportá"
+
+msgid "Exportar como"
+msgstr "Eksportá komo"
+
+msgid "Todas ({0})"
+msgstr "Tur ({0})"
+
+msgid "Solo las marcadas ({0})"
+msgstr "Solamente esnan marká ({0})"
+
+msgid "Elige al menos un campo"
+msgstr "Skohe por lo ménos un kampu"
+
+msgid "Falta el fichero"
+msgstr "Fail ta falta"
+
+msgid "Exportadas {0} fila(s) y {1} campo(s) a {2}"
+msgstr "A eksportá {0} fila(s) i {1} kampu(s) na {2}"
+
+msgid "Exportar como Excel XML..."
+msgstr "Eksportá komo Excel XML..."
+
+msgid "Ejecuta las sentencias de un fichero .sql sin cargarlo en el editor (volcados grandes)."
+msgstr "Ta ehekutá e instrukshonnan di un fail .sql sin kark'é den e editor (dump grandi)."
+
+msgid "Ejecutar fichero SQL"
+msgstr "Ehekutá fail SQL"
+
+msgid "Ejecutar un fichero .sql en la BD activa (importar)"
+msgstr "Ehekutá un fail .sql den e BD aktivo (importá)"
+
+msgid "Fichero a ejecutar"
+msgstr "Fail pa ehekutá"
+
+msgid "Parar en el primer error"
+msgstr "Para na e promé eror"
+
+msgid "Ver errores..."
+msgstr "Mira erornan..."
+
+msgid "Ejecutar fichero SQL..."
+msgstr "Ehekutá fail SQL..."
+
+msgid "(la de la conexión)"
+msgstr "(esun di e konekshon)"
+
+msgid "¿Ejecutar igualmente?"
+msgstr "Ehekutá tòg?"
+
+msgid "Parada en un error."
+msgstr "A para na un eror."
+
+msgid "{0} sentencias ejecutadas"
+msgstr "{0} instrukshon ehekutá"
+
+msgid "... y {0} error(es) más"
+msgstr "... i {0} eror mas"
+
+msgid "Errores al ejecutar el fichero"
+msgstr "Erornan ehekutando e fail"
+
+msgid "Ejecutando... {0} sentencias"
+msgstr "Ta ehekutá... {0} instrukshon"
+
+msgid "Parando..."
+msgstr "Ta para..."
+
+msgid "{0} is a production connection: the whole file {1} will be executed"
+msgstr "{0} ta un konekshon di produkshon: henter e fail {1} lo wòrdu ehekutá"
+
+msgid "Cannot read {0}: {1}"
+msgstr "No por a lesa {0}: {1}"
+
+msgid "Incluir CREATE TABLE"
+msgstr "Inkluí CREATE TABLE"
+
+msgid "Leyendo el CREATE TABLE de {0}..."
+msgstr "Lesando e CREATE TABLE di {0}..."
+
+msgid "Exportando {0} fila(s) a {1}..."
+msgstr "Eksportando {0} fila(s) na {1}..."
+
+msgid "Exportación terminada"
+msgstr "Eksportashon kla"
+
+msgid "Solo cuando la rejilla es de una tabla (pestaña Datos)"
+msgstr "Solamente ora e rooster ta di un tabel (pèchi Datos)"
+
+msgid "Pone delante de los INSERT el CREATE TABLE de {0}"
+msgstr "Ta pone e CREATE TABLE di {0} promé ku e INSERTnan"
+
+msgid "Solo con la tabla {0}: los INSERT van a otra"
+msgstr "Solamente ku tabel {0}: e INSERTnan ta bai na otro"
+
+msgid "Abrir la carpeta"
+msgstr "Habri e kaarchi"
+
+msgid "No existe la carpeta de {0}"
+msgstr "E kaarchi di {0} no ta eksistí"
+
+msgid "Solo lectura: para editar, Ver datos de la tabla (F11)"
+msgstr "Solamente lesa: pa edita, Mira datonan di e tabel (F11)"
+
+msgid "Solo lectura: no se encuentra la tabla {0}"
+msgstr "Solamente lesa: no a haña tabel {0}"
+
+msgid "Solo lectura: hay columnas repetidas"
+msgstr "Solamente lesa: tin kolumnanan ripití"
+
+msgid "Solo lectura: hay columnas que no son de la tabla"
+msgstr "Solamente lesa: tin kolumna ku no ta di e tabel"
+
+msgid "No"
+msgstr "No"
+
+msgid "Se borran {0} fila(s) de {1}. ¿Seguir?"
+msgstr "Lo kita {0} fila(nan) di {1}. Sigui?"
+
+msgid "Borrar filas"
+msgstr "Kita filanan"
+
+msgid "Insertar fila"
+msgstr "Inserta fila"
+
+msgid "Solo lectura: el resultado no es de una sola tabla (sin JOIN, GROUP BY ni expresiones)"
+msgstr "Solamente lesa: e resultado no ta di un solo tabel (sin JOIN, GROUP BY ni ekspreshon)"
+
+msgid "Comprobando si {0} se puede editar..."
+msgstr "Ta chek si por editá {0}..."
+
+msgid "Solo lectura: no se pudieron leer las columnas de {0}"
+msgstr "Solamente lesa: no por a lesa e kolumnanan di {0}"
+
+msgid "El resultado tiene {0} cambio(s) sin guardar. ¿Descartarlos y ejecutar?"
+msgstr "E resultado tin {0} kambio(nan) no wardá. Deskart nan i ehekutá?"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Historial"
+msgstr "Historia"
+
+msgid "Limpiar historial"
+msgstr "Limpia historia"
+
+msgid "¿Borrar el historial de TODAS las conexiones?"
+msgstr "Kita e historia di TUR e konekshonnan?"
+
+msgid "¿Borrar el historial de esta conexión?"
+msgstr "Kita e historia di e konekshon aki?"
+
+msgid "Historial limpio: {0} ejecución(es) borradas"
+msgstr "Historia limpiá: {0} ehekushon(nan) kitá"
+
+msgid "Exportar SQL"
+msgstr "Eksportá SQL"
+
+msgid "Lo que se ve, en orden de ejecución, para volver a lanzarlo con Importar"
+msgstr "Loke bo ta mira, den órden di ehekushon, pa bolbe kòrè ku Importá"
+
+msgid "Exportar el historial a SQL"
+msgstr "Eksportá e historia na SQL"
+
+msgid "Script SQL"
+msgstr "Script SQL"
+
+msgid "Exportadas {0} ejecución(es) a {1}"
+msgstr "{0} ehekushon(nan) eksportá na {1}"
+
+msgid "No se pudo escribir {0}: {1}"
+msgstr "No por a skirbi {0}: {1}"
+
+msgid "Limpiar"
+msgstr "Limpia"
+
+msgid "Vacía el editor de esta pestaña (Ctrl+Z lo recupera)"
+msgstr "Ta basha e editor di e tab aki (Ctrl+Z ta trese bek)"
+
+msgid "Refrescar"
+msgstr "Refreská"
+
+msgid "Volver a leer el historial (F5): lo lanzado desde el árbol (DROP, duplicar...) aparece al refrescar"
+msgstr "Lesa e historia di nobo (F5): loke a lansa for di e palu (DROP, duplicá...) ta aparesé ora di refreská"

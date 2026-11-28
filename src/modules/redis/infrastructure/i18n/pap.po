@@ -1,0 +1,232 @@
+# modulo redis - pap (Papiamentu, ortografia di Kòrsou)
+
+msgid "patrón: user:*"
+msgstr "patron: user:*"
+
+msgid "Patrón de SCAN MATCH: * cualquier cosa, ? un carácter, [ab] uno de"
+msgstr "Patron di SCAN MATCH: * kualke kos, ? un karakter, [ab] un di nan"
+
+msgid "Buscar"
+msgstr "Buska"
+
+msgid "Más"
+msgstr "Mas"
+
+msgid "Siguiente tanda de SCAN"
+msgstr "Siguiente tanda di SCAN"
+
+msgid "Valor"
+msgstr "Balor"
+
+msgid "(elige una clave)"
+msgstr "(skohe un klave)"
+
+msgid "TTL…"
+msgstr "TTL…"
+
+msgid "Caducidad en segundos (vacío = no caduca)"
+msgstr "Vensimentu na sekonde (bashí = no ta vense)"
+
+msgid "Renombrar…"
+msgstr "Kambia nòmber…"
+
+msgid "Borrar"
+msgstr "Borá"
+
+msgid "Volver a leer el valor"
+msgstr "Lesa e balor di nobo"
+
+msgid "campo"
+msgstr "kampo"
+
+msgid "valor"
+msgstr "balor"
+
+msgid "score"
+msgstr "score"
+
+msgid "Guardar"
+msgstr "Warda"
+
+msgid "Quitar"
+msgstr "Kita"
+
+msgid "Consola"
+msgstr "Konsola"
+
+msgid "redis>"
+msgstr "redis>"
+
+msgid "GET clave · HGETALL h · ↑ ↓ historial"
+msgstr "GET klave · HGETALL h · ↑ ↓ historia"
+
+msgid "Ejecutar"
+msgstr "Ehekutá"
+
+msgid "Buscando..."
+msgstr "Ta buska..."
+
+msgid "{0} clave(s)"
+msgstr "{0} klave(nan)"
+
+msgid "{0} clave(s) · hay más (Más)"
+msgstr "{0} klave(nan) · tin mas (Mas)"
+
+msgid "Leyendo..."
+msgstr "Ta lesa..."
+
+msgid "{0} bytes"
+msgstr "{0} bytes"
+
+msgid "{0} elemento(s)"
+msgstr "{0} elemento(nan)"
+
+msgid "Valor binario: se ve en hexadecimal y no se edita aquí (usa la consola)."
+msgstr "Balor binario: e ta mustra na heksadesimal i no por editá e aki (usa e konsola)."
+
+msgid "Se ven los primeros {0} de {1}."
+msgstr "Ta mustra e promé {0} di {1}."
+
+msgid "índice (vacío = añadir al final)"
+msgstr "índice (bashí = agregá na final)"
+
+msgid "miembro"
+msgstr "miembro"
+
+msgid "Guardar valor"
+msgstr "Warda balor"
+
+msgid "Caducidad"
+msgstr "Vensimentu"
+
+msgid "Segundos hasta que {0} caduque (vacío = no caduca nunca)"
+msgstr "Sekonde te ora {0} vense (bashí = nunka no ta vense)"
+
+msgid "Renombrar clave"
+msgstr "Kambia nòmber di klave"
+
+msgid "Nuevo nombre para {0} (si ya existe, se sobrescribe)"
+msgstr "Nòmber nobo pa {0} (si e ta eksistí kaba, e ta wòrdu sobreskribí)"
+
+msgid "¿Borrar la clave {0}?"
+msgstr "Borá e klave {0}?"
+
+msgid "(borrada) {0}"
+msgstr "(borá) {0}"
+
+msgid "Guardando..."
+msgstr "Ta warda..."
+
+msgid "Hecho ({0})"
+msgstr "Kla ({0})"
+
+msgid "sin caducidad"
+msgstr "sin vensimentu"
+
+msgid "caduca en {0} s"
+msgstr "ta vense den {0} s"
+
+msgid "caduca en {0} min"
+msgstr "ta vense den {0} min"
+
+msgid "caduca en {0} h"
+msgstr "ta vense den {0} o"
+
+msgid "Ejecutar en producción"
+msgstr "Ehekutá na produkshon"
+
+msgid "Conexión de producción"
+msgstr "Konekshon di produkshon"
+
+msgid "Operación destructiva en PRODUCCIÓN"
+msgstr "Operashon destruktivo na PRODUKSHON"
+
+msgid "(vacío)"
+msgstr "(bashí)"
+
+msgid "{0} is required"
+msgstr "{0} ta obligatorio"
+
+msgid "Could not read {0}: {1}"
+msgstr "No por a lesa {0}: {1}"
+
+msgid "Could not change {0}: {1}"
+msgstr "No por a kambia {0}: {1}"
+
+msgid "Unknown operation {0}"
+msgstr "Operashon deskonosí {0}"
+
+msgid "Operation {0} does not apply to a {1} key"
+msgstr "Operashon {0} no ta aplikabel na un klave {1}"
+
+msgid "Key {0} not found"
+msgstr "No a haña klave {0}"
+
+msgid "Nothing to execute"
+msgstr "No tin nada pa ehekutá"
+
+msgid "Production connection {0}: confirm before running {1}"
+msgstr "Konekshon di produkshon {0}: konfirmá promé ku ehekutá {1}"
+
+msgid "Invalid score {0}"
+msgstr "Score no válido {0}"
+
+msgid "field"
+msgstr "kampo"
+
+msgid "value"
+msgstr "balor"
+
+msgid "index"
+msgstr "índice"
+
+msgid "member"
+msgstr "miembro"
+
+msgid "id"
+msgstr "id"
+
+msgid "fields"
+msgstr "kamponan"
+
+msgid "Clave"
+msgstr "Yabi"
+
+msgid "Tipo"
+msgstr "Tipo"
+
+msgid "vacío = no caduca"
+msgstr "bashí = no ta vense"
+
+msgid "Creando..."
+msgstr "Kreando..."
+
+msgid "Nueva clave"
+msgstr "Yabi nobo"
+
+msgid "Nueva clave…"
+msgstr "Yabi nobo…"
+
+msgid "Campo (hash)"
+msgstr "Kampo (hash)"
+
+msgid "Score (zset)"
+msgstr "Score (zset)"
+
+msgid "Caduca en (s)"
+msgstr "Ta vense den (s)"
+
+msgid "Invalid expiration {0}: whole seconds greater than 0, or empty"
+msgstr "Vensementu no ta válido {0}: sekundo entero mas grandi ku 0, of bashí"
+
+msgid "Key {0} already exists: edit it in the value panel"
+msgstr "Yabi {0} ta eksistí kaba: editá esaki den e panel di e balor"
+
+msgid "A {0} key cannot be created here: string, hash, list, set or zset"
+msgstr "No por krea un yabi {0} aki: string, hash, list, set of zset"
+
+msgid "Invalid expiration {0}: whole seconds greater than 0"
+msgstr "Vensementu no ta válido {0}: sekundo entero mas grandi ku 0"
+
+msgid "Invalid list index {0}: a whole number"
+msgstr "Índise di lista no ta válido {0}: un number entero"

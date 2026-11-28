@@ -24,7 +24,6 @@ buildNumber.properties
 .classpath
 .project
 .settings/
-bin/
 
 # NetBeans
 nbproject/private/
@@ -54,3 +53,6 @@ desktop.ini
 .javayog/
 logs/
 exports/
+
+# BD de los tests y logs
+storage/

@@ -1,0 +1,89 @@
+# modulo redis - es (español)
+# Solo las claves en ingles (RedisMessageEnum y cabeceras de columnas); las claves en español se ven tal cual.
+
+msgid "{0} is required"
+msgstr "{0} es obligatorio"
+
+msgid "Could not read {0}: {1}"
+msgstr "No se pudo leer {0}: {1}"
+
+msgid "Could not change {0}: {1}"
+msgstr "No se pudo cambiar {0}: {1}"
+
+msgid "Unknown operation {0}"
+msgstr "Operación desconocida {0}"
+
+msgid "Operation {0} does not apply to a {1} key"
+msgstr "La operación {0} no se aplica a una clave {1}"
+
+msgid "Key {0} not found"
+msgstr "No se encuentra la clave {0}"
+
+msgid "Nothing to execute"
+msgstr "No hay nada que ejecutar"
+
+msgid "Production connection {0}: confirm before running {1}"
+msgstr "Conexión de producción {0}: confirma antes de ejecutar {1}"
+
+msgid "Invalid score {0}"
+msgstr "Score no válido {0}"
+
+msgid "field"
+msgstr "campo"
+
+msgid "value"
+msgstr "valor"
+
+msgid "index"
+msgstr "índice"
+
+msgid "member"
+msgstr "miembro"
+
+msgid "id"
+msgstr "id"
+
+msgid "fields"
+msgstr "campos"
+
+msgid "Clave"
+msgstr "Clave"
+
+msgid "Tipo"
+msgstr "Tipo"
+
+msgid "vacío = no caduca"
+msgstr "vacío = no caduca"
+
+msgid "Creando..."
+msgstr "Creando..."
+
+msgid "Nueva clave"
+msgstr "Nueva clave"
+
+msgid "Nueva clave…"
+msgstr "Nueva clave…"
+
+msgid "Campo (hash)"
+msgstr "Campo (hash)"
+
+msgid "Score (zset)"
+msgstr "Score (zset)"
+
+msgid "Caduca en (s)"
+msgstr "Caduca en (s)"
+
+msgid "Invalid expiration {0}: whole seconds greater than 0, or empty"
+msgstr "Caducidad no válida {0}: segundos enteros mayores que 0, o vacío"
+
+msgid "Key {0} already exists: edit it in the value panel"
+msgstr "La clave {0} ya existe: edítala en el panel del valor"
+
+msgid "A {0} key cannot be created here: string, hash, list, set or zset"
+msgstr "Aquí no se puede crear una clave {0}: string, hash, list, set o zset"
+
+msgid "Invalid expiration {0}: whole seconds greater than 0"
+msgstr "Caducidad no válida {0}: segundos enteros mayores que 0"
+
+msgid "Invalid list index {0}: a whole number"
+msgstr "Índice de lista no válido {0}: un número entero"

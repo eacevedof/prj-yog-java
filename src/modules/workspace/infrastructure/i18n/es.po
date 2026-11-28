@@ -1,0 +1,92 @@
+# multidbs - modulo workspace - español (es)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Archivo"
+msgstr "Archivo"
+
+msgid "Salir"
+msgstr "Salir"
+
+msgid "Ver"
+msgstr "Ver"
+
+msgid "Tema oscuro"
+msgstr "Tema oscuro"
+
+msgid "Abre una conexión (doble clic o botón Abrir) para ver sus objetos y escribir SQL"
+msgstr "Abre una conexión (doble clic o botón Abrir) para ver sus objetos y escribir SQL"
+
+msgid "BD activa:"
+msgstr "BD activa:"
+
+msgid "Cambiar el idioma cierra las conexiones abiertas. ¿Seguir?"
+msgstr "Cambiar el idioma cierra las conexiones abiertas. ¿Seguir?"
+
+msgid "Cargando..."
+msgstr "Cargando..."
+
+msgid "Info: {0}"
+msgstr "Info: {0}"
+
+msgid "Datos: {0}"
+msgstr "Datos: {0}"
+
+msgid "La pestaña tiene cambios sin guardar. ¿Cerrarla y perderlos?"
+msgstr "La pestaña tiene cambios sin guardar. ¿Cerrarla y perderlos?"
+
+msgid "(ninguna)"
+msgstr "(ninguna)"
+
+msgid "Query {0}"
+msgstr "Query {0}"
+
+msgid "Renombrar pestaña"
+msgstr "Renombrar pestaña"
+
+msgid "Nombre:"
+msgstr "Nombre:"
+
+msgid "Unknown workspace state {0}"
+msgstr "Dato del espacio de trabajo desconocido: {0}"
+
+msgid "{0} is too long"
+msgstr "{0} es demasiado largo"
+
+msgid "Exportar"
+msgstr "Exportar"
+
+msgid "Importar"
+msgstr "Importar"
+
+msgid "Elegir la BD activa (escribe para buscar)"
+msgstr "Elegir la BD activa (escribe para buscar)"
+
+msgid "Cerrar (Ctrl+W)"
+msgstr "Cerrar (Ctrl+W)"
+
+msgid "Cerrar las demás"
+msgstr "Cerrar las demás"
+
+msgid "Cerrar todas"
+msgstr "Cerrar todas"
+
+msgid "Cerrar las no modificadas"
+msgstr "Cerrar las no modificadas"
+
+msgid "Cerrar las de la derecha"
+msgstr "Cerrar las de la derecha"
+
+msgid "Renombrar... (doble clic)"
+msgstr "Renombrar... (doble clic)"
+
+msgid "Restablecer espacio de trabajo…"
+msgstr "Restablecer espacio de trabajo…"
+
+msgid "Se borran los filtros, la BD activa de cada conexión, las carpetas y el último fichero recordados y las pestañas de query guardadas. Las conexiones, el tema, el idioma y el historial se quedan."
+msgstr "Se borran los filtros, la BD activa de cada conexión, las carpetas y el último fichero recordados y las pestañas de query guardadas. Las conexiones, el tema, el idioma y el historial se quedan."
+
+msgid "Se cierran las conexiones abiertas."
+msgstr "Se cierran las conexiones abiertas."
+
+msgid "¿Restablecer el espacio de trabajo?"
+msgstr "¿Restablecer el espacio de trabajo?"

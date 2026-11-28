@@ -1,0 +1,347 @@
+# multidbs - modulo dbcopy - neerlandes (nl)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Copia objetos entre bases de datos y servidores (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite)."
+msgstr "Kopieert objecten tussen databases en servers (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite)."
+
+msgid "Origen (conexión - BD)"
+msgstr "Bron (verbinding - database)"
+
+msgid "Objetos"
+msgstr "Objecten"
+
+msgid "Destino"
+msgstr "Doel"
+
+msgid "La copia puede ir a otra BD del mismo servidor o a cualquier conexión SQL guardada (directa, SSH o túnel HTTP). Si la BD destino no existe, se crea. Entre motores distintos solo se copian las tablas."
+msgstr "De kopie kan naar een andere database op dezelfde server of naar elke opgeslagen SQL-verbinding (direct, SSH of HTTP-tunnel). Bestaat de doeldatabase niet, dan wordt die aangemaakt. Tussen verschillende engines worden alleen tabellen gekopieerd."
+
+msgid "Conexión"
+msgstr "Verbinding"
+
+msgid "Base de datos"
+msgstr "Database"
+
+msgid "nombre de la BD destino"
+msgstr "naam van de doeldatabase"
+
+msgid "Estructura y datos"
+msgstr "Structuur en gegevens"
+
+msgid "Solo estructura"
+msgstr "Alleen structuur"
+
+msgid "Borrar en destino si existe (DROP IF EXISTS)"
+msgstr "Op het doel verwijderen als het bestaat (DROP IF EXISTS)"
+
+msgid "INSERT en bloque (varias filas por sentencia)"
+msgstr "Bulk-INSERT (meerdere rijen per statement)"
+
+msgid "Ignorar DEFINER"
+msgstr "DEFINER negeren"
+
+msgid "Copiar los triggers de las tablas marcadas"
+msgstr "Triggers van de aangevinkte tabellen kopiëren"
+
+msgid "Ver resumen..."
+msgstr "Samenvatting bekijken..."
+
+msgid "Copiar"
+msgstr "Kopiëren"
+
+msgid "Cerrar"
+msgstr "Sluiten"
+
+msgid "Copiar BD a otro servidor/BD"
+msgstr "Database kopiëren naar andere server/database"
+
+msgid "Copiar tabla a otro servidor/BD"
+msgstr "Tabel kopiëren naar andere server/database"
+
+msgid "Leyendo los objetos de {0}..."
+msgstr "Objecten van {0} lezen..."
+
+msgid "Leyendo las BD del destino..."
+msgstr "Databases van het doel lezen..."
+
+msgid "La BD {0} no existe en el destino: se creará."
+msgstr "Database {0} bestaat niet op het doel: die wordt aangemaakt."
+
+msgid "Parando en cuanto acabe la página en curso..."
+msgstr "Stoppen zodra de huidige pagina klaar is..."
+
+msgid "Copiando..."
+msgstr "Kopiëren..."
+
+msgid "¿Copiar igualmente?"
+msgstr "Toch kopiëren?"
+
+msgid "Parada."
+msgstr "Gestopt."
+
+msgid "Hecho."
+msgstr "Klaar."
+
+msgid "{0} objetos copiados"
+msgstr "{0} objecten gekopieerd"
+
+msgid "{0} filas"
+msgstr "{0} rijen"
+
+msgid "{0} con error"
+msgstr "{0} met fouten"
+
+msgid "en {0} s."
+msgstr "in {0} s."
+
+msgid "Copia parada antes de acabar."
+msgstr "Kopiëren gestopt voordat het klaar was."
+
+msgid "Resumen de la copia"
+msgstr "Samenvatting van de kopie"
+
+msgid "Parar"
+msgstr "Stoppen"
+
+msgid "Tablas"
+msgstr "Tabellen"
+
+msgid "Vistas"
+msgstr "Views"
+
+msgid "Procedimientos"
+msgstr "Procedures"
+
+msgid "Funciones"
+msgstr "Functies"
+
+msgid "Triggers"
+msgstr "Triggers"
+
+msgid "Eventos"
+msgstr "Events"
+
+msgid "tabla"
+msgstr "tabel"
+
+msgid "vista"
+msgstr "view"
+
+msgid "procedimiento"
+msgstr "procedure"
+
+msgid "función"
+msgstr "functie"
+
+msgid "trigger"
+msgstr "trigger"
+
+msgid "evento"
+msgstr "event"
+
+msgid "{0} is required"
+msgstr "{0} is verplicht"
+
+msgid "Nothing is selected to copy"
+msgstr "Er is niets geselecteerd om te kopiëren"
+
+msgid "Source and target are the same database on the same server: the copy would delete it"
+msgstr "Bron en doel zijn dezelfde database op dezelfde server: de kopie zou die wissen"
+
+msgid "Target \"{0}\" is a production connection: database {1} will be written"
+msgstr "Doel \"{0}\" is een productieverbinding: er wordt in database {1} geschreven"
+
+msgid "the server gives no definition (missing privileges?): {0}"
+msgstr "de server geeft geen definitie (ontbrekende rechten?): {0}"
+
+msgid "cancelled: the table was copied partially"
+msgstr "geannuleerd: de tabel is gedeeltelijk gekopieerd"
+
+msgid "Exportar a"
+msgstr "Exporteren naar"
+
+msgid "Exportar como SQL"
+msgstr "Exporteren als SQL"
+
+msgid "Fecha y hora delante del nombre del fichero"
+msgstr "Datum en tijd voor de bestandsnaam"
+
+msgid "Incluir CREATE DATABASE"
+msgstr "CREATE DATABASE opnemen"
+
+msgid "Incluir DROP de cada objeto"
+msgstr "DROP van elk object opnemen"
+
+msgid "Incluir USE de la BD"
+msgstr "USE van de database opnemen"
+
+msgid "Incluir la versión del servidor en el fichero"
+msgstr "Serverversie in het bestand opnemen"
+
+msgid "Opciones avanzadas"
+msgstr "Geavanceerde opties"
+
+msgid "Opciones en el origen"
+msgstr "Opties op de bron"
+
+msgid "Opciones que van al fichero"
+msgstr "Opties in het bestand"
+
+msgid "Solo datos"
+msgstr "Alleen gegevens"
+
+msgid "Transacción única (una foto coherente, sin bloquear)"
+msgstr "Eén transactie (consistente momentopname, zonder vergrendeling)"
+
+msgid "Volcado SQL"
+msgstr "SQL-dump"
+
+msgid "Volcado SQL de la BD activa (exportar a .sql)"
+msgstr "SQL-dump van de actieve database (exporteren naar .sql)"
+
+msgid "Volcado SQL (exportar a .sql)..."
+msgstr "SQL-dump (exporteren naar .sql)..."
+
+msgid "Leyendo las BD..."
+msgstr "Databases lezen..."
+
+msgid "Exportando..."
+msgstr "Exporteren..."
+
+msgid "Exportando {0} ({1}/{2})..."
+msgstr "{0} exporteren ({1}/{2})..."
+
+msgid "Exportando {0}: {1} filas"
+msgstr "{0} exporteren: {1} rijen"
+
+msgid "{0} objetos"
+msgstr "{0} objecten"
+
+msgid "Resumen del volcado"
+msgstr "Samenvatting van de dump"
+
+msgid "The SQL dump only works with MySQL/MariaDB: {0} is {1}"
+msgstr "SQL-dump werkt alleen met MySQL/MariaDB: {0} is {1}"
+
+msgid "Nothing is selected to export"
+msgstr "Er is niets geselecteerd om te exporteren"
+
+msgid "Unknown dump mode {0}"
+msgstr "Onbekende dumpmodus {0}"
+
+msgid "Cannot write {0}: {1}"
+msgstr "Kan {0} niet schrijven: {1}"
+
+msgid "Abrir la carpeta"
+msgstr "De map openen"
+
+msgid "No existe la carpeta de {0}"
+msgstr "De map van {0} bestaat niet"
+
+msgid "Renombrar BD"
+msgstr "Database hernoemen"
+
+msgid "Nombre nuevo"
+msgstr "Nieuwe naam"
+
+msgid "Copia de seguridad (.sql)"
+msgstr "Back-up (.sql)"
+
+msgid "Borrar la BD original al terminar (solo si la nueva tiene los mismos objetos y filas)"
+msgstr "De originele database verwijderen als het klaar is (alleen als de nieuwe dezelfde objecten en rijen heeft)"
+
+msgid "MySQL no puede renombrar una BD: se vuelca la original al .sql, se crea la nueva con el mismo juego de caracteres, se carga el volcado, se comprueba que tiene los mismos objetos y filas y, si cuadra, se borra la original. Si algo falla, la nueva se borra y la original no se toca. El .sql se queda como copia de seguridad."
+msgstr "MySQL kan een database niet hernoemen: de originele wordt naar de .sql gedumpt, de nieuwe wordt met dezelfde tekenset aangemaakt, de dump wordt geladen, er wordt gecontroleerd of die dezelfde objecten en rijen heeft en, als dat klopt, wordt de originele verwijderd. Als er iets misgaat, wordt de nieuwe verwijderd en blijft de originele onaangeroerd. De .sql blijft als back-up bewaard."
+
+msgid "Renombrar"
+msgstr "Hernoemen"
+
+msgid "Renombrar BD {0}"
+msgstr "Database {0} hernoemen"
+
+msgid "¿Renombrar {0} a {1}? Al terminar se borra {0}."
+msgstr "{0} hernoemen naar {1}? {0} wordt verwijderd als het klaar is."
+
+msgid "¿Copiar {0} a {1}? {0} se queda como está."
+msgstr "{0} naar {1} kopiëren? {0} blijft zoals het is."
+
+msgid "Empezando..."
+msgstr "Beginnen..."
+
+msgid "{0} renombrada a {1}"
+msgstr "{0} hernoemd naar {1}"
+
+msgid "{0} copiada a {1} (la original sigue)"
+msgstr "{0} gekopieerd naar {1} (de originele blijft)"
+
+msgid "Copia de seguridad: {0}"
+msgstr "Back-up: {0}"
+
+msgid "1/5 Volcando {0} al .sql..."
+msgstr "1/5 {0} naar de .sql dumpen..."
+
+msgid "2/5 Creando {0}..."
+msgstr "2/5 {0} aanmaken..."
+
+msgid "3/5 Cargando el volcado en {0}..."
+msgstr "3/5 De dump in {0} laden..."
+
+msgid "4/5 Comprobando objetos y filas..."
+msgstr "4/5 Objecten en rijen controleren..."
+
+msgid "5/5 Borrando {0}..."
+msgstr "5/5 {0} verwijderen..."
+
+msgid "1/5 Volcando {0} ({1}/{2})..."
+msgstr "1/5 {0} dumpen ({1}/{2})..."
+
+msgid "1/5 Volcando {0}: {1} filas"
+msgstr "1/5 {0} dumpen: {1} rijen"
+
+msgid "Invalid database name {0}: only letters, digits, _, $ and -, up to 64 characters"
+msgstr "Ongeldige databasenaam {0}: alleen letters, cijfers, _, $ en -, tot 64 tekens"
+
+msgid "The new name is the same as the current one: {0}"
+msgstr "De nieuwe naam is dezelfde als de huidige: {0}"
+
+msgid "Database {0} already exists"
+msgstr "Database {0} bestaat al"
+
+msgid "{0} is a production connection: database {1} will be copied to {2}"
+msgstr "{0} is een productieverbinding: database {1} wordt gekopieerd naar {2}"
+
+msgid "{0} is a production connection: database {1} will be copied to {2} and then DROPPED"
+msgstr "{0} is een productieverbinding: database {1} wordt gekopieerd naar {2} en daarna VERWIJDERD"
+
+msgid "The dump of the original database failed ({0} object(s) with errors): nothing was created"
+msgstr "De dump van de originele database is mislukt ({0} object(en) met fouten): er is niets aangemaakt"
+
+msgid "Loading the dump into {0} failed and it was dropped: {1}"
+msgstr "Het laden van de dump in {0} is mislukt en die is verwijderd: {1}"
+
+msgid "{0} does not match the original after loading ({1}) and it was dropped: the original is untouched"
+msgstr "{0} komt na het laden niet overeen met de originele ({1}) en is verwijderd: de originele is onaangeroerd"
+
+msgid "Duplicar BD"
+msgstr "Database dupliceren"
+
+msgid "Copying only works between SQL engines (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite): {0} is {1}"
+msgstr "Kopiëren werkt alleen tussen SQL-engines (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite): {0} is {1}"
+
+msgid "between different engines only tables are copied (views, routines, triggers and events are not translated)"
+msgstr "tussen verschillende engines worden alleen tabellen gekopieerd (views, routines, triggers en events worden niet vertaald)"
+
+msgid "SQLite has a single database (main): {0} cannot be created"
+msgstr "SQLite heeft één database (main): {0} kan niet worden aangemaakt"
+
+msgid "value {0} is not valid for column {1} ({2})"
+msgstr "waarde {0} is niet geldig voor kolom {1} ({2})"
+
+msgid "index {0} not created: {1}"
+msgstr "index {0} niet aangemaakt: {1}"
+
+msgid "Entre motores distintos solo se copian las tablas (tipos traducidos, clave primaria, índices y datos)."
+msgstr "Tussen verschillende engines worden alleen tabellen gekopieerd (vertaalde types, primaire sleutel, indexen en gegevens)."
+
+msgid "Renombrando: espera a que acabe, no se puede parar a medias"
+msgstr "Hernoemen: wacht tot het klaar is, het kan niet halverwege worden gestopt"

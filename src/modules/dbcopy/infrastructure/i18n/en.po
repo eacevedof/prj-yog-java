@@ -1,0 +1,314 @@
+# multidbs - modulo dbcopy - ingles (en)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Copia objetos entre bases de datos y servidores (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite)."
+msgstr "Copies objects between databases and servers (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite)."
+
+msgid "Origen (conexión - BD)"
+msgstr "Source (connection - database)"
+
+msgid "Objetos"
+msgstr "Objects"
+
+msgid "Destino"
+msgstr "Target"
+
+msgid "La copia puede ir a otra BD del mismo servidor o a cualquier conexión SQL guardada (directa, SSH o túnel HTTP). Si la BD destino no existe, se crea. Entre motores distintos solo se copian las tablas."
+msgstr "The copy can go to another database on the same server or to any saved SQL connection (direct, SSH or HTTP tunnel). If the target database does not exist, it is created. Between different engines only tables are copied."
+
+msgid "Conexión"
+msgstr "Connection"
+
+msgid "Base de datos"
+msgstr "Database"
+
+msgid "nombre de la BD destino"
+msgstr "target database name"
+
+msgid "Estructura y datos"
+msgstr "Structure and data"
+
+msgid "Solo estructura"
+msgstr "Structure only"
+
+msgid "Borrar en destino si existe (DROP IF EXISTS)"
+msgstr "Drop on target if it exists (DROP IF EXISTS)"
+
+msgid "INSERT en bloque (varias filas por sentencia)"
+msgstr "Bulk INSERT (several rows per statement)"
+
+msgid "Ignorar DEFINER"
+msgstr "Ignore DEFINER"
+
+msgid "Copiar los triggers de las tablas marcadas"
+msgstr "Copy the triggers of the checked tables"
+
+msgid "Ver resumen..."
+msgstr "View summary..."
+
+msgid "Copiar"
+msgstr "Copy"
+
+msgid "Cerrar"
+msgstr "Close"
+
+msgid "Copiar BD a otro servidor/BD"
+msgstr "Copy database to another server/database"
+
+msgid "Copiar tabla a otro servidor/BD"
+msgstr "Copy table to another server/database"
+
+msgid "Leyendo los objetos de {0}..."
+msgstr "Reading the objects of {0}..."
+
+msgid "Leyendo las BD del destino..."
+msgstr "Reading the target databases..."
+
+msgid "La BD {0} no existe en el destino: se creará."
+msgstr "Database {0} does not exist on the target: it will be created."
+
+msgid "Parando en cuanto acabe la página en curso..."
+msgstr "Stopping as soon as the current page finishes..."
+
+msgid "Copiando..."
+msgstr "Copying..."
+
+msgid "¿Copiar igualmente?"
+msgstr "Copy anyway?"
+
+msgid "Parada."
+msgstr "Stopped."
+
+msgid "Hecho."
+msgstr "Done."
+
+msgid "{0} objetos copiados"
+msgstr "{0} objects copied"
+
+msgid "{0} filas"
+msgstr "{0} rows"
+
+msgid "{0} con error"
+msgstr "{0} with errors"
+
+msgid "en {0} s."
+msgstr "in {0} s."
+
+msgid "Copia parada antes de acabar."
+msgstr "Copy stopped before finishing."
+
+msgid "Resumen de la copia"
+msgstr "Copy summary"
+
+msgid "Parar"
+msgstr "Stop"
+
+msgid "Tablas"
+msgstr "Tables"
+
+msgid "Vistas"
+msgstr "Views"
+
+msgid "Procedimientos"
+msgstr "Procedures"
+
+msgid "Funciones"
+msgstr "Functions"
+
+msgid "Triggers"
+msgstr "Triggers"
+
+msgid "Eventos"
+msgstr "Events"
+
+msgid "tabla"
+msgstr "table"
+
+msgid "vista"
+msgstr "view"
+
+msgid "procedimiento"
+msgstr "procedure"
+
+msgid "función"
+msgstr "function"
+
+msgid "trigger"
+msgstr "trigger"
+
+msgid "evento"
+msgstr "event"
+
+msgid "Exportar a"
+msgstr "Export to"
+
+msgid "Exportar como SQL"
+msgstr "Export as SQL"
+
+msgid "Fecha y hora delante del nombre del fichero"
+msgstr "Prefix the file name with date and time"
+
+msgid "Incluir CREATE DATABASE"
+msgstr "Include CREATE DATABASE"
+
+msgid "Incluir DROP de cada objeto"
+msgstr "Include DROP of every object"
+
+msgid "Incluir USE de la BD"
+msgstr "Include USE of the database"
+
+msgid "Incluir la versión del servidor en el fichero"
+msgstr "Include the server version in the file"
+
+msgid "Opciones avanzadas"
+msgstr "Advanced options"
+
+msgid "Opciones en el origen"
+msgstr "Options on the source"
+
+msgid "Opciones que van al fichero"
+msgstr "Options written to the file"
+
+msgid "Solo datos"
+msgstr "Data only"
+
+msgid "Transacción única (una foto coherente, sin bloquear)"
+msgstr "Single transaction (a consistent snapshot, no locks)"
+
+msgid "Volcado SQL"
+msgstr "SQL dump"
+
+msgid "Volcado SQL de la BD activa (exportar a .sql)"
+msgstr "SQL dump of the active database (export to .sql)"
+
+msgid "Volcado SQL (exportar a .sql)..."
+msgstr "SQL dump (export to .sql)..."
+
+msgid "Leyendo las BD..."
+msgstr "Reading the databases..."
+
+msgid "Exportando..."
+msgstr "Exporting..."
+
+msgid "Exportando {0} ({1}/{2})..."
+msgstr "Exporting {0} ({1}/{2})..."
+
+msgid "Exportando {0}: {1} filas"
+msgstr "Exporting {0}: {1} rows"
+
+msgid "{0} objetos"
+msgstr "{0} objects"
+
+msgid "Resumen del volcado"
+msgstr "Dump summary"
+
+msgid "The SQL dump only works with MySQL/MariaDB: {0} is {1}"
+msgstr "The SQL dump only works with MySQL/MariaDB: {0} is {1}"
+
+msgid "Nothing is selected to export"
+msgstr "Nothing is selected to export"
+
+msgid "Unknown dump mode {0}"
+msgstr "Unknown dump mode {0}"
+
+msgid "Cannot write {0}: {1}"
+msgstr "Cannot write {0}: {1}"
+
+msgid "Abrir la carpeta"
+msgstr "Open the folder"
+
+msgid "No existe la carpeta de {0}"
+msgstr "The folder of {0} does not exist"
+
+msgid "Renombrar BD"
+msgstr "Rename database"
+
+msgid "Nombre nuevo"
+msgstr "New name"
+
+msgid "Copia de seguridad (.sql)"
+msgstr "Backup (.sql)"
+
+msgid "Borrar la BD original al terminar (solo si la nueva tiene los mismos objetos y filas)"
+msgstr "Drop the original database when done (only if the new one has the same objects and rows)"
+
+msgid "MySQL no puede renombrar una BD: se vuelca la original al .sql, se crea la nueva con el mismo juego de caracteres, se carga el volcado, se comprueba que tiene los mismos objetos y filas y, si cuadra, se borra la original. Si algo falla, la nueva se borra y la original no se toca. El .sql se queda como copia de seguridad."
+msgstr "MySQL cannot rename a database: the original is dumped to the .sql, the new one is created with the same character set, the dump is loaded, it is checked to have the same objects and rows and, if it matches, the original is dropped. If anything fails, the new one is dropped and the original is untouched. The .sql is kept as a backup."
+
+msgid "Renombrar"
+msgstr "Rename"
+
+msgid "Renombrar BD {0}"
+msgstr "Rename database {0}"
+
+msgid "¿Renombrar {0} a {1}? Al terminar se borra {0}."
+msgstr "Rename {0} to {1}? {0} is dropped when done."
+
+msgid "¿Copiar {0} a {1}? {0} se queda como está."
+msgstr "Copy {0} to {1}? {0} stays as it is."
+
+msgid "Empezando..."
+msgstr "Starting..."
+
+msgid "{0} renombrada a {1}"
+msgstr "{0} renamed to {1}"
+
+msgid "{0} copiada a {1} (la original sigue)"
+msgstr "{0} copied to {1} (the original is kept)"
+
+msgid "Copia de seguridad: {0}"
+msgstr "Backup: {0}"
+
+msgid "1/5 Volcando {0} al .sql..."
+msgstr "1/5 Dumping {0} to the .sql..."
+
+msgid "2/5 Creando {0}..."
+msgstr "2/5 Creating {0}..."
+
+msgid "3/5 Cargando el volcado en {0}..."
+msgstr "3/5 Loading the dump into {0}..."
+
+msgid "4/5 Comprobando objetos y filas..."
+msgstr "4/5 Checking objects and rows..."
+
+msgid "5/5 Borrando {0}..."
+msgstr "5/5 Dropping {0}..."
+
+msgid "1/5 Volcando {0} ({1}/{2})..."
+msgstr "1/5 Dumping {0} ({1}/{2})..."
+
+msgid "1/5 Volcando {0}: {1} filas"
+msgstr "1/5 Dumping {0}: {1} rows"
+
+msgid "Invalid database name {0}: only letters, digits, _, $ and -, up to 64 characters"
+msgstr "Invalid database name {0}: only letters, digits, _, $ and -, up to 64 characters"
+
+msgid "The new name is the same as the current one: {0}"
+msgstr "The new name is the same as the current one: {0}"
+
+msgid "Database {0} already exists"
+msgstr "Database {0} already exists"
+
+msgid "{0} is a production connection: database {1} will be copied to {2}"
+msgstr "{0} is a production connection: database {1} will be copied to {2}"
+
+msgid "{0} is a production connection: database {1} will be copied to {2} and then DROPPED"
+msgstr "{0} is a production connection: database {1} will be copied to {2} and then DROPPED"
+
+msgid "The dump of the original database failed ({0} object(s) with errors): nothing was created"
+msgstr "The dump of the original database failed ({0} object(s) with errors): nothing was created"
+
+msgid "Loading the dump into {0} failed and it was dropped: {1}"
+msgstr "Loading the dump into {0} failed and it was dropped: {1}"
+
+msgid "{0} does not match the original after loading ({1}) and it was dropped: the original is untouched"
+msgstr "{0} does not match the original after loading ({1}) and it was dropped: the original is untouched"
+
+msgid "Duplicar BD"
+msgstr "Duplicate database"
+
+msgid "Entre motores distintos solo se copian las tablas (tipos traducidos, clave primaria, índices y datos)."
+msgstr "Between different engines only tables are copied (translated types, primary key, indexes and data)."
+
+msgid "Renombrando: espera a que acabe, no se puede parar a medias"
+msgstr "Renaming: wait until it finishes, it cannot be stopped halfway"

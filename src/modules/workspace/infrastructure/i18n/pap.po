@@ -1,0 +1,128 @@
+# multidbs - modulo workspace - papiamento (Curazao) (pap)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Archivo"
+msgstr "Fail"
+
+msgid "Salir"
+msgstr "Sali"
+
+msgid "Ver"
+msgstr "Mira"
+
+msgid "Tema oscuro"
+msgstr "Tema oskuro"
+
+msgid "Abre una conexión (doble clic o botón Abrir) para ver sus objetos y escribir SQL"
+msgstr "Habri un konekshon (dòbel klek òf e boton Habri) pa mira su obhetonan i skirbi SQL"
+
+msgid "BD activa:"
+msgstr "BD aktivo:"
+
+msgid "Cambiar el idioma cierra las conexiones abiertas. ¿Seguir?"
+msgstr "Kambia e idioma ta sera e konekshonnan habri. Sigui?"
+
+msgid "Cargando..."
+msgstr "Kargando..."
+
+msgid "Info: {0}"
+msgstr "Info: {0}"
+
+msgid "Datos: {0}"
+msgstr "Dato: {0}"
+
+msgid "La pestaña tiene cambios sin guardar. ¿Cerrarla y perderlos?"
+msgstr "E tab tin kambio ku no a warda. Ser'é i pèrdè nan?"
+
+msgid "(ninguna)"
+msgstr "(ningun)"
+
+msgid "Query {0}"
+msgstr "Konsulta {0}"
+
+msgid "Renombrar pestaña"
+msgstr "Kambia nòmber di tab"
+
+msgid "Nombre:"
+msgstr "Nòmber:"
+
+msgid "Unknown workspace state {0}"
+msgstr "Estado di área di trabou deskonosí {0}"
+
+msgid "{0} is too long"
+msgstr "{0} ta muchu largu"
+
+msgid "Exportar"
+msgstr "Eksportá"
+
+msgid "Importar"
+msgstr "Importá"
+
+msgid "Elegir la BD activa (escribe para buscar)"
+msgstr "Skohe e BD aktivo (skirbi pa buska)"
+
+msgid "Cerrar (Ctrl+W)"
+msgstr "Sera (Ctrl+W)"
+
+msgid "Cerrar las demás"
+msgstr "Sera e otro tabnan"
+
+msgid "Cerrar todas"
+msgstr "Sera tur tab"
+
+msgid "Cerrar las no modificadas"
+msgstr "Sera e tabnan no kambiá"
+
+msgid "Cerrar las de la derecha"
+msgstr "Sera e tabnan na banda drechi"
+
+msgid "Renombrar... (doble clic)"
+msgstr "Kambia nòmber... (dobel klik)"
+
+msgid "Restablecer espacio de trabajo…"
+msgstr "Restablesé area di trabou…"
+
+msgid "Se borran los filtros, la BD activa de cada conexión, las carpetas y el último fichero recordados y las pestañas de query guardadas. Las conexiones, el tema, el idioma y el historial se quedan."
+msgstr "Ta kita e filternan di e panel, e base di datos aktivo di kada konekshon, e kartanan i e último archivo kordá i e tabnan di query wardá. E konekshonnan, e tema, e idioma i e historia ta keda."
+
+msgid "Se cierran las conexiones abiertas."
+msgstr "E konekshonnan habrí ta sera."
+
+msgid "¿Restablecer el espacio de trabajo?"
+msgstr "Restablesé e area di trabou?"
+
+msgid "Guardar en ficheros"
+msgstr "Warda den archivonan"
+
+msgid "Recargar ficheros"
+msgstr "Karga archivonan di nobo"
+
+msgid "Escribe en su fichero cada tabla que ha cambiado; una tabla nueva, como .csv"
+msgstr "Ta skirbi kada tabel kambiá den su archivo; un tabel nobo, komo .csv"
+
+msgid "Vuelve a leer todos los ficheros de la carpeta (se pierde lo no guardado)"
+msgstr "Ta lesa tur archivo den e mapa di nobo (loke no a warda ta perde)"
+
+msgid "Cargando ficheros..."
+msgstr "Kargando archivonan..."
+
+msgid "{0} fichero(s) cargado(s), {1} sin cambios"
+msgstr "{0} archivo(nan) kargá, {1} sin kambio"
+
+msgid "Guardando ficheros..."
+msgstr "Wardando archivonan..."
+
+msgid "Nada que guardar: los ficheros ya están al día"
+msgstr "Nada pa warda: e archivonan ta al dia"
+
+msgid "Guardado: {0}"
+msgstr "Wardá: {0}"
+
+msgid "¿Volver a leer todos los ficheros de la carpeta? Se pierde lo que no hayas guardado."
+msgstr "Lesa tur archivo den e mapa di nobo? Loke bo no a warda ta perde."
+
+msgid "BD de sistema"
+msgstr "BD di sistema"
+
+msgid "La BD activa es del propio servidor: cuidado al escribir en ella"
+msgstr "E BD aktivo ta di e sirbidó mes: tene kuidou ora di skirbi den dje"

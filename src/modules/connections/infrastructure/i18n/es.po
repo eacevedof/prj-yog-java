@@ -1,0 +1,122 @@
+# multidbs - modulo connections - es (español)
+# clave = texto fuente (FXML %... o __(...) en Java)
+
+msgid "field is required"
+msgstr "campo obligatorio"
+
+msgid "max length is {0}"
+msgstr "longitud máxima {0}"
+
+msgid "allowed values are {0}"
+msgstr "valores permitidos: {0}"
+
+msgid "value must be between {0} and {1}"
+msgstr "el valor debe estar entre {0} y {1}"
+
+msgid "invalid color, expected format {0}"
+msgstr "color no válido, formato esperado {0}"
+
+msgid "Connection {0} not found"
+msgstr "No se encuentra la conexión {0}"
+
+msgid "Connection name {0} already exists"
+msgstr "Ya existe una conexión con el nombre {0}"
+
+msgid "Connection {0} failed: {1}"
+msgstr "La conexión {0} ha fallado: {1}"
+
+msgid "Connection {0} OK. Server: {1}"
+msgstr "Conexión {0} correcta. Servidor: {1}"
+
+msgid "{0} (copy)"
+msgstr "{0} (copia)"
+
+msgid "an SSH password or a private key is required"
+msgstr "hace falta una password SSH o una clave privada"
+
+msgid "SSH tunnel failed: {0}"
+msgstr "El túnel SSH ha fallado: {0}"
+
+msgid "HTTP tunnel failed: {0}"
+msgstr "El túnel HTTP ha fallado: {0}"
+
+msgid "must start with http:// or https://"
+msgstr "debe empezar por http:// o https://"
+
+msgid "use either the SSH tunnel or the HTTP tunnel, not both"
+msgstr "usa el túnel SSH o el túnel HTTP, no los dos"
+
+msgid "an SSH tunnel does not apply to SQLite (use the HTTP tunnel for a remote file)"
+msgstr "un túnel SSH no vale para SQLite (para un fichero remoto, usa el túnel HTTP)"
+
+msgid "SQLite file not found: {0}"
+msgstr "No se encuentra el fichero SQLite: {0}"
+
+msgid "the HTTP tunnel (SQLyog PHP) does not support {0}"
+msgstr "el túnel HTTP (PHP de SQLyog) no admite {0}"
+
+msgid "write user and password in their own fields, not in the connection string"
+msgstr "escribe usuario y password en sus campos, no en la cadena de conexión"
+
+msgid "a connection string brings its own hosts: it cannot go through the SSH tunnel"
+msgstr "una cadena de conexión trae sus propios hosts: no puede ir por el túnel SSH"
+
+msgid "Editar..."
+msgstr "Editar..."
+
+msgid "Renombrar..."
+msgstr "Renombrar..."
+
+msgid "Eliminar"
+msgstr "Eliminar"
+
+msgid "Eliminar (ciérrala antes)"
+msgstr "Eliminar (ciérrala antes)"
+
+msgid "Renombrar la conexión"
+msgstr "Renombrar la conexión"
+
+msgid "Nombre"
+msgstr "Nombre"
+
+msgid "Conectar"
+msgstr "Conectar"
+
+msgid "Clonar"
+msgstr "Clonar"
+
+msgid "Desconectar"
+msgstr "Desconectar"
+
+msgid "Desconectar la conexión elegida (cierra su pestaña)"
+msgstr "Desconectar la conexión elegida (cierra su pestaña)"
+
+msgid "Eliminar (desconéctala antes)"
+msgstr "Eliminar (desconéctala antes)"
+
+msgid "Conectada"
+msgstr "Conectada"
+
+msgid "Sin conexión"
+msgstr "Sin conexión"
+
+msgid "sin conexión"
+msgstr "sin conexión"
+
+msgid "a files connection reads a local folder: no SSH or HTTP tunnel"
+msgstr "una conexión de ficheros lee una carpeta local: sin túnel SSH ni HTTP"
+
+msgid "Folder or data file not found: {0}"
+msgstr "No se encuentra la carpeta ni el fichero de datos: {0}"
+
+msgid "Folder {0}: {1} CSV or JSON file(s)"
+msgstr "Carpeta {0}: {1} fichero(s) CSV o JSON"
+
+msgid "a connection string brings its own hosts: it cannot go through the HTTP tunnel (it takes host and port)"
+msgstr "una cadena de conexión trae sus propios hosts: no puede ir por el túnel HTTP (usa host y puerto)"
+
+msgid "{0} is a folder: an empty .sqlite file will be created in it when the connection is saved"
+msgstr "{0} es una carpeta: al guardar la conexión se crea dentro un .sqlite vacío"
+
+msgid "File {0}: one table"
+msgstr "Fichero {0}: una tabla"

@@ -1,0 +1,209 @@
+# multidbs · módulo query · es (español)
+# clave = texto fuente (español en la interfaz, inglés en los mensajes de dominio)
+
+msgid "{0} is required"
+msgstr "{0} es obligatorio"
+
+msgid "Nothing to execute: the editor has no statements"
+msgstr "Nada que ejecutar: el editor no tiene sentencias"
+
+msgid "Error Code: {0} - {1}"
+msgstr "Código de error: {0} - {1}"
+
+msgid "Cancelled by the user"
+msgstr "Cancelado por el usuario"
+
+msgid "{0} is a production connection. Confirm these statements:\n\n{1}"
+msgstr "{0} es una conexión de producción. Confirma estas sentencias:\n\n{1}"
+
+msgid "{0} is a production connection. Save {1} change(s)?"
+msgstr "{0} es una conexión de producción. ¿Guardar {1} cambio(s)?"
+
+msgid "Table {0} has no primary key: its data cannot be edited"
+msgstr "La tabla {0} no tiene clave primaria: sus datos no se pueden editar"
+
+msgid "Changes not saved (rolled back): {0}"
+msgstr "Cambios no guardados (se deshicieron): {0}"
+
+msgid "There are no changes to save"
+msgstr "No hay cambios que guardar"
+
+msgid "Elige el formato en el que quieres exportar los datos"
+msgstr "Elige el formato en el que quieres exportar los datos"
+
+msgid "Opciones de CSV"
+msgstr "Opciones de CSV"
+
+msgid "Campos terminados por"
+msgstr "Campos terminados por"
+
+msgid "Entre comillas"
+msgstr "Entre comillas"
+
+msgid "Escapados con"
+msgstr "Escapados con"
+
+msgid "Líneas terminadas por"
+msgstr "Líneas terminadas por"
+
+msgid "NULL se escribe como"
+msgstr "NULL se escribe como"
+
+msgid "\\t tabulador · \\n salto de línea · <NONE> nada"
+msgstr "\\t tabulador · \\n salto de línea · <NONE> nada"
+
+msgid "Opciones de Excel"
+msgstr "Opciones de Excel"
+
+msgid "Ancho máximo de texto"
+msgstr "Ancho máximo de texto"
+
+msgid "Decimales"
+msgstr "Decimales"
+
+msgid "Opciones de SQL"
+msgstr "Opciones de SQL"
+
+msgid "Tabla"
+msgstr "Tabla"
+
+msgid "Filas por INSERT"
+msgstr "Filas por INSERT"
+
+msgid "Nombres de columna en la primera fila"
+msgstr "Nombres de columna en la primera fila"
+
+msgid "Campos a exportar"
+msgstr "Campos a exportar"
+
+msgid "Quitar todo"
+msgstr "Quitar todo"
+
+msgid "Juego de caracteres"
+msgstr "Juego de caracteres"
+
+msgid "Guardar en"
+msgstr "Guardar en"
+
+msgid "Exportar"
+msgstr "Exportar"
+
+msgid "Exportar como"
+msgstr "Exportar como"
+
+msgid "Todas ({0})"
+msgstr "Todas ({0})"
+
+msgid "Solo las marcadas ({0})"
+msgstr "Solo las marcadas ({0})"
+
+msgid "Elige al menos un campo"
+msgstr "Elige al menos un campo"
+
+msgid "Falta el fichero"
+msgstr "Falta el fichero"
+
+msgid "Exportadas {0} fila(s) y {1} campo(s) a {2}"
+msgstr "Exportadas {0} fila(s) y {1} campo(s) a {2}"
+
+msgid "Exportar como Excel XML..."
+msgstr "Exportar como Excel XML..."
+
+msgid "Ejecuta las sentencias de un fichero .sql sin cargarlo en el editor (volcados grandes)."
+msgstr "Ejecuta las sentencias de un fichero .sql sin cargarlo en el editor (volcados grandes)."
+
+msgid "Ejecutar fichero SQL"
+msgstr "Ejecutar fichero SQL"
+
+msgid "Ejecutar un fichero .sql en la BD activa (importar)"
+msgstr "Ejecutar un fichero .sql en la BD activa (importar)"
+
+msgid "Fichero a ejecutar"
+msgstr "Fichero a ejecutar"
+
+msgid "Parar en el primer error"
+msgstr "Parar en el primer error"
+
+msgid "Ver errores..."
+msgstr "Ver errores..."
+
+msgid "Ejecutar fichero SQL..."
+msgstr "Ejecutar fichero SQL..."
+
+msgid "(la de la conexión)"
+msgstr "(la de la conexión)"
+
+msgid "Todos"
+msgstr "Todos"
+
+msgid "¿Ejecutar igualmente?"
+msgstr "¿Ejecutar igualmente?"
+
+msgid "Parada en un error."
+msgstr "Parada en un error."
+
+msgid "{0} sentencias ejecutadas"
+msgstr "{0} sentencias ejecutadas"
+
+msgid "... y {0} error(es) más"
+msgstr "... y {0} error(es) más"
+
+msgid "Errores al ejecutar el fichero"
+msgstr "Errores al ejecutar el fichero"
+
+msgid "Ejecutando..."
+msgstr "Ejecutando..."
+
+msgid "Ejecutando... {0} sentencias"
+msgstr "Ejecutando... {0} sentencias"
+
+msgid "Parando..."
+msgstr "Parando..."
+
+msgid "{0} is a production connection: the whole file {1} will be executed"
+msgstr "{0} es una conexión de producción: se ejecutará el fichero {1} entero"
+
+msgid "Cannot read {0}: {1}"
+msgstr "No se pudo leer {0}: {1}"
+
+msgid "Abrir la carpeta"
+msgstr "Abrir la carpeta"
+
+msgid "No existe la carpeta de {0}"
+msgstr "No existe la carpeta de {0}"
+
+msgid "Solo lectura: para editar, Ver datos de la tabla (F11)"
+msgstr "Solo lectura: para editar, Ver datos de la tabla (F11)"
+
+msgid "Solo lectura: no se encuentra la tabla {0}"
+msgstr "Solo lectura: no se encuentra la tabla {0}"
+
+msgid "Solo lectura: hay columnas repetidas"
+msgstr "Solo lectura: hay columnas repetidas"
+
+msgid "Solo lectura: hay columnas que no son de la tabla"
+msgstr "Solo lectura: hay columnas que no son de la tabla"
+
+msgid "No"
+msgstr "No"
+
+msgid "Se borran {0} fila(s) de {1}. ¿Seguir?"
+msgstr "Se borran {0} fila(s) de {1}. ¿Seguir?"
+
+msgid "Borrar filas"
+msgstr "Borrar filas"
+
+msgid "Insertar fila"
+msgstr "Insertar fila"
+
+msgid "Solo lectura: el resultado no es de una sola tabla (sin JOIN, GROUP BY ni expresiones)"
+msgstr "Solo lectura: el resultado no es de una sola tabla (sin JOIN, GROUP BY ni expresiones)"
+
+msgid "Comprobando si {0} se puede editar..."
+msgstr "Comprobando si {0} se puede editar..."
+
+msgid "Solo lectura: no se pudieron leer las columnas de {0}"
+msgstr "Solo lectura: no se pudieron leer las columnas de {0}"
+
+msgid "El resultado tiene {0} cambio(s) sin guardar. ¿Descartarlos y ejecutar?"
+msgstr "El resultado tiene {0} cambio(s) sin guardar. ¿Descartarlos y ejecutar?"

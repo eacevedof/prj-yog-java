@@ -1,0 +1,542 @@
+# multidbs · módulo query · en (inglés)
+# clave = texto fuente (español en la interfaz, inglés en los mensajes de dominio)
+
+msgid "Añadir fila"
+msgstr "Add row"
+
+msgid "BD"
+msgstr "DB"
+
+msgid "Borrar (Supr)"
+msgstr "Delete (Del)"
+
+msgid "Buscar en el SQL"
+msgstr "Search in the SQL"
+
+msgid "Cancelar"
+msgstr "Cancel"
+
+msgid "Cerrar"
+msgstr "Close"
+
+msgid "Conexión"
+msgstr "Connection"
+
+msgid "Copiar"
+msgstr "Copy"
+
+msgid "Descartar"
+msgstr "Discard"
+
+msgid "Duplicar"
+msgstr "Duplicate"
+
+msgid "Ejecutar (Ctrl+Enter)"
+msgstr "Execute (Ctrl+Enter)"
+
+msgid "Ejecutar todo (Ctrl+F9)"
+msgstr "Execute all (Ctrl+F9)"
+
+msgid "Fecha"
+msgstr "Date"
+
+msgid "Filas que se leen como mucho de cada resultado (0 = todas)"
+msgstr "Maximum rows read from each result (0 = all)"
+
+msgid "Filas"
+msgstr "Rows"
+
+msgid "Guardar (Ctrl+S)"
+msgstr "Save (Ctrl+S)"
+
+msgid "Historial (Ctrl+H)"
+msgstr "History (Ctrl+H)"
+
+msgid "La sentencia donde está el cursor, o lo seleccionado (Ctrl+Enter o F9)"
+msgstr "The statement at the cursor, or the selection (Ctrl+Enter or F9)"
+
+msgid "Límite"
+msgstr "Limit"
+
+msgid "Mensajes"
+msgstr "Messages"
+
+msgid "Máx. filas"
+msgstr "Max. rows"
+
+msgid "ORDER BY"
+msgstr "ORDER BY"
+
+msgid "Pegar en el editor"
+msgstr "Paste into the editor"
+
+msgid "Poner NULL"
+msgstr "Set NULL"
+
+msgid "Refrescar (F5)"
+msgstr "Refresh (F5)"
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "Solo esta conexión"
+msgstr "This connection only"
+
+msgid "Texto"
+msgstr "Text"
+
+msgid "WHERE"
+msgstr "WHERE"
+
+msgid "id > 10 AND estado = 'activo'"
+msgstr "id > 10 AND status = 'active'"
+
+msgid "id DESC"
+msgstr "id DESC"
+
+msgid "ms"
+msgstr "ms"
+
+msgid "JSON formateado"
+msgstr "Formatted JSON"
+
+msgid "{0} caracteres"
+msgstr "{0} characters"
+
+msgid "Valor de {0}"
+msgstr "Value of {0}"
+
+msgid "columna"
+msgstr "column"
+
+msgid "tabla"
+msgstr "table"
+
+msgid "palabra clave"
+msgstr "keyword"
+
+msgid "Exportar {0} fila(s)"
+msgstr "Export {0} row(s)"
+
+msgid "No se pudo escribir {0}: {1}"
+msgstr "Could not write {0}: {1}"
+
+msgid "Buscar en todas las columnas"
+msgstr "Search in all columns"
+
+msgid "{0} de {1} fila(s)"
+msgstr "{0} of {1} row(s)"
+
+msgid "{0} fila(s)"
+msgstr "{0} row(s)"
+
+msgid "Filtro"
+msgstr "Filter"
+
+msgid "Ver valor"
+msgstr "View value"
+
+msgid "Insertar fila nueva"
+msgstr "Insert new row"
+
+msgid "Guardar cambios (Ctrl+S)"
+msgstr "Save changes (Ctrl+S)"
+
+msgid "Borrar / recuperar fila(s) seleccionada(s) (Supr)"
+msgstr "Delete / restore selected row(s) (Del)"
+
+msgid "Cancelar cambios"
+msgstr "Cancel changes"
+
+msgid "Poner cadena vacía"
+msgstr "Set empty string"
+
+msgid "Poner DEFAULT"
+msgstr "Set DEFAULT"
+
+msgid "Quitar orden"
+msgstr "Remove sorting"
+
+msgid "Exportar las filas como... (Ctrl+Shift+E)"
+msgstr "Export rows as... (Ctrl+Shift+E)"
+
+msgid "Celdas seleccionadas (Ctrl+C)"
+msgstr "Selected cells (Ctrl+C)"
+
+msgid "Filas seleccionadas"
+msgstr "Selected rows"
+
+msgid "Todas las filas con tabuladores y cabecera"
+msgstr "All rows tab-separated, with header"
+
+msgid "Nombre de la columna"
+msgstr "Column name"
+
+msgid "Duplicar fila actual"
+msgstr "Duplicate current row"
+
+msgid "Quitar filtro"
+msgstr "Remove filter"
+
+msgid "Seleccionar todo"
+msgstr "Select all"
+
+msgid "Exportar como CSV..."
+msgstr "Export as CSV..."
+
+msgid "Exportar como INSERTs (SQL)..."
+msgstr "Export as INSERTs (SQL)..."
+
+msgid "Exportar como JSON..."
+msgstr "Export as JSON..."
+
+msgid "Exportar como XML..."
+msgstr "Export as XML..."
+
+msgid "Exportar como HTML..."
+msgstr "Export as HTML..."
+
+msgid "Copiar todo con tabuladores y cabecera"
+msgstr "Copy all tab-separated, with header"
+
+msgid "Borrar / recuperar fila(s) (Supr)"
+msgstr "Delete / restore row(s) (Del)"
+
+msgid "Duplicar fila"
+msgstr "Duplicate row"
+
+msgid "Copiar fila(s)"
+msgstr "Copy row(s)"
+
+msgid "{0} ejecución(es)"
+msgstr "{0} execution(s)"
+
+msgid "Cancelando..."
+msgstr "Cancelling..."
+
+msgid "No ejecutado"
+msgstr "Not executed"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Ejecutando..."
+msgstr "Executing..."
+
+msgid "Ejecutar en producción"
+msgstr "Execute in production"
+
+msgid "Conexión de producción"
+msgstr "Production connection"
+
+msgid "Sentencias destructivas en PRODUCCIÓN"
+msgstr "Destructive statements in PRODUCTION"
+
+msgid "{0} fila(s) devueltas"
+msgstr "{0} row(s) returned"
+
+msgid "(cortado en Máx. filas)"
+msgstr "(cut at Max. rows)"
+
+msgid "{0} fila(s) afectadas"
+msgstr "{0} row(s) affected"
+
+msgid "Tiempo: {0} ms"
+msgstr "Time: {0} ms"
+
+msgid "Cancelado por el usuario"
+msgstr "Cancelled by the user"
+
+msgid "Cancelado"
+msgstr "Cancelled"
+
+msgid "Resultado"
+msgstr "Result"
+
+msgid "Resultado {0}"
+msgstr "Result {0}"
+
+msgid "Hay {0} cambio(s) sin guardar. ¿Descartarlos y recargar?"
+msgstr "There are {0} unsaved change(s). Discard them and reload?"
+
+msgid "Cargando..."
+msgstr "Loading..."
+
+msgid "Guarda o cancela los cambios antes de filtrar"
+msgstr "Save or cancel the changes before filtering"
+
+msgid "Guardado: {0} fila(s)"
+msgstr "Saved: {0} row(s)"
+
+msgid "Guardando..."
+msgstr "Saving..."
+
+msgid "Sin resultado"
+msgstr "No result"
+
+msgid "(límite alcanzado)"
+msgstr "(limit reached)"
+
+msgid "Solo lectura: vista o tabla sin clave primaria"
+msgstr "Read-only: view or table without primary key"
+
+msgid "Solo lectura: el resultado no trae toda la clave primaria"
+msgstr "Read-only: the result does not include the whole primary key"
+
+msgid "Solo lectura: la clave primaria es binaria"
+msgstr "Read-only: the primary key is binary"
+
+msgid "Editable: doble clic, F2 o Enter"
+msgstr "Editable: double-click, F2 or Enter"
+
+msgid "{0} cambio(s) sin guardar"
+msgstr "{0} unsaved change(s)"
+
+msgid "Guardar en producción"
+msgstr "Save in production"
+
+msgid "Cambios en PRODUCCIÓN"
+msgstr "Changes in PRODUCTION"
+
+msgid "Elige el formato en el que quieres exportar los datos"
+msgstr "Choose the format to export your data in"
+
+msgid "Opciones de CSV"
+msgstr "CSV options"
+
+msgid "Campos terminados por"
+msgstr "Fields terminated by"
+
+msgid "Entre comillas"
+msgstr "Enclosed by"
+
+msgid "Escapados con"
+msgstr "Escaped by"
+
+msgid "Líneas terminadas por"
+msgstr "Lines terminated by"
+
+msgid "NULL se escribe como"
+msgstr "NULL replaced by"
+
+msgid "\\t tabulador · \\n salto de línea · <NONE> nada"
+msgstr "\\t tab · \\n line break · <NONE> nothing"
+
+msgid "Opciones de Excel"
+msgstr "Excel options"
+
+msgid "Ancho máximo de texto"
+msgstr "Text column size limit"
+
+msgid "Decimales"
+msgstr "Decimal places"
+
+msgid "Opciones de SQL"
+msgstr "SQL options"
+
+msgid "Tabla"
+msgstr "Table"
+
+msgid "Filas por INSERT"
+msgstr "Rows per INSERT"
+
+msgid "Nombres de columna en la primera fila"
+msgstr "Add column names on top"
+
+msgid "Campos a exportar"
+msgstr "Select field(s) to export"
+
+msgid "Quitar todo"
+msgstr "Deselect all"
+
+msgid "Juego de caracteres"
+msgstr "Charset"
+
+msgid "Guardar en"
+msgstr "Save to file"
+
+msgid "Exportar"
+msgstr "Export"
+
+msgid "Exportar como"
+msgstr "Export as"
+
+msgid "Todas ({0})"
+msgstr "All ({0})"
+
+msgid "Solo las marcadas ({0})"
+msgstr "Only the checked ones ({0})"
+
+msgid "Elige al menos un campo"
+msgstr "Choose at least one field"
+
+msgid "Falta el fichero"
+msgstr "The file is missing"
+
+msgid "Exportadas {0} fila(s) y {1} campo(s) a {2}"
+msgstr "Exported {0} row(s) and {1} field(s) to {2}"
+
+msgid "Exportar como Excel XML..."
+msgstr "Export as Excel XML..."
+
+msgid "Ejecuta las sentencias de un fichero .sql sin cargarlo en el editor (volcados grandes)."
+msgstr "Runs the statements of a .sql file without loading it into the editor (big dumps)."
+
+msgid "Ejecutar fichero SQL"
+msgstr "Execute SQL file"
+
+msgid "Ejecutar un fichero .sql en la BD activa (importar)"
+msgstr "Execute a .sql file in the active database (import)"
+
+msgid "Fichero a ejecutar"
+msgstr "File to execute"
+
+msgid "Parar en el primer error"
+msgstr "Abort on error"
+
+msgid "Ver errores..."
+msgstr "Show errors..."
+
+msgid "Ejecutar fichero SQL..."
+msgstr "Execute SQL file..."
+
+msgid "(la de la conexión)"
+msgstr "(the connection's)"
+
+msgid "¿Ejecutar igualmente?"
+msgstr "Execute anyway?"
+
+msgid "Parada en un error."
+msgstr "Stopped on an error."
+
+msgid "{0} sentencias ejecutadas"
+msgstr "{0} statements executed"
+
+msgid "... y {0} error(es) más"
+msgstr "... and {0} more error(s)"
+
+msgid "Errores al ejecutar el fichero"
+msgstr "Errors executing the file"
+
+msgid "Ejecutando... {0} sentencias"
+msgstr "Executing... {0} statements"
+
+msgid "Parando..."
+msgstr "Stopping..."
+
+msgid "{0} is a production connection: the whole file {1} will be executed"
+msgstr "{0} is a production connection: the whole file {1} will be executed"
+
+msgid "Cannot read {0}: {1}"
+msgstr "Cannot read {0}: {1}"
+
+msgid "Incluir CREATE TABLE"
+msgstr "Include CREATE TABLE"
+
+msgid "Leyendo el CREATE TABLE de {0}..."
+msgstr "Reading the CREATE TABLE of {0}..."
+
+msgid "Exportando {0} fila(s) a {1}..."
+msgstr "Exporting {0} row(s) to {1}..."
+
+msgid "Exportación terminada"
+msgstr "Export finished"
+
+msgid "Solo cuando la rejilla es de una tabla (pestaña Datos)"
+msgstr "Only when the grid belongs to a table (Data tab)"
+
+msgid "Pone delante de los INSERT el CREATE TABLE de {0}"
+msgstr "Puts the CREATE TABLE of {0} before the INSERTs"
+
+msgid "Solo con la tabla {0}: los INSERT van a otra"
+msgstr "Only with table {0}: the INSERTs go to another one"
+
+msgid "Abrir la carpeta"
+msgstr "Open the folder"
+
+msgid "No existe la carpeta de {0}"
+msgstr "The folder of {0} does not exist"
+
+msgid "Solo lectura: para editar, Ver datos de la tabla (F11)"
+msgstr "Read only: to edit, View data of the table (F11)"
+
+msgid "Solo lectura: no se encuentra la tabla {0}"
+msgstr "Read only: table {0} not found"
+
+msgid "Solo lectura: hay columnas repetidas"
+msgstr "Read only: there are repeated columns"
+
+msgid "Solo lectura: hay columnas que no son de la tabla"
+msgstr "Read only: some columns are not from the table"
+
+msgid "No"
+msgstr "No"
+
+msgid "Se borran {0} fila(s) de {1}. ¿Seguir?"
+msgstr "{0} row(s) of {1} will be deleted. Continue?"
+
+msgid "Borrar filas"
+msgstr "Delete rows"
+
+msgid "Insertar fila"
+msgstr "Insert row"
+
+msgid "Solo lectura: el resultado no es de una sola tabla (sin JOIN, GROUP BY ni expresiones)"
+msgstr "Read only: the result is not from a single table (no JOIN, GROUP BY or expressions)"
+
+msgid "Comprobando si {0} se puede editar..."
+msgstr "Checking whether {0} can be edited..."
+
+msgid "Solo lectura: no se pudieron leer las columnas de {0}"
+msgstr "Read only: could not read the columns of {0}"
+
+msgid "El resultado tiene {0} cambio(s) sin guardar. ¿Descartarlos y ejecutar?"
+msgstr "The result has {0} unsaved change(s). Discard them and run?"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Historial"
+msgstr "History"
+
+msgid "Limpiar historial"
+msgstr "Clear history"
+
+msgid "¿Borrar el historial de TODAS las conexiones?"
+msgstr "Delete the history of ALL connections?"
+
+msgid "¿Borrar el historial de esta conexión?"
+msgstr "Delete the history of this connection?"
+
+msgid "Historial limpio: {0} ejecución(es) borradas"
+msgstr "History cleared: {0} execution(s) deleted"
+
+msgid "Exportar SQL"
+msgstr "Export SQL"
+
+msgid "Lo que se ve, en orden de ejecución, para volver a lanzarlo con Importar"
+msgstr "What is shown, in execution order, to run it again with Import"
+
+msgid "Exportar el historial a SQL"
+msgstr "Export the history to SQL"
+
+msgid "Script SQL"
+msgstr "SQL script"
+
+msgid "Exportadas {0} ejecución(es) a {1}"
+msgstr "Exported {0} execution(s) to {1}"
+
+msgid "No se pudo escribir {0}: {1}"
+msgstr "Could not write {0}: {1}"
+
+msgid "Limpiar"
+msgstr "Clear"
+
+msgid "Vacía el editor de esta pestaña (Ctrl+Z lo recupera)"
+msgstr "Empty this tab's editor (Ctrl+Z brings it back)"
+
+msgid "Refrescar"
+msgstr "Refresh"
+
+msgid "Volver a leer el historial (F5): lo lanzado desde el árbol (DROP, duplicar...) aparece al refrescar"
+msgstr "Reload the history (F5): what was run from the tree (DROP, duplicate...) shows up on refresh"

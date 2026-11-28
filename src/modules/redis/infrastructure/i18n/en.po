@@ -1,0 +1,188 @@
+# modulo redis - en (English)
+# Las claves en ingles (RedisMessageEnum, cabeceras de columnas) no necesitan entrada aqui.
+
+msgid "patrón: user:*"
+msgstr "pattern: user:*"
+
+msgid "Patrón de SCAN MATCH: * cualquier cosa, ? un carácter, [ab] uno de"
+msgstr "SCAN MATCH pattern: * anything, ? one character, [ab] one of"
+
+msgid "Buscar"
+msgstr "Search"
+
+msgid "Más"
+msgstr "More"
+
+msgid "Siguiente tanda de SCAN"
+msgstr "Next SCAN batch"
+
+msgid "Valor"
+msgstr "Value"
+
+msgid "(elige una clave)"
+msgstr "(choose a key)"
+
+msgid "TTL…"
+msgstr "TTL…"
+
+msgid "Caducidad en segundos (vacío = no caduca)"
+msgstr "Expiry in seconds (empty = never expires)"
+
+msgid "Renombrar…"
+msgstr "Rename…"
+
+msgid "Borrar"
+msgstr "Delete"
+
+msgid "Volver a leer el valor"
+msgstr "Reload the value"
+
+msgid "campo"
+msgstr "field"
+
+msgid "valor"
+msgstr "value"
+
+msgid "score"
+msgstr "score"
+
+msgid "Guardar"
+msgstr "Save"
+
+msgid "Quitar"
+msgstr "Remove"
+
+msgid "Consola"
+msgstr "Console"
+
+msgid "redis>"
+msgstr "redis>"
+
+msgid "GET clave · HGETALL h · ↑ ↓ historial"
+msgstr "GET key · HGETALL h · ↑ ↓ history"
+
+msgid "Ejecutar"
+msgstr "Run"
+
+msgid "Buscando..."
+msgstr "Searching..."
+
+msgid "{0} clave(s)"
+msgstr "{0} key(s)"
+
+msgid "{0} clave(s) · hay más (Más)"
+msgstr "{0} key(s) · there are more (More)"
+
+msgid "Leyendo..."
+msgstr "Reading..."
+
+msgid "{0} bytes"
+msgstr "{0} bytes"
+
+msgid "{0} elemento(s)"
+msgstr "{0} item(s)"
+
+msgid "Valor binario: se ve en hexadecimal y no se edita aquí (usa la consola)."
+msgstr "Binary value: shown in hexadecimal and not editable here (use the console)."
+
+msgid "Se ven los primeros {0} de {1}."
+msgstr "Showing the first {0} of {1}."
+
+msgid "índice (vacío = añadir al final)"
+msgstr "index (empty = append at the end)"
+
+msgid "miembro"
+msgstr "member"
+
+msgid "Guardar valor"
+msgstr "Save value"
+
+msgid "Caducidad"
+msgstr "Expiry"
+
+msgid "Segundos hasta que {0} caduque (vacío = no caduca nunca)"
+msgstr "Seconds until {0} expires (empty = never expires)"
+
+msgid "Renombrar clave"
+msgstr "Rename key"
+
+msgid "Nuevo nombre para {0} (si ya existe, se sobrescribe)"
+msgstr "New name for {0} (if it already exists, it is overwritten)"
+
+msgid "¿Borrar la clave {0}?"
+msgstr "Delete key {0}?"
+
+msgid "(borrada) {0}"
+msgstr "(deleted) {0}"
+
+msgid "Guardando..."
+msgstr "Saving..."
+
+msgid "Hecho ({0})"
+msgstr "Done ({0})"
+
+msgid "sin caducidad"
+msgstr "no expiry"
+
+msgid "caduca en {0} s"
+msgstr "expires in {0} s"
+
+msgid "caduca en {0} min"
+msgstr "expires in {0} min"
+
+msgid "caduca en {0} h"
+msgstr "expires in {0} h"
+
+msgid "Ejecutar en producción"
+msgstr "Run on production"
+
+msgid "Conexión de producción"
+msgstr "Production connection"
+
+msgid "Operación destructiva en PRODUCCIÓN"
+msgstr "Destructive operation on PRODUCTION"
+
+msgid "(vacío)"
+msgstr "(empty)"
+
+msgid "Clave"
+msgstr "Key"
+
+msgid "Tipo"
+msgstr "Type"
+
+msgid "vacío = no caduca"
+msgstr "empty = never expires"
+
+msgid "Creando..."
+msgstr "Creating..."
+
+msgid "Nueva clave"
+msgstr "New key"
+
+msgid "Nueva clave…"
+msgstr "New key…"
+
+msgid "Campo (hash)"
+msgstr "Field (hash)"
+
+msgid "Score (zset)"
+msgstr "Score (zset)"
+
+msgid "Caduca en (s)"
+msgstr "Expires in (s)"
+
+msgid "Invalid expiration {0}: whole seconds greater than 0, or empty"
+msgstr "Invalid expiration {0}: whole seconds greater than 0, or empty"
+
+msgid "Key {0} already exists: edit it in the value panel"
+msgstr "Key {0} already exists: edit it in the value panel"
+
+msgid "A {0} key cannot be created here: string, hash, list, set or zset"
+msgstr "A {0} key cannot be created here: string, hash, list, set or zset"
+
+msgid "Invalid expiration {0}: whole seconds greater than 0"
+msgstr "Invalid expiration {0}: whole seconds greater than 0"
+
+msgid "Invalid list index {0}: a whole number"
+msgstr "Invalid list index {0}: a whole number"

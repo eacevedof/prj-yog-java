@@ -1,0 +1,232 @@
+# modulo redis - nl (Nederlands)
+
+msgid "patrón: user:*"
+msgstr "patroon: user:*"
+
+msgid "Patrón de SCAN MATCH: * cualquier cosa, ? un carácter, [ab] uno de"
+msgstr "SCAN MATCH-patroon: * alles, ? één teken, [ab] een van"
+
+msgid "Buscar"
+msgstr "Zoeken"
+
+msgid "Más"
+msgstr "Meer"
+
+msgid "Siguiente tanda de SCAN"
+msgstr "Volgende SCAN-reeks"
+
+msgid "Valor"
+msgstr "Waarde"
+
+msgid "(elige una clave)"
+msgstr "(kies een sleutel)"
+
+msgid "TTL…"
+msgstr "TTL…"
+
+msgid "Caducidad en segundos (vacío = no caduca)"
+msgstr "Vervaltijd in seconden (leeg = verloopt niet)"
+
+msgid "Renombrar…"
+msgstr "Hernoemen…"
+
+msgid "Borrar"
+msgstr "Verwijderen"
+
+msgid "Volver a leer el valor"
+msgstr "Waarde opnieuw lezen"
+
+msgid "campo"
+msgstr "veld"
+
+msgid "valor"
+msgstr "waarde"
+
+msgid "score"
+msgstr "score"
+
+msgid "Guardar"
+msgstr "Opslaan"
+
+msgid "Quitar"
+msgstr "Verwijderen"
+
+msgid "Consola"
+msgstr "Console"
+
+msgid "redis>"
+msgstr "redis>"
+
+msgid "GET clave · HGETALL h · ↑ ↓ historial"
+msgstr "GET sleutel · HGETALL h · ↑ ↓ geschiedenis"
+
+msgid "Ejecutar"
+msgstr "Uitvoeren"
+
+msgid "Buscando..."
+msgstr "Zoeken..."
+
+msgid "{0} clave(s)"
+msgstr "{0} sleutel(s)"
+
+msgid "{0} clave(s) · hay más (Más)"
+msgstr "{0} sleutel(s) · er zijn er meer (Meer)"
+
+msgid "Leyendo..."
+msgstr "Lezen..."
+
+msgid "{0} bytes"
+msgstr "{0} bytes"
+
+msgid "{0} elemento(s)"
+msgstr "{0} element(en)"
+
+msgid "Valor binario: se ve en hexadecimal y no se edita aquí (usa la consola)."
+msgstr "Binaire waarde: wordt hexadecimaal getoond en kan hier niet worden bewerkt (gebruik de console)."
+
+msgid "Se ven los primeros {0} de {1}."
+msgstr "De eerste {0} van {1} worden getoond."
+
+msgid "índice (vacío = añadir al final)"
+msgstr "index (leeg = achteraan toevoegen)"
+
+msgid "miembro"
+msgstr "lid"
+
+msgid "Guardar valor"
+msgstr "Waarde opslaan"
+
+msgid "Caducidad"
+msgstr "Vervaltijd"
+
+msgid "Segundos hasta que {0} caduque (vacío = no caduca nunca)"
+msgstr "Seconden tot {0} verloopt (leeg = verloopt nooit)"
+
+msgid "Renombrar clave"
+msgstr "Sleutel hernoemen"
+
+msgid "Nuevo nombre para {0} (si ya existe, se sobrescribe)"
+msgstr "Nieuwe naam voor {0} (bestaat die al, dan wordt die overschreven)"
+
+msgid "¿Borrar la clave {0}?"
+msgstr "Sleutel {0} verwijderen?"
+
+msgid "(borrada) {0}"
+msgstr "(verwijderd) {0}"
+
+msgid "Guardando..."
+msgstr "Opslaan..."
+
+msgid "Hecho ({0})"
+msgstr "Klaar ({0})"
+
+msgid "sin caducidad"
+msgstr "verloopt niet"
+
+msgid "caduca en {0} s"
+msgstr "verloopt over {0} s"
+
+msgid "caduca en {0} min"
+msgstr "verloopt over {0} min"
+
+msgid "caduca en {0} h"
+msgstr "verloopt over {0} u"
+
+msgid "Ejecutar en producción"
+msgstr "Uitvoeren op productie"
+
+msgid "Conexión de producción"
+msgstr "Productieverbinding"
+
+msgid "Operación destructiva en PRODUCCIÓN"
+msgstr "Destructieve bewerking op PRODUCTIE"
+
+msgid "(vacío)"
+msgstr "(leeg)"
+
+msgid "{0} is required"
+msgstr "{0} is verplicht"
+
+msgid "Could not read {0}: {1}"
+msgstr "Kon {0} niet lezen: {1}"
+
+msgid "Could not change {0}: {1}"
+msgstr "Kon {0} niet wijzigen: {1}"
+
+msgid "Unknown operation {0}"
+msgstr "Onbekende bewerking {0}"
+
+msgid "Operation {0} does not apply to a {1} key"
+msgstr "Bewerking {0} is niet van toepassing op een {1}-sleutel"
+
+msgid "Key {0} not found"
+msgstr "Sleutel {0} niet gevonden"
+
+msgid "Nothing to execute"
+msgstr "Niets om uit te voeren"
+
+msgid "Production connection {0}: confirm before running {1}"
+msgstr "Productieverbinding {0}: bevestig voordat {1} wordt uitgevoerd"
+
+msgid "Invalid score {0}"
+msgstr "Ongeldige score {0}"
+
+msgid "field"
+msgstr "veld"
+
+msgid "value"
+msgstr "waarde"
+
+msgid "index"
+msgstr "index"
+
+msgid "member"
+msgstr "lid"
+
+msgid "id"
+msgstr "id"
+
+msgid "fields"
+msgstr "velden"
+
+msgid "Clave"
+msgstr "Sleutel"
+
+msgid "Tipo"
+msgstr "Type"
+
+msgid "vacío = no caduca"
+msgstr "leeg = verloopt niet"
+
+msgid "Creando..."
+msgstr "Aanmaken..."
+
+msgid "Nueva clave"
+msgstr "Nieuwe sleutel"
+
+msgid "Nueva clave…"
+msgstr "Nieuwe sleutel…"
+
+msgid "Campo (hash)"
+msgstr "Veld (hash)"
+
+msgid "Score (zset)"
+msgstr "Score (zset)"
+
+msgid "Caduca en (s)"
+msgstr "Verloopt over (s)"
+
+msgid "Invalid expiration {0}: whole seconds greater than 0, or empty"
+msgstr "Ongeldige vervaltijd {0}: hele seconden groter dan 0, of leeg"
+
+msgid "Key {0} already exists: edit it in the value panel"
+msgstr "Sleutel {0} bestaat al: bewerk hem in het waardepaneel"
+
+msgid "A {0} key cannot be created here: string, hash, list, set or zset"
+msgstr "Een {0}-sleutel kan hier niet worden aangemaakt: string, hash, list, set of zset"
+
+msgid "Invalid expiration {0}: whole seconds greater than 0"
+msgstr "Ongeldige vervaltijd {0}: hele seconden groter dan 0"
+
+msgid "Invalid list index {0}: a whole number"
+msgstr "Ongeldige lijstindex {0}: een geheel getal"

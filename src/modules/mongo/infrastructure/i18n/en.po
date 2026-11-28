@@ -1,0 +1,110 @@
+# modulo mongo - en (English)
+# Las claves en ingles (MongoMessageEnum) no necesitan entrada aqui.
+
+msgid "BDs y colecciones"
+msgstr "Databases and collections"
+
+msgid "Refrescar"
+msgstr "Refresh"
+
+msgid "Documentos"
+msgstr "Documents"
+
+msgid "(elige una colección)"
+msgstr "(choose a collection)"
+
+msgid "filtro"
+msgstr "filter"
+
+msgid "{age: {$gte: 18}}"
+msgstr "{age: {$gte: 18}}"
+
+msgid "orden"
+msgstr "sort"
+
+msgid "{age: -1}"
+msgstr "{age: -1}"
+
+msgid "salto"
+msgstr "skip"
+
+msgid "límite"
+msgstr "limit"
+
+msgid "Buscar"
+msgstr "Find"
+
+msgid "El documento elegido, en JSON de mongosh: se edita aquí y se guarda"
+msgstr "The selected document, as mongosh JSON: edit it here and save it"
+
+msgid "Guardar"
+msgstr "Save"
+
+msgid "Reemplaza el documento con ese _id"
+msgstr "Replaces the document with that _id"
+
+msgid "Insertar como nuevo"
+msgstr "Insert as new"
+
+msgid "Inserta el JSON del cuadro (sin _id, se crea uno)"
+msgstr "Inserts the JSON in the box (without _id, one is created)"
+
+msgid "Borrar"
+msgstr "Delete"
+
+msgid "Consola"
+msgstr "Console"
+
+msgid "test>"
+msgstr "test>"
+
+msgid "db.users.find({age: {$gt: 18}}).sort({age: -1}).limit(10) · show collections · use x · ↑ ↓ historial"
+msgstr "db.users.find({age: {$gt: 18}}).sort({age: -1}).limit(10) · show collections · use x · ↑ ↓ history"
+
+msgid "Ejecutar"
+msgstr "Run"
+
+msgid "Leyendo BDs..."
+msgstr "Reading databases..."
+
+msgid "{0} BD(s)"
+msgstr "{0} database(s)"
+
+msgid "Buscando..."
+msgstr "Searching..."
+
+msgid "{0} de {1} documento(s) · {2} ms"
+msgstr "{0} of {1} document(s) · {2} ms"
+
+msgid "¿Borrar este documento de {0}?"
+msgstr "Delete this document from {0}?"
+
+msgid "Guardando..."
+msgstr "Saving..."
+
+msgid "Borrado {0}"
+msgstr "Deleted {0}"
+
+msgid "Insertado {0}"
+msgstr "Inserted {0}"
+
+msgid "Guardado {0}"
+msgstr "Saved {0}"
+
+msgid "Ejecutar en producción"
+msgstr "Run on production"
+
+msgid "Conexión de producción"
+msgstr "Production connection"
+
+msgid "Operación destructiva en PRODUCCIÓN"
+msgstr "Destructive operation on PRODUCTION"
+
+msgid "Cargando..."
+msgstr "Loading..."
+
+msgid "(sin documentos)"
+msgstr "(no documents)"
+
+msgid "({0} documento(s))"
+msgstr "({0} document(s))"

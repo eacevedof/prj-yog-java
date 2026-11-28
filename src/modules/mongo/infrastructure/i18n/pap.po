@@ -1,0 +1,142 @@
+# modulo mongo - pap (Papiamentu, ortografia di Kòrsou)
+
+msgid "BDs y colecciones"
+msgstr "Base di dato i kolekshon"
+
+msgid "Refrescar"
+msgstr "Refreská"
+
+msgid "Documentos"
+msgstr "Dokumentonan"
+
+msgid "(elige una colección)"
+msgstr "(skohe un kolekshon)"
+
+msgid "filtro"
+msgstr "filter"
+
+msgid "{age: {$gte: 18}}"
+msgstr "{age: {$gte: 18}}"
+
+msgid "orden"
+msgstr "òrdu"
+
+msgid "{age: -1}"
+msgstr "{age: -1}"
+
+msgid "salto"
+msgstr "salta"
+
+msgid "límite"
+msgstr "límite"
+
+msgid "Buscar"
+msgstr "Buska"
+
+msgid "El documento elegido, en JSON de mongosh: se edita aquí y se guarda"
+msgstr "E dokumento skohí, na JSON di mongosh: editá e aki i warda e"
+
+msgid "Guardar"
+msgstr "Warda"
+
+msgid "Reemplaza el documento con ese _id"
+msgstr "Ta remplasá e dokumento ku e _id ei"
+
+msgid "Insertar como nuevo"
+msgstr "Inserta komo nobo"
+
+msgid "Inserta el JSON del cuadro (sin _id, se crea uno)"
+msgstr "Ta inserta e JSON di e kuadro (sin _id, ta krea un)"
+
+msgid "Borrar"
+msgstr "Borá"
+
+msgid "Consola"
+msgstr "Konsola"
+
+msgid "test>"
+msgstr "test>"
+
+msgid "db.users.find({age: {$gt: 18}}).sort({age: -1}).limit(10) · show collections · use x · ↑ ↓ historial"
+msgstr "db.users.find({age: {$gt: 18}}).sort({age: -1}).limit(10) · show collections · use x · ↑ ↓ historia"
+
+msgid "Ejecutar"
+msgstr "Ehekutá"
+
+msgid "Leyendo BDs..."
+msgstr "Ta lesa base di dato..."
+
+msgid "{0} BD(s)"
+msgstr "{0} base(s) di dato"
+
+msgid "Buscando..."
+msgstr "Ta buska..."
+
+msgid "{0} de {1} documento(s) · {2} ms"
+msgstr "{0} di {1} dokumento(nan) · {2} ms"
+
+msgid "¿Borrar este documento de {0}?"
+msgstr "Borá e dokumento aki di {0}?"
+
+msgid "Guardando..."
+msgstr "Ta warda..."
+
+msgid "Borrado {0}"
+msgstr "Borá {0}"
+
+msgid "Insertado {0}"
+msgstr "Insertá {0}"
+
+msgid "Guardado {0}"
+msgstr "Wardá {0}"
+
+msgid "Ejecutar en producción"
+msgstr "Ehekutá na produkshon"
+
+msgid "Conexión de producción"
+msgstr "Konekshon di produkshon"
+
+msgid "Operación destructiva en PRODUCCIÓN"
+msgstr "Operashon destruktivo na PRODUKSHON"
+
+msgid "Cargando..."
+msgstr "Ta karga..."
+
+msgid "(sin documentos)"
+msgstr "(sin dokumento)"
+
+msgid "({0} documento(s))"
+msgstr "({0} dokumento(nan))"
+
+msgid "{0} is required"
+msgstr "{0} ta obligatorio"
+
+msgid "Could not read {0}: {1}"
+msgstr "No por a lesa {0}: {1}"
+
+msgid "Could not save in {0}: {1}"
+msgstr "No por a warda den {0}: {1}"
+
+msgid "Invalid JSON in {0}: {1}"
+msgstr "JSON no válido den {0}: {1}"
+
+msgid "The document has no _id: use New to insert it"
+msgstr "E dokumento no tin _id: usa Inserta komo nobo"
+
+msgid "Document {0} not found (deleted or its _id changed)"
+msgstr "No a haña dokumento {0} (a borá e òf su _id a kambia)"
+
+msgid "Nothing to execute"
+msgstr "No tin nada pa ehekutá"
+
+msgid "Unknown command: {0}"
+msgstr "Òrdu deskonosí: {0}"
+
+msgid "Unsupported method {0} (find, findOne, countDocuments, distinct, aggregate, insertOne, insertMany, updateOne, updateMany, replaceOne, deleteOne, deleteMany, getIndexes, createIndex, dropIndex, drop)"
+msgstr "Método no soportá {0} (find, findOne, countDocuments, distinct, aggregate, insertOne, insertMany, updateOne, updateMany, replaceOne, deleteOne, deleteMany, getIndexes, createIndex, dropIndex, drop)"
+
+msgid "Wrong arguments for {0}"
+msgstr "Argumento robes pa {0}"
+
+msgid "Production connection {0}: confirm before running {1}"
+msgstr "Konekshon di produkshon {0}: konfirmá promé ku ehekutá {1}"

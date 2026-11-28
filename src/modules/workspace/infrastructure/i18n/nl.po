@@ -1,0 +1,128 @@
+# multidbs - modulo workspace - neerlandes (nl)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Archivo"
+msgstr "Bestand"
+
+msgid "Salir"
+msgstr "Afsluiten"
+
+msgid "Ver"
+msgstr "Beeld"
+
+msgid "Tema oscuro"
+msgstr "Donker thema"
+
+msgid "Abre una conexión (doble clic o botón Abrir) para ver sus objetos y escribir SQL"
+msgstr "Open een verbinding (dubbelklik of de knop Openen) om de objecten te zien en SQL te schrijven"
+
+msgid "BD activa:"
+msgstr "Actieve database:"
+
+msgid "Cambiar el idioma cierra las conexiones abiertas. ¿Seguir?"
+msgstr "Van taal wisselen sluit de open verbindingen. Doorgaan?"
+
+msgid "Cargando..."
+msgstr "Laden..."
+
+msgid "Info: {0}"
+msgstr "Info: {0}"
+
+msgid "Datos: {0}"
+msgstr "Gegevens: {0}"
+
+msgid "La pestaña tiene cambios sin guardar. ¿Cerrarla y perderlos?"
+msgstr "Het tabblad heeft niet-opgeslagen wijzigingen. Sluiten en ze kwijtraken?"
+
+msgid "(ninguna)"
+msgstr "(geen)"
+
+msgid "Query {0}"
+msgstr "Query {0}"
+
+msgid "Renombrar pestaña"
+msgstr "Tabblad hernoemen"
+
+msgid "Nombre:"
+msgstr "Naam:"
+
+msgid "Unknown workspace state {0}"
+msgstr "Onbekende werkruimtestatus {0}"
+
+msgid "{0} is too long"
+msgstr "{0} is te lang"
+
+msgid "Exportar"
+msgstr "Exporteren"
+
+msgid "Importar"
+msgstr "Importeren"
+
+msgid "Elegir la BD activa (escribe para buscar)"
+msgstr "De actieve database kiezen (typ om te zoeken)"
+
+msgid "Cerrar (Ctrl+W)"
+msgstr "Sluiten (Ctrl+W)"
+
+msgid "Cerrar las demás"
+msgstr "Andere tabbladen sluiten"
+
+msgid "Cerrar todas"
+msgstr "Alle tabbladen sluiten"
+
+msgid "Cerrar las no modificadas"
+msgstr "Ongewijzigde tabbladen sluiten"
+
+msgid "Cerrar las de la derecha"
+msgstr "Tabbladen rechts sluiten"
+
+msgid "Renombrar... (doble clic)"
+msgstr "Hernoemen... (dubbelklik)"
+
+msgid "Restablecer espacio de trabajo…"
+msgstr "Werkruimte herstellen…"
+
+msgid "Se borran los filtros, la BD activa de cada conexión, las carpetas y el último fichero recordados y las pestañas de query guardadas. Las conexiones, el tema, el idioma y el historial se quedan."
+msgstr "Wist de filters van het paneel, de actieve database van elke verbinding, de onthouden mappen en het laatste bestand en de opgeslagen querytabbladen. Verbindingen, thema, taal en geschiedenis blijven behouden."
+
+msgid "Se cierran las conexiones abiertas."
+msgstr "Open verbindingen worden gesloten."
+
+msgid "¿Restablecer el espacio de trabajo?"
+msgstr "De werkruimte herstellen?"
+
+msgid "Guardar en ficheros"
+msgstr "Opslaan in bestanden"
+
+msgid "Recargar ficheros"
+msgstr "Bestanden opnieuw laden"
+
+msgid "Escribe en su fichero cada tabla que ha cambiado; una tabla nueva, como .csv"
+msgstr "Schrijft elke gewijzigde tabel naar zijn bestand; een nieuwe tabel als .csv"
+
+msgid "Vuelve a leer todos los ficheros de la carpeta (se pierde lo no guardado)"
+msgstr "Leest alle bestanden in de map opnieuw (niet-opgeslagen wijzigingen gaan verloren)"
+
+msgid "Cargando ficheros..."
+msgstr "Bestanden laden..."
+
+msgid "{0} fichero(s) cargado(s), {1} sin cambios"
+msgstr "{0} bestand(en) geladen, {1} ongewijzigd"
+
+msgid "Guardando ficheros..."
+msgstr "Bestanden opslaan..."
+
+msgid "Nada que guardar: los ficheros ya están al día"
+msgstr "Niets op te slaan: de bestanden zijn bijgewerkt"
+
+msgid "Guardado: {0}"
+msgstr "Opgeslagen: {0}"
+
+msgid "¿Volver a leer todos los ficheros de la carpeta? Se pierde lo que no hayas guardado."
+msgstr "Alle bestanden in de map opnieuw lezen? Niet-opgeslagen wijzigingen gaan verloren."
+
+msgid "BD de sistema"
+msgstr "Systeem-DB"
+
+msgid "La BD activa es del propio servidor: cuidado al escribir en ella"
+msgstr "De actieve database is van de server zelf: wees voorzichtig met schrijven"

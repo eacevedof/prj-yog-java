@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import modules.shared.infrastructure.components.icons.AppIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- datos de una tabla (F11): filtro WHERE, ORDER BY y limite; la rejilla debajo -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="modules.query.infrastructure.controllers.TableDataTabController">
+    <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+        <Label fx:id="tableNameLabel" styleClass="active-database"/>
+        <Label text="%WHERE"/>
+        <TextField fx:id="whereField" promptText="%id &gt; 10 AND estado = 'activo'" HBox.hgrow="ALWAYS"/>
+        <Label text="%ORDER BY"/>
+        <TextField fx:id="orderByField" promptText="%id DESC" prefColumnCount="12"/>
+        <Label text="%Límite"/>
+        <TextField fx:id="limitField" text="1000" prefColumnCount="6"/>
+        <Button fx:id="refreshButton" text="%Refrescar (F5)" minWidth="-Infinity" onAction="#onRefresh"><graphic><AppIcon name="refresh"/></graphic></Button>
+    </HBox>
+    <HBox fx:id="editBar" styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+        <Button fx:id="addRowButton" text="%Añadir fila" minWidth="-Infinity" onAction="#onAddRow"><graphic><AppIcon name="add-row"/></graphic></Button>
+        <Button fx:id="duplicateRowButton" text="%Duplicar" minWidth="-Infinity" onAction="#onDuplicateRow"><graphic><AppIcon name="copy"/></graphic></Button>
+        <Button fx:id="deleteRowButton" text="%Borrar (Supr)" minWidth="-Infinity" onAction="#onDeleteRows"><graphic><AppIcon name="delete"/></graphic></Button>
+        <Button fx:id="setNullButton" text="%Poner NULL" minWidth="-Infinity" onAction="#onSetNull"><graphic><AppIcon name="set-null"/></graphic></Button>
+        <Button fx:id="saveButton" text="%Guardar (Ctrl+S)" minWidth="-Infinity" onAction="#onSave"><graphic><AppIcon name="save"/></graphic></Button>
+        <Button fx:id="discardButton" text="%Descartar" minWidth="-Infinity" onAction="#onDiscard"><graphic><AppIcon name="discard"/></graphic></Button>
+        <Label fx:id="editStatusLabel" styleClass="query-status"/>
+    </HBox>
+    <StackPane fx:id="gridContainer" VBox.vgrow="ALWAYS"/>
+    <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+        <Label fx:id="sqlLabel" styleClass="query-status"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="statusLabel" styleClass="query-status"/>
+    </HBox>
+</VBox>

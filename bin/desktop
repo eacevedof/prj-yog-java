@@ -1,0 +1,28 @@
+#!/bin/sh
+# Lanzador de JavaYog (make run): antes, make build (target/classes + target/lib).
+# El separador del classpath es ";" con el java de Windows (Git Bash) y ":" en Linux/WSL/macOS.
+ROOT=$(cd "$(dirname "$0")/.." && pwd)
+SEP=":"
+case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*) SEP=";"; ROOT=$(cygpath -m "$ROOT") ;;
+esac
+# La app corre desde una copia propia de clases y librerias (build/run/<marca>): una compilacion o unos tests mientras
+# esta abierta regeneran target/classes, y la app perdia clases por debajo (NoClassDefFoundError). Las copias viejas
+# se borran; la de una app aun abierta no se deja borrar en Windows (jars en uso) y se queda hasta la proxima.
+RUN_ROOT="$ROOT/build/run"
+RUN_DIR="$RUN_ROOT/$(date +%Y%m%d%H%M%S)-$$"
+mkdir -p "$RUN_ROOT"
+for OLD_RUN_DIR in "$RUN_ROOT"/*; do
+    [ -d "$OLD_RUN_DIR" ] || continue
+    # la copia lleva el pid de su app (exec mantiene el del lanzador): si sigue viva no se toca. En Windows, ademas,
+    # renombrar falla si una app la tiene abierta: asi nunca se borra a medias la de una app que sigue en marcha
+    OLD_PID=${OLD_RUN_DIR##*-}
+    kill -0 "$OLD_PID" 2>/dev/null && continue
+    mv "$OLD_RUN_DIR" "$OLD_RUN_DIR.old" 2>/dev/null && rm -rf "$OLD_RUN_DIR.old"
+done
+mkdir -p "$RUN_DIR"
+cp -r "$ROOT/target/classes" "$RUN_DIR/classes"
+cp -r "$ROOT/target/lib" "$RUN_DIR/lib"
+# JavaFX va por module-path (en el classpath avisa "Unsupported JavaFX configuration"); --enable-native-access:
+# sqlite-jdbc y JavaFX cargan librerias nativas (sin el, la JVM avisa)
+exec java --enable-native-access=ALL-UNNAMED,javafx.graphics,org.xerial.sqlitejdbc --module-path "$RUN_DIR/lib" --add-modules javafx.controls,javafx.fxml -cp "$RUN_DIR/classes${SEP}$RUN_DIR/lib/*" cmd.desktop.Main "$@"

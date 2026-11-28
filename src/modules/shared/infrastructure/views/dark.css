@@ -1,0 +1,177 @@
+/* tema oscuro (feature 37): va encima de styles.css. Modena se oscurece con sus variables y lo propio se repinta aqui */
+.root {
+    -fx-base: #3c3f41;
+    -fx-background: #2b2b2b;
+    -fx-control-inner-background: #1e1f22;
+    -fx-control-inner-background-alt: #26282b;
+    -fx-accent: #3d6fb4;
+    /* el boton por defecto (Exportar, Copiar, Guardar...): el azul claro de Modena con texto claro no se leia */
+    -fx-default-button: #3d6fb4;
+    -fx-focus-color: #4a88c7;
+    -fx-faint-focus-color: #4a88c722;
+    -fx-text-base-color: #d0d0d0;
+    -fx-text-background-color: #d0d0d0;
+    -fx-text-inner-color: #e0e0e0;
+    -fx-selection-bar: #2f65ca;
+    -fx-selection-bar-non-focused: #3a4a5e;
+    -fx-prompt-text-fill: #7a7a7a;
+}
+
+.label {
+    -fx-text-fill: #d0d0d0;
+}
+
+.workspace-placeholder,
+.explorer-loading,
+.explorer-status,
+.query-status,
+.status-footer-label {
+    -fx-text-fill: #8c8c8c;
+}
+
+.explorer-folder {
+    -fx-text-fill: #a9b7c6;
+}
+
+.explorer-db-prod {
+    -fx-text-fill: #ff6b6b;
+}
+
+.explorer-db-dev {
+    -fx-text-fill: #ffa94d;
+}
+
+.explorer-db-local {
+    -fx-text-fill: #69db7c;
+}
+
+/* editor SQL */
+.sql-editor {
+    -fx-background-color: #1e1f22;
+}
+
+.sql-editor .text {
+    -fx-fill: #d4d4d4;
+}
+
+.sql-editor .caret {
+    -fx-stroke: #ffffff;
+}
+
+.sql-editor .selection {
+    -fx-fill: #214283;
+}
+
+.sql-editor .lineno {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #6e6e6e;
+}
+
+.sql-editor .text.sql-keyword {
+    -fx-fill: #cc7832;
+}
+
+.sql-editor .text.sql-string {
+    -fx-fill: #6a8759;
+}
+
+.sql-editor .text.sql-identifier {
+    -fx-fill: #c792ea;
+}
+
+.sql-editor .text.sql-number {
+    -fx-fill: #6897bb;
+}
+
+.sql-editor .text.sql-comment {
+    -fx-fill: #808080;
+}
+
+/* rejillas */
+.null-cell {
+    -fx-text-fill: #6e6e6e;
+}
+
+.json-cell {
+    -fx-text-fill: #b389c5;
+}
+
+.row-number-cell {
+    -fx-background-color: #313335;
+    -fx-text-fill: #808080;
+}
+
+.row-number-cell:hover {
+    -fx-background-color: #3c4a5a;
+}
+
+.history-error .table-cell {
+    -fx-text-fill: #ef6c6c;
+}
+
+.form-message-error {
+    -fx-text-fill: #ef6c6c;
+}
+
+.form-message-ok {
+    -fx-text-fill: #81c784;
+}
+
+.row-new {
+    -fx-background-color: #23392a;
+}
+
+.row-modified {
+    -fx-background-color: #3d3520;
+}
+
+.row-deleted {
+    -fx-background-color: #3e2525;
+}
+
+.copy-source-name {
+    -fx-text-fill: #6ea8fe;
+}
+
+.connection-closed {
+    -fx-text-fill: #9a9a9a;
+}
+
+.connection-state {
+    -fx-text-fill: #6f6f6f;
+}
+
+.explorer-error {
+    -fx-text-fill: #ef5350;
+}
+
+.engine-icon {
+    -fx-fill: #cfd8dc;
+}
+
+.query-status.form-message-error {
+    -fx-text-fill: #ef6c6c;
+}
+
+.query-status.form-message-ok {
+    -fx-text-fill: #81c784;
+}
+
+.explorer-db-system {
+    -fx-text-fill: #7a7a7a;
+}
+
+.combo-box.active-database-system,
+.combo-box.active-database-system .text-field {
+    -fx-background-color: #b35c00;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box.active-database-system {
+    -fx-background-color: #ffa94d, #b35c00;
+    -fx-background-insets: 0, 1;
+}
+
+.system-database-warning {
+    -fx-text-fill: #ffa94d;
+}

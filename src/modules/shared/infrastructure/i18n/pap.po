@@ -1,0 +1,11 @@
+# multidbs - modulo shared - papiamento (Curazao) (pap)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Fields validation errors"
+msgstr "Eror di validashon den e kamponan"
+
+msgid "Unexpected error"
+msgstr "Eror inesperá"
+
+msgid "Error Code: {0} - {1}"
+msgstr "Kódigo di eror: {0} - {1}"

@@ -1,0 +1,28 @@
+# motor "Ficheros": mensajes del dominio (msgid en ingles)
+
+msgid "{0} is required"
+msgstr "{0} ta obligatorio"
+
+msgid "Connection {0} not found"
+msgstr "No a haña konekshon {0}"
+
+msgid "Connection {0} is not a files connection"
+msgstr "Konekshon {0} no ta di archivo"
+
+msgid "Folder or data file not found: {0}"
+msgstr "No a haña e mapa ni e archivo di datos: {0}"
+
+msgid "{0} is not a list of objects (an array of objects or one object per line)"
+msgstr "{0} no ta un lista di obheto (un array di obheto of un obheto pa liña)"
+
+msgid "{0} is not valid JSON: {1}"
+msgstr "{0} no ta un JSON válido: {1}"
+
+msgid "Could not read {0}: {1}"
+msgstr "No por a lesa {0}: {1}"
+
+msgid "{0} is not valid JSON at line {1}: {2}"
+msgstr "{0} no ta JSON válido na liña {1}: {2}"
+
+msgid "{0} is not UTF-8 text (save it as UTF-8)"
+msgstr "{0} no ta teksto UTF-8 (warda e komo UTF-8)"

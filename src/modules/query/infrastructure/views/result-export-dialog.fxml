@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import modules.shared.infrastructure.components.icons.AppIcon?>
+
+<!-- feature 9: el "Export As" de SQLyog. Arriba el formato; en medio las opciones de CSV, Excel y SQL y los campos a
+     exportar; abajo las filas, el juego de caracteres, el fichero y los botones -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefWidth="820" spacing="10"
+      styleClass="copy-dialog" fx:controller="modules.query.infrastructure.controllers.ResultExportDialogController">
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <AppIcon name="save"/>
+        <Label text="%Elige el formato en el que quieres exportar los datos"/>
+    </HBox>
+    <fx:define>
+        <ToggleGroup fx:id="formatToggleGroup"/>
+        <ToggleGroup fx:id="rowsToggleGroup"/>
+    </fx:define>
+    <HBox fx:id="formatBox" spacing="22" alignment="CENTER_LEFT"/>
+    <Separator/>
+    <HBox spacing="14">
+        <VBox fx:id="csvOptionsBox" spacing="6" prefWidth="270">
+            <Label text="%Opciones de CSV" styleClass="copy-section"/>
+            <GridPane hgap="8" vgap="6">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="150"/>
+                    <ColumnConstraints prefWidth="90"/>
+                </columnConstraints>
+                <Label text="%Campos terminados por" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="fieldsTerminatedByField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="%Entre comillas" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="enclosedByField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="%Escapados con" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="escapedByField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="%Líneas terminadas por" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="linesTerminatedByField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="%NULL se escribe como" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="nullReplacedByField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </GridPane>
+            <Label text="%\t tabulador · \n salto de línea · &lt;NONE&gt; nada" wrapText="true" styleClass="query-status"/>
+        </VBox>
+        <VBox spacing="12" prefWidth="230">
+            <VBox fx:id="excelOptionsBox" spacing="6">
+                <Label text="%Opciones de Excel" styleClass="copy-section"/>
+                <GridPane hgap="8" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="150"/>
+                        <ColumnConstraints prefWidth="60"/>
+                    </columnConstraints>
+                    <Label text="%Ancho máximo de texto" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="textSizeLimitField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="%Decimales" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="decimalPlacesField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                </GridPane>
+            </VBox>
+            <VBox fx:id="sqlOptionsBox" spacing="6">
+                <Label text="%Opciones de SQL" styleClass="copy-section"/>
+                <GridPane hgap="8" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100"/>
+                        <ColumnConstraints prefWidth="110"/>
+                    </columnConstraints>
+                    <Label text="%Tabla" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tableNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="%Filas por INSERT" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="rowsPerInsertField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                </GridPane>
+                <CheckBox fx:id="createTableCheckBox" text="%Incluir CREATE TABLE" mnemonicParsing="false" wrapText="true"/>
+            </VBox>
+            <CheckBox fx:id="headerCheckBox" text="%Nombres de columna en la primera fila" wrapText="true"/>
+        </VBox>
+        <VBox spacing="6" HBox.hgrow="ALWAYS">
+            <Label text="%Campos a exportar" styleClass="copy-section"/>
+            <ListView fx:id="columnsListView" prefHeight="190" VBox.vgrow="ALWAYS"/>
+            <HBox spacing="6">
+                <Button text="%Seleccionar todo" onAction="#onSelectAllColumns"/>
+                <Button text="%Quitar todo" onAction="#onDeselectAllColumns"/>
+            </HBox>
+        </VBox>
+    </HBox>
+    <Separator/>
+    <HBox spacing="16" alignment="CENTER_LEFT">
+        <Label text="%Filas" styleClass="copy-section"/>
+        <RadioButton fx:id="allRowsRadio" selected="true" toggleGroup="$rowsToggleGroup"/>
+        <RadioButton fx:id="selectedRowsRadio" toggleGroup="$rowsToggleGroup"/>
+        <Label text="%Juego de caracteres" styleClass="copy-section"/>
+        <ComboBox fx:id="charsetComboBox" prefWidth="170"/>
+    </HBox>
+    <HBox spacing="6" alignment="CENTER_LEFT">
+        <Label text="%Guardar en"/>
+        <TextField fx:id="filePathField" HBox.hgrow="ALWAYS"/>
+        <Button text="..." onAction="#onChooseFile"/>
+        <Button fx:id="openFolderButton" text="%Abrir la carpeta" minWidth="-Infinity" contentDisplay="GRAPHIC_ONLY" onAction="#onOpenFolder"><graphic><AppIcon name="folder"/></graphic><tooltip><Tooltip text="%Abrir la carpeta"/></tooltip></Button>
+    </HBox>
+    <ProgressBar fx:id="progressBar" maxWidth="Infinity" progress="0" visible="false" managed="false"/>
+    <Label fx:id="statusLabel" wrapText="true" styleClass="query-status"/>
+    <HBox styleClass="toolbar-buttons" alignment="CENTER_RIGHT">
+        <Button fx:id="exportButton" text="%Exportar" defaultButton="true" onAction="#onExport">
+            <graphic><AppIcon name="save"/></graphic>
+        </Button>
+        <Button text="%Cerrar" cancelButton="true" onAction="#onClose"/>
+    </HBox>
+</VBox>

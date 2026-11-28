@@ -1,0 +1,473 @@
+# multidbs - modulo explorer - neerlandes (nl)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Cargando bases de datos..."
+msgstr "Databases laden..."
+
+msgid "{0} BD"
+msgstr "{0} DB"
+
+msgid "Error: {0}"
+msgstr "Fout: {0}"
+
+msgid "Cargando..."
+msgstr "Laden..."
+
+msgid "Tablas"
+msgstr "Tabellen"
+
+msgid "Vistas"
+msgstr "Views"
+
+msgid "Procedimientos"
+msgstr "Procedures"
+
+msgid "Funciones"
+msgstr "Functies"
+
+msgid "Triggers"
+msgstr "Triggers"
+
+msgid "Copiar BD a otro servidor/BD..."
+msgstr "Database kopiëren naar andere server/database..."
+
+msgid "Usar esta BD"
+msgstr "Deze database gebruiken"
+
+msgid "Ver datos (F11)"
+msgstr "Gegevens bekijken (F11)"
+
+msgid "SELECT en pestaña nueva"
+msgstr "SELECT in nieuw tabblad"
+
+msgid "Info: DDL, índices y tamaño"
+msgstr "Info: DDL, indexen en grootte"
+
+msgid "Insertar nombre en el editor"
+msgstr "Naam in editor invoegen"
+
+msgid "Copiar tabla a otro servidor/BD..."
+msgstr "Tabel kopiëren naar andere server/database..."
+
+msgid "Copiar nombre"
+msgstr "Naam kopiëren"
+
+msgid "Refrescar (F5)"
+msgstr "Vernieuwen (F5)"
+
+msgid "Ver definición"
+msgstr "Definitie bekijken"
+
+msgid "Vista"
+msgstr "View"
+
+msgid "Tabla"
+msgstr "Tabel"
+
+msgid "Filas (aprox.)"
+msgstr "Rijen (ca.)"
+
+msgid "Datos"
+msgstr "Gegevens"
+
+msgid "Índices"
+msgstr "Indexen"
+
+msgid "Total"
+msgstr "Totaal"
+
+msgid "Cotejamiento"
+msgstr "Collatie"
+
+msgid "Creada"
+msgstr "Aangemaakt"
+
+msgid "Modificada"
+msgstr "Gewijzigd"
+
+msgid "Comentario"
+msgstr "Opmerking"
+
+msgid "(sin índices)"
+msgstr "(geen indexen)"
+
+msgid "{0} is required"
+msgstr "{0} is verplicht"
+
+msgid "Duplicar tabla"
+msgstr "Tabel dupliceren"
+
+msgid "Duplicando {0}..."
+msgstr "{0} dupliceren..."
+
+msgid "Tabla duplicada: {0}"
+msgstr "Tabel gedupliceerd: {0}"
+
+msgid "Nombre de la copia de {0}"
+msgstr "Naam van de kopie van {0}"
+
+msgid "Invalid table name {0}: only letters, digits and _ (no spaces), not starting with a digit"
+msgstr "Ongeldige tabelnaam {0}: alleen letters, cijfers en _ (geen spaties), niet beginnend met een cijfer"
+
+msgid "1 Columnas"
+msgstr "1 Kolommen"
+
+msgid "2 Índices"
+msgstr "2 Indexen"
+
+msgid "3 Claves foráneas"
+msgstr "3 Vreemde sleutels"
+
+msgid "4 Avanzado"
+msgstr "4 Geavanceerd"
+
+msgid "5 SQL"
+msgstr "5 SQL"
+
+msgid "Añadir clave foránea"
+msgstr "Vreemde sleutel toevoegen"
+
+msgid "Añadir columna"
+msgstr "Kolom toevoegen"
+
+msgid "Añadir índice"
+msgstr "Index toevoegen"
+
+msgid "Bajar"
+msgstr "Omlaag"
+
+msgid "Subir"
+msgstr "Omhoog"
+
+msgid "Insertar encima"
+msgstr "Erboven invoegen"
+
+msgid "Columnas separadas por comas, en el mismo orden en las dos tablas."
+msgstr "Kolommen gescheiden door komma's, in dezelfde volgorde in beide tabellen."
+
+msgid "Columnas separadas por comas; nombre(10) indexa solo 10 caracteres. La clave primaria va en la pestaña Columnas."
+msgstr "Kolommen gescheiden door komma's; naam(10) indexeert alleen 10 tekens. De primaire sleutel staat op het tabblad Kolommen."
+
+msgid "Default es SQL: 'texto', 0, NULL, CURRENT_TIMESTAMP (vacío = sin DEFAULT)"
+msgstr "Default is SQL: 'tekst', 0, NULL, CURRENT_TIMESTAMP (leeg = geen DEFAULT)"
+
+msgid "Formato de fila"
+msgstr "Rijformaat"
+
+msgid "Siguiente AUTO_INCREMENT"
+msgstr "Volgende AUTO_INCREMENT"
+
+msgid "Editar tabla {0}"
+msgstr "Tabel {0} bewerken"
+
+msgid "en {0}"
+msgstr "in {0}"
+
+msgid "Leyendo la tabla..."
+msgstr "Tabel lezen..."
+
+msgid "Tipo"
+msgstr "Type"
+
+msgid "Longitud/valores"
+msgstr "Lengte/waarden"
+
+msgid "Default"
+msgstr "Standaard"
+
+msgid "No nulo"
+msgstr "Niet null"
+
+msgid "Sin signo"
+msgstr "Zonder teken"
+
+msgid "Auto incr."
+msgstr "Auto incr."
+
+msgid "Ceros"
+msgstr "Nullen"
+
+msgid "Columnas"
+msgstr "Kolommen"
+
+msgid "Tabla referida"
+msgstr "Verwezen tabel"
+
+msgid "Columnas referidas"
+msgstr "Verwezen kolommen"
+
+msgid "¿Borrar la columna {0}? Se pierden sus datos al guardar."
+msgstr "Kolom {0} verwijderen? De gegevens gaan verloren bij het opslaan."
+
+msgid "¿Guardar igualmente?"
+msgstr "Toch opslaan?"
+
+msgid "No se puede guardar:"
+msgstr "Kan niet opslaan:"
+
+msgid "Sin cambios"
+msgstr "Geen wijzigingen"
+
+msgid "Editar tabla (columnas, índices...)"
+msgstr "Tabel bewerken (kolommen, indexen...)"
+
+msgid "Tabla guardada: {0}"
+msgstr "Tabel opgeslagen: {0}"
+
+msgid "Invalid column name {0}: only letters, digits and _ (no spaces), not starting with a digit"
+msgstr "Ongeldige kolomnaam {0}: alleen letters, cijfers en _ (geen spaties), niet beginnend met een cijfer"
+
+msgid "Invalid index or key name {0}: only letters, digits and _ (no spaces)"
+msgstr "Ongeldige index- of sleutelnaam {0}: alleen letters, cijfers en _ (geen spaties)"
+
+msgid "The table needs at least one column"
+msgstr "De tabel heeft minstens één kolom nodig"
+
+msgid "Column {0} is repeated"
+msgstr "Kolom {0} komt dubbel voor"
+
+msgid "Index {0} is repeated"
+msgstr "Index {0} komt dubbel voor"
+
+msgid "Column {0} has no data type"
+msgstr "Kolom {0} heeft geen gegevenstype"
+
+msgid "Index {0} has no columns"
+msgstr "Index {0} heeft geen kolommen"
+
+msgid "Unknown column {0} in {1}"
+msgstr "Onbekende kolom {0} in {1}"
+
+msgid "Foreign key {0} needs the same number of columns on both sides and a referenced table"
+msgstr "Vreemde sleutel {0} heeft aan beide kanten evenveel kolommen en een verwezen tabel nodig"
+
+msgid "Editing tables only works with MySQL/MariaDB for now: the connection is {0}"
+msgstr "Tabellen bewerken werkt voorlopig alleen met MySQL/MariaDB: de verbinding is {0}"
+
+msgid "There is nothing to change"
+msgstr "Er is niets te wijzigen"
+
+msgid "{0} is a production connection: table {1} will be altered"
+msgstr "{0} is een productieverbinding: tabel {1} wordt gewijzigd"
+
+msgid "Eliminar tabla..."
+msgstr "Tabel verwijderen..."
+
+msgid "¿Eliminar la tabla {0} de {1}? Se borran también sus datos y no se puede deshacer."
+msgstr "Tabel {0} uit {1} verwijderen? De gegevens worden ook verwijderd en dit kan niet ongedaan worden gemaakt."
+
+msgid "Eliminando {0}..."
+msgstr "{0} verwijderen..."
+
+msgid "Tabla eliminada: {0}"
+msgstr "Tabel verwijderd: {0}"
+
+msgid "Escribe {0} para confirmar"
+msgstr "Typ {0} om te bevestigen"
+
+msgid "{0} is a production connection: table {1} will be dropped with all its data"
+msgstr "{0} is een productieverbinding: tabel {1} wordt met al zijn gegevens verwijderd"
+
+msgid "Alterar BD (juego de caracteres, solo lectura...)"
+msgstr "Database wijzigen (tekenset, alleen-lezen...)"
+
+msgid "Renombrar BD..."
+msgstr "Database hernoemen..."
+
+msgid "BD guardada: {0}"
+msgstr "Database opgeslagen: {0}"
+
+msgid "Alterar BD {0}"
+msgstr "Database {0} wijzigen"
+
+msgid "Leyendo la BD..."
+msgstr "Database lezen..."
+
+msgid "Este servidor no tiene esta opción"
+msgstr "Deze server heeft deze optie niet"
+
+msgid "No hay nada que cambiar"
+msgstr "Er is niets te wijzigen"
+
+msgid "Cifrado por defecto"
+msgstr "Standaardversleuteling"
+
+msgid "Tablas nuevas cifradas (ENCRYPTION)"
+msgstr "Nieuwe tabellen versleuteld (ENCRYPTION)"
+
+msgid "Solo lectura"
+msgstr "Alleen-lezen"
+
+msgid "Nadie puede escribir en la BD (READ ONLY)"
+msgstr "Niemand kan naar de database schrijven (READ ONLY)"
+
+msgid "El juego de caracteres y el cotejamiento son los de las tablas nuevas: las que ya existen no cambian."
+msgstr "De tekenset en sortering gelden voor nieuwe tabellen: bestaande tabellen veranderen niet."
+
+msgid "SQL que se va a ejecutar"
+msgstr "SQL dat wordt uitgevoerd"
+
+msgid "Altering databases only works with MySQL/MariaDB for now: the connection is {0}"
+msgstr "Databases wijzigen werkt voorlopig alleen met MySQL/MariaDB: de verbinding is {0}"
+
+msgid "Database {0} not found"
+msgstr "Database {0} niet gevonden"
+
+msgid "{0} is a production connection: database {1} will be altered"
+msgstr "{0} is een productieverbinding: database {1} wordt gewijzigd"
+
+msgid "Wrong character set or collation: {0}"
+msgstr "Onjuiste tekenset of sortering: {0}"
+
+msgid "Eliminar tabla... (Supr)"
+msgstr "Tabel verwijderen... (Del)"
+
+msgid "Cambiar nombre"
+msgstr "Naam wijzigen"
+
+msgid "Cambiar nombre... (F2)"
+msgstr "Naam wijzigen... (F2)"
+
+msgid "Nombre nuevo de {0}"
+msgstr "Nieuwe naam voor {0}"
+
+msgid "Nombre nuevo de {0}.{1}"
+msgstr "Nieuwe naam voor {0}.{1}"
+
+msgid "Renombrando {0}..."
+msgstr "{0} hernoemen..."
+
+msgid "Tabla renombrada: {0} -> {1}"
+msgstr "Tabel hernoemd: {0} -> {1}"
+
+msgid "Columna renombrada: {0} -> {1}"
+msgstr "Kolom hernoemd: {0} -> {1}"
+
+msgid "{0} is a production connection: {1} will be renamed to {2}"
+msgstr "{0} is een productieverbinding: {1} wordt hernoemd naar {2}"
+
+msgid "Renaming cannot move the table to another schema: {0}"
+msgstr "Hernoemen kan de tabel niet naar een ander schema verplaatsen: {0}"
+
+msgid "Renombrar BD... (F2)"
+msgstr "Database hernoemen... (F2)"
+
+msgid "Duplicar BD..."
+msgstr "Database dupliceren..."
+
+msgid "Crear BD en"
+msgstr "Maak DB aan op"
+
+msgid "Propietario"
+msgstr "Eigenaar"
+
+msgid "Solo si no existe (IF NOT EXISTS)"
+msgstr "Alleen als die niet bestaat (IF NOT EXISTS)"
+
+msgid "Crear"
+msgstr "Aanmaken"
+
+msgid "Nueva BD"
+msgstr "Nieuwe DB"
+
+msgid "Crear una BD en la conexión elegida (CREATE DATABASE)"
+msgstr "Maak een database aan op de gekozen verbinding (CREATE DATABASE)"
+
+msgid "Crear BD"
+msgstr "Database aanmaken"
+
+msgid "Leyendo las opciones del servidor..."
+msgstr "Serveropties lezen..."
+
+msgid "Esquema"
+msgstr "Schema"
+
+msgid "Escribe el nombre de la BD"
+msgstr "Typ de naam van de database"
+
+msgid "¿Crear igualmente?"
+msgstr "Toch aanmaken?"
+
+msgid "Lo que diga el servidor"
+msgstr "Standaard van de server"
+
+msgid "BD creada: {0}"
+msgstr "Database aangemaakt: {0}"
+
+msgid "Crear BD..."
+msgstr "Database aanmaken..."
+
+msgid "El juego de caracteres y el cotejamiento son los que toman las tablas nuevas de la BD."
+msgstr "De tekenset en sortering zijn die van de nieuwe tabellen in de database."
+
+msgid "En PostgreSQL cada BD del árbol es un esquema de la base de datos de la conexión: se crea con CREATE SCHEMA."
+msgstr "In PostgreSQL is elke DB in de boom een schema van de database van de verbinding: die wordt aangemaakt met CREATE SCHEMA."
+
+msgid "Los ficheros de datos y de log van a la carpeta por defecto del servidor."
+msgstr "De data- en logbestanden gaan naar de standaardmap van de server."
+
+msgid "Sí: tablas nuevas cifradas (ENCRYPTION 'Y')"
+msgstr "Ja: nieuwe tabellen versleuteld (ENCRYPTION 'Y')"
+
+msgid "No (ENCRYPTION 'N')"
+msgstr "Nee (ENCRYPTION 'N')"
+
+msgid "Creating databases only works with MySQL/MariaDB, PostgreSQL and SQL Server: the connection is {0}"
+msgstr "Databases aanmaken werkt alleen met MySQL/MariaDB, PostgreSQL en SQL Server: de verbinding is {0}"
+
+msgid "Wrong database name or option: {0}"
+msgstr "Verkeerde databasenaam of optie: {0}"
+
+msgid "{0} is a production connection: database {1} will be created"
+msgstr "{0} is een productieverbinding: database {1} wordt aangemaakt"
+
+msgid "BD de sistema del servidor: cuidado al escribir en ella"
+msgstr "Systeemdatabase van de server: wees voorzichtig met schrijven"
+
+msgid "Eliminar BD..."
+msgstr "Database verwijderen..."
+
+msgid "Se elimina la BD {0} con todas sus tablas, vistas, rutinas y datos. No se puede deshacer."
+msgstr "Database {0} wordt verwijderd met al zijn tabellen, views, routines en data. Dit kan niet ongedaan worden gemaakt."
+
+msgid "BD eliminada: {0}"
+msgstr "Database verwijderd: {0}"
+
+msgid "Dropping databases only works with MySQL/MariaDB, PostgreSQL and SQL Server: the connection is {0}"
+msgstr "Databases verwijderen werkt alleen met MySQL/MariaDB, PostgreSQL en SQL Server: de verbinding is {0}"
+
+msgid "{0} is a system database of the server: it cannot be dropped from here"
+msgstr "{0} is een systeemdatabase van de server: die kan hier niet verwijderd worden"
+
+msgid "{0} is a production connection: database {1} will be dropped with all its tables and data"
+msgstr "{0} is een productieverbinding: database {1} wordt verwijderd met al zijn tabellen en data"
+
+msgid "The edited database {1} is not the original {0}"
+msgstr "De bewerkte database {1} is niet de oorspronkelijke {0}"
+
+msgid "Crear tabla..."
+msgstr "Tabel aanmaken..."
+
+msgid "Crear tabla en {0}"
+msgstr "Tabel aanmaken in {0}"
+
+msgid "Tabla creada: {0}"
+msgstr "Tabel aangemaakt: {0}"
+
+msgid "Leyendo motores y cotejamientos..."
+msgstr "Engines en collaties lezen..."
+
+msgid "{0} is a production connection: table {1} will be created"
+msgstr "{0} is een productieverbinding: tabel {1} wordt aangemaakt"
+
+msgid "Creating tables only works with MySQL/MariaDB, PostgreSQL, SQLite and SQL Server: the connection is {0}"
+msgstr "Tabellen aanmaken werkt alleen met MySQL/MariaDB, PostgreSQL, SQLite en SQL Server: de verbinding is {0}"
+
+msgid "{0} is not available in {1}"
+msgstr "{0} is niet beschikbaar in {1}"
+
+msgid "In SQLite only a single INTEGER primary key can auto-increment: {0}"
+msgstr "In SQLite kan alleen een primaire sleutel van één INTEGER-kolom automatisch ophogen: {0}"
+
+msgid "Column {0} cannot auto-increment and have a DEFAULT"
+msgstr "Kolom {0} kan niet automatisch ophogen en een DEFAULT hebben"

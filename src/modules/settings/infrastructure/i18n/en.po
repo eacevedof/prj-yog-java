@@ -1,0 +1,2 @@
+# multidbs - modulo settings - en (inglés)
+# clave = texto fuente (FXML %... o __(...) en Java)

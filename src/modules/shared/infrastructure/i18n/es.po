@@ -1,0 +1,11 @@
+# multidbs - modulo shared - español (es)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Fields validation errors"
+msgstr "Errores de validación de los campos"
+
+msgid "Unexpected error"
+msgstr "Error inesperado"
+
+msgid "Error Code: {0} - {1}"
+msgstr "Código de error: {0} - {1}"

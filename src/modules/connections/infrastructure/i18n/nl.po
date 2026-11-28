@@ -1,0 +1,344 @@
+# multidbs - modulo connections - nl (neerlandés)
+# clave = texto fuente (FXML %... o __(...) en Java)
+
+msgid "Conexión"
+msgstr "Verbinding"
+
+msgid "Nombre"
+msgstr "Naam"
+
+msgid "prod-mi-app"
+msgstr "prod-mijn-app"
+
+msgid "Motor"
+msgstr "Engine"
+
+msgid "Host"
+msgstr "Host"
+
+msgid "Puerto"
+msgstr "Poort"
+
+msgid "Usuario"
+msgstr "Gebruiker"
+
+msgid "root"
+msgstr "root"
+
+msgid "Password"
+msgstr "Wachtwoord"
+
+msgid "Base de datos"
+msgstr "Database"
+
+msgid "(opcional)"
+msgstr "(optioneel)"
+
+msgid "Color"
+msgstr "Kleur"
+
+msgid "usar color"
+msgstr "kleur gebruiken"
+
+msgid "Producción"
+msgstr "Productie"
+
+msgid "pedir confirmación en sentencias peligrosas"
+msgstr "om bevestiging vragen bij gevaarlijke statements"
+
+msgid "SSH"
+msgstr "SSH"
+
+msgid "conectar a través de un túnel SSH"
+msgstr "verbinden via een SSH-tunnel"
+
+msgid "Host SSH"
+msgstr "SSH-host"
+
+msgid "servidor.ejemplo.com"
+msgstr "server.voorbeeld.com"
+
+msgid "Puerto SSH"
+msgstr "SSH-poort"
+
+msgid "Usuario SSH"
+msgstr "SSH-gebruiker"
+
+msgid "Password SSH"
+msgstr "SSH-wachtwoord"
+
+msgid "(o clave privada)"
+msgstr "(of privésleutel)"
+
+msgid "Clave privada"
+msgstr "Privésleutel"
+
+msgid "C:\\Users\\yo\\.ssh\\id_ed25519"
+msgstr "C:\\Users\\ik\\.ssh\\id_ed25519"
+
+msgid "Passphrase"
+msgstr "Wachtwoordzin"
+
+msgid "(si la clave la tiene)"
+msgstr "(als de sleutel er een heeft)"
+
+msgid "Con túnel, Host y Puerto de la pestaña Conexión son la BD vista desde el servidor SSH (normalmente 127.0.0.1 y 3306)."
+msgstr "Met een tunnel zijn Host en Poort op het tabblad Verbinding de database gezien vanaf de SSH-server (meestal 127.0.0.1 en 3306)."
+
+msgid "HTTP"
+msgstr "HTTP"
+
+msgid "conectar a través de un túnel HTTP (PHP)"
+msgstr "verbinden via een HTTP-tunnel (PHP)"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "https://yog.ejemplo.com/<token>"
+msgstr "https://yog.voorbeeld.com/<token>"
+
+msgid "Timeout (s)"
+msgstr "Time-out (s)"
+
+msgid "El túnel es el PHP de prj-yog (protocolo de SQLyog 13.21). La URL lleva el token de acceso: se guarda cifrada y no se vuelve a mostrar. Host y Puerto de la pestaña Conexión son la BD vista desde ese servidor. Con PostgreSQL, la URL va igual: multidbs añade /pg."
+msgstr "De tunnel is het PHP-script van prj-yog (SQLyog 13.21-protocol). De URL bevat het toegangstoken: die wordt versleuteld opgeslagen en niet meer getoond. Host en Poort op het tabblad Verbinding zijn de database gezien vanaf die server. Met PostgreSQL blijft de URL gelijk: multidbs voegt /pg toe."
+
+msgid "Probar conexión"
+msgstr "Verbinding testen"
+
+msgid "Cancelar"
+msgstr "Annuleren"
+
+msgid "Guardar"
+msgstr "Opslaan"
+
+msgid "Conectar"
+msgstr "Verbinden"
+
+msgid "Nueva"
+msgstr "Nieuw"
+
+msgid "Nueva conexión"
+msgstr "Nieuwe verbinding"
+
+msgid "Editar"
+msgstr "Bewerken"
+
+msgid "Editar la conexión"
+msgstr "De verbinding bewerken"
+
+msgid "Clonar"
+msgstr "Klonen"
+
+msgid "Clonar la conexión"
+msgstr "De verbinding klonen"
+
+msgid "Borrar"
+msgstr "Verwijderen"
+
+msgid "Borrar la conexión"
+msgstr "De verbinding verwijderen"
+
+msgid "Refrescar"
+msgstr "Vernieuwen"
+
+msgid "Refrescar las BD de la conexión elegida (F5)"
+msgstr "De databases van de gekozen verbinding vernieuwen (F5)"
+
+msgid "Filtrar BD"
+msgstr "Databases filteren"
+
+msgid "Filtrar tablas..."
+msgstr "Tabellen filteren..."
+
+msgid "(sin cambios)"
+msgstr "(ongewijzigd)"
+
+msgid "(guardada, sin cambios)"
+msgstr "(opgeslagen, ongewijzigd)"
+
+msgid "C:\\datos\\app.sqlite (por el túnel: la clave)"
+msgstr "C:\\data\\app.sqlite (via de tunnel: de sleutel)"
+
+msgid "Fichero"
+msgstr "Bestand"
+
+msgid "BD (índice)"
+msgstr "Database (index)"
+
+msgid "(opcional: la BD de la consola)"
+msgstr "(optioneel: de database van de console)"
+
+msgid "127.0.0.1 o mongodb+srv://cluster.ejemplo.net (sin usuario)"
+msgstr "127.0.0.1 of mongodb+srv://cluster.voorbeeld.net (zonder gebruiker)"
+
+msgid "(opcional, usuario ACL)"
+msgstr "(optioneel, ACL-gebruiker)"
+
+msgid "(opcional; se autentica en admin)"
+msgstr "(optioneel; authenticeert tegen admin)"
+
+msgid "(solo por el túnel HTTP)"
+msgstr "(alleen via de HTTP-tunnel)"
+
+msgid "Fichero SQLite"
+msgstr "SQLite-bestand"
+
+msgid "Todos"
+msgstr "Alle"
+
+msgid "SQLite por el túnel HTTP: Fichero es la clave de la lista de BDs del PHP y Password, su YOG_SQLITE_PASSWORD."
+msgstr "SQLite via de HTTP-tunnel: Bestand is de sleutel in de databaselijst van het PHP-script en Wachtwoord is de YOG_SQLITE_PASSWORD ervan."
+
+msgid "SQLite local: Fichero es la ruta del .sqlite. Si es una carpeta, al guardar se crea dentro un .sqlite vacío."
+msgstr "Lokale SQLite: Bestand is het pad naar het .sqlite-bestand. Is het een map, dan wordt er bij het opslaan een leeg .sqlite-bestand in aangemaakt."
+
+msgid "Va por el túnel SSH (pestaña SSH): Host y Puerto son la BD vista desde el servidor SSH."
+msgstr "Gaat via de SSH-tunnel (tabblad SSH): Host en Poort zijn de database gezien vanaf de SSH-server."
+
+msgid "Va por el túnel HTTP (pestaña HTTP): Host y Puerto son la BD vista desde el servidor del túnel."
+msgstr "Gaat via de HTTP-tunnel (tabblad HTTP): Host en Poort zijn de database gezien vanaf de tunnelserver."
+
+msgid "Conexión directa (sin túnel)."
+msgstr "Directe verbinding (zonder tunnel)."
+
+msgid "Clave privada SSH"
+msgstr "SSH-privésleutel"
+
+msgid "Probando..."
+msgstr "Testen..."
+
+msgid "¿Borrar la conexión \"{0}\"?"
+msgstr "Verbinding \"{0}\" verwijderen?"
+
+msgid "Editar conexión"
+msgstr "Verbinding bewerken"
+
+msgid "field is required"
+msgstr "veld is verplicht"
+
+msgid "max length is {0}"
+msgstr "maximale lengte is {0}"
+
+msgid "allowed values are {0}"
+msgstr "toegestane waarden zijn {0}"
+
+msgid "value must be between {0} and {1}"
+msgstr "waarde moet tussen {0} en {1} liggen"
+
+msgid "invalid color, expected format {0}"
+msgstr "ongeldige kleur, verwacht formaat {0}"
+
+msgid "Connection {0} not found"
+msgstr "Verbinding {0} niet gevonden"
+
+msgid "Connection name {0} already exists"
+msgstr "Verbindingsnaam {0} bestaat al"
+
+msgid "Connection {0} failed: {1}"
+msgstr "Verbinding {0} mislukt: {1}"
+
+msgid "Connection {0} OK. Server: {1}"
+msgstr "Verbinding {0} OK. Server: {1}"
+
+msgid "{0} (copy)"
+msgstr "{0} (kopie)"
+
+msgid "an SSH password or a private key is required"
+msgstr "een SSH-wachtwoord of een privésleutel is verplicht"
+
+msgid "SSH tunnel failed: {0}"
+msgstr "SSH-tunnel mislukt: {0}"
+
+msgid "HTTP tunnel failed: {0}"
+msgstr "HTTP-tunnel mislukt: {0}"
+
+msgid "must start with http:// or https://"
+msgstr "moet beginnen met http:// of https://"
+
+msgid "use either the SSH tunnel or the HTTP tunnel, not both"
+msgstr "gebruik de SSH-tunnel of de HTTP-tunnel, niet allebei"
+
+msgid "an SSH tunnel does not apply to SQLite (use the HTTP tunnel for a remote file)"
+msgstr "een SSH-tunnel geldt niet voor SQLite (gebruik de HTTP-tunnel voor een extern bestand)"
+
+msgid "SQLite file not found: {0}"
+msgstr "SQLite-bestand niet gevonden: {0}"
+
+msgid "the HTTP tunnel (SQLyog PHP) does not support {0}"
+msgstr "de HTTP-tunnel (SQLyog PHP) ondersteunt {0} niet"
+
+msgid "write user and password in their own fields, not in the connection string"
+msgstr "vul gebruiker en wachtwoord in hun eigen velden in, niet in de connection string"
+
+msgid "a connection string brings its own hosts: it cannot go through the SSH tunnel"
+msgstr "een connection string heeft eigen hosts: die kan niet via de SSH-tunnel"
+
+msgid "Editar..."
+msgstr "Bewerken..."
+
+msgid "Renombrar..."
+msgstr "Hernoemen..."
+
+msgid "Eliminar"
+msgstr "Verwijderen"
+
+msgid "Eliminar (ciérrala antes)"
+msgstr "Verwijderen (eerst sluiten)"
+
+msgid "Renombrar la conexión"
+msgstr "Verbinding hernoemen"
+
+msgid "Desconectar"
+msgstr "Verbinding verbreken"
+
+msgid "Desconectar la conexión elegida (cierra su pestaña)"
+msgstr "Verbinding van de gekozen verbinding verbreken (sluit het tabblad)"
+
+msgid "Eliminar (desconéctala antes)"
+msgstr "Verwijderen (eerst verbinding verbreken)"
+
+msgid "Conectada"
+msgstr "Verbonden"
+
+msgid "Sin conexión"
+msgstr "Niet verbonden"
+
+msgid "sin conexión"
+msgstr "niet verbonden"
+
+msgid "Limpiar filtros"
+msgstr "Filters wissen"
+
+msgid "Ficheros (CSV, JSON)"
+msgstr "Bestanden (CSV, JSON)"
+
+msgid "Carpeta o fichero"
+msgstr "Map of bestand"
+
+msgid "C:\\datos\\exportados (sus .csv, .tsv, .json y .jsonl)"
+msgstr "C:\\gegevens\\exports (de .csv-, .tsv-, .json- en .jsonl-bestanden)"
+
+msgid "Carpeta con los CSV y JSON"
+msgstr "Map met de CSV- en JSON-bestanden"
+
+msgid "Ficheros: cada .csv, .tsv, .json o .jsonl de la carpeta es una tabla (si la ruta es un fichero, solo ese). Los cambios se escriben con «Guardar en ficheros»."
+msgstr "Bestanden: elk .csv-, .tsv-, .json- of .jsonl-bestand in de map is een tabel (is het pad een bestand, dan alleen dat). Wijzigingen worden geschreven met „Opslaan in bestanden”."
+
+msgid "a files connection reads a local folder: no SSH or HTTP tunnel"
+msgstr "een bestandsverbinding leest een lokale map: geen SSH- of HTTP-tunnel"
+
+msgid "Folder or data file not found: {0}"
+msgstr "Map of gegevensbestand niet gevonden: {0}"
+
+msgid "Folder {0}: {1} CSV or JSON file(s)"
+msgstr "Map {0}: {1} CSV- of JSON-bestand(en)"
+
+msgid "a connection string brings its own hosts: it cannot go through the HTTP tunnel (it takes host and port)"
+msgstr "een connection string heeft eigen hosts: die kan niet via de HTTP-tunnel (die gebruikt host en poort)"
+
+msgid "{0} is a folder: an empty .sqlite file will be created in it when the connection is saved"
+msgstr "{0} is een map: bij het opslaan van de verbinding wordt er een leeg .sqlite-bestand in aangemaakt"
+
+msgid "File {0}: one table"
+msgstr "Bestand {0}: één tabel"

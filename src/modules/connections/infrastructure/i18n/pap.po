@@ -1,0 +1,344 @@
+# multidbs - modulo connections - pap (papiamento (Curazao))
+# clave = texto fuente (FXML %... o __(...) en Java)
+
+msgid "Conexión"
+msgstr "Konekshon"
+
+msgid "Nombre"
+msgstr "Nòmber"
+
+msgid "prod-mi-app"
+msgstr "prod-mi-app"
+
+msgid "Motor"
+msgstr "Motor"
+
+msgid "Host"
+msgstr "Host"
+
+msgid "Puerto"
+msgstr "Pòrt"
+
+msgid "Usuario"
+msgstr "Usuario"
+
+msgid "root"
+msgstr "root"
+
+msgid "Password"
+msgstr "Kontraseña"
+
+msgid "Base de datos"
+msgstr "Base di dato"
+
+msgid "(opcional)"
+msgstr "(opshonal)"
+
+msgid "Color"
+msgstr "Koló"
+
+msgid "usar color"
+msgstr "usa koló"
+
+msgid "Producción"
+msgstr "Produkshon"
+
+msgid "pedir confirmación en sentencias peligrosas"
+msgstr "pidi konfirmashon pa instrukshonnan peligroso"
+
+msgid "SSH"
+msgstr "SSH"
+
+msgid "conectar a través de un túnel SSH"
+msgstr "konektá via un tunel SSH"
+
+msgid "Host SSH"
+msgstr "Host SSH"
+
+msgid "servidor.ejemplo.com"
+msgstr "sèrvidor.ehempel.com"
+
+msgid "Puerto SSH"
+msgstr "Pòrt SSH"
+
+msgid "Usuario SSH"
+msgstr "Usuario SSH"
+
+msgid "Password SSH"
+msgstr "Kontraseña SSH"
+
+msgid "(o clave privada)"
+msgstr "(òf klave privá)"
+
+msgid "Clave privada"
+msgstr "Klave privá"
+
+msgid "C:\\Users\\yo\\.ssh\\id_ed25519"
+msgstr "C:\\Users\\ami\\.ssh\\id_ed25519"
+
+msgid "Passphrase"
+msgstr "Frase di kontraseña"
+
+msgid "(si la clave la tiene)"
+msgstr "(si e klave tin un)"
+
+msgid "Con túnel, Host y Puerto de la pestaña Conexión son la BD vista desde el servidor SSH (normalmente 127.0.0.1 y 3306)."
+msgstr "Ku tunel, Host i Pòrt di e pestaña Konekshon ta e base di dato manera e sèrvidor SSH ta mir'é (normalmente 127.0.0.1 i 3306)."
+
+msgid "HTTP"
+msgstr "HTTP"
+
+msgid "conectar a través de un túnel HTTP (PHP)"
+msgstr "konektá via un tunel HTTP (PHP)"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "https://yog.ejemplo.com/<token>"
+msgstr "https://yog.ehempel.com/<token>"
+
+msgid "Timeout (s)"
+msgstr "Timeout (s)"
+
+msgid "El túnel es el PHP de prj-yog (protocolo de SQLyog 13.21). La URL lleva el token de acceso: se guarda cifrada y no se vuelve a mostrar. Host y Puerto de la pestaña Conexión son la BD vista desde ese servidor. Con PostgreSQL, la URL va igual: multidbs añade /pg."
+msgstr "E tunel ta e PHP di prj-yog (protokòl di SQLyog 13.21). E URL ta kontené e token di akseso: e ta wòrdu warda sifrá i no ta mustr'é mas. Host i Pòrt di e pestaña Konekshon ta e base di dato manera e sèrvidor ei ta mir'é. Ku PostgreSQL, e URL ta keda meskos: multidbs ta agregá /pg."
+
+msgid "Probar conexión"
+msgstr "Probá konekshon"
+
+msgid "Cancelar"
+msgstr "Kanselá"
+
+msgid "Guardar"
+msgstr "Warda"
+
+msgid "Conectar"
+msgstr "Konektá"
+
+msgid "Nueva"
+msgstr "Nobo"
+
+msgid "Nueva conexión"
+msgstr "Konekshon nobo"
+
+msgid "Editar"
+msgstr "Edità"
+
+msgid "Editar la conexión"
+msgstr "Edità e konekshon"
+
+msgid "Clonar"
+msgstr "Klona"
+
+msgid "Clonar la conexión"
+msgstr "Klona e konekshon"
+
+msgid "Borrar"
+msgstr "Borra"
+
+msgid "Borrar la conexión"
+msgstr "Borra e konekshon"
+
+msgid "Refrescar"
+msgstr "Refreská"
+
+msgid "Refrescar las BD de la conexión elegida (F5)"
+msgstr "Refreská e base di datonan di e konekshon skohí (F5)"
+
+msgid "Filtrar BD"
+msgstr "Filtrá base di dato"
+
+msgid "Filtrar tablas..."
+msgstr "Filtrá tabla..."
+
+msgid "(sin cambios)"
+msgstr "(sin kambio)"
+
+msgid "(guardada, sin cambios)"
+msgstr "(wardá, sin kambio)"
+
+msgid "C:\\datos\\app.sqlite (por el túnel: la clave)"
+msgstr "C:\\dato\\app.sqlite (via e tunel: e klave)"
+
+msgid "Fichero"
+msgstr "Archivo"
+
+msgid "BD (índice)"
+msgstr "Base di dato (índise)"
+
+msgid "(opcional: la BD de la consola)"
+msgstr "(opshonal: e base di dato di e konsola)"
+
+msgid "127.0.0.1 o mongodb+srv://cluster.ejemplo.net (sin usuario)"
+msgstr "127.0.0.1 òf mongodb+srv://cluster.ehempel.net (sin usuario)"
+
+msgid "(opcional, usuario ACL)"
+msgstr "(opshonal, usuario ACL)"
+
+msgid "(opcional; se autentica en admin)"
+msgstr "(opshonal; e ta outentiká den admin)"
+
+msgid "(solo por el túnel HTTP)"
+msgstr "(solamente via e tunel HTTP)"
+
+msgid "Fichero SQLite"
+msgstr "Archivo SQLite"
+
+msgid "Todos"
+msgstr "Tur"
+
+msgid "SQLite por el túnel HTTP: Fichero es la clave de la lista de BDs del PHP y Password, su YOG_SQLITE_PASSWORD."
+msgstr "SQLite via e tunel HTTP: Archivo ta e klave den e lista di base di dato di e PHP i Kontraseña ta su YOG_SQLITE_PASSWORD."
+
+msgid "SQLite local: Fichero es la ruta del .sqlite. Si es una carpeta, al guardar se crea dentro un .sqlite vacío."
+msgstr "SQLite lokal: Archivo ta e ruta di e .sqlite. Si e ta un mapa, ora di warda ta krea un .sqlite bashí aden."
+
+msgid "Va por el túnel SSH (pestaña SSH): Host y Puerto son la BD vista desde el servidor SSH."
+msgstr "Ta bai via e tunel SSH (pestaña SSH): Host i Pòrt ta e base di dato manera e sèrvidor SSH ta mir'é."
+
+msgid "Va por el túnel HTTP (pestaña HTTP): Host y Puerto son la BD vista desde el servidor del túnel."
+msgstr "Ta bai via e tunel HTTP (pestaña HTTP): Host i Pòrt ta e base di dato manera e sèrvidor di e tunel ta mir'é."
+
+msgid "Conexión directa (sin túnel)."
+msgstr "Konekshon direkto (sin tunel)."
+
+msgid "Clave privada SSH"
+msgstr "Klave privá SSH"
+
+msgid "Probando..."
+msgstr "Probando..."
+
+msgid "¿Borrar la conexión \"{0}\"?"
+msgstr "Borra e konekshon \"{0}\"?"
+
+msgid "Editar conexión"
+msgstr "Edità konekshon"
+
+msgid "field is required"
+msgstr "e kampo ta obligatorio"
+
+msgid "max length is {0}"
+msgstr "largura máksimo ta {0}"
+
+msgid "allowed values are {0}"
+msgstr "balornan permití ta {0}"
+
+msgid "value must be between {0} and {1}"
+msgstr "e balor mester ta entre {0} i {1}"
+
+msgid "invalid color, expected format {0}"
+msgstr "koló no ta válido, formato spera {0}"
+
+msgid "Connection {0} not found"
+msgstr "No a haña konekshon {0}"
+
+msgid "Connection name {0} already exists"
+msgstr "Nòmber di konekshon {0} ta eksistí kaba"
+
+msgid "Connection {0} failed: {1}"
+msgstr "Konekshon {0} a faya: {1}"
+
+msgid "Connection {0} OK. Server: {1}"
+msgstr "Konekshon {0} OK. Sèrvidor: {1}"
+
+msgid "{0} (copy)"
+msgstr "{0} (kopia)"
+
+msgid "an SSH password or a private key is required"
+msgstr "mester tin un kontraseña SSH òf un klave privá"
+
+msgid "SSH tunnel failed: {0}"
+msgstr "Tunel SSH a faya: {0}"
+
+msgid "HTTP tunnel failed: {0}"
+msgstr "Tunel HTTP a faya: {0}"
+
+msgid "must start with http:// or https://"
+msgstr "mester kuminsá ku http:// òf https://"
+
+msgid "use either the SSH tunnel or the HTTP tunnel, not both"
+msgstr "usa e tunel SSH òf e tunel HTTP, no tur dos"
+
+msgid "an SSH tunnel does not apply to SQLite (use the HTTP tunnel for a remote file)"
+msgstr "un tunel SSH no ta aplika na SQLite (usa e tunel HTTP pa un archivo remoto)"
+
+msgid "SQLite file not found: {0}"
+msgstr "No a haña e archivo SQLite: {0}"
+
+msgid "the HTTP tunnel (SQLyog PHP) does not support {0}"
+msgstr "e tunel HTTP (PHP di SQLyog) no ta soportá {0}"
+
+msgid "write user and password in their own fields, not in the connection string"
+msgstr "skirbi usuario i kontraseña den nan mes kamponan, no den e kadena di konekshon"
+
+msgid "a connection string brings its own hosts: it cannot go through the SSH tunnel"
+msgstr "un kadena di konekshon ta trese su mes hostnan: e no por bai via e tunel SSH"
+
+msgid "Editar..."
+msgstr "Edita..."
+
+msgid "Renombrar..."
+msgstr "Kambia nòmber..."
+
+msgid "Eliminar"
+msgstr "Kita"
+
+msgid "Eliminar (ciérrala antes)"
+msgstr "Kita (sera e promé)"
+
+msgid "Renombrar la conexión"
+msgstr "Kambia nòmber di e konekshon"
+
+msgid "Desconectar"
+msgstr "Deskonektá"
+
+msgid "Desconectar la conexión elegida (cierra su pestaña)"
+msgstr "Deskonektá e konekshon skohí (ta sera su pèstaña)"
+
+msgid "Eliminar (desconéctala antes)"
+msgstr "Kita (deskonekt'é promé)"
+
+msgid "Conectada"
+msgstr "Konektá"
+
+msgid "Sin conexión"
+msgstr "Sin konekshon"
+
+msgid "sin conexión"
+msgstr "sin konekshon"
+
+msgid "Limpiar filtros"
+msgstr "Limpia filternan"
+
+msgid "Ficheros (CSV, JSON)"
+msgstr "Archivonan (CSV, JSON)"
+
+msgid "Carpeta o fichero"
+msgstr "Mapa of archivo"
+
+msgid "C:\\datos\\exportados (sus .csv, .tsv, .json y .jsonl)"
+msgstr "C:\\datos\\eksportá (su .csv, .tsv, .json i .jsonl)"
+
+msgid "Carpeta con los CSV y JSON"
+msgstr "Mapa ku e CSV i JSON"
+
+msgid "Ficheros: cada .csv, .tsv, .json o .jsonl de la carpeta es una tabla (si la ruta es un fichero, solo ese). Los cambios se escriben con «Guardar en ficheros»."
+msgstr "Archivonan: kada .csv, .tsv, .json of .jsonl den e mapa ta un tabel (si e ruta ta un archivo, solamente esei). E kambionan ta wòrdu skirbí ku «Warda den archivonan»."
+
+msgid "a files connection reads a local folder: no SSH or HTTP tunnel"
+msgstr "un konekshon di archivo ta lesa un mapa lokal: sin túnel SSH ni HTTP"
+
+msgid "Folder or data file not found: {0}"
+msgstr "No a haña e mapa ni e archivo di datos: {0}"
+
+msgid "Folder {0}: {1} CSV or JSON file(s)"
+msgstr "Mapa {0}: {1} archivo(nan) CSV of JSON"
+
+msgid "a connection string brings its own hosts: it cannot go through the HTTP tunnel (it takes host and port)"
+msgstr "un kadena di konekshon ta trese su mes hostnan: e no por bai via e tunel HTTP (e ta usa host i port)"
+
+msgid "{0} is a folder: an empty .sqlite file will be created in it when the connection is saved"
+msgstr "{0} ta un mapa: ora di warda e konekshon ta krea un .sqlite bashí aden"
+
+msgid "File {0}: one table"
+msgstr "Archivo {0}: un tabel"

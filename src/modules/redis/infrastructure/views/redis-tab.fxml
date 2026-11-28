@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import modules.shared.infrastructure.components.icons.AppIcon?>
+
+<!-- una conexion Redis abierta: claves por SCAN agrupadas por prefijo a la izquierda; valor y consola a la derecha -->
+<SplitPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" dividerPositions="0.32"
+           fx:controller="modules.redis.infrastructure.controllers.RedisTabController">
+    <VBox minWidth="220">
+        <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+            <TextField fx:id="patternField" text="*" promptText="%patrón: user:*" HBox.hgrow="ALWAYS" onAction="#onScan">
+                <tooltip><Tooltip text="%Patrón de SCAN MATCH: * cualquier cosa, ? un carácter, [ab] uno de"/></tooltip>
+            </TextField>
+            <Button text="%Buscar" minWidth="-Infinity" onAction="#onScan"><graphic><AppIcon name="search"/></graphic></Button>
+            <Button fx:id="moreButton" text="%Más" minWidth="-Infinity" onAction="#onMore" disable="true">
+                <tooltip><Tooltip text="%Siguiente tanda de SCAN"/></tooltip>
+            </Button>
+            <Button text="%Nueva clave…" minWidth="-Infinity" onAction="#onNewKey"><graphic><AppIcon name="add-row"/></graphic></Button>
+        </HBox>
+        <TreeView fx:id="keysTreeView" showRoot="false" VBox.vgrow="ALWAYS"/>
+        <Label fx:id="keysStatusLabel" styleClass="explorer-status"/>
+    </VBox>
+    <TabPane fx:id="redisTabPane" tabClosingPolicy="UNAVAILABLE">
+        <Tab fx:id="valueTab" text="%Valor">
+            <graphic><AppIcon name="key"/></graphic>
+            <VBox>
+                <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+                    <Label fx:id="keyNameLabel" styleClass="active-database" text="%(elige una clave)"/>
+                    <Label fx:id="keyTypeLabel" styleClass="engine-badge" visible="false"/>
+                    <Label fx:id="keyInfoLabel" styleClass="query-status"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="ttlButton" text="%TTL…" minWidth="-Infinity" onAction="#onSetTtl" disable="true">
+                        <tooltip><Tooltip text="%Caducidad en segundos (vacío = no caduca)"/></tooltip>
+                    </Button>
+                    <Button fx:id="renameButton" text="%Renombrar…" minWidth="-Infinity" onAction="#onRenameKey" disable="true"/>
+                    <Button fx:id="deleteKeyButton" text="%Borrar" minWidth="-Infinity" onAction="#onDeleteKey" disable="true"><graphic><AppIcon name="delete"/></graphic></Button>
+                    <Button fx:id="reloadValueButton" minWidth="-Infinity" onAction="#onReloadValue" disable="true">
+                        <graphic><AppIcon name="refresh"/></graphic>
+                        <tooltip><Tooltip text="%Volver a leer el valor"/></tooltip>
+                    </Button>
+                </HBox>
+                <StackPane VBox.vgrow="ALWAYS">
+                    <TextArea fx:id="stringValueArea" styleClass="result-text" wrapText="true" visible="false"/>
+                    <TableView fx:id="valueTableView" visible="false"/>
+                </StackPane>
+                <HBox fx:id="editBar" styleClass="toolbar-buttons" alignment="CENTER_LEFT" visible="false" managed="false">
+                    <TextField fx:id="itemFieldField" promptText="%campo" HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="itemValueField" promptText="%valor" HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="itemScoreField" promptText="%score" prefColumnCount="6"/>
+                    <Button fx:id="saveItemButton" text="%Guardar" minWidth="-Infinity" onAction="#onSaveItem"><graphic><AppIcon name="save"/></graphic></Button>
+                    <Button fx:id="removeItemButton" text="%Quitar" minWidth="-Infinity" onAction="#onRemoveItem"><graphic><AppIcon name="delete"/></graphic></Button>
+                </HBox>
+                <Label fx:id="valueStatusLabel" styleClass="query-status"/>
+            </VBox>
+        </Tab>
+        <Tab fx:id="consoleTab" text="%Consola">
+            <graphic><AppIcon name="query"/></graphic>
+            <VBox>
+                <TextArea fx:id="consoleOutputArea" editable="false" styleClass="result-text" VBox.vgrow="ALWAYS"/>
+                <HBox styleClass="toolbar-buttons" alignment="CENTER_LEFT">
+                    <Label fx:id="consolePromptLabel" styleClass="result-text" text="%redis&gt;"/>
+                    <TextField fx:id="consoleInputField" styleClass="result-text" promptText="%GET clave · HGETALL h · ↑ ↓ historial" HBox.hgrow="ALWAYS" onAction="#onRunCommand"/>
+                    <Button fx:id="runCommandButton" text="%Ejecutar" minWidth="-Infinity" onAction="#onRunCommand"><graphic><AppIcon name="execute"/></graphic></Button>
+                </HBox>
+            </VBox>
+        </Tab>
+    </TabPane>
+</SplitPane>

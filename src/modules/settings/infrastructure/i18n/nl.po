@@ -1,0 +1,8 @@
+# multidbs - modulo settings - nl (neerlandés)
+# clave = texto fuente (FXML %... o __(...) en Java)
+
+msgid "Unknown setting {0}"
+msgstr "Onbekende instelling {0}"
+
+msgid "Invalid value {0} for {1}, allowed: {2}"
+msgstr "Ongeldige waarde {0} voor {1}, toegestaan: {2}"

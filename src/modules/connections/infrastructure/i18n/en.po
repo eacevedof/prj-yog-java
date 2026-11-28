@@ -1,0 +1,281 @@
+# multidbs - modulo connections - en (inglés)
+# clave = texto fuente (FXML %... o __(...) en Java)
+
+msgid "Conexión"
+msgstr "Connection"
+
+msgid "Nombre"
+msgstr "Name"
+
+msgid "prod-mi-app"
+msgstr "prod-my-app"
+
+msgid "Motor"
+msgstr "Engine"
+
+msgid "Host"
+msgstr "Host"
+
+msgid "Puerto"
+msgstr "Port"
+
+msgid "Usuario"
+msgstr "User"
+
+msgid "root"
+msgstr "root"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Base de datos"
+msgstr "Database"
+
+msgid "(opcional)"
+msgstr "(optional)"
+
+msgid "Color"
+msgstr "Color"
+
+msgid "usar color"
+msgstr "use color"
+
+msgid "Producción"
+msgstr "Production"
+
+msgid "pedir confirmación en sentencias peligrosas"
+msgstr "ask for confirmation on dangerous statements"
+
+msgid "SSH"
+msgstr "SSH"
+
+msgid "conectar a través de un túnel SSH"
+msgstr "connect through an SSH tunnel"
+
+msgid "Host SSH"
+msgstr "SSH host"
+
+msgid "servidor.ejemplo.com"
+msgstr "server.example.com"
+
+msgid "Puerto SSH"
+msgstr "SSH port"
+
+msgid "Usuario SSH"
+msgstr "SSH user"
+
+msgid "Password SSH"
+msgstr "SSH password"
+
+msgid "(o clave privada)"
+msgstr "(or private key)"
+
+msgid "Clave privada"
+msgstr "Private key"
+
+msgid "C:\\Users\\yo\\.ssh\\id_ed25519"
+msgstr "C:\\Users\\me\\.ssh\\id_ed25519"
+
+msgid "Passphrase"
+msgstr "Passphrase"
+
+msgid "(si la clave la tiene)"
+msgstr "(if the key has one)"
+
+msgid "Con túnel, Host y Puerto de la pestaña Conexión son la BD vista desde el servidor SSH (normalmente 127.0.0.1 y 3306)."
+msgstr "With a tunnel, Host and Port on the Connection tab are the database as seen from the SSH server (usually 127.0.0.1 and 3306)."
+
+msgid "HTTP"
+msgstr "HTTP"
+
+msgid "conectar a través de un túnel HTTP (PHP)"
+msgstr "connect through an HTTP tunnel (PHP)"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "https://yog.ejemplo.com/<token>"
+msgstr "https://yog.example.com/<token>"
+
+msgid "Timeout (s)"
+msgstr "Timeout (s)"
+
+msgid "El túnel es el PHP de prj-yog (protocolo de SQLyog 13.21). La URL lleva el token de acceso: se guarda cifrada y no se vuelve a mostrar. Host y Puerto de la pestaña Conexión son la BD vista desde ese servidor. Con PostgreSQL, la URL va igual: multidbs añade /pg."
+msgstr "The tunnel is the prj-yog PHP script (SQLyog 13.21 protocol). The URL carries the access token: it is stored encrypted and never shown again. Host and Port on the Connection tab are the database as seen from that server. With PostgreSQL, use the same URL: multidbs appends /pg."
+
+msgid "Probar conexión"
+msgstr "Test connection"
+
+msgid "Cancelar"
+msgstr "Cancel"
+
+msgid "Guardar"
+msgstr "Save"
+
+msgid "Conectar"
+msgstr "Connect"
+
+msgid "Nueva"
+msgstr "New"
+
+msgid "Nueva conexión"
+msgstr "New connection"
+
+msgid "Editar"
+msgstr "Edit"
+
+msgid "Editar la conexión"
+msgstr "Edit the connection"
+
+msgid "Clonar"
+msgstr "Clone"
+
+msgid "Clonar la conexión"
+msgstr "Clone the connection"
+
+msgid "Borrar"
+msgstr "Delete"
+
+msgid "Borrar la conexión"
+msgstr "Delete the connection"
+
+msgid "Refrescar"
+msgstr "Refresh"
+
+msgid "Refrescar las BD de la conexión elegida (F5)"
+msgstr "Refresh the databases of the selected connection (F5)"
+
+msgid "Filtrar BD"
+msgstr "Filter databases"
+
+msgid "Filtrar tablas..."
+msgstr "Filter tables..."
+
+msgid "(sin cambios)"
+msgstr "(unchanged)"
+
+msgid "(guardada, sin cambios)"
+msgstr "(saved, unchanged)"
+
+msgid "C:\\datos\\app.sqlite (por el túnel: la clave)"
+msgstr "C:\\data\\app.sqlite (over the tunnel: the key)"
+
+msgid "Fichero"
+msgstr "File"
+
+msgid "BD (índice)"
+msgstr "Database (index)"
+
+msgid "(opcional: la BD de la consola)"
+msgstr "(optional: the console database)"
+
+msgid "127.0.0.1 o mongodb+srv://cluster.ejemplo.net (sin usuario)"
+msgstr "127.0.0.1 or mongodb+srv://cluster.example.net (no user)"
+
+msgid "(opcional, usuario ACL)"
+msgstr "(optional, ACL user)"
+
+msgid "(opcional; se autentica en admin)"
+msgstr "(optional; authenticates against admin)"
+
+msgid "(solo por el túnel HTTP)"
+msgstr "(HTTP tunnel only)"
+
+msgid "Fichero SQLite"
+msgstr "SQLite file"
+
+msgid "Todos"
+msgstr "All"
+
+msgid "SQLite por el túnel HTTP: Fichero es la clave de la lista de BDs del PHP y Password, su YOG_SQLITE_PASSWORD."
+msgstr "SQLite over the HTTP tunnel: File is the key in the PHP database list and Password is its YOG_SQLITE_PASSWORD."
+
+msgid "SQLite local: Fichero es la ruta del .sqlite. Si es una carpeta, al guardar se crea dentro un .sqlite vacío."
+msgstr "Local SQLite: File is the path to the .sqlite file. If it is a folder, an empty .sqlite file is created in it on save."
+
+msgid "Va por el túnel SSH (pestaña SSH): Host y Puerto son la BD vista desde el servidor SSH."
+msgstr "Goes through the SSH tunnel (SSH tab): Host and Port are the database as seen from the SSH server."
+
+msgid "Va por el túnel HTTP (pestaña HTTP): Host y Puerto son la BD vista desde el servidor del túnel."
+msgstr "Goes through the HTTP tunnel (HTTP tab): Host and Port are the database as seen from the tunnel server."
+
+msgid "Conexión directa (sin túnel)."
+msgstr "Direct connection (no tunnel)."
+
+msgid "Clave privada SSH"
+msgstr "SSH private key"
+
+msgid "Probando..."
+msgstr "Testing..."
+
+msgid "¿Borrar la conexión \"{0}\"?"
+msgstr "Delete the connection \"{0}\"?"
+
+msgid "Editar conexión"
+msgstr "Edit connection"
+
+msgid "Editar..."
+msgstr "Edit..."
+
+msgid "Renombrar..."
+msgstr "Rename..."
+
+msgid "Eliminar"
+msgstr "Delete"
+
+msgid "Eliminar (ciérrala antes)"
+msgstr "Delete (close it first)"
+
+msgid "Renombrar la conexión"
+msgstr "Rename connection"
+
+msgid "Desconectar"
+msgstr "Disconnect"
+
+msgid "Desconectar la conexión elegida (cierra su pestaña)"
+msgstr "Disconnect the selected connection (closes its tab)"
+
+msgid "Eliminar (desconéctala antes)"
+msgstr "Delete (disconnect it first)"
+
+msgid "Conectada"
+msgstr "Connected"
+
+msgid "Sin conexión"
+msgstr "Not connected"
+
+msgid "sin conexión"
+msgstr "not connected"
+
+msgid "Limpiar filtros"
+msgstr "Clear filters"
+
+msgid "Ficheros (CSV, JSON)"
+msgstr "Files (CSV, JSON)"
+
+msgid "Carpeta o fichero"
+msgstr "Folder or file"
+
+msgid "C:\\datos\\exportados (sus .csv, .tsv, .json y .jsonl)"
+msgstr "C:\\data\\exports (its .csv, .tsv, .json and .jsonl)"
+
+msgid "Carpeta con los CSV y JSON"
+msgstr "Folder with the CSV and JSON files"
+
+msgid "Ficheros: cada .csv, .tsv, .json o .jsonl de la carpeta es una tabla (si la ruta es un fichero, solo ese). Los cambios se escriben con «Guardar en ficheros»."
+msgstr "Files: each .csv, .tsv, .json or .jsonl in the folder is a table (if the path is a file, only that one). Changes are written with “Save to files”."
+
+msgid "a files connection reads a local folder: no SSH or HTTP tunnel"
+msgstr "a files connection reads a local folder: no SSH or HTTP tunnel"
+
+msgid "Folder or data file not found: {0}"
+msgstr "Folder or data file not found: {0}"
+
+msgid "Folder {0}: {1} CSV or JSON file(s)"
+msgstr "Folder {0}: {1} CSV or JSON file(s)"
+
+msgid "{0} is a folder: an empty .sqlite file will be created in it when the connection is saved"
+msgstr "{0} is a folder: an empty .sqlite file will be created in it when the connection is saved"
+
+msgid "File {0}: one table"
+msgstr "File {0}: one table"

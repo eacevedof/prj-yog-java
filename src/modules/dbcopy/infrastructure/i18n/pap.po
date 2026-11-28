@@ -1,0 +1,347 @@
+# multidbs - modulo dbcopy - papiamento (Curazao) (pap)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Copia objetos entre bases de datos y servidores (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite)."
+msgstr "Ta kopia obhetonan entre base di dato i server (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite)."
+
+msgid "Origen (conexión - BD)"
+msgstr "Orígen (konekshon - BD)"
+
+msgid "Objetos"
+msgstr "Obhetonan"
+
+msgid "Destino"
+msgstr "Destinashon"
+
+msgid "La copia puede ir a otra BD del mismo servidor o a cualquier conexión SQL guardada (directa, SSH o túnel HTTP). Si la BD destino no existe, se crea. Entre motores distintos solo se copian las tablas."
+msgstr "E kopia por bai na otro BD den e mesun server òf na kualke konekshon SQL warda (direkto, SSH òf tunel HTTP). Si e BD di destinashon no ta eksistí, e ta wòrdu kreá. Entre motor diferente ta kopia so e tabelnan."
+
+msgid "Conexión"
+msgstr "Konekshon"
+
+msgid "Base de datos"
+msgstr "Base di dato"
+
+msgid "nombre de la BD destino"
+msgstr "nòmber di e BD di destinashon"
+
+msgid "Estructura y datos"
+msgstr "Struktura i dato"
+
+msgid "Solo estructura"
+msgstr "Struktura so"
+
+msgid "Borrar en destino si existe (DROP IF EXISTS)"
+msgstr "Kita na destinashon si e eksistí (DROP IF EXISTS)"
+
+msgid "INSERT en bloque (varias filas por sentencia)"
+msgstr "INSERT na bloke (vários fila pa instrukshon)"
+
+msgid "Ignorar DEFINER"
+msgstr "Ignorá DEFINER"
+
+msgid "Copiar los triggers de las tablas marcadas"
+msgstr "Kopia e triggernan di e tabelnan marká"
+
+msgid "Ver resumen..."
+msgstr "Mira resumen..."
+
+msgid "Copiar"
+msgstr "Kopia"
+
+msgid "Cerrar"
+msgstr "Sera"
+
+msgid "Copiar BD a otro servidor/BD"
+msgstr "Kopia BD na otro server/BD"
+
+msgid "Copiar tabla a otro servidor/BD"
+msgstr "Kopia tabel na otro server/BD"
+
+msgid "Leyendo los objetos de {0}..."
+msgstr "Lesando e obhetonan di {0}..."
+
+msgid "Leyendo las BD del destino..."
+msgstr "Lesando e BD-nan di destinashon..."
+
+msgid "La BD {0} no existe en el destino: se creará."
+msgstr "E BD {0} no ta eksistí na destinashon: lo e wòrdu kreá."
+
+msgid "Parando en cuanto acabe la página en curso..."
+msgstr "Ta para apenas e página aktual kaba..."
+
+msgid "Copiando..."
+msgstr "Kopiando..."
+
+msgid "¿Copiar igualmente?"
+msgstr "Kopia tòg?"
+
+msgid "Parada."
+msgstr "Pará."
+
+msgid "Hecho."
+msgstr "Kla."
+
+msgid "{0} objetos copiados"
+msgstr "{0} obheto kopiá"
+
+msgid "{0} filas"
+msgstr "{0} fila"
+
+msgid "{0} con error"
+msgstr "{0} ku eror"
+
+msgid "en {0} s."
+msgstr "den {0} s."
+
+msgid "Copia parada antes de acabar."
+msgstr "Kopia a para promé ku e kaba."
+
+msgid "Resumen de la copia"
+msgstr "Resumen di e kopia"
+
+msgid "Parar"
+msgstr "Para"
+
+msgid "Tablas"
+msgstr "Tabelnan"
+
+msgid "Vistas"
+msgstr "Vistanan"
+
+msgid "Procedimientos"
+msgstr "Prosedimentunan"
+
+msgid "Funciones"
+msgstr "Funshonnan"
+
+msgid "Triggers"
+msgstr "Triggernan"
+
+msgid "Eventos"
+msgstr "Eventonan"
+
+msgid "tabla"
+msgstr "tabel"
+
+msgid "vista"
+msgstr "vista"
+
+msgid "procedimiento"
+msgstr "prosedimentu"
+
+msgid "función"
+msgstr "funshon"
+
+msgid "trigger"
+msgstr "trigger"
+
+msgid "evento"
+msgstr "evento"
+
+msgid "{0} is required"
+msgstr "{0} ta obligatorio"
+
+msgid "Nothing is selected to copy"
+msgstr "Nada no ta selektá pa kopia"
+
+msgid "Source and target are the same database on the same server: the copy would delete it"
+msgstr "Orígen i destinashon ta e mesun BD riba e mesun server: e kopia lo kit'é"
+
+msgid "Target \"{0}\" is a production connection: database {1} will be written"
+msgstr "Destinashon \"{0}\" ta un konekshon di produkshon: lo skirbi den BD {1}"
+
+msgid "the server gives no definition (missing privileges?): {0}"
+msgstr "e server no ta duna definishon (falta privilegio?): {0}"
+
+msgid "cancelled: the table was copied partially"
+msgstr "kanselá: e tabel a wòrdu kopiá parsialmente"
+
+msgid "Exportar a"
+msgstr "Eksportá na"
+
+msgid "Exportar como SQL"
+msgstr "Eksportá komo SQL"
+
+msgid "Fecha y hora delante del nombre del fichero"
+msgstr "Fecha i ora dilanti di e nòmber di fail"
+
+msgid "Incluir CREATE DATABASE"
+msgstr "Inkluí CREATE DATABASE"
+
+msgid "Incluir DROP de cada objeto"
+msgstr "Inkluí DROP di kada opheto"
+
+msgid "Incluir USE de la BD"
+msgstr "Inkluí USE di e BD"
+
+msgid "Incluir la versión del servidor en el fichero"
+msgstr "Inkluí e version di e server den e fail"
+
+msgid "Opciones avanzadas"
+msgstr "Opshonnan avansá"
+
+msgid "Opciones en el origen"
+msgstr "Opshonnan na orígen"
+
+msgid "Opciones que van al fichero"
+msgstr "Opshonnan ku ta bai den e fail"
+
+msgid "Solo datos"
+msgstr "Solamente dato"
+
+msgid "Transacción única (una foto coherente, sin bloquear)"
+msgstr "Un solo transakshon (un potrèt koherente, sin bloká)"
+
+msgid "Volcado SQL"
+msgstr "Dump SQL"
+
+msgid "Volcado SQL de la BD activa (exportar a .sql)"
+msgstr "Dump SQL di e BD aktivo (eksportá na .sql)"
+
+msgid "Volcado SQL (exportar a .sql)..."
+msgstr "Dump SQL (eksportá na .sql)..."
+
+msgid "Leyendo las BD..."
+msgstr "Ta lesa e BDnan..."
+
+msgid "Exportando..."
+msgstr "Ta eksportá..."
+
+msgid "Exportando {0} ({1}/{2})..."
+msgstr "Ta eksportá {0} ({1}/{2})..."
+
+msgid "Exportando {0}: {1} filas"
+msgstr "Ta eksportá {0}: {1} fila"
+
+msgid "{0} objetos"
+msgstr "{0} opheto"
+
+msgid "Resumen del volcado"
+msgstr "Resúmen di e dump"
+
+msgid "The SQL dump only works with MySQL/MariaDB: {0} is {1}"
+msgstr "E dump SQL ta traha solamente ku MySQL/MariaDB: {0} ta {1}"
+
+msgid "Nothing is selected to export"
+msgstr "No tin nada marká pa eksportá"
+
+msgid "Unknown dump mode {0}"
+msgstr "Modo di dump deskonosí: {0}"
+
+msgid "Cannot write {0}: {1}"
+msgstr "No por a skirbi {0}: {1}"
+
+msgid "Abrir la carpeta"
+msgstr "Habri e kaarchi"
+
+msgid "No existe la carpeta de {0}"
+msgstr "E kaarchi di {0} no ta eksistí"
+
+msgid "Renombrar BD"
+msgstr "Kambia nòmber di BD"
+
+msgid "Nombre nuevo"
+msgstr "Nòmber nobo"
+
+msgid "Copia de seguridad (.sql)"
+msgstr "Kopia di seguridat (.sql)"
+
+msgid "Borrar la BD original al terminar (solo si la nueva tiene los mismos objetos y filas)"
+msgstr "Eliminá e BD original ora e kaba (solamente si e nobo tin e mesun objetonan i filanan)"
+
+msgid "MySQL no puede renombrar una BD: se vuelca la original al .sql, se crea la nueva con el mismo juego de caracteres, se carga el volcado, se comprueba que tiene los mismos objetos y filas y, si cuadra, se borra la original. Si algo falla, la nueva se borra y la original no se toca. El .sql se queda como copia de seguridad."
+msgstr "MySQL no por kambia nòmber di un BD: e original ta wòrdu dump na e .sql, e nobo ta wòrdu kreá ku e mesun set di karakter, e dump ta wòrdu karg, ta wòrdu chèk ku e tin e mesun objetonan i filanan i, si e ta kuadra, e original ta wòrdu eliminá. Si algu faya, e nobo ta wòrdu eliminá i e original no ta wòrdu tocá. E .sql ta keda komo kopia di seguridat."
+
+msgid "Renombrar"
+msgstr "Kambia nòmber"
+
+msgid "Renombrar BD {0}"
+msgstr "Kambia nòmber di BD {0}"
+
+msgid "¿Renombrar {0} a {1}? Al terminar se borra {0}."
+msgstr "Kambia nòmber di {0} pa {1}? {0} ta wòrdu eliminá ora e kaba."
+
+msgid "¿Copiar {0} a {1}? {0} se queda como está."
+msgstr "Kopia {0} pa {1}? {0} ta keda manera e ta."
+
+msgid "Empezando..."
+msgstr "Ta kuminsá..."
+
+msgid "{0} renombrada a {1}"
+msgstr "Nòmber di {0} kambiá pa {1}"
+
+msgid "{0} copiada a {1} (la original sigue)"
+msgstr "{0} kopiá pa {1} (e original ta keda)"
+
+msgid "Copia de seguridad: {0}"
+msgstr "Kopia di seguridat: {0}"
+
+msgid "1/5 Volcando {0} al .sql..."
+msgstr "1/5 Ta dump {0} na e .sql..."
+
+msgid "2/5 Creando {0}..."
+msgstr "2/5 Ta kreá {0}..."
+
+msgid "3/5 Cargando el volcado en {0}..."
+msgstr "3/5 Ta karga e dump den {0}..."
+
+msgid "4/5 Comprobando objetos y filas..."
+msgstr "4/5 Ta chèk objetonan i filanan..."
+
+msgid "5/5 Borrando {0}..."
+msgstr "5/5 Ta eliminá {0}..."
+
+msgid "1/5 Volcando {0} ({1}/{2})..."
+msgstr "1/5 Ta dump {0} ({1}/{2})..."
+
+msgid "1/5 Volcando {0}: {1} filas"
+msgstr "1/5 Ta dump {0}: {1} fila"
+
+msgid "Invalid database name {0}: only letters, digits, _, $ and -, up to 64 characters"
+msgstr "Nòmber di BD no válido {0}: solamente lèter, número, _, $ i -, te 64 karakter"
+
+msgid "The new name is the same as the current one: {0}"
+msgstr "E nòmber nobo ta meskos ku e aktual: {0}"
+
+msgid "Database {0} already exists"
+msgstr "BD {0} ta eksistí kaba"
+
+msgid "{0} is a production connection: database {1} will be copied to {2}"
+msgstr "{0} ta un konekshon di produkshon: BD {1} lo wòrdu kopiá pa {2}"
+
+msgid "{0} is a production connection: database {1} will be copied to {2} and then DROPPED"
+msgstr "{0} ta un konekshon di produkshon: BD {1} lo wòrdu kopiá pa {2} i despues ELIMINÁ"
+
+msgid "The dump of the original database failed ({0} object(s) with errors): nothing was created"
+msgstr "E dump di e BD original a faya ({0} objeto(nan) ku fout): nada no a wòrdu kreá"
+
+msgid "Loading the dump into {0} failed and it was dropped: {1}"
+msgstr "Karga e dump den {0} a faya i e a wòrdu eliminá: {1}"
+
+msgid "{0} does not match the original after loading ({1}) and it was dropped: the original is untouched"
+msgstr "{0} no ta kuadra ku e original despues di karga ({1}) i e a wòrdu eliminá: e original no a wòrdu tocá"
+
+msgid "Duplicar BD"
+msgstr "Duplicá BD"
+
+msgid "Copying only works between SQL engines (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite): {0} is {1}"
+msgstr "Kopia ta funshoná so entre motor SQL (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite): {0} ta {1}"
+
+msgid "between different engines only tables are copied (views, routines, triggers and events are not translated)"
+msgstr "entre motor diferente ta kopia so e tabelnan (e vista, rutina, trigger i evento no ta wòrdu tradusí)"
+
+msgid "SQLite has a single database (main): {0} cannot be created"
+msgstr "SQLite tin un BD so (main): no por kreá {0}"
+
+msgid "value {0} is not valid for column {1} ({2})"
+msgstr "e balor {0} no ta bálido pa e kolom {1} ({2})"
+
+msgid "index {0} not created: {1}"
+msgstr "índise {0} no a wòrdu kreá: {1}"
+
+msgid "Entre motores distintos solo se copian las tablas (tipos traducidos, clave primaria, índices y datos)."
+msgstr "Entre motor diferente ta kopia so e tabelnan (tipo tradusí, yave primario, índise i dato)."
+
+msgid "Renombrando: espera a que acabe, no se puede parar a medias"
+msgstr "Ta kambiando nòmber: warda te ku e kaba, no por para e na mitar"

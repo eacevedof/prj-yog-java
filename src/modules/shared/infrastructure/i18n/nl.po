@@ -1,0 +1,11 @@
+# multidbs - modulo shared - neerlandes (nl)
+# clave = el texto tal cual en el codigo o el FXML
+
+msgid "Fields validation errors"
+msgstr "Validatiefouten in de velden"
+
+msgid "Unexpected error"
+msgstr "Onverwachte fout"
+
+msgid "Error Code: {0} - {1}"
+msgstr "Foutcode: {0} - {1}"

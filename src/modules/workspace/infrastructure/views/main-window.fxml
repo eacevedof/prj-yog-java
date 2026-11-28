@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import modules.shared.infrastructure.components.icons.AppIcon?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<!-- ventana principal: a la izquierda las conexiones guardadas en arbol (con los objetos de las abiertas); a la derecha una pestaña por conexion abierta -->
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" styleClass="main-window"
+            fx:controller="modules.workspace.infrastructure.controllers.MainWindowController">
+    <top>
+        <!-- menu a la izquierda; selector de idioma con banderas a la derecha -->
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT">
+            <MenuBar HBox.hgrow="ALWAYS">
+                <Menu text="%Archivo">
+                    <MenuItem text="%Restablecer espacio de trabajo…" onAction="#onResetWorkspace"><graphic><AppIcon name="refresh"/></graphic></MenuItem>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="%Salir" onAction="#onExit"><graphic><AppIcon name="exit"/></graphic></MenuItem>
+                </Menu>
+                <Menu text="%Ver">
+                    <CheckMenuItem fx:id="darkThemeMenuItem" text="%Tema oscuro" onAction="#onToggleDarkTheme"><graphic><AppIcon name="dark-theme"/></graphic></CheckMenuItem>
+                </Menu>
+            </MenuBar>
+            <MenuButton fx:id="languageMenuButton" styleClass="language-menu-button"/>
+        </HBox>
+    </top>
+    <center>
+        <SplitPane fx:id="mainSplitPane" dividerPositions="0.26">
+            <fx:include fx:id="connectionsPanel" source="/modules/connections/infrastructure/views/connections-panel.fxml"/>
+            <StackPane>
+                <TabPane fx:id="connectionTabPane" tabClosingPolicy="ALL_TABS" tabDragPolicy="REORDER" styleClass="connection-tabs"/>
+                <Label fx:id="noConnectionLabel" styleClass="workspace-placeholder"
+                       text="%Abre una conexión (doble clic o botón Abrir) para ver sus objetos y escribir SQL"/>
+            </StackPane>
+        </SplitPane>
+    </center>
+    <bottom>
+        <!-- pie: la version a la derecha, para saber que hay desplegado -->
+        <HBox styleClass="status-footer" alignment="CENTER_RIGHT">
+            <Label fx:id="versionLabel" styleClass="status-footer-label"/>
+        </HBox>
+    </bottom>
+</BorderPane>

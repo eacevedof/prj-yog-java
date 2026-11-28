@@ -1,0 +1,28 @@
+# motor "Ficheros": mensajes del dominio (msgid en ingles)
+
+msgid "{0} is required"
+msgstr "{0} is verplicht"
+
+msgid "Connection {0} not found"
+msgstr "Verbinding {0} niet gevonden"
+
+msgid "Connection {0} is not a files connection"
+msgstr "Verbinding {0} is geen bestandsverbinding"
+
+msgid "Folder or data file not found: {0}"
+msgstr "Map of gegevensbestand niet gevonden: {0}"
+
+msgid "{0} is not a list of objects (an array of objects or one object per line)"
+msgstr "{0} is geen lijst van objecten (een array van objecten of één object per regel)"
+
+msgid "{0} is not valid JSON: {1}"
+msgstr "{0} is geen geldige JSON: {1}"
+
+msgid "Could not read {0}: {1}"
+msgstr "Kon {0} niet lezen: {1}"
+
+msgid "{0} is not valid JSON at line {1}: {2}"
+msgstr "{0} is geen geldige JSON op regel {1}: {2}"
+
+msgid "{0} is not UTF-8 text (save it as UTF-8)"
+msgstr "{0} is geen UTF-8-tekst (sla het op als UTF-8)"

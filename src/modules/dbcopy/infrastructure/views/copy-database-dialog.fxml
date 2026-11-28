@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import modules.shared.infrastructure.components.icons.AppIcon?>
+
+<!-- feature 29: "Copy Database To Different Host/Database" de SQLyog. Izquierda, el origen con sus objetos marcables;
+     derecha, el destino y las opciones; abajo, el progreso y los botones -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefWidth="760" prefHeight="560" spacing="8"
+      styleClass="copy-dialog" fx:controller="modules.dbcopy.infrastructure.controllers.CopyDatabaseDialogController">
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <AppIcon name="copy"/>
+        <Label text="%Copia objetos entre bases de datos y servidores (MySQL/MariaDB, PostgreSQL, SQL Server, SQLite)."/>
+    </HBox>
+    <HBox spacing="12" VBox.vgrow="ALWAYS">
+        <VBox spacing="6" HBox.hgrow="ALWAYS" prefWidth="360">
+            <Label text="%Origen (conexión - BD)" styleClass="copy-section"/>
+            <Label fx:id="sourceNameLabel" wrapText="true" styleClass="copy-source-name"/>
+            <Label text="%Objetos"/>
+            <TreeView fx:id="objectsTreeView" showRoot="false" VBox.vgrow="ALWAYS"/>
+        </VBox>
+        <VBox spacing="6" prefWidth="360">
+            <Label text="%Destino" styleClass="copy-section"/>
+            <Label text="%La copia puede ir a otra BD del mismo servidor o a cualquier conexión SQL guardada (directa, SSH o túnel HTTP). Si la BD destino no existe, se crea. Entre motores distintos solo se copian las tablas."
+                   wrapText="true" styleClass="query-status"/>
+            <Label text="%Conexión"/>
+            <ComboBox fx:id="targetConnectionComboBox" maxWidth="Infinity"/>
+            <Label fx:id="engineHintLabel" text="%Entre motores distintos solo se copian las tablas (tipos traducidos, clave primaria, índices y datos)."
+                   wrapText="true" styleClass="query-status" visible="false" managed="false"/>
+            <Label text="%Base de datos"/>
+            <ComboBox fx:id="targetDatabaseComboBox" editable="true" maxWidth="Infinity" promptText="%nombre de la BD destino"/>
+            <Separator/>
+            <fx:define>
+                <ToggleGroup fx:id="copyModeToggleGroup"/>
+            </fx:define>
+            <RadioButton fx:id="structureAndDataRadio" text="%Estructura y datos" selected="true" toggleGroup="$copyModeToggleGroup"/>
+            <RadioButton fx:id="structureOnlyRadio" text="%Solo estructura" toggleGroup="$copyModeToggleGroup"/>
+            <Separator/>
+            <CheckBox fx:id="dropIfExistsCheckBox" text="%Borrar en destino si existe (DROP IF EXISTS)" selected="true"/>
+            <CheckBox fx:id="bulkInsertCheckBox" text="%INSERT en bloque (varias filas por sentencia)" selected="true"/>
+            <CheckBox fx:id="ignoreDefinerCheckBox" text="%Ignorar DEFINER"/>
+            <CheckBox fx:id="copyTriggersCheckBox" text="%Copiar los triggers de las tablas marcadas"/>
+        </VBox>
+    </HBox>
+    <ProgressBar fx:id="progressBar" maxWidth="Infinity" progress="0"/>
+    <Label fx:id="statusLabel" wrapText="true" styleClass="query-status"/>
+    <HBox styleClass="toolbar-buttons" alignment="CENTER_RIGHT">
+        <Button fx:id="summaryButton" text="%Ver resumen..." disable="true" onAction="#onShowSummary"/>
+        <Button fx:id="copyButton" text="%Copiar" defaultButton="true" onAction="#onCopy">
+            <graphic><AppIcon name="copy"/></graphic>
+        </Button>
+        <Button fx:id="closeButton" text="%Cerrar" cancelButton="true" onAction="#onClose"/>
+    </HBox>
+</VBox>
