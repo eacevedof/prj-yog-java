@@ -1,7 +1,6 @@
 package modules.workspace.infrastructure.controllers;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -388,7 +387,8 @@ public final class MainWindowController extends AbstractFxController {
             connectionTabRoot = fxmlLoader.load();
         }
         catch (IOException e) {
-            throw new UncheckedIOException(e);
+            showAndLogError(e);
+            return;
         }
 
         ConnectionViewController connectionTabController = fxmlLoader.getController();

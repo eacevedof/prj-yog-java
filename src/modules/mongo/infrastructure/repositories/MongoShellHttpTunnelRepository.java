@@ -87,8 +87,8 @@ public final class MongoShellHttpTunnelRepository extends AbstractMongoShellRepo
                 getResponse(new Document("insert", collection).append("documents", documents), databaseName);
                 yield getResultText(new Document("acknowledged", true).append("insertedIds", documents.stream().map(document -> document.get("_id")).toList()));
             }
-            case "updateOne" -> getUpdateText(collection, getDocument(arguments, 0), getDocument(arguments, 1), false, databaseName);
-            case "updateMany" -> getUpdateText(collection, getDocument(arguments, 0), getDocument(arguments, 1), true, databaseName);
+            case "updateOne" -> getUpdateText(collection, getDocument(arguments, 0), getOperatorsUpdate(getDocument(arguments, 1)), false, databaseName);
+            case "updateMany" -> getUpdateText(collection, getDocument(arguments, 0), getOperatorsUpdate(getDocument(arguments, 1)), true, databaseName);
             case "replaceOne" -> getUpdateText(collection, getDocument(arguments, 0), getDocument(arguments, 1), false, databaseName);
             case "deleteOne" -> getDeleteText(collection, getDocument(arguments, 0), 1, databaseName);
             case "deleteMany" -> getDeleteText(collection, getDocument(arguments, 0), 0, databaseName);
@@ -149,6 +149,20 @@ public final class MongoShellHttpTunnelRepository extends AbstractMongoShellRepo
         List<Document> upserted = response.getList("upserted", Document.class, List.of());
         if (!upserted.isEmpty()) result.append("upsertedId", upserted.getFirst().get("_id"));
         return getResultText(result);
+    }
+
+    /**
+     * updateOne/updateMany solo con operadores ($set, $inc...), como el driver (MongoShellRepository): sin esto, el
+     * servidor tomaria un documento sin $ como reemplazo. Mismos mensajes que el UpdateFieldNameValidator del driver.
+     */
+    private Document getOperatorsUpdate(Document update) {
+        if (update.isEmpty()) throw new IllegalArgumentException("Invalid BSON document for an update. The document may not be empty.");
+        for (String fieldName : update.keySet()) {
+            if (!fieldName.startsWith("$")) {
+                throw new IllegalArgumentException(String.format("All update operators must start with '$', but '%s' does not", fieldName));
+            }
+        }
+        return update;
     }
 
     /**

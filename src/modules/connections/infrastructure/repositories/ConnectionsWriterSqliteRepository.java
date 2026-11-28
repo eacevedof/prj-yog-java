@@ -108,7 +108,23 @@ public final class ConnectionsWriterSqliteRepository extends AbstractSqliteRepos
         );
     }
 
-    public int updateUserPasswordById(ConnectionEntity connectionEntity) {
+    /**
+     * Editar una conexion: los campos y los secretos que se tocaron en el dialogo, en una sola transaccion (si falla un
+     * UPDATE no queda la conexion a medias). Un secreto que no se toco no se reescribe: uno guardado que no se pudo
+     * descifrar llega vacio y debe seguir cifrado como estaba.
+     */
+    public void updateConnectionAndChangedSecretsById(
+        ConnectionEntity connectionEntity, boolean isPasswordChanged, boolean isSshSecretsChanged, boolean isHttpUrlChanged
+    ) {
+        executeInTransaction(() -> {
+            updateConnectionById(connectionEntity);
+            if (isPasswordChanged) updateUserPasswordById(connectionEntity);
+            if (isSshSecretsChanged) updateSshSecretsById(connectionEntity);
+            if (isHttpUrlChanged) updateHttpUrlById(connectionEntity);
+        });
+    }
+
+    private int updateUserPasswordById(ConnectionEntity connectionEntity) {
         String sql = """
             -- updateUserPasswordById
             UPDATE `app_connections`
@@ -120,7 +136,7 @@ public final class ConnectionsWriterSqliteRepository extends AbstractSqliteRepos
         return execute(sql, getNullIfEmpty(secretCipherComponent.encrypt(connectionEntity.getUserPassword())), connectionEntity.getId());
     }
 
-    public int updateSshSecretsById(ConnectionEntity connectionEntity) {
+    private int updateSshSecretsById(ConnectionEntity connectionEntity) {
         String sql = """
             -- updateSshSecretsById
             UPDATE `app_connections`
@@ -137,7 +153,7 @@ public final class ConnectionsWriterSqliteRepository extends AbstractSqliteRepos
         );
     }
 
-    public int updateHttpUrlById(ConnectionEntity connectionEntity) {
+    private int updateHttpUrlById(ConnectionEntity connectionEntity) {
         String sql = """
             -- updateHttpUrlById
             UPDATE `app_connections`

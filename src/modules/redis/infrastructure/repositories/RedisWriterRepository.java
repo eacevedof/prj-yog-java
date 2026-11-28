@@ -72,21 +72,11 @@ public final class RedisWriterRepository extends AbstractRedisWriterRepository {
     }
 
     /**
-     * La BD de la sesion (SELECT n en la consola la cambia). Se pregunta al servidor (CLIENT INFO, Redis 6.2+): Jedis no
-     * cuenta la BD con la que se abrio la conexion. Si el servidor no lo sabe decir, lo que diga Jedis.
+     * La BD de la sesion, sin ir al servidor: SELECT n en la consola va por jedis.select() (executeCommand) y la BD con
+     * la que se abrio la conexion tambien (RedisClientComponent.open), asi que Jedis la sabe.
      */
     @Override
     public long getCurrentDatabase() {
-        try {
-            Object clientInfo = jedis.sendCommand(() -> SafeEncoder.encode("CLIENT"), "INFO");
-            String info = clientInfo instanceof byte[] bytes ? SafeEncoder.encode(bytes) : String.valueOf(clientInfo);
-            for (String field : info.trim().split(" ")) {
-                if (field.startsWith("db=")) return Long.parseLong(field.substring(3));
-            }
-        }
-        catch (RuntimeException e) {
-            // Redis antiguo o sin permiso para CLIENT: se usa lo que sabe Jedis
-        }
         return jedis.getDB();
     }
 }

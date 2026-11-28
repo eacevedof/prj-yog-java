@@ -115,6 +115,9 @@ public final class RenameTableService {
         if (renameTableDto.getSessionKey().isEmpty()) {
             throw ExplorerException.badRequestCustom(__(ExplorerMessageEnum.FIELD_IS_REQUIRED_X, "sessionKey"));
         }
+        if (renameTableDto.getDatabaseName().isEmpty()) {
+            throw ExplorerException.badRequestCustom(__(ExplorerMessageEnum.FIELD_IS_REQUIRED_X, "databaseName"));
+        }
         if (renameTableDto.getTableName().isEmpty()) {
             throw ExplorerException.badRequestCustom(__(ExplorerMessageEnum.FIELD_IS_REQUIRED_X, "tableName"));
         }

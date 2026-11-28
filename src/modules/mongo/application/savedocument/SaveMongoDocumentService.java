@@ -108,5 +108,8 @@ public final class SaveMongoDocumentService {
         if (saveMongoDocumentDto.getDatabaseName().isEmpty() || saveMongoDocumentDto.getCollectionName().isEmpty()) {
             throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.FIELD_IS_REQUIRED_X, "databaseName, collectionName"));
         }
+        if (saveMongoDocumentDto.isNew() && saveMongoDocumentDto.isDelete()) {
+            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.NEW_AND_DELETE_TOGETHER));
+        }
     }
 }

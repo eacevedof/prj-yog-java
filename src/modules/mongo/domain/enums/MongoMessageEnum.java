@@ -7,6 +7,7 @@ public final class MongoMessageEnum {
     public static final String COULD_NOT_SAVE_X_X = "Could not save in {0}: {1}";
     public static final String INVALID_JSON_X_X = "Invalid JSON in {0}: {1}";
     public static final String DOCUMENT_WITHOUT_ID = "The document has no _id: use New to insert it";
+    public static final String NEW_AND_DELETE_TOGETHER = "A document cannot be inserted and deleted at once (isNew and isDelete)";
     public static final String DOCUMENT_X_NOT_FOUND = "Document {0} not found (deleted or its _id changed)";
     public static final String NOTHING_TO_EXECUTE = "Nothing to execute";
     public static final String UNKNOWN_COMMAND_X = "Unknown command: {0}";

@@ -258,7 +258,8 @@ public final class ConnectionDialogController extends AbstractFxController {
             if (!isHttpSupported) httpEnabledCheckBox.setSelected(false);
             httpEnabledCheckBox.setDisable(!isHttpSupported);
             userPasswordField.setDisable(isFiles);
-            userPasswordField.setPromptText(isSqlite ? __("(solo por el túnel HTTP)") : userPasswordField.getPromptText().equals(__("(solo por el túnel HTTP)")) ? "" : userPasswordField.getPromptText());
+            // en edicion, la password guardada sigue «(sin cambios)» aunque se pase por SQLite y se vuelva
+            userPasswordField.setPromptText(isSqlite ? __("(solo por el túnel HTTP)") : connectionUuid.isEmpty() ? "" : __("(sin cambios)"));
             // SQLite no tiene servidor: ni host, ni puerto, ni usuario, ni SSH
             for (Node serverField : List.of(hostField, portField, userNameField)) serverField.setDisable(isSqlite);
             sqliteFileButton.setVisible(isSqlite);

@@ -123,6 +123,9 @@ msgstr "JSON no válido den {0}: {1}"
 msgid "The document has no _id: use New to insert it"
 msgstr "E dokumento no tin _id: usa Inserta komo nobo"
 
+msgid "A document cannot be inserted and deleted at once (isNew and isDelete)"
+msgstr "Un dokumento no por wòrdu insertá i kitá na mes momento (isNew i isDelete)"
+
 msgid "Document {0} not found (deleted or its _id changed)"
 msgstr "No a haña dokumento {0} (a borá e òf su _id a kambia)"
 

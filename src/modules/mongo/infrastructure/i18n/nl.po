@@ -123,6 +123,9 @@ msgstr "Ongeldige JSON in {0}: {1}"
 msgid "The document has no _id: use New to insert it"
 msgstr "Het document heeft geen _id: gebruik Als nieuw invoegen"
 
+msgid "A document cannot be inserted and deleted at once (isNew and isDelete)"
+msgstr "Een document kan niet tegelijk worden ingevoegd en verwijderd (isNew en isDelete)"
+
 msgid "Document {0} not found (deleted or its _id changed)"
 msgstr "Document {0} niet gevonden (verwijderd of _id gewijzigd)"
 

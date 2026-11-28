@@ -121,6 +121,9 @@ public final class DuplicateTableService {
         if (duplicateTableDto.getSessionKey().isEmpty()) {
             throw ExplorerException.badRequestCustom(__(ExplorerMessageEnum.FIELD_IS_REQUIRED_X, "sessionKey"));
         }
+        if (duplicateTableDto.getDatabaseName().isEmpty()) {
+            throw ExplorerException.badRequestCustom(__(ExplorerMessageEnum.FIELD_IS_REQUIRED_X, "databaseName"));
+        }
         if (duplicateTableDto.getTableName().isEmpty()) {
             throw ExplorerException.badRequestCustom(__(ExplorerMessageEnum.FIELD_IS_REQUIRED_X, "tableName"));
         }

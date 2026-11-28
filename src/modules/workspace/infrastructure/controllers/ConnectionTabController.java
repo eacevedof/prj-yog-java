@@ -1,7 +1,6 @@
 package modules.workspace.infrastructure.controllers;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -407,7 +406,8 @@ public final class ConnectionTabController extends AbstractFxController implemen
             tableDataRoot = fxmlLoader.load();
         }
         catch (IOException e) {
-            throw new UncheckedIOException(e);
+            showAndLogError(e);
+            return;
         }
         queryTabCounter++;
         TableDataTabController tableDataTabController = fxmlLoader.getController();
@@ -531,7 +531,8 @@ public final class ConnectionTabController extends AbstractFxController implemen
     }
 
     /**
-     * Una pestaña de query; title vacio = "Query N". Las recuperadas llegan con su titulo y su SQL.
+     * Una pestaña de query; title vacio = "Query N". Las recuperadas llegan con su titulo y su SQL. null si su vista no
+     * carga (ya se ha ensenado el error y queda en errors.log).
      */
     private QueryTabController addQueryTab(String title, String sql) {
         FXMLLoader fxmlLoader = new FXMLLoader(ConnectionTabController.class.getResource(PATH_QUERY_TAB), TranslatorResourceBundle.getInstance());
@@ -540,7 +541,8 @@ public final class ConnectionTabController extends AbstractFxController implemen
             queryTabRoot = fxmlLoader.load();
         }
         catch (IOException e) {
-            throw new UncheckedIOException(e);
+            showAndLogError(e);
+            return null;
         }
 
         queryTabCounter++;
@@ -700,7 +702,8 @@ public final class ConnectionTabController extends AbstractFxController implemen
         Tab selectedTab = null;
         for (Map<String, Object> savedQueryTab : savedQueryTabs.getQueryTabs()) {
             Object sqlText = savedQueryTab.get(WorkspaceKeyEnum.SQL_TEXT);
-            addQueryTab(getTrimmedString(savedQueryTab.get(WorkspaceKeyEnum.TAB_TITLE)), sqlText == null ? "" : String.valueOf(sqlText));
+            // si la vista no carga, un solo dialogo de error y no uno por pestaña
+            if (addQueryTab(getTrimmedString(savedQueryTab.get(WorkspaceKeyEnum.TAB_TITLE)), sqlText == null ? "" : String.valueOf(sqlText)) == null) break;
             if (getBool(savedQueryTab.get(WorkspaceKeyEnum.IS_SELECTED))) selectedTab = queryTabPane.getTabs().getLast();
         }
         if (selectedTab != null) queryTabPane.getSelectionModel().select(selectedTab);
@@ -732,7 +735,8 @@ public final class ConnectionTabController extends AbstractFxController implemen
      * Desde el arbol: el SQL en una pestaña nueva, para no pisar lo que se esta escribiendo.
      */
     private void executeInNewQueryTab(String sql) {
-        addQueryTab().setSqlAndExecute(sql);
+        QueryTabController queryTabController = addQueryTab();
+        if (queryTabController != null) queryTabController.setSqlAndExecute(sql);
     }
 
     private QueryTabController getSelectedQueryTabController() {

@@ -215,7 +215,7 @@ public final class ExportSqlDumpService {
      * Lo marcado en orden de creacion; con "solo datos", solo las tablas. Las vistas, despues de las vistas de las que
      * dependen (su CREATE las nombra), para que el fichero se cargue de corrido.
      */
-    private List<DumpItem> getDumpItems() throws SQLException {
+    private List<DumpItem> getDumpItems() {
         boolean isDataOnly = SqlDumpModeEnum.DATA_ONLY.equals(exportSqlDumpDto.getDumpMode());
         List<DumpItem> dumpItems = new ArrayList<>();
         for (String objectType : DbCopyObjectTypeEnum.VALUES) {
@@ -228,11 +228,9 @@ public final class ExportSqlDumpService {
         return dumpItems;
     }
 
-    private List<String> getViewsInDependencyOrder(List<String> viewNames) throws SQLException {
+    private List<String> getViewsInDependencyOrder(List<String> viewNames) {
         Map<String, String> createSqlsByView = new LinkedHashMap<>();
-        for (String viewName : viewNames) {
-            createSqlsByView.put(viewName, dbCopyReaderMysqlRepository.getCreateSql(DbCopyObjectTypeEnum.VIEW, exportSqlDumpDto.getDatabaseName(), viewName));
-        }
+        for (String viewName : viewNames) createSqlsByView.put(viewName, getViewCreateSqlForOrder(viewName));
         List<String> orderedViews = new ArrayList<>();
         Set<String> pendingViews = new HashSet<>(viewNames);
         while (!pendingViews.isEmpty()) {
@@ -253,6 +251,19 @@ public final class ExportSqlDumpService {
             }
         }
         return orderedViews;
+    }
+
+    /**
+     * El CREATE de la vista solo para ordenarla. Si el servidor no lo da (sin permisos, error 1142), "" (sin
+     * dependencias): el fallo no tira el volcado entero, sino que lo vuelve a dar y lo apunta dumpObject en esa vista.
+     */
+    private String getViewCreateSqlForOrder(String viewName) {
+        try {
+            return dbCopyReaderMysqlRepository.getCreateSql(DbCopyObjectTypeEnum.VIEW, exportSqlDumpDto.getDatabaseName(), viewName);
+        }
+        catch (SQLException e) {
+            return "";
+        }
     }
 
     private DumpOutcome dumpObject(DumpItem dumpItem) {

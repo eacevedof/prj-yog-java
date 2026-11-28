@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 
+import core.boot.ErrorLogComponent;
 import static core.config.Global.__;
 
 import modules.shared.domain.enums.SharedMessageEnum;
@@ -32,6 +33,15 @@ public abstract class AbstractFxController {
 
     protected void showError(Throwable throwable) {
         showErrorMessage(getErrorMessage(throwable));
+    }
+
+    /**
+     * Un fallo que no deberia pasar (una vista FXML que no carga): a errors.log con su traza y el dialogo de error, en
+     * vez de que la app "no haga nada".
+     */
+    protected void showAndLogError(Throwable throwable) {
+        ErrorLogComponent.getInstance().log(Thread.currentThread().getName(), throwable);
+        showError(throwable);
     }
 
     protected void showErrorMessage(String errorMessage) {

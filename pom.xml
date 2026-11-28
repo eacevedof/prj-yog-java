@@ -11,7 +11,7 @@
 
     <groupId>es.eduardoaf</groupId>
     <artifactId>javayog</artifactId>
-    <version>0.72.16</version>
+    <version>0.72.17</version>
     <packaging>jar</packaging>
     <description>JavaYog: cliente SQL de escritorio (MySQL) en JavaFX, DDD sin framework</description>
 

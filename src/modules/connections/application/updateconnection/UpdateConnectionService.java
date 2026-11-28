@@ -73,8 +73,7 @@ public final class UpdateConnectionService {
         failIfNameExists();
         loadSqliteFileIfFolder();
 
-        connectionsWriterSqliteRepository.updateConnectionById(connectionEntity);
-        updateChangedSecrets(updateConnectionDto);
+        updateConnectionAndChangedSecrets(updateConnectionDto);
         ConnectionEntity updatedConnectionEntity = connectionsReaderSqliteRepository.getConnectionById(connectionEntity.getId());
         return UpdateConnectionResultDto.fromPrimitives(Primitives.of(
             "connection", updatedConnectionEntity.toPrimitives()
@@ -82,14 +81,18 @@ public final class UpdateConnectionService {
     }
 
     /**
-     * Solo los secretos que se tocaron en el dialogo: uno guardado que no se pudo descifrar (BD de otro PC) llega vacio y,
-     * si no se reescribe, se queda cifrado como estaba en vez de perderse al editar otro campo.
+     * Los campos y solo los secretos que se tocaron en el dialogo, en una transaccion: uno guardado que no se pudo
+     * descifrar (BD de otro PC) llega vacio y, si no se reescribe, se queda cifrado como estaba en vez de perderse al
+     * editar otro campo.
      */
-    private void updateChangedSecrets(UpdateConnectionDto updateConnectionDto) {
-        if (updateConnectionDto.isPasswordChanged()) connectionsWriterSqliteRepository.updateUserPasswordById(connectionEntity);
+    private void updateConnectionAndChangedSecrets(UpdateConnectionDto updateConnectionDto) {
         Map<String, Object> tunnelForm = updateConnectionDto.getTunnelForm();
-        if (getBool(tunnelForm.get("isSshSecretsChanged"))) connectionsWriterSqliteRepository.updateSshSecretsById(connectionEntity);
-        if (getBool(tunnelForm.get("isHttpUrlChanged"))) connectionsWriterSqliteRepository.updateHttpUrlById(connectionEntity);
+        connectionsWriterSqliteRepository.updateConnectionAndChangedSecretsById(
+            connectionEntity,
+            updateConnectionDto.isPasswordChanged(),
+            getBool(tunnelForm.get("isSshSecretsChanged")),
+            getBool(tunnelForm.get("isHttpUrlChanged"))
+        );
     }
 
     /**

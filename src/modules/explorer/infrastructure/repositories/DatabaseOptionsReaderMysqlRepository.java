@@ -20,6 +20,11 @@ import modules.explorer.domain.entities.DatabaseOptionsEntity;
  */
 public final class DatabaseOptionsReaderMysqlRepository extends AbstractJdbcRepository {
 
+    // "Unknown table 'SCHEMATA_EXTENSIONS' in information_schema" (MariaDB, MySQL < 8.0.22); 1146 por si el servidor
+    // la da como tabla que no existe
+    private static final int ER_UNKNOWN_TABLE = 1109;
+    private static final int ER_NO_SUCH_TABLE = 1146;
+
     private DatabaseOptionsReaderMysqlRepository(Connection pdo) {
         super(pdo);
     }
@@ -108,8 +113,9 @@ public final class DatabaseOptionsReaderMysqlRepository extends AbstractJdbcRepo
 
     /**
      * "READ ONLY=1" o vacio en MySQL 8.0.22+; null si el servidor no tiene SCHEMATA_EXTENSIONS (MariaDB, MySQL viejo).
+     * Cualquier otro fallo (permisos, tunel caido) sube: no es que la opcion no exista.
      */
-    private String getReadOnlyOptions(String databaseName) {
+    private String getReadOnlyOptions(String databaseName) throws SQLException {
         try {
             List<Map<String, Object>> rows = query("""
                 -- getReadOnlyOptions
@@ -121,7 +127,8 @@ public final class DatabaseOptionsReaderMysqlRepository extends AbstractJdbcRepo
             return rows.isEmpty() ? "" : getText(rows.getFirst().get("schema_options"));
         }
         catch (SQLException e) {
-            return null;
+            if (e.getErrorCode() == ER_UNKNOWN_TABLE || e.getErrorCode() == ER_NO_SUCH_TABLE) return null;
+            throw e;
         }
     }
 

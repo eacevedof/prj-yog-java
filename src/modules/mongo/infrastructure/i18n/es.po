@@ -16,6 +16,9 @@ msgstr "JSON no válido en {0}: {1}"
 msgid "The document has no _id: use New to insert it"
 msgstr "El documento no tiene _id: usa Insertar como nuevo"
 
+msgid "A document cannot be inserted and deleted at once (isNew and isDelete)"
+msgstr "Un documento no se puede insertar y borrar a la vez (isNew e isDelete)"
+
 msgid "Document {0} not found (deleted or its _id changed)"
 msgstr "No se encuentra el documento {0} (se borró o cambió su _id)"
 

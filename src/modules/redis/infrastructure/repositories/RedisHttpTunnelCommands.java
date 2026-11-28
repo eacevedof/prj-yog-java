@@ -132,7 +132,7 @@ final class RedisHttpTunnelCommands {
         List<List<byte[]>> rows = result.rows();
         return switch (replyType) {
             case TYPE_NIL -> null;
-            case TYPE_INTEGER -> rows.isEmpty() ? 0L : Long.parseLong(HttpTunnelResult.getText(rows.getFirst().getFirst()).trim());
+            case TYPE_INTEGER -> rows.isEmpty() || rows.getFirst().isEmpty() ? 0L : getInteger(rows.getFirst().getFirst());
             case TYPE_ARRAY -> {
                 List<Object> items = new ArrayList<>();
                 for (List<byte[]> row : rows) items.add(row.isEmpty() ? null : row.getFirst());
@@ -140,6 +140,20 @@ final class RedisHttpTunnelCommands {
             }
             default -> rows.isEmpty() || rows.getFirst().isEmpty() ? null : rows.getFirst().getFirst();
         };
+    }
+
+    /**
+     * Un integer que no es un numero es una respuesta rota del tunel: como un fallo de protocolo de Jedis
+     * (JedisConnectionException), no un NumberFormatException que se salte el mapeo de errores de los servicios.
+     */
+    private long getInteger(byte[] value) {
+        String text = value == null ? "" : HttpTunnelResult.getText(value).trim();
+        try {
+            return Long.parseLong(text);
+        }
+        catch (NumberFormatException e) {
+            throw new JedisConnectionException("tunnel: unexpected integer reply: " + text, e);
+        }
     }
 
     private List<byte[]> getArguments(String... arguments) {

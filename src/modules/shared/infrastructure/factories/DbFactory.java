@@ -40,18 +40,27 @@ public final class DbFactory {
     }
 
     /**
-     * Cierra las conexiones abiertas (al salir de la app y en los tests, antes de borrar el fichero de su BD).
+     * Cierra las conexiones abiertas (al salir de la app y en los tests, antes de borrar el fichero de su BD). Si un
+     * close() falla se intentan las demas y el mapa se vacia igual (finally): getSqlitePdo() nunca devuelve una
+     * conexion ya cerrada. El primer fallo sube despues.
+     * @throws IllegalStateException
      */
     public void closeAll() {
-        for (Connection sqliteConnection : SQLITE_CONNECTIONS_BY_PATH.values()) {
-            try {
-                sqliteConnection.close();
-            }
-            catch (SQLException e) {
-                throw new IllegalStateException(e.getMessage(), e);
+        SQLException firstException = null;
+        try {
+            for (Connection sqliteConnection : SQLITE_CONNECTIONS_BY_PATH.values()) {
+                try {
+                    sqliteConnection.close();
+                }
+                catch (SQLException e) {
+                    if (firstException == null) firstException = e;
+                }
             }
         }
-        SQLITE_CONNECTIONS_BY_PATH.clear();
+        finally {
+            SQLITE_CONNECTIONS_BY_PATH.clear();
+        }
+        if (firstException != null) throw new IllegalStateException(firstException.getMessage(), firstException);
     }
 
     private Connection getNewSqliteConnection(String pathSqlite) {

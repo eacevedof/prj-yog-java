@@ -31,17 +31,20 @@ public final class RedisClientComponent {
      * @throws redis.clients.jedis.exceptions.JedisException si no conecta o no autentica
      */
     public Jedis open(ConnectionEntity connectionEntity, String host, int port, int socketTimeoutMs) {
+        int databaseIndex = getDatabaseIndex(connectionEntity);
         DefaultJedisClientConfig.Builder configBuilder = DefaultJedisClientConfig.builder()
             .connectionTimeoutMillis(CONNECT_TIMEOUT_MS)
             .socketTimeoutMillis(socketTimeoutMs)
             .clientName(CLIENT_NAME)
-            .database(getDatabaseIndex(connectionEntity));
+            .database(databaseIndex);
         if (!connectionEntity.getUserName().isEmpty()) configBuilder.user(connectionEntity.getUserName());
         if (!connectionEntity.getUserPassword().isEmpty()) configBuilder.password(connectionEntity.getUserPassword());
         JedisClientConfig jedisClientConfig = configBuilder.build();
         Jedis jedis = new Jedis(new HostAndPort(host, port), jedisClientConfig);
         // Jedis conecta perezosamente: el ping fuerza la conexion y la autenticacion aqui
         jedis.ping();
+        // la BD de la config la selecciona la conexion, pero Jedis.getDB() se queda en 0: con select() la sabe
+        if (databaseIndex != 0) jedis.select(databaseIndex);
         return jedis;
     }
 

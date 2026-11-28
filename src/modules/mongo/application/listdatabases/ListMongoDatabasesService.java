@@ -1,6 +1,8 @@
 package modules.mongo.application.listdatabases;
 
 import com.mongodb.MongoException;
+import com.mongodb.MongoSocketException;
+import com.mongodb.MongoTimeoutException;
 
 import modules.shared.application.Primitives;
 
@@ -43,8 +45,13 @@ public final class ListMongoDatabasesService {
                 ).getDatabaseNames(defaultDatabase)
             ));
         }
-        catch (MongoException e) {
+        // red o tiempo agotado: el servidor no esta (503); un error del servidor (sin permisos, Unauthorized 13) es de la
+        // peticion (400), como en el resto del modulo
+        catch (MongoSocketException | MongoTimeoutException e) {
             throw MongoModuleException.serviceUnavailableCustom(__(MongoMessageEnum.COULD_NOT_READ_X_X, "databases", e.getMessage()));
+        }
+        catch (MongoException e) {
+            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.COULD_NOT_READ_X_X, "databases", e.getMessage()));
         }
     }
 }

@@ -165,11 +165,20 @@ public final class SaveFilesFolderService {
         for (String columnName : dataColumnNames) columnKinds.add(kindsByLowerName.getOrDefault(columnName.toLowerCase(Locale.ROOT), FilesColumnKindEnum.STRING));
         return new FileTableEntity(
             getTrimmedString(savedTable.get(FilesKeyEnum.FILE_FORMAT)),
-            getTrimmedString(savedTable.get(FilesKeyEnum.CSV_DELIMITER)).isEmpty() ? NEW_FILE_DELIMITER : String.valueOf(savedTable.get(FilesKeyEnum.CSV_DELIMITER)),
+            getSavedDelimiter(savedTable),
             String.valueOf(savedTable.get(FilesKeyEnum.LINE_SEPARATOR)),
             getBool(savedTable.get(FilesKeyEnum.HAS_BOM)),
             dataColumnNames, columnKinds, fileTableStateBuilder.getList(savedTable.get(FilesKeyEnum.EXPLICIT_NULL_COLUMNS)), dataRows
         );
+    }
+
+    /**
+     * El separador tal cual se guardo, sin trim: es un dato donde el blanco importa (el de un TSV es "\t"). Sin
+     * separador guardado (JSON), el de los ficheros nuevos.
+     */
+    private String getSavedDelimiter(Map<String, Object> savedTable) {
+        Object csvDelimiter = savedTable.get(FilesKeyEnum.CSV_DELIMITER);
+        return csvDelimiter instanceof String delimiter && !delimiter.isEmpty() ? delimiter : NEW_FILE_DELIMITER;
     }
 
     /**

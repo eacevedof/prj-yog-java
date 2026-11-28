@@ -153,6 +153,19 @@ final class FilesIntegrationTest extends AbstractTestCase {
         assertEquals("Bea", getValue("SELECT name FROM clients WHERE id = 2"));
     }
 
+    @Test
+    @Order(5)
+    void testSavedTsvKeepsItsTabDelimiter() throws SQLException, IOException {
+        write("scores.tsv", "id\tplayer\tpoints\n1\tAna\t10\n2\tBob\t7\n");
+        sync(false);
+        execute("UPDATE scores SET points = 12 WHERE id = 2");
+
+        SaveFilesFolderResultDto save = save();
+
+        assertTrue(save.getSavedFileNames().contains("scores.tsv"));
+        assertEquals("id\tplayer\tpoints\n1\tAna\t10\n2\tBob\t12\n", read("scores.tsv"));
+    }
+
     private static void write(String fileName, String text) throws IOException {
         Files.writeString(folder.resolve(fileName), text, StandardCharsets.UTF_8);
     }
