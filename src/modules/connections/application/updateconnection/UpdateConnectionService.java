@@ -47,6 +47,8 @@ public final class UpdateConnectionService {
      * @throws ConnectionsException
      */
     public UpdateConnectionResultDto invoke(UpdateConnectionDto updateConnectionDto) {
+        failIfWrongInput(updateConnectionDto);
+
         ConnectionEntity savedConnectionEntity = connectionsReaderSqliteRepository.getConnectionByUuid(updateConnectionDto.getConnectionUuid());
         if (savedConnectionEntity == null) {
             throw ConnectionsException.notFoundCustom(__(ConnectionsMessageEnum.CONNECTION_X_NOT_FOUND, updateConnectionDto.getConnectionUuid()));
@@ -130,6 +132,15 @@ public final class UpdateConnectionService {
         String connectionName = connectionEntity.getConnectionName();
         if (connectionsReaderSqliteRepository.doesConnectionNameExist(connectionName, connectionEntity.getConnectionUuid())) {
             throw ConnectionsException.conflictCustom(__(ConnectionsMessageEnum.CONNECTION_NAME_X_ALREADY_EXISTS, connectionName));
+        }
+    }
+
+    /**
+     * @throws ConnectionsException
+     */
+    private void failIfWrongInput(UpdateConnectionDto updateConnectionDto) {
+        if (updateConnectionDto.getConnectionUuid().isEmpty()) {
+            throw ConnectionsException.badRequestCustom(__(ConnectionsMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid"));
         }
     }
 }

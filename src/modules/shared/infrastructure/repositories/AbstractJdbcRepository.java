@@ -17,7 +17,8 @@ import modules.shared.infrastructure.components.sqltrace.SqlTraceComponent;
 
 /**
  * La BD destino (MySQL, PostgreSQL o SQLite de una conexion guardada) sobre una sesion ya abierta. A diferencia de la BD local, aqui un
- * fallo es normal (permisos, BD borrada, red): sube como SQLException para que el servicio lo traduzca a su mensaje.
+ * fallo es normal (permisos, BD borrada, red): sube como SQLException, sin traducir, hasta el controller. Solo
+ * executeInTransaction la captura, para el ROLLBACK, y la relanza.
  */
 public abstract class AbstractJdbcRepository {
 

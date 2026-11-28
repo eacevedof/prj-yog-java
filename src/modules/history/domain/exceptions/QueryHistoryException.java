@@ -7,7 +7,7 @@ public final class QueryHistoryException extends RuntimeException implements Int
 
     private final int code;
 
-    public QueryHistoryException(String message, int code) {
+    private QueryHistoryException(String message, int code) {
         super(message);
         this.code = code;
     }

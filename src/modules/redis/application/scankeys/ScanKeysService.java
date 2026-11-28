@@ -1,7 +1,12 @@
 package modules.redis.application.scankeys;
 
+import java.util.Map;
+
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
+
+import modules.shared.application.Primitives;
+import static modules.shared.application.Primitives.getTrimmedString;
 
 import static core.config.Global.__;
 
@@ -32,9 +37,10 @@ public final class ScanKeysService {
             AbstractRedisReaderRepository redisReaderRepository = RedisRepositoryFactory.getInstance().getReaderRepository(
                 scanKeysDto.getConnectionUuid(), scanKeysDto.getSessionKey()
             );
-            return ScanKeysResultDto.fromPrimitives(
-                redisReaderRepository.scanKeys(scanKeysDto.getPattern(), scanKeysDto.getCursor(), scanKeysDto.getCount())
-            );
+            Map<String, Object> scannedKeys = redisReaderRepository.scanKeys(scanKeysDto.getPattern(), scanKeysDto.getCursor(), scanKeysDto.getCount());
+            return ScanKeysResultDto.fromPrimitives(Primitives.merge(scannedKeys, Primitives.of(
+                "isComplete", ScanKeysDto.FIRST_CURSOR.equals(getTrimmedString(scannedKeys.get("nextCursor")))
+            )));
         }
         // el servidor contesto con un error (WRONGTYPE, sintaxis...): es de la peticion (400), no un servidor caido (503)
         catch (JedisDataException e) {

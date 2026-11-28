@@ -44,6 +44,7 @@ import modules.shared.infrastructure.components.uuid.UuidGenerator;
 import modules.shared.infrastructure.controllers.AbstractFxController;
 import modules.shared.infrastructure.controllers.ConnectionViewController;
 import modules.shared.infrastructure.exceptions.InterfaceException;
+import static modules.shared.application.Primitives.getBool;
 import static modules.shared.application.Primitives.getTrimmedString;
 
 import static core.config.Global.__;
@@ -286,21 +287,23 @@ public final class RedisTabController extends AbstractFxController implements Co
         runInBackground(() -> {
             List<Map<String, Object>> keys = new ArrayList<>();
             String cursor = startCursor;
+            boolean isComplete = false;
             for (int round = 0; round < MAX_SCAN_ROUNDS_PER_LOAD && keys.size() < KEYS_PER_LOAD; round++) {
-                ScanKeysResultDto page = ScanKeysService.getInstance().invoke(ScanKeysDto.fromPrimitives(Primitives.of(
+                ScanKeysResultDto scanKeysResultDto = ScanKeysService.getInstance().invoke(ScanKeysDto.fromPrimitives(Primitives.of(
                     "connectionUuid", connectionUuid, "sessionKey", browserSessionKey, "pattern", pattern, "cursor", cursor, "count", KEYS_PER_LOAD
                 )));
-                keys.addAll(page.getKeys());
-                cursor = page.getNextCursor();
-                if (page.isComplete()) break;
+                keys.addAll(scanKeysResultDto.getKeys());
+                cursor = scanKeysResultDto.getNextCursor();
+                isComplete = scanKeysResultDto.isComplete();
+                if (isComplete) break;
             }
-            return Primitives.of("keys", keys, "cursor", cursor);
-        }, result -> {
+            return Primitives.of("keys", keys, "cursor", cursor, "isComplete", isComplete);
+        }, scannedKeys -> {
             @SuppressWarnings("unchecked")
-            List<Map<String, Object>> keys = (List<Map<String, Object>>) result.get("keys");
+            List<Map<String, Object>> keys = (List<Map<String, Object>>) scannedKeys.get("keys");
             loadedKeys.addAll(keys);
-            nextCursor = String.valueOf(result.get("cursor"));
-            boolean isComplete = ScanKeysDto.FIRST_CURSOR.equals(nextCursor);
+            nextCursor = String.valueOf(scannedKeys.get("cursor"));
+            boolean isComplete = getBool(scannedKeys.get("isComplete"));
             moreButton.setDisable(isComplete);
             rebuildTree();
             keysStatusLabel.setText(isComplete ? __("{0} clave(s)", loadedKeys.size()) : __("{0} clave(s) · hay más (Más)", loadedKeys.size()));
@@ -481,11 +484,11 @@ public final class RedisTabController extends AbstractFxController implements Co
     private void onSetTtl() {
         if (currentValue == null) return;
         String key = currentValue.getKey();
-        TextInputDialog dialog = new TextInputDialog(currentValue.getTtlMs() > 0 ? String.valueOf(currentValue.getTtlMs() / 1000) : "");
-        ThemeComponent.getInstance().applyTo(dialog);
-        dialog.setTitle(__("Caducidad"));
-        dialog.setHeaderText(__("Segundos hasta que {0} caduque (vacío = no caduca nunca)", key));
-        Optional<String> seconds = dialog.showAndWait();
+        TextInputDialog ttlInputDialog = new TextInputDialog(currentValue.getTtlMs() > 0 ? String.valueOf(currentValue.getTtlMs() / 1000) : "");
+        ThemeComponent.getInstance().applyTo(ttlInputDialog);
+        ttlInputDialog.setTitle(__("Caducidad"));
+        ttlInputDialog.setHeaderText(__("Segundos hasta que {0} caduque (vacío = no caduca nunca)", key));
+        Optional<String> seconds = ttlInputDialog.showAndWait();
         if (seconds.isEmpty()) return;
         String ttlSeconds = seconds.get().trim();
         applyChange(key, ttlSeconds.isEmpty()
@@ -497,11 +500,11 @@ public final class RedisTabController extends AbstractFxController implements Co
     private void onRenameKey() {
         if (currentValue == null) return;
         String key = currentValue.getKey();
-        TextInputDialog dialog = new TextInputDialog(key);
-        ThemeComponent.getInstance().applyTo(dialog);
-        dialog.setTitle(__("Renombrar clave"));
-        dialog.setHeaderText(__("Nuevo nombre para {0} (si ya existe, se sobrescribe)", key));
-        Optional<String> newKey = dialog.showAndWait();
+        TextInputDialog newKeyInputDialog = new TextInputDialog(key);
+        ThemeComponent.getInstance().applyTo(newKeyInputDialog);
+        newKeyInputDialog.setTitle(__("Renombrar clave"));
+        newKeyInputDialog.setHeaderText(__("Nuevo nombre para {0} (si ya existe, se sobrescribe)", key));
+        Optional<String> newKey = newKeyInputDialog.showAndWait();
         if (newKey.isEmpty() || newKey.get().isEmpty() || newKey.get().equals(key)) return;
         applyChange(key, Primitives.of("operation", RedisKeyEnum.OP_RENAME, "newKey", newKey.get()), () -> {
             onScan();
@@ -538,8 +541,8 @@ public final class RedisTabController extends AbstractFxController implements Co
             () -> ChangeKeyService.getInstance().invoke(ChangeKeyDto.fromPrimitives(Primitives.merge(Primitives.of(
                 "connectionUuid", connectionUuid, "sessionKey", browserSessionKey, "key", key, "isConfirmed", isConfirmed
             ), change))),
-            result -> {
-                valueStatusLabel.setText(__("Hecho ({0})", result.getAffected()));
+            changeKeyResultDto -> {
+                valueStatusLabel.setText(__("Hecho ({0})", changeKeyResultDto.getAffected()));
                 onDone.run();
             },
             throwable -> {
@@ -571,10 +574,10 @@ public final class RedisTabController extends AbstractFxController implements Co
             () -> ExecuteRedisCommandService.getInstance().invoke(ExecuteRedisCommandDto.fromPrimitives(Primitives.of(
                 "connectionUuid", connectionUuid, "sessionKey", consoleSessionKey, "commandLine", commandLine, "isConfirmed", isConfirmed
             ))),
-            result -> {
+            executeRedisCommandResultDto -> {
                 runCommandButton.setDisable(false);
-                appendConsole(commandLine, result.getOutput() + "\n(" + result.getElapsedMs() + " ms)");
-                consolePromptLabel.setText("db" + result.getCurrentDatabase() + ">");
+                appendConsole(commandLine, executeRedisCommandResultDto.getOutput() + "\n(" + executeRedisCommandResultDto.getElapsedMs() + " ms)");
+                consolePromptLabel.setText("db" + executeRedisCommandResultDto.getCurrentDatabase() + ">");
             },
             throwable -> {
                 runCommandButton.setDisable(false);
@@ -640,15 +643,15 @@ public final class RedisTabController extends AbstractFxController implements Co
      * pipeline a medias, otra peticion daba "Cannot use Jedis when in Pipeline").
      */
     private <T> void runInBackground(Supplier<T> work, Consumer<T> onSucceeded, Consumer<Throwable> onFailed, ExecutorService sessionExecutor) {
-        Task<T> task = new Task<>() {
+        Task<T> backgroundTask = new Task<>() {
             @Override
             protected T call() {
                 return work.get();
             }
         };
-        task.setOnSucceeded(event -> onSucceeded.accept(task.getValue()));
-        task.setOnFailed(event -> onFailed.accept(task.getException()));
-        sessionExecutor.execute(task);
+        backgroundTask.setOnSucceeded(event -> onSucceeded.accept(backgroundTask.getValue()));
+        backgroundTask.setOnFailed(event -> onFailed.accept(backgroundTask.getException()));
+        sessionExecutor.execute(backgroundTask);
     }
 
     private void awaitTermination(ExecutorService sessionExecutor) {
@@ -662,9 +665,9 @@ public final class RedisTabController extends AbstractFxController implements Co
 
     private ExecutorService getSessionExecutor(String threadName) {
         return Executors.newSingleThreadExecutor(runnable -> {
-            Thread thread = new Thread(runnable, threadName);
-            thread.setDaemon(true);
-            return thread;
+            Thread daemonThread = new Thread(runnable, threadName);
+            daemonThread.setDaemon(true);
+            return daemonThread;
         });
     }
 

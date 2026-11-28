@@ -78,10 +78,10 @@ public final class RedisReaderRepository extends AbstractRedisReaderRepository {
     @Override
     public Map<String, Object> getKeyValue(String key, int limit) {
         String type = jedis.type(key);
-        Map<String, Object> value = new LinkedHashMap<>();
-        value.put(RedisKeyEnum.KEY, key);
-        value.put(RedisKeyEnum.TYPE, type);
-        value.put(RedisKeyEnum.TTL_MS, jedis.pttl(key));
+        Map<String, Object> keyValue = new LinkedHashMap<>();
+        keyValue.put(RedisKeyEnum.KEY, key);
+        keyValue.put(RedisKeyEnum.TYPE, type);
+        keyValue.put(RedisKeyEnum.TTL_MS, jedis.pttl(key));
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
         List<String> columns = List.of();
         List<List<String>> rows = new ArrayList<>();
@@ -90,8 +90,8 @@ public final class RedisReaderRepository extends AbstractRedisReaderRepository {
             case RedisKeyEnum.TYPE_STRING -> {
                 byte[] bytes = jedis.get(keyBytes);
                 String text = bytes == null ? "" : RedisReplyFormatter.getUtf8OrNull(bytes);
-                value.put("isBinary", text == null);
-                value.put("stringValue", text == null ? getHexText(bytes) : text);
+                keyValue.put("isBinary", text == null);
+                keyValue.put("stringValue", text == null ? getHexText(bytes) : text);
                 size = bytes == null ? 0 : bytes.length;
             }
             case RedisKeyEnum.TYPE_HASH -> {
@@ -144,12 +144,12 @@ public final class RedisReaderRepository extends AbstractRedisReaderRepository {
             default -> {
             }
         }
-        value.put(RedisKeyEnum.SIZE, size);
-        value.put("columns", columns);
-        value.put("rows", rows);
-        value.putIfAbsent("isBinary", false);
-        value.putIfAbsent("stringValue", "");
-        return value;
+        keyValue.put(RedisKeyEnum.SIZE, size);
+        keyValue.put("columns", columns);
+        keyValue.put("rows", rows);
+        keyValue.putIfAbsent("isBinary", false);
+        keyValue.putIfAbsent("stringValue", "");
+        return keyValue;
     }
 
     /**

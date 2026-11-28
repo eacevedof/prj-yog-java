@@ -67,10 +67,10 @@ public final class RedisReaderHttpTunnelRepository extends AbstractRedisReaderRe
     public Map<String, Object> getKeyValue(String key, int limit) {
         List<Object> typeAndTtl = redisHttpTunnelCommands.getReplies(List.of(List.of("TYPE", key), List.of("PTTL", key)));
         String type = redisHttpTunnelCommands.getText(typeAndTtl.getFirst());
-        Map<String, Object> value = new LinkedHashMap<>();
-        value.put(RedisKeyEnum.KEY, key);
-        value.put(RedisKeyEnum.TYPE, type);
-        value.put(RedisKeyEnum.TTL_MS, redisHttpTunnelCommands.getLong(typeAndTtl.get(1)));
+        Map<String, Object> keyValue = new LinkedHashMap<>();
+        keyValue.put(RedisKeyEnum.KEY, key);
+        keyValue.put(RedisKeyEnum.TYPE, type);
+        keyValue.put(RedisKeyEnum.TTL_MS, redisHttpTunnelCommands.getLong(typeAndTtl.get(1)));
         List<String> columns = List.of();
         List<List<String>> rows = new ArrayList<>();
         long size = 0;
@@ -79,8 +79,8 @@ public final class RedisReaderHttpTunnelRepository extends AbstractRedisReaderRe
                 Object reply = redisHttpTunnelCommands.getReply("GET", key);
                 byte[] bytes = reply instanceof byte[] raw ? raw : new byte[0];
                 String text = RedisReplyFormatter.getUtf8OrNull(bytes);
-                value.put("isBinary", text == null);
-                value.put("stringValue", text == null ? "0x" + HexFormat.of().formatHex(bytes) : text);
+                keyValue.put("isBinary", text == null);
+                keyValue.put("stringValue", text == null ? "0x" + HexFormat.of().formatHex(bytes) : text);
                 size = bytes.length;
             }
             case RedisKeyEnum.TYPE_HASH -> {
@@ -124,12 +124,12 @@ public final class RedisReaderHttpTunnelRepository extends AbstractRedisReaderRe
             default -> {
             }
         }
-        value.put(RedisKeyEnum.SIZE, size);
-        value.put("columns", columns);
-        value.put("rows", rows);
-        value.putIfAbsent("isBinary", false);
-        value.putIfAbsent("stringValue", "");
-        return value;
+        keyValue.put(RedisKeyEnum.SIZE, size);
+        keyValue.put("columns", columns);
+        keyValue.put("rows", rows);
+        keyValue.putIfAbsent("isBinary", false);
+        keyValue.putIfAbsent("stringValue", "");
+        return keyValue;
     }
 
     /**

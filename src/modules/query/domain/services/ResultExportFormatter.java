@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import modules.shared.domain.enums.SharedConfigEnum;
 import modules.shared.domain.services.SqlIdentifierQuoter;
 import modules.shared.domain.services.SqlLiteralQuoter;
 
@@ -172,7 +173,7 @@ public final class ResultExportFormatter {
 
     private String getHtml(List<String> columnNames, List<List<String>> rows, ResultExportOptionsEntity options) {
         StringBuilder html = new StringBuilder("<!DOCTYPE html>").append(NEW_LINE)
-            .append("<html><head><meta charset=\"").append(getXmlEscaped(options.getCharset())).append("\"><title>multidbs</title>")
+            .append("<html><head><meta charset=\"").append(getXmlEscaped(options.getCharset())).append("\"><title>").append(SharedConfigEnum.APP_NAME).append("</title>")
             .append("<style>table{border-collapse:collapse;font-family:sans-serif;font-size:13px}")
             .append("th,td{border:1px solid #ccc;padding:3px 6px}th{background:#eee}.null{color:#999;font-style:italic}</style>")
             .append("</head><body>").append(NEW_LINE).append("<table>").append(NEW_LINE).append("<tr>");
@@ -239,7 +240,7 @@ public final class ResultExportFormatter {
 
     private String getExcelSheetName(String tableName) {
         String sheetName = EXCEL_SHEET_FORBIDDEN_PATTERN.matcher(tableName == null ? "" : tableName).replaceAll("_").trim();
-        if (sheetName.isEmpty()) sheetName = "multidbs";
+        if (sheetName.isEmpty()) sheetName = SharedConfigEnum.APP_NAME;
         return sheetName.length() > EXCEL_SHEET_NAME_MAX ? sheetName.substring(0, EXCEL_SHEET_NAME_MAX) : sheetName;
     }
 

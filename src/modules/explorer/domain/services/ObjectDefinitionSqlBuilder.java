@@ -30,11 +30,11 @@ public final class ObjectDefinitionSqlBuilder {
     }
 
     /**
-     * Lo que se ve en el menu contextual.
+     * "SHOW CREATE ..." en MySQL, que es lo que se ve en el menu contextual; vacio en el resto de motores (la vista pone
+     * su propio texto).
      */
-    public String getMenuLabel(String nodeType) {
-        if (sqlDialect.isMysql()) return "SHOW CREATE " + getMysqlKeyword(nodeType);
-        return "Ver definición";
+    public String getShowCreateLabel(String nodeType) {
+        return sqlDialect.isMysql() ? "SHOW CREATE " + getMysqlKeyword(nodeType) : "";
     }
 
     public String getDefinitionSql(String nodeType, String databaseName, String objectName) {

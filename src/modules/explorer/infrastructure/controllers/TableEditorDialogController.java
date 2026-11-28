@@ -170,15 +170,15 @@ public final class TableEditorDialogController extends AbstractFxController {
         GetTableDefinitionDto getTableDefinitionDto = GetTableDefinitionDto.fromPrimitives(Primitives.of(
             "connectionUuid", connectionUuid, "sessionKey", sessionKey, "databaseName", databaseName, "tableName", tableName
         ));
-        Task<GetTableDefinitionResultDto> task = new Task<>() {
+        Task<GetTableDefinitionResultDto> getTableDefinitionTask = new Task<>() {
             @Override
             protected GetTableDefinitionResultDto call() throws SQLException {
                 return GetTableDefinitionService.getInstance().invoke(getTableDefinitionDto);
             }
         };
-        task.setOnSucceeded(event -> showDefinition(task.getValue()));
-        task.setOnFailed(event -> setStatus(getErrorMessage(task.getException())));
-        startDaemon(task, "table-editor-read");
+        getTableDefinitionTask.setOnSucceeded(event -> showDefinition(getTableDefinitionTask.getValue()));
+        getTableDefinitionTask.setOnFailed(event -> setStatus(getErrorMessage(getTableDefinitionTask.getException())));
+        startDaemon(getTableDefinitionTask, "table-editor-read");
     }
 
     /**
@@ -191,15 +191,15 @@ public final class TableEditorDialogController extends AbstractFxController {
         GetCreateTableOptionsDto getCreateTableOptionsDto = GetCreateTableOptionsDto.fromPrimitives(Primitives.of(
             "connectionUuid", connectionUuid, "sessionKey", sessionKey, "databaseName", databaseName
         ));
-        Task<GetCreateTableOptionsResultDto> task = new Task<>() {
+        Task<GetCreateTableOptionsResultDto> getCreateTableOptionsTask = new Task<>() {
             @Override
             protected GetCreateTableOptionsResultDto call() throws SQLException {
                 return GetCreateTableOptionsService.getInstance().invoke(getCreateTableOptionsDto);
             }
         };
-        task.setOnSucceeded(event -> showNewTable(task.getValue()));
-        task.setOnFailed(event -> setStatus(getErrorMessage(task.getException())));
-        startDaemon(task, "table-editor-options");
+        getCreateTableOptionsTask.setOnSucceeded(event -> showNewTable(getCreateTableOptionsTask.getValue()));
+        getCreateTableOptionsTask.setOnFailed(event -> setStatus(getErrorMessage(getCreateTableOptionsTask.getException())));
+        startDaemon(getCreateTableOptionsTask, "table-editor-options");
     }
 
     private void loadEditor(String connectionUuid, String sessionKey, String databaseName, Consumer<String> onSaved) {
@@ -377,16 +377,16 @@ public final class TableEditorDialogController extends AbstractFxController {
     }
 
     private void saveTable(boolean isConfirmed) {
-        Task<String> task = isNewTable ? getCreateTableTask(isConfirmed) : getAlterTableTask(isConfirmed);
+        Task<String> saveTableTask = isNewTable ? getCreateTableTask(isConfirmed) : getAlterTableTask(isConfirmed);
         saveButton.setDisable(true);
         setStatus(__("Guardando..."));
-        task.setOnSucceeded(event -> {
-            onSaved.accept(task.getValue());
+        saveTableTask.setOnSucceeded(event -> {
+            onSaved.accept(saveTableTask.getValue());
             ((Stage) closeButton.getScene().getWindow()).close();
         });
-        task.setOnFailed(event -> {
+        saveTableTask.setOnFailed(event -> {
             saveButton.setDisable(false);
-            Throwable throwable = task.getException();
+            Throwable throwable = saveTableTask.getException();
             if (throwable instanceof InterfaceException interfaceException && interfaceException.getCode() == ExceptionEnum.CODE_PRECONDITION_REQUIRED) {
                 setStatus("");
                 if (isConfirmed(throwable.getMessage() + ".\n\n" + __("¿Guardar igualmente?"))) saveTable(true);
@@ -395,7 +395,7 @@ public final class TableEditorDialogController extends AbstractFxController {
             setStatus(getErrorMessage(throwable));
             showError(throwable);
         });
-        startDaemon(task, "table-editor-save");
+        startDaemon(saveTableTask, "table-editor-save");
     }
 
     private Task<String> getCreateTableTask(boolean isConfirmed) {
@@ -505,10 +505,10 @@ public final class TableEditorDialogController extends AbstractFxController {
         statusLabel.setText(status);
     }
 
-    private void startDaemon(Task<?> task, String threadName) {
-        Thread thread = new Thread(task, threadName);
-        thread.setDaemon(true);
-        thread.start();
+    private void startDaemon(Task<?> backgroundTask, String threadName) {
+        Thread daemonThread = new Thread(backgroundTask, threadName);
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 
     private <S> TableColumn<S, String> getTextColumn(String title, Function<S, StringProperty> property, double width, Predicate<S> isEditable) {

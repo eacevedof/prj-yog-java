@@ -2,6 +2,7 @@ package modules.explorer.application.renametablecolumn;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.application.Primitives;
 
@@ -62,7 +63,7 @@ public final class RenameTableColumnService {
                 "connectionUuid", renameTableColumnDto.getConnectionUuid(),
                 "databaseName", renameTableColumnDto.getDatabaseName(),
                 "sqlQuery", renameSql,
-                "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000,
+                "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos),
                 "hasError", hasError
             )));
         }

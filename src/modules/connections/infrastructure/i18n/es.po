@@ -120,3 +120,12 @@ msgstr "{0} es una carpeta: al guardar la conexión se crea dentro un .sqlite va
 
 msgid "File {0}: one table"
 msgstr "Fichero {0}: una tabla"
+
+msgid "{0}\n{1}@{2}:{3}\n{4}"
+msgstr "{0}\n{1}@{2}:{3}\n{4}"
+
+msgid "PROD"
+msgstr "PROD"
+
+msgid "{0} is required"
+msgstr "{0} es obligatorio"

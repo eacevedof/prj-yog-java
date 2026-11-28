@@ -35,6 +35,8 @@ public final class CloneConnectionService {
      * @throws ConnectionsException
      */
     public CloneConnectionResultDto invoke(CloneConnectionDto cloneConnectionDto) {
+        failIfWrongInput(cloneConnectionDto);
+
         ConnectionEntity sourceConnectionEntity = connectionsReaderSqliteRepository.getConnectionByUuid(cloneConnectionDto.getConnectionUuid());
         if (sourceConnectionEntity == null) {
             throw ConnectionsException.notFoundCustom(__(ConnectionsMessageEnum.CONNECTION_X_NOT_FOUND, cloneConnectionDto.getConnectionUuid()));
@@ -61,5 +63,14 @@ public final class CloneConnectionService {
             copyName = __(ConnectionsMessageEnum.COPY_OF_X, copyName);
         }
         return copyName;
+    }
+
+    /**
+     * @throws ConnectionsException
+     */
+    private void failIfWrongInput(CloneConnectionDto cloneConnectionDto) {
+        if (cloneConnectionDto.getConnectionUuid().isEmpty()) {
+            throw ConnectionsException.badRequestCustom(__(ConnectionsMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid"));
+        }
     }
 }

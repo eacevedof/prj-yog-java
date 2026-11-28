@@ -342,3 +342,12 @@ msgstr "{0} ta un mapa: ora di warda e konekshon ta krea un .sqlite bashí aden"
 
 msgid "File {0}: one table"
 msgstr "Archivo {0}: un tabel"
+
+msgid "{0}\n{1}@{2}:{3}\n{4}"
+msgstr "{0}\n{1}@{2}:{3}\n{4}"
+
+msgid "PROD"
+msgstr "PROD"
+
+msgid "{0} is required"
+msgstr "{0} ta obligatorio"

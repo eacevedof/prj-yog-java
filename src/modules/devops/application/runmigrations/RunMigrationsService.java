@@ -28,7 +28,7 @@ public final class RunMigrationsService {
         return new RunMigrationsService();
     }
 
-    public RunMigrationsResultDto invoke() {
+    public RunMigrationsResultDto invoke(RunMigrationsDto runMigrationsDto) {
         runMigrationsWriterSqliteRepository.createMigrationsTableIfNotExists();
         Set<String> doneMigrations = runMigrationsReaderSqliteRepository.getDoneMigrations();
 

@@ -16,13 +16,14 @@ import org.bson.Document;
 
 import modules.shared.application.Primitives;
 
+import modules.mongo.domain.enums.MongoConfigEnum;
+
 /**
  * Lo que lee el navegador de MongoDB: BDs, colecciones con su numero (estimado) de documentos y una pagina de
  * documentos con filtro, orden, salto y limite.
  */
 public final class MongoReaderRepository extends AbstractMongoReaderRepository {
 
-    private static final long COUNT_MAX_TIME_MS = 5000;
 
     private final MongoClient mongoClient;
 
@@ -89,7 +90,7 @@ public final class MongoReaderRepository extends AbstractMongoReaderRepository {
      */
     @Override
     public long countDocuments(String databaseName, String collectionName, Document filter) {
-        return getCollection(databaseName, collectionName).countDocuments(filter, new CountOptions().maxTime(COUNT_MAX_TIME_MS, TimeUnit.MILLISECONDS));
+        return getCollection(databaseName, collectionName).countDocuments(filter, new CountOptions().maxTime(MongoConfigEnum.COUNT_MAX_TIME_MS, TimeUnit.MILLISECONDS));
     }
 
     private MongoCollection<Document> getCollection(String databaseName, String collectionName) {

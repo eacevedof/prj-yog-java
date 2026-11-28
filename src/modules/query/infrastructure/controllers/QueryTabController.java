@@ -175,9 +175,6 @@ public final class QueryTabController extends AbstractFxController {
     }
 
     /**
-     * Desde el arbol: inserta un nombre donde esta el cursor.
-     */
-    /**
      * Lo que se arrastra desde el arbol (el nombre de una BD, tabla o columna) se suelta donde esta el raton, con el
      * cursor siguiendolo mientras se arrastra.
      */
@@ -467,7 +464,7 @@ public final class QueryTabController extends AbstractFxController {
 
         for (Map<String, Object> result : executeQueryResultDto.getResults()) {
             String sql = getTrimmedString(result.get(QueryKeyEnum.SQL));
-            messagesText.append("Query: ").append(getShortSql(sql)).append('\n');
+            messagesText.append(__("Query: {0}", getShortSql(sql))).append('\n');
 
             String errorMessage = getTrimmedString(result.get(QueryKeyEnum.ERROR_MESSAGE));
             if (!errorMessage.isEmpty()) {

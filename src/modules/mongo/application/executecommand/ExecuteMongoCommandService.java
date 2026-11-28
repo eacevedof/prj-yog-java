@@ -1,5 +1,7 @@
 package modules.mongo.application.executecommand;
 
+import java.util.concurrent.TimeUnit;
+
 import com.mongodb.MongoException;
 import com.mongodb.MongoSocketException;
 import com.mongodb.MongoTimeoutException;
@@ -42,12 +44,8 @@ public final class ExecuteMongoCommandService {
      * @throws modules.connections.domain.exceptions.ConnectionsException
      */
     public ExecuteMongoCommandResultDto invoke(ExecuteMongoCommandDto executeMongoCommandDto) {
-        if (executeMongoCommandDto.getConnectionUuid().isEmpty() || executeMongoCommandDto.getSessionKey().isEmpty()) {
-            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid, sessionKey"));
-        }
-        if (executeMongoCommandDto.getCommandLine().isEmpty()) {
-            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.NOTHING_TO_EXECUTE));
-        }
+        failIfWrongInput(executeMongoCommandDto);
+
         String databaseName = executeMongoCommandDto.getDatabaseName().isEmpty() ? DEFAULT_DATABASE : executeMongoCommandDto.getDatabaseName();
         MongoShellCommandEntity command;
         try {
@@ -67,13 +65,13 @@ public final class ExecuteMongoCommandService {
         long startNanos = System.nanoTime();
         try {
             String output = mongoShellRepository.execute(command, databaseName);
-            return getResult(output, false, databaseName, (System.nanoTime() - startNanos) / 1_000_000);
+            return getResult(output, false, databaseName, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos));
         }
         catch (MongoSocketException | MongoTimeoutException e) {
             throw MongoModuleException.serviceUnavailableCustom(e.getMessage());
         }
         catch (MongoException | JsonParseException e) {
-            return getResult("(error) " + e.getMessage(), true, databaseName, (System.nanoTime() - startNanos) / 1_000_000);
+            return getResult("(error) " + e.getMessage(), true, databaseName, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos));
         }
         catch (IllegalArgumentException e) {
             String message = String.valueOf(e.getMessage());
@@ -108,5 +106,17 @@ public final class ExecuteMongoCommandService {
         throw MongoModuleException.preconditionRequiredCustom(__(
             MongoMessageEnum.PRODUCTION_X_CONFIRM_X, connectionEntity.getConnectionName(), executeMongoCommandDto.getCommandLine()
         ));
+    }
+
+    /**
+     * @throws MongoModuleException
+     */
+    private void failIfWrongInput(ExecuteMongoCommandDto executeMongoCommandDto) {
+        if (executeMongoCommandDto.getConnectionUuid().isEmpty() || executeMongoCommandDto.getSessionKey().isEmpty()) {
+            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid, sessionKey"));
+        }
+        if (executeMongoCommandDto.getCommandLine().isEmpty()) {
+            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.NOTHING_TO_EXECUTE));
+        }
     }
 }

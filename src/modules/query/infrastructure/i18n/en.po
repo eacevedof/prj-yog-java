@@ -540,3 +540,6 @@ msgstr "Refresh"
 
 msgid "Volver a leer el historial (F5): lo lanzado desde el árbol (DROP, duplicar...) aparece al refrescar"
 msgstr "Reload the history (F5): what was run from the tree (DROP, duplicate...) shows up on refresh"
+
+msgid "Query: {0}"
+msgstr "Query: {0}"

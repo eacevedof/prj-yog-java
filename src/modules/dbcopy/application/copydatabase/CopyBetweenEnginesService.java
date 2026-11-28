@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.application.Primitives;
@@ -143,7 +144,7 @@ public final class CopyBetweenEnginesService {
         }
         int okCount = (int) objectResults.stream().filter(objectResult -> getBool(objectResult.get(DbCopyKeyEnum.IS_OK))).count();
         long copiedRows = objectResults.stream().mapToLong(objectResult -> (long) objectResult.get(DbCopyKeyEnum.COPIED_ROWS)).sum();
-        long elapsedMs = (System.nanoTime() - startNanos) / 1_000_000;
+        long elapsedMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
         RecordQueryHistoryService.getInstance().invoke(RecordQueryHistoryDto.fromPrimitives(Primitives.of(
             "connectionUuid", targetConnectionEntity.getConnectionUuid(),
             "databaseName", copyDatabaseDto.getTargetDatabase(),
@@ -271,16 +272,16 @@ public final class CopyBetweenEnginesService {
         Map<String, TableIndex> indexes = new LinkedHashMap<>();
         Set<String> skippedIndexes = new HashSet<>();
         for (Map<String, Object> row : sourceExplorerReaderRepository.getIndexes(copyDatabaseDto.getSourceDatabase(), tableName)) {
-            String indexName = getTrimmedString(row.get("index_name"));
-            String indexType = getTrimmedString(row.get("index_type")).toUpperCase(Locale.ROOT);
-            String columnName = getTrimmedString(row.get("column_name"));
+            String indexName = getTrimmedString(row.get(ExplorerKeyEnum.INDEX_NAME));
+            String indexType = getTrimmedString(row.get(ExplorerKeyEnum.INDEX_TYPE)).toUpperCase(Locale.ROOT);
+            String columnName = getTrimmedString(row.get(ExplorerKeyEnum.COLUMN_NAME));
             if ("PRIMARY".equals(indexName) || skippedIndexes.contains(indexName)) continue;
             if (!columnNames.contains(columnName) || indexType.equals("FULLTEXT") || indexType.equals("SPATIAL")) {
                 skippedIndexes.add(indexName);
                 indexes.remove(indexName);
                 continue;
             }
-            boolean isUnique = "0".equals(getTrimmedString(row.get("non_unique"))) || Boolean.FALSE.equals(row.get("non_unique"));
+            boolean isUnique = "0".equals(getTrimmedString(row.get(ExplorerKeyEnum.NON_UNIQUE))) || Boolean.FALSE.equals(row.get(ExplorerKeyEnum.NON_UNIQUE));
             indexes.computeIfAbsent(indexName, name -> new TableIndex(name, isUnique, new ArrayList<>())).columnNames().add(columnName);
         }
         return indexes;
@@ -378,7 +379,7 @@ public final class CopyBetweenEnginesService {
      * Las filas que estima el origen, solo para la barra de progreso; 0 si no lo sabe.
      */
     private long getEstimatedRows(String tableName) throws SQLException {
-        String tableRows = getTrimmedString(sourceExplorerReaderRepository.getTableStatus(copyDatabaseDto.getSourceDatabase(), tableName).get("table_rows"));
+        String tableRows = getTrimmedString(sourceExplorerReaderRepository.getTableStatus(copyDatabaseDto.getSourceDatabase(), tableName).get(ExplorerKeyEnum.TABLE_ROWS));
         return tableRows.matches("\\d{1,18}") ? Long.parseLong(tableRows) : 0;
     }
 

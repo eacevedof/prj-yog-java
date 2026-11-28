@@ -12,13 +12,14 @@ import modules.shared.application.Primitives;
 
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelClient;
 
+import modules.mongo.domain.enums.MongoConfigEnum;
+
 /**
  * El navegador de MongoDB por el tunel HTTP: lo mismo que MongoReaderRepository, con documentos de runCommand. Los
  * recuentos de todas las colecciones van en un lote (una peticion).
  */
 public final class MongoReaderHttpTunnelRepository extends AbstractMongoReaderRepository {
 
-    private static final long COUNT_MAX_TIME_MS = 5000;
 
     private final MongoHttpTunnelCommands mongoHttpTunnelCommands;
 
@@ -82,7 +83,7 @@ public final class MongoReaderHttpTunnelRepository extends AbstractMongoReaderRe
 
     @Override
     public long countDocuments(String databaseName, String collectionName, Document filter) {
-        Document count = new Document("count", collectionName).append("query", filter).append("maxTimeMS", COUNT_MAX_TIME_MS);
+        Document count = new Document("count", collectionName).append("query", filter).append("maxTimeMS", MongoConfigEnum.COUNT_MAX_TIME_MS);
         return getLong(mongoHttpTunnelCommands.getResponse(count, databaseName).get("n"));
     }
 

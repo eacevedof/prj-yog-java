@@ -279,3 +279,12 @@ msgstr "{0} is a folder: an empty .sqlite file will be created in it when the co
 
 msgid "File {0}: one table"
 msgstr "File {0}: one table"
+
+msgid "{0}\n{1}@{2}:{3}\n{4}"
+msgstr "{0}\n{1}@{2}:{3}\n{4}"
+
+msgid "PROD"
+msgstr "PROD"
+
+msgid "{0} is required"
+msgstr "{0} is required"

@@ -19,13 +19,13 @@ final class SqlDumpScriptBuilderTest extends AbstractTestCase {
     @Test
     void testCommentsWithANewLineInTheNameStayOnOneLine() {
         assertEquals("\n-- Tabla `x DROP DATABASE prod;  -- `\n\n", sqlDumpScriptBuilder.getSectionComment("Tabla", HOSTILE_NAME));
-        assertEquals("\n-- Datos de `x DROP DATABASE prod;  -- `\n", sqlDumpScriptBuilder.getDataComment(HOSTILE_NAME));
+        assertEquals("\n-- Datos de `x DROP DATABASE prod;  -- `\n", sqlDumpScriptBuilder.getDataComment("Datos de", HOSTILE_NAME));
         assertEquals("-- ERROR `x DROP DATABASE prod;  -- `: line 1 line 2\n", sqlDumpScriptBuilder.getErrorComment(HOSTILE_NAME, "line 1\nline 2"));
     }
 
     @Test
     void testHeaderKeepsTheDatabaseNameOnItsCommentLine() {
-        String header = sqlDumpScriptBuilder.getHeader(HOSTILE_NAME, "MySQL 8.4\nSELECT 1;", "2026-11-27 23:00:00", false);
+        String header = sqlDumpScriptBuilder.getHeader("BD: " + HOSTILE_NAME, "Fecha: 2026-11-27 23:00:00", "MySQL 8.4\nSELECT 1;", false);
 
         assertTrue(header.contains("\n-- BD: x DROP DATABASE prod;  -- \n"));
         assertTrue(header.contains("\n-- MySQL 8.4 SELECT 1;\n"));

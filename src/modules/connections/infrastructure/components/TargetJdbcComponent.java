@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import modules.shared.domain.enums.SharedConfigEnum;
+
 import core.boot.BootPathsEnum;
 import static core.config.Global.__;
 
@@ -99,7 +101,7 @@ public final class TargetJdbcComponent {
             properties.setProperty("connectTimeout", String.valueOf(CONNECT_TIMEOUT_MS / 1000));
             properties.setProperty("socketTimeout", String.valueOf(socketTimeoutMs / 1000));
             properties.setProperty("sslmode", "prefer");
-            properties.setProperty("ApplicationName", "multidbs");
+            properties.setProperty("ApplicationName", SharedConfigEnum.APP_NAME);
             // la rejilla manda los valores como texto: que el servidor los convierta al tipo de la columna
             properties.setProperty("stringtype", "unspecified");
             return properties;
@@ -113,7 +115,7 @@ public final class TargetJdbcComponent {
             // sslMode PREFERRED de MySQL)
             properties.setProperty("encrypt", "true");
             properties.setProperty("trustServerCertificate", "true");
-            properties.setProperty("applicationName", "multidbs");
+            properties.setProperty("applicationName", SharedConfigEnum.APP_NAME);
             return properties;
         }
         properties.setProperty("connectTimeout", String.valueOf(CONNECT_TIMEOUT_MS));

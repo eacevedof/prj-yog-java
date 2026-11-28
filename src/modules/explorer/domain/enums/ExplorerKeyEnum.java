@@ -17,6 +17,10 @@ public final class ExplorerKeyEnum {
     public static final String COLUMN_KEY = "column_key";
     public static final String DATA_TYPE = "data_type";
     public static final String EXTRA = "extra";
+    public static final String INDEX_NAME = "index_name";
+    public static final String INDEX_TYPE = "index_type";
+    public static final String NON_UNIQUE = "non_unique";
+    public static final String TABLE_ROWS = "table_rows";
 
     private ExplorerKeyEnum() {
     }

@@ -19,7 +19,7 @@ public final class ResetWorkspaceService {
         return new ResetWorkspaceService();
     }
 
-    public ResetWorkspaceResultDto invoke() {
+    public ResetWorkspaceResultDto invoke(ResetWorkspaceDto resetWorkspaceDto) {
         int deletedStates = WorkspaceStateSqliteRepository.getInstance().deleteAllStates();
         int deletedQueryTabs = QueryTabsWriterSqliteRepository.getInstance().deleteAllQueryTabs();
         return ResetWorkspaceResultDto.fromPrimitives(Primitives.of(

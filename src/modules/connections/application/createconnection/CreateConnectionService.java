@@ -69,7 +69,8 @@ public final class CreateConnectionService {
         int connectionId = connectionsWriterSqliteRepository.insertConnection(connectionEntity);
         ConnectionEntity createdConnectionEntity = connectionsReaderSqliteRepository.getConnectionById(connectionId);
         return CreateConnectionResultDto.fromPrimitives(Primitives.of(
-            "connection", createdConnectionEntity.toPrimitives()
+            "connection", createdConnectionEntity.toPrimitives(),
+            "connectionUuid", createdConnectionEntity.getConnectionUuid()
         ));
     }
 

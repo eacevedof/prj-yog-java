@@ -7,7 +7,7 @@ public final class SettingsException extends RuntimeException implements Interfa
 
     private final int code;
 
-    public SettingsException(String message, int code) {
+    private SettingsException(String message, int code) {
         super(message);
         this.code = code;
     }

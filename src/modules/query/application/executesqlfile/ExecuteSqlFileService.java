@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.application.Primitives;
@@ -101,7 +102,7 @@ public final class ExecuteSqlFileService {
                 "connectionUuid", executeSqlFileDto.getConnectionUuid(),
                 "databaseName", executeSqlFileDto.getDatabaseName(),
                 "sqlQuery", QueryHistoryConfigEnum.SQL_FILE_PREFIX + filePath,
-                "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000,
+                "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos),
                 "rowsCount", runState.executedCount,
                 "hasError", runState.getErrorCount() > 0 || runState.isAborted
             )));
@@ -112,7 +113,7 @@ public final class ExecuteSqlFileService {
             "errors", runState.errors,
             "isCancelled", runState.isCancelled,
             "isAborted", runState.isAborted,
-            "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000
+            "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos)
         ));
     }
 

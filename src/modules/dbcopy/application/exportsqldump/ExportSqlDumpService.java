@@ -9,7 +9,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
+import modules.shared.domain.enums.SharedConfigEnum;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.date.DateTimer;
 import modules.shared.infrastructure.components.uuid.UuidGenerator;
@@ -51,8 +53,6 @@ import modules.dbcopy.domain.exceptions.DbCopyException;
  * impide el volcado entero (la sesion, leer los objetos, escribir el fichero) sube hasta el controller.
  */
 public final class ExportSqlDumpService {
-
-    private static final int DUMP_MAX_STATEMENT_CHARS = 512 * 1024;
 
     private final TargetSessionFactory targetSessionFactory;
     private final DbCopySqlBuilder dbCopySqlBuilder;
@@ -102,11 +102,13 @@ public final class ExportSqlDumpService {
             dbCopyReaderMysqlRepository.prepareSession(databaseName);
             if (exportSqlDumpDto.isSingleTransaction()) dbCopyReaderMysqlRepository.startConsistentSnapshot();
             List<DumpItem> dumpItems = getDumpItems();
-            String versionInfo = exportSqlDumpDto.isVersionIncluded() ? "multidbs · " + dbCopyReaderMysqlRepository.getServerVersion() : "";
+            String versionInfo = exportSqlDumpDto.isVersionIncluded() ? SharedConfigEnum.APP_NAME + " · " + dbCopyReaderMysqlRepository.getServerVersion() : "";
 
             sqlDumpFileComponent = openFileOrFail(filePath);
             try (SqlDumpFileComponent dumpFile = sqlDumpFileComponent) {
-                dumpFile.write(sqlDumpScriptBuilder.getHeader(databaseName, versionInfo, nowDt, exportSqlDumpDto.isForeignKeyChecksOff()));
+                dumpFile.write(sqlDumpScriptBuilder.getHeader(
+                    __("BD: {0}", databaseName), __("Fecha: {0}", nowDt), versionInfo, exportSqlDumpDto.isForeignKeyChecksOff()
+                ));
                 if (exportSqlDumpDto.isCreateDatabaseIncluded()) {
                     Map<String, Object> charset = dbCopyReaderMysqlRepository.getDatabaseCharset(databaseName);
                     dumpFile.write(dbCopySqlBuilder.getCreateDatabaseSql(
@@ -145,7 +147,7 @@ public final class ExportSqlDumpService {
             "errorCount", objectResults.size() - okCount,
             "dumpedRows", objectResults.stream().mapToLong(objectResult -> (long) objectResult.get(DbCopyKeyEnum.COPIED_ROWS)).sum(),
             "isCancelled", isCancelled,
-            "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000
+            "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos)
         ));
     }
 
@@ -295,12 +297,12 @@ public final class ExportSqlDumpService {
 
     private String getSectionLabel(String objectType) {
         return switch (objectType) {
-            case DbCopyObjectTypeEnum.VIEW -> "Vista";
-            case DbCopyObjectTypeEnum.PROCEDURE -> "Procedimiento";
-            case DbCopyObjectTypeEnum.FUNCTION -> "Funcion";
-            case DbCopyObjectTypeEnum.TRIGGER -> "Trigger";
-            case DbCopyObjectTypeEnum.EVENT -> "Evento";
-            default -> "Tabla";
+            case DbCopyObjectTypeEnum.VIEW -> __("Vista");
+            case DbCopyObjectTypeEnum.PROCEDURE -> __("Procedimiento");
+            case DbCopyObjectTypeEnum.FUNCTION -> __("Función");
+            case DbCopyObjectTypeEnum.TRIGGER -> __("Trigger");
+            case DbCopyObjectTypeEnum.EVENT -> __("Evento");
+            default -> __("Tabla");
         };
     }
 
@@ -354,11 +356,11 @@ public final class ExportSqlDumpService {
                 databaseName, tableName, columnNames, cellKinds, primaryKeyColumns, lastKeyValues, dumpedRows
             );
             if (isFirstPage && !rows.isEmpty()) {
-                sqlDumpFileComponent.write(sqlDumpScriptBuilder.getDataComment(tableName));
+                sqlDumpFileComponent.write(sqlDumpScriptBuilder.getDataComment(__("Datos de"), tableName));
             }
             isFirstPage = false;
             BulkInsertBuffer bulkInsertBuffer = exportSqlDumpDto.isBulkInsert()
-                ? BulkInsertBuffer.getBulkInstance(insertPrefix, DUMP_MAX_STATEMENT_CHARS)
+                ? BulkInsertBuffer.getBulkInstance(insertPrefix, DbCopyConfigEnum.JDBC_MAX_STATEMENT_CHARS)
                 : BulkInsertBuffer.getRowByRowInstance(insertPrefix);
             for (List<Object> row : rows) bulkInsertBuffer.add(dbCopySqlBuilder.getRowTuple(row));
             for (String insertSql : bulkInsertBuffer.takeAllStatements()) sqlDumpFileComponent.write(insertSql + ";" + SqlDumpScriptBuilder.NEW_LINE);

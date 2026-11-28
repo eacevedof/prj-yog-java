@@ -1,6 +1,7 @@
 package modules.history.application.recordqueryhistory;
 
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.sqltrace.SqlTraceComponent;
@@ -46,7 +47,7 @@ public final class QueryHistoryTracer {
                     "connectionUuid", connectionUuid,
                     "databaseName", databaseName,
                     "sqlQuery", String.join(";\n", sqlTrace.getSqls()),
-                    "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000,
+                    "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos),
                     "rowsCount", sqlTrace.getRowsCount(),
                     "hasError", hasError
                 )));

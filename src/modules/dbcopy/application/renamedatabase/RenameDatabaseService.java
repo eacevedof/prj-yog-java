@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.uuid.UuidGenerator;
@@ -136,7 +137,7 @@ public final class RenameDatabaseService {
                 "sqlQuery", (renameDatabaseDto.isDropOriginal()
                     ? QueryHistoryConfigEnum.RENAME_DATABASE_DROPPED_X_X
                     : QueryHistoryConfigEnum.RENAME_DATABASE_X_X).formatted(databaseName, newDatabaseName),
-                "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000,
+                "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos),
                 "rowsCount", rowCount
             )));
             return RenameDatabaseResultDto.fromPrimitives(Primitives.of(
@@ -145,7 +146,7 @@ public final class RenameDatabaseService {
                 "objectCount", getObjectCount(originalObjects),
                 "rowCount", rowCount,
                 "isOriginalDropped", renameDatabaseDto.isDropOriginal(),
-                "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000
+                "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos)
             ));
         }
         finally {

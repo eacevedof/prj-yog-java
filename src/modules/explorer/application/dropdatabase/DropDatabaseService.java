@@ -2,6 +2,7 @@ package modules.explorer.application.dropdatabase;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.domain.services.SystemDatabaseDetector;
 import modules.shared.application.Primitives;
@@ -65,7 +66,7 @@ public final class DropDatabaseService {
                 "connectionUuid", dropDatabaseDto.getConnectionUuid(),
                 "databaseName", dropDatabaseDto.getDatabaseName(),
                 "sqlQuery", dropSql,
-                "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000,
+                "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos),
                 "hasError", hasError
             )));
         }

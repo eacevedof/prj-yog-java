@@ -13,6 +13,7 @@ import testcase.AbstractTestCase;
 
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.application.createconnection.CreateConnectionDto;
+import modules.connections.application.encryptstoredsecrets.EncryptStoredSecretsDto;
 import modules.connections.application.renameconnection.RenameConnectionDto;
 import modules.connections.application.updateconnection.UpdateConnectionDto;
 import modules.connections.application.createconnection.CreateConnectionService;
@@ -80,8 +81,8 @@ final class StoredSecretsTest extends AbstractTestCase {
             statement.executeUpdate();
         }
 
-        int encryptedConnections = EncryptStoredSecretsService.getInstance().invoke().getEncryptedConnections();
-        int secondRun = EncryptStoredSecretsService.getInstance().invoke().getEncryptedConnections();
+        int encryptedConnections = EncryptStoredSecretsService.getInstance().invoke(EncryptStoredSecretsDto.fromPrimitives(Primitives.of())).getEncryptedConnections();
+        int secondRun = EncryptStoredSecretsService.getInstance().invoke(EncryptStoredSecretsDto.fromPrimitives(Primitives.of())).getEncryptedConnections();
 
         assertEquals(1, encryptedConnections);
         assertEquals(0, secondRun);

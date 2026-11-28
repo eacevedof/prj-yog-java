@@ -305,9 +305,9 @@ public final class SqlDumpDialogController extends AbstractFxController {
         dbCopyProgressTracker.register(dumpId, new DialogProgressListener());
         runInBackground(
             () -> ExportSqlDumpService.getInstance().invoke(exportSqlDumpDto),
-            resultDto -> {
+            exportSqlDumpResultDto -> {
                 dbCopyProgressTracker.unregister(dumpId);
-                showResult(resultDto);
+                showResult(exportSqlDumpResultDto);
             },
             throwable -> {
                 dbCopyProgressTracker.unregister(dumpId);
@@ -318,18 +318,18 @@ public final class SqlDumpDialogController extends AbstractFxController {
         );
     }
 
-    private void showResult(ExportSqlDumpResultDto resultDto) {
+    private void showResult(ExportSqlDumpResultDto exportSqlDumpResultDto) {
         setRunning(false);
-        this.exportSqlDumpResultDto = resultDto;
+        this.exportSqlDumpResultDto = exportSqlDumpResultDto;
         summaryButton.setDisable(false);
-        progressBar.setProgress(resultDto.isCancelled() ? progressBar.getProgress() : 1);
-        LastDirectoryComponent.getInstance(WorkspaceKeyEnum.SQL_DUMP_DIRECTORY).saveDirectoryOf(new File(resultDto.getFilePath()));
-        setStatus((resultDto.isCancelled() ? __("Parada.") : __("Hecho.")) + " "
-            + __("{0} objetos", resultDto.getOkCount()) + ", " + __("{0} filas", String.format("%,d", resultDto.getDumpedRows()))
-            + (resultDto.getErrorCount() > 0 ? ", " + __("{0} con error", resultDto.getErrorCount()) : "")
-            + " " + __("en {0} s.", String.format("%.1f", resultDto.getElapsedMs() / 1000.0))
-            + " → " + resultDto.getFilePath());
-        if (resultDto.getErrorCount() > 0) onShowSummary();
+        progressBar.setProgress(exportSqlDumpResultDto.isCancelled() ? progressBar.getProgress() : 1);
+        LastDirectoryComponent.getInstance(WorkspaceKeyEnum.SQL_DUMP_DIRECTORY).saveDirectoryOf(new File(exportSqlDumpResultDto.getFilePath()));
+        setStatus((exportSqlDumpResultDto.isCancelled() ? __("Parada.") : __("Hecho.")) + " "
+            + __("{0} objetos", exportSqlDumpResultDto.getOkCount()) + ", " + __("{0} filas", String.format("%,d", exportSqlDumpResultDto.getDumpedRows()))
+            + (exportSqlDumpResultDto.getErrorCount() > 0 ? ", " + __("{0} con error", exportSqlDumpResultDto.getErrorCount()) : "")
+            + " " + __("en {0} s.", String.format("%.1f", exportSqlDumpResultDto.getElapsedMs() / 1000.0))
+            + " → " + exportSqlDumpResultDto.getFilePath());
+        if (exportSqlDumpResultDto.getErrorCount() > 0) onShowSummary();
     }
 
     @FXML
@@ -339,9 +339,9 @@ public final class SqlDumpDialogController extends AbstractFxController {
         for (Map<String, Object> object : exportSqlDumpResultDto.getObjects()) {
             boolean isOk = getBool(object.get(DbCopyKeyEnum.IS_OK));
             String objectType = getTrimmedString(object.get(DbCopyKeyEnum.OBJECT_TYPE));
-            summary.append(isOk ? "OK     " : "ERROR  ").append(getTypeLabel(objectType)).append(" ").append(getTrimmedString(object.get(DbCopyKeyEnum.OBJECT_NAME)));
+            summary.append(String.format("%-7s", isOk ? __("OK") : __("ERROR"))).append(getTypeLabel(objectType)).append(" ").append(getTrimmedString(object.get(DbCopyKeyEnum.OBJECT_NAME)));
             if (DbCopyObjectTypeEnum.TABLE.equals(objectType) && object.get(DbCopyKeyEnum.COPIED_ROWS) instanceof Number dumpedRows) {
-                summary.append("  (").append(__("{0} filas", String.format("%,d", dumpedRows.longValue()))).append(")");
+                summary.append("  ").append(__("({0} filas)", String.format("%,d", dumpedRows.longValue())));
             }
             String message = getTrimmedString(object.get(DbCopyKeyEnum.MESSAGE));
             if (!message.isEmpty()) summary.append("\n       ").append(message.replace("\n", "\n       "));
@@ -422,17 +422,17 @@ public final class SqlDumpDialogController extends AbstractFxController {
     }
 
     private <T> void runInBackground(Callable<T> work, Consumer<T> onSucceeded, Consumer<Throwable> onFailed, String threadName) {
-        Task<T> task = new Task<>() {
+        Task<T> backgroundTask = new Task<>() {
             @Override
             protected T call() throws Exception {
                 return work.call();
             }
         };
-        task.setOnSucceeded(event -> onSucceeded.accept(task.getValue()));
-        task.setOnFailed(event -> onFailed.accept(task.getException()));
-        Thread thread = new Thread(task, threadName);
-        thread.setDaemon(true);
-        thread.start();
+        backgroundTask.setOnSucceeded(event -> onSucceeded.accept(backgroundTask.getValue()));
+        backgroundTask.setOnFailed(event -> onFailed.accept(backgroundTask.getException()));
+        Thread daemonThread = new Thread(backgroundTask, threadName);
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 
     /**

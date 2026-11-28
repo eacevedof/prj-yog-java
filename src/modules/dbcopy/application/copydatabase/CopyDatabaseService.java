@@ -8,6 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.uuid.UuidGenerator;
@@ -154,7 +155,7 @@ public final class CopyDatabaseService {
         }
         int okCount = (int) objectResults.stream().filter(objectResult -> getBool(objectResult.get(DbCopyKeyEnum.IS_OK))).count();
         long copiedRows = objectResults.stream().mapToLong(objectResult -> (long) objectResult.get(DbCopyKeyEnum.COPIED_ROWS)).sum();
-        long elapsedMs = (System.nanoTime() - startNanos) / 1_000_000;
+        long elapsedMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
         RecordQueryHistoryService.getInstance().invoke(RecordQueryHistoryDto.fromPrimitives(Primitives.of(
             "connectionUuid", targetConnectionEntity.getConnectionUuid(),
             "databaseName", copyDatabaseDto.getTargetDatabase(),

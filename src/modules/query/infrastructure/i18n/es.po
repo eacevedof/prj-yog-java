@@ -207,3 +207,6 @@ msgstr "Solo lectura: no se pudieron leer las columnas de {0}"
 
 msgid "El resultado tiene {0} cambio(s) sin guardar. ¿Descartarlos y ejecutar?"
 msgstr "El resultado tiene {0} cambio(s) sin guardar. ¿Descartarlos y ejecutar?"
+
+msgid "Query: {0}"
+msgstr "Query: {0}"

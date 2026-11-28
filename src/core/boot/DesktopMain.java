@@ -5,12 +5,14 @@ import javafx.application.Application;
 import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.theme.ThemeComponent;
 
+import modules.devops.application.runmigrations.RunMigrationsDto;
 import modules.devops.application.runmigrations.RunMigrationsService;
 
 import modules.settings.domain.enums.SettingsKeyEnum;
 import modules.settings.application.getsetting.GetSettingDto;
 import modules.settings.application.getsetting.GetSettingService;
 
+import modules.connections.application.encryptstoredsecrets.EncryptStoredSecretsDto;
 import modules.connections.application.encryptstoredsecrets.EncryptStoredSecretsService;
 
 import core.config.Translator;
@@ -29,9 +31,9 @@ public final class DesktopMain {
     }
 
     public void run(String[] args) {
-        RunMigrationsService.getInstance().invoke();
+        RunMigrationsService.getInstance().invoke(RunMigrationsDto.fromPrimitives(Primitives.of()));
         // feature 47: las passwords que quedaran en claro de versiones anteriores se cifran ya
-        EncryptStoredSecretsService.getInstance().invoke();
+        EncryptStoredSecretsService.getInstance().invoke(EncryptStoredSecretsDto.fromPrimitives(Primitives.of()));
         loadTheme();
         loadLanguage();
         Application.launch(DesktopApplication.class, args);

@@ -28,10 +28,18 @@ public final class CancelQueryService {
      * @throws SQLException si la BD falla: sube tal cual hasta el controller
      */
     public CancelQueryResultDto invoke(CancelQueryDto cancelQueryDto) throws SQLException {
+        failIfWrongInput(cancelQueryDto);
+
+        boolean wasRunning = RunningStatementsComponent.getInstance().cancel(cancelQueryDto.getSessionKey());
+        return CancelQueryResultDto.fromPrimitives(Primitives.of("wasRunning", wasRunning));
+    }
+
+    /**
+     * @throws QueryException
+     */
+    private void failIfWrongInput(CancelQueryDto cancelQueryDto) {
         if (cancelQueryDto.getSessionKey().isEmpty()) {
             throw QueryException.badRequestCustom(__(QueryMessageEnum.FIELD_IS_REQUIRED_X, "sessionKey"));
         }
-        boolean wasRunning = RunningStatementsComponent.getInstance().cancel(cancelQueryDto.getSessionKey());
-        return CancelQueryResultDto.fromPrimitives(Primitives.of("wasRunning", wasRunning));
     }
 }

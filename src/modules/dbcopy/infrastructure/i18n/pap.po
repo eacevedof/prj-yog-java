@@ -345,3 +345,33 @@ msgstr "Entre motor diferente ta kopia so e tabelnan (tipo tradusí, yave primar
 
 msgid "Renombrando: espera a que acabe, no se puede parar a medias"
 msgstr "Ta kambiando nòmber: warda te ku e kaba, no por para e na mitar"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "ERROR"
+msgstr "FAYO"
+
+msgid "({0} filas)"
+msgstr "({0} fila)"
+
+msgid "BD: {0}"
+msgstr "BD: {0}"
+
+msgid "Fecha: {0}"
+msgstr "Fecha: {0}"
+
+msgid "Datos de"
+msgstr "Datos di"
+
+msgid "Procedimiento"
+msgstr "Prosedimentu"
+
+msgid "Función"
+msgstr "Funshon"
+
+msgid "Trigger"
+msgstr "Trigger"
+
+msgid "Evento"
+msgstr "Evento"

@@ -2,6 +2,7 @@ package modules.explorer.application.alterdatabase;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.application.Primitives;
@@ -64,7 +65,7 @@ public final class AlterDatabaseService {
                 "connectionUuid", alterDatabaseDto.getConnectionUuid(),
                 "databaseName", alterDatabaseDto.getOriginal().databaseName(),
                 "sqlQuery", alterSql,
-                "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000,
+                "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos),
                 "hasError", hasError
             )));
         }

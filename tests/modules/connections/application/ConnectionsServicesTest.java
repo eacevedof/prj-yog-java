@@ -23,6 +23,7 @@ import modules.connections.application.createconnection.CreateConnectionDto;
 import modules.connections.application.createconnection.CreateConnectionResultDto;
 import modules.connections.application.deleteconnection.DeleteConnectionDto;
 import modules.connections.application.getconnection.GetConnectionDto;
+import modules.connections.application.listconnections.ListConnectionsDto;
 import modules.connections.application.testconnection.TestConnectionDto;
 import modules.connections.application.updateconnection.UpdateConnectionDto;
 import modules.connections.application.cloneconnection.CloneConnectionService;
@@ -173,6 +174,24 @@ final class ConnectionsServicesTest extends AbstractTestCase {
     }
 
     @Test
+    void testServicesByUuidFailWithBadRequestIfTheUuidIsEmpty() {
+        Map<String, Object> primitives = Primitives.of("connectionUuid", " ");
+
+        ConnectionsException getException = assertThrows(ConnectionsException.class, () -> GetConnectionService.getInstance().invoke(
+            GetConnectionDto.fromPrimitives(primitives)
+        ));
+        ConnectionsException deleteException = assertThrows(ConnectionsException.class, () -> DeleteConnectionService.getInstance().invoke(
+            DeleteConnectionDto.fromPrimitives(primitives)
+        ));
+        ConnectionsException cloneException = assertThrows(ConnectionsException.class, () -> CloneConnectionService.getInstance().invoke(
+            CloneConnectionDto.fromPrimitives(primitives)
+        ));
+        assertEquals(ExceptionEnum.CODE_BAD_REQUEST, getException.getCode());
+        assertEquals(ExceptionEnum.CODE_BAD_REQUEST, deleteException.getCode());
+        assertEquals(ExceptionEnum.CODE_BAD_REQUEST, cloneException.getCode());
+    }
+
+    @Test
     void testCloneConnectionCopiesWithFreeNameAndWithoutProductionMark() {
         String connectionUuid = getConnectionUuid(CreateConnectionService.getInstance().invoke(CreateConnectionDto.fromPrimitives(
             Primitives.merge(ConnectionPrimitivesMother.getValidLocal("prod-mi-app"), Primitives.of("isProduction", true))
@@ -194,7 +213,7 @@ final class ConnectionsServicesTest extends AbstractTestCase {
         createConnection("Loc-a");
         createConnection("prod-c");
 
-        List<Object> names = ListConnectionsService.getInstance().invoke().getConnections().stream()
+        List<Object> names = ListConnectionsService.getInstance().invoke(ListConnectionsDto.fromPrimitives(Primitives.of())).getConnections().stream()
             .map(connection -> connection.get(ConnectionsKeyEnum.CONNECTION_NAME))
             .toList();
         assertEquals(List.of("Loc-a", "pre-b", "prod-c"), names);

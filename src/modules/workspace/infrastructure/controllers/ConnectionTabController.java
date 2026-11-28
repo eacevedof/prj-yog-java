@@ -261,10 +261,10 @@ public final class ConnectionTabController extends AbstractFxController implemen
         filesStatusLabel.setText(status);
     }
 
-    private void startDaemon(Task<?> task, String threadName) {
-        Thread thread = new Thread(task, threadName);
-        thread.setDaemon(true);
-        thread.start();
+    private void startDaemon(Task<?> backgroundTask, String threadName) {
+        Thread daemonThread = new Thread(backgroundTask, threadName);
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 
     public String getActiveDatabase() {
@@ -438,10 +438,6 @@ public final class ConnectionTabController extends AbstractFxController implemen
         return connectionTabUuid + TargetSessionFactory.SESSION_KEY_SEPARATOR + EXPLORER_SESSION;
     }
 
-    /**
-     * Cancela lo que se este ejecutando y cierra las sesiones de esta conexion, fuera del hilo de la UI: cerrar una
-     * sesion con una query en marcha espera a que el servidor la corte.
-     */
     /**
      * El arbol va bajo la conexion en el panel de la izquierda; la ventana lo engancha y empieza a cargarse.
      */

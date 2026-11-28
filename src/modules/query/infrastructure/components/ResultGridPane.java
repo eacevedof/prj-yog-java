@@ -851,9 +851,6 @@ public final class ResultGridPane extends VBox {
     }
 
     /**
-     * Fila editable: color segun su estado (nueva, cambiada, a borrar).
-     */
-    /**
      * El numero de la fila tal como se ve (1, 2, 3... tras buscar y ordenar); "*" en una fila nueva sin guardar.
      */
     private final class RowNumberCell extends TableCell<List<String>, String> {

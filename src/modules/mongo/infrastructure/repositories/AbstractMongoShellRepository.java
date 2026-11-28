@@ -7,6 +7,8 @@ import org.bson.Document;
 
 import static core.config.Global.__;
 
+import modules.connections.domain.enums.DbEngineEnum;
+
 import modules.mongo.domain.entities.MongoShellCommandEntity;
 import modules.mongo.infrastructure.components.MongoDocumentFormatter;
 
@@ -19,7 +21,7 @@ public abstract class AbstractMongoShellRepository {
 
     public static final int DEFAULT_FIND_LIMIT = 50;
     protected static final int MAX_RESULTS = 1000;
-    protected static final String ADMIN_DATABASE = "admin";
+    protected static final String ADMIN_DATABASE = DbEngineEnum.MONGODB_ADMIN_DATABASE;
 
     protected final MongoDocumentFormatter mongoDocumentFormatter = MongoDocumentFormatter.getInstance();
 

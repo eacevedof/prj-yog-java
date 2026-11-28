@@ -31,6 +31,8 @@ public final class DeleteConnectionService {
      * @throws ConnectionsException
      */
     public DeleteConnectionResultDto invoke(DeleteConnectionDto deleteConnectionDto) {
+        failIfWrongInput(deleteConnectionDto);
+
         ConnectionEntity connectionEntity = connectionsReaderSqliteRepository.getConnectionByUuid(deleteConnectionDto.getConnectionUuid());
         if (connectionEntity == null) {
             throw ConnectionsException.notFoundCustom(__(ConnectionsMessageEnum.CONNECTION_X_NOT_FOUND, deleteConnectionDto.getConnectionUuid()));
@@ -41,5 +43,14 @@ public final class DeleteConnectionService {
             "connectionUuid", connectionEntity.getConnectionUuid(),
             "connectionName", connectionEntity.getConnectionName()
         ));
+    }
+
+    /**
+     * @throws ConnectionsException
+     */
+    private void failIfWrongInput(DeleteConnectionDto deleteConnectionDto) {
+        if (deleteConnectionDto.getConnectionUuid().isEmpty()) {
+            throw ConnectionsException.badRequestCustom(__(ConnectionsMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid"));
+        }
     }
 }

@@ -12,6 +12,7 @@ import javafx.application.Platform;
 
 import modules.shared.application.Primitives;
 
+import modules.explorer.domain.enums.ExplorerKeyEnum;
 import modules.explorer.application.listdatabaseobjects.ListDatabaseObjectsDto;
 import modules.explorer.application.listdatabaseobjects.ListDatabaseObjectsResultDto;
 import modules.explorer.application.listdatabases.ListDatabasesDto;
@@ -93,7 +94,7 @@ public final class SchemaCacheComponent {
                 for (Map<String, Object> column : ListTableColumnsService.getInstance().invoke(ListTableColumnsDto.fromPrimitives(Primitives.of(
                     "connectionUuid", connectionUuid, "sessionKey", sessionKey, "databaseName", databaseName, "tableName", tableName
                 ))).getColumns()) {
-                    names.add(String.valueOf(column.get("column_name")));
+                    names.add(String.valueOf(column.get(ExplorerKeyEnum.COLUMN_NAME)));
                 }
                 columnNamesByTable.put(tableKey, names);
                 return true;

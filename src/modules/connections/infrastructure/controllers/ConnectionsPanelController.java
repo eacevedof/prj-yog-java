@@ -60,6 +60,7 @@ import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.domain.enums.DbEngineEnum;
 import modules.connections.application.cloneconnection.CloneConnectionDto;
 import modules.connections.application.deleteconnection.DeleteConnectionDto;
+import modules.connections.application.listconnections.ListConnectionsDto;
 import modules.connections.application.renameconnection.RenameConnectionDto;
 import modules.connections.application.cloneconnection.CloneConnectionService;
 import modules.connections.application.deleteconnection.DeleteConnectionService;
@@ -383,7 +384,7 @@ public final class ConnectionsPanelController extends AbstractFxController {
     private void loadConnections(String connectionUuidToSelect) {
         List<Map<String, Object>> connections;
         try {
-            connections = ListConnectionsService.getInstance().invoke().getConnections();
+            connections = ListConnectionsService.getInstance().invoke(ListConnectionsDto.fromPrimitives(Primitives.of())).getConnections();
         }
         catch (RuntimeException e) {
             showError(e);
@@ -643,18 +644,19 @@ public final class ConnectionsPanelController extends AbstractFxController {
             HBox row = new HBox(6, plugIcon, EngineIconComponent.getInstance().getIcon(dbEngine), nameLabel);
             row.setAlignment(Pos.CENTER_LEFT);
             if (getBool(connection.get(ConnectionsKeyEnum.IS_PRODUCTION))) {
-                Label productionLabel = new Label("PROD");
+                Label productionLabel = new Label(__("PROD"));
                 productionLabel.getStyleClass().add("production-badge");
                 row.getChildren().add(productionLabel);
             }
 
-            setTooltip(new Tooltip(
-                __(DbEngineEnum.LABELS.getOrDefault(dbEngine, dbEngine)) + "\n"
-                    + getTrimmedString(connection.get(ConnectionsKeyEnum.USER_NAME)) + "@"
-                    + getTrimmedString(connection.get(ConnectionsKeyEnum.HOST)) + ":"
-                    + getTrimmedString(connection.get(ConnectionsKeyEnum.PORT))
-                    + "\n" + (isOpen ? __("Conectada") : __("Sin conexión"))
-            ));
+            setTooltip(new Tooltip(__(
+                "{0}\n{1}@{2}:{3}\n{4}",
+                __(DbEngineEnum.LABELS.getOrDefault(dbEngine, dbEngine)),
+                getTrimmedString(connection.get(ConnectionsKeyEnum.USER_NAME)),
+                getTrimmedString(connection.get(ConnectionsKeyEnum.HOST)),
+                getTrimmedString(connection.get(ConnectionsKeyEnum.PORT)),
+                isOpen ? __("Conectada") : __("Sin conexión")
+            )));
             if (!isOpen) {
                 Label stateLabel = new Label(__("sin conexión"));
                 stateLabel.getStyleClass().add("connection-state");

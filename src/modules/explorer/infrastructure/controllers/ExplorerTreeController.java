@@ -1080,7 +1080,9 @@ public final class ExplorerTreeController extends AbstractFxController implement
         ObjectDefinitionSqlBuilder objectDefinitionSqlBuilder = ObjectDefinitionSqlBuilder.getInstance(dbEngine);
         String definitionSql = objectDefinitionSqlBuilder.getDefinitionSql(explorerNode.type(), explorerNode.databaseName(), explorerNode.name());
         if (definitionSql.isEmpty()) return;
-        menuItems.add(getMenuItem(AppIconEnum.QUERY, __(objectDefinitionSqlBuilder.getMenuLabel(explorerNode.type())), () -> onExecuteInNewTab.accept(definitionSql)));
+        String showCreateLabel = objectDefinitionSqlBuilder.getShowCreateLabel(explorerNode.type());
+        String menuLabel = showCreateLabel.isEmpty() ? __("Ver definición") : showCreateLabel;
+        menuItems.add(getMenuItem(AppIconEnum.QUERY, menuLabel, () -> onExecuteInNewTab.accept(definitionSql)));
     }
 
     private MenuItem getMenuItem(String iconName, String text, Runnable action) {
@@ -1119,17 +1121,17 @@ public final class ExplorerTreeController extends AbstractFxController implement
     }
 
     private <T> void runInBackground(Callable<T> work, Consumer<T> onSucceeded, Consumer<Throwable> onFailed, String threadName) {
-        Task<T> task = new Task<>() {
+        Task<T> backgroundTask = new Task<>() {
             @Override
             protected T call() throws Exception {
                 return work.call();
             }
         };
-        task.setOnSucceeded(event -> onSucceeded.accept(task.getValue()));
-        task.setOnFailed(event -> onFailed.accept(task.getException()));
-        Thread thread = new Thread(task, threadName);
-        thread.setDaemon(true);
-        thread.start();
+        backgroundTask.setOnSucceeded(event -> onSucceeded.accept(backgroundTask.getValue()));
+        backgroundTask.setOnFailed(event -> onFailed.accept(backgroundTask.getException()));
+        Thread daemonThread = new Thread(backgroundTask, threadName);
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 
     /**

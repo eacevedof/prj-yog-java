@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.application.Primitives;
@@ -169,6 +170,6 @@ public final class QueryExecutorJdbcRepository {
     }
 
     private long getElapsedMs(long startNanos) {
-        return (System.nanoTime() - startNanos) / 1_000_000;
+        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
     }
 }

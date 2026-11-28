@@ -181,21 +181,21 @@ public final class RenameDatabaseDialogController extends AbstractFxController {
         setStatus(__("Empezando..."));
         DbCopyProgressTracker dbCopyProgressTracker = DbCopyProgressTracker.getInstance();
         dbCopyProgressTracker.register(renameId, new DialogProgressListener());
-        Task<RenameDatabaseResultDto> task = new Task<>() {
+        Task<RenameDatabaseResultDto> renameDatabaseTask = new Task<>() {
             @Override
             protected RenameDatabaseResultDto call() throws Exception {
                 return RenameDatabaseService.getInstance().invoke(renameDatabaseDto);
             }
         };
-        task.setOnSucceeded(event -> {
+        renameDatabaseTask.setOnSucceeded(event -> {
             dbCopyProgressTracker.unregister(renameId);
             setRunning(false);
-            showResult(task.getValue());
+            showResult(renameDatabaseTask.getValue());
         });
-        task.setOnFailed(event -> {
+        renameDatabaseTask.setOnFailed(event -> {
             dbCopyProgressTracker.unregister(renameId);
             setRunning(false);
-            Throwable throwable = task.getException();
+            Throwable throwable = renameDatabaseTask.getException();
             if (throwable instanceof InterfaceException interfaceException && interfaceException.getCode() == ExceptionEnum.CODE_PRECONDITION_REQUIRED) {
                 setStatus("");
                 if (isDatabaseNameTyped(throwable.getMessage())) runRename(newDatabaseName, true);
@@ -204,9 +204,9 @@ public final class RenameDatabaseDialogController extends AbstractFxController {
             setStatus(getErrorMessage(throwable));
             showError(throwable);
         });
-        Thread thread = new Thread(task, "rename-database");
-        thread.setDaemon(true);
-        thread.start();
+        Thread daemonThread = new Thread(renameDatabaseTask, "rename-database");
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 
     /**
@@ -222,18 +222,18 @@ public final class RenameDatabaseDialogController extends AbstractFxController {
         return nameDialog.showAndWait().map(String::trim).filter(databaseName::equals).isPresent();
     }
 
-    private void showResult(RenameDatabaseResultDto resultDto) {
-        LastDirectoryComponent.getInstance(WorkspaceKeyEnum.SQL_DUMP_DIRECTORY).saveDirectoryOf(new File(resultDto.getFilePath()));
+    private void showResult(RenameDatabaseResultDto renameDatabaseResultDto) {
+        LastDirectoryComponent.getInstance(WorkspaceKeyEnum.SQL_DUMP_DIRECTORY).saveDirectoryOf(new File(renameDatabaseResultDto.getFilePath()));
         progressBar.setProgress(1);
-        String doneMessage = (resultDto.isOriginalDropped()
-            ? __("{0} renombrada a {1}", databaseName, resultDto.getNewDatabaseName())
-            : __("{0} copiada a {1} (la original sigue)", databaseName, resultDto.getNewDatabaseName()))
-            + ": " + __("{0} objetos", resultDto.getObjectCount()) + ", " + __("{0} filas", String.format("%,d", resultDto.getRowCount()))
-            + " " + __("en {0} s.", String.format("%.1f", resultDto.getElapsedMs() / 1000.0))
-            + "\n" + __("Copia de seguridad: {0}", resultDto.getFilePath());
+        String doneMessage = (renameDatabaseResultDto.isOriginalDropped()
+            ? __("{0} renombrada a {1}", databaseName, renameDatabaseResultDto.getNewDatabaseName())
+            : __("{0} copiada a {1} (la original sigue)", databaseName, renameDatabaseResultDto.getNewDatabaseName()))
+            + ": " + __("{0} objetos", renameDatabaseResultDto.getObjectCount()) + ", " + __("{0} filas", String.format("%,d", renameDatabaseResultDto.getRowCount()))
+            + " " + __("en {0} s.", String.format("%.1f", renameDatabaseResultDto.getElapsedMs() / 1000.0))
+            + "\n" + __("Copia de seguridad: {0}", renameDatabaseResultDto.getFilePath());
         setStatus(doneMessage);
         renameButton.setDisable(true);
-        onRenamed.accept(databaseName, resultDto.getNewDatabaseName());
+        onRenamed.accept(databaseName, renameDatabaseResultDto.getNewDatabaseName());
         Alert alert = new Alert(Alert.AlertType.INFORMATION, doneMessage, ButtonType.OK);
         ThemeComponent.getInstance().applyTo(alert);
         alert.setHeaderText(null);

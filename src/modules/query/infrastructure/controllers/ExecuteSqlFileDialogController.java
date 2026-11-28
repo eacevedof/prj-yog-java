@@ -193,20 +193,20 @@ public final class ExecuteSqlFileDialogController extends AbstractFxController {
         setStatus(__("Ejecutando..."));
         SqlFileProgressTracker sqlFileProgressTracker = SqlFileProgressTracker.getInstance();
         sqlFileProgressTracker.register(sessionKey, new DialogProgressListener());
-        Task<ExecuteSqlFileResultDto> task = new Task<>() {
+        Task<ExecuteSqlFileResultDto> executeSqlFileTask = new Task<>() {
             @Override
             protected ExecuteSqlFileResultDto call() throws SQLException {
                 return ExecuteSqlFileService.getInstance().invoke(executeSqlFileDto);
             }
         };
-        task.setOnSucceeded(event -> {
+        executeSqlFileTask.setOnSucceeded(event -> {
             sqlFileProgressTracker.unregister(sessionKey);
-            showResult(task.getValue());
+            showResult(executeSqlFileTask.getValue());
         });
-        task.setOnFailed(event -> {
+        executeSqlFileTask.setOnFailed(event -> {
             sqlFileProgressTracker.unregister(sessionKey);
             setRunning(false);
-            Throwable throwable = task.getException();
+            Throwable throwable = executeSqlFileTask.getException();
             if (throwable instanceof InterfaceException interfaceException && interfaceException.getCode() == ExceptionEnum.CODE_PRECONDITION_REQUIRED) {
                 setStatus("");
                 if (isConfirmed(throwable.getMessage() + ".\n\n" + __("¿Ejecutar igualmente?"))) runFile(true);
@@ -214,21 +214,21 @@ public final class ExecuteSqlFileDialogController extends AbstractFxController {
             }
             setStatus(getErrorMessage(throwable));
         });
-        Thread thread = new Thread(task, "sqlfile-execute");
-        thread.setDaemon(true);
-        thread.start();
+        Thread daemonThread = new Thread(executeSqlFileTask, "sqlfile-execute");
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 
-    private void showResult(ExecuteSqlFileResultDto resultDto) {
+    private void showResult(ExecuteSqlFileResultDto executeSqlFileResultDto) {
         setRunning(false);
-        this.executeSqlFileResultDto = resultDto;
-        errorsButton.setDisable(resultDto.getErrorCount() == 0);
-        if (!resultDto.isCancelled() && !resultDto.isAborted()) progressBar.setProgress(1);
-        String outcome = resultDto.isCancelled() ? __("Parada.") : resultDto.isAborted() ? __("Parada en un error.") : __("Hecho.");
-        setStatus(outcome + " " + __("{0} sentencias ejecutadas", String.format("%,d", resultDto.getExecutedCount()))
-            + (resultDto.getErrorCount() > 0 ? ", " + __("{0} con error", resultDto.getErrorCount()) : "")
-            + " " + __("en {0} s.", String.format("%.1f", resultDto.getElapsedMs() / 1000.0)));
-        if (resultDto.getErrorCount() > 0) onShowErrors();
+        this.executeSqlFileResultDto = executeSqlFileResultDto;
+        errorsButton.setDisable(executeSqlFileResultDto.getErrorCount() == 0);
+        if (!executeSqlFileResultDto.isCancelled() && !executeSqlFileResultDto.isAborted()) progressBar.setProgress(1);
+        String outcome = executeSqlFileResultDto.isCancelled() ? __("Parada.") : executeSqlFileResultDto.isAborted() ? __("Parada en un error.") : __("Hecho.");
+        setStatus(outcome + " " + __("{0} sentencias ejecutadas", String.format("%,d", executeSqlFileResultDto.getExecutedCount()))
+            + (executeSqlFileResultDto.getErrorCount() > 0 ? ", " + __("{0} con error", executeSqlFileResultDto.getErrorCount()) : "")
+            + " " + __("en {0} s.", String.format("%.1f", executeSqlFileResultDto.getElapsedMs() / 1000.0)));
+        if (executeSqlFileResultDto.getErrorCount() > 0) onShowErrors();
     }
 
     @FXML

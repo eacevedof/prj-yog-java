@@ -13,6 +13,9 @@ import com.mongodb.connection.ClusterConnectionMode;
 
 import org.bson.Document;
 
+import modules.shared.domain.enums.SharedConfigEnum;
+
+import modules.connections.domain.enums.DbEngineEnum;
 import modules.connections.domain.entities.ConnectionEntity;
 
 /**
@@ -24,8 +27,8 @@ import modules.connections.domain.entities.ConnectionEntity;
 public final class MongoClientComponent {
 
     private static final int CONNECT_TIMEOUT_MS = 8000;
-    private static final String APPLICATION_NAME = "multidbs";
-    private static final String DEFAULT_AUTH_SOURCE = "admin";
+    private static final String APPLICATION_NAME = SharedConfigEnum.APP_NAME;
+    private static final String DEFAULT_AUTH_SOURCE = DbEngineEnum.MONGODB_ADMIN_DATABASE;
 
     private MongoClientComponent() {
     }

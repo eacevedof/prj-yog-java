@@ -16,6 +16,7 @@ import modules.workspace.domain.enums.WorkspaceKeyEnum;
 import modules.workspace.application.getquerytabs.GetQueryTabsDto;
 import modules.workspace.application.getquerytabs.GetQueryTabsResultDto;
 import modules.workspace.application.getworkspacestate.GetWorkspaceStateDto;
+import modules.workspace.application.resetworkspace.ResetWorkspaceDto;
 import modules.workspace.application.resetworkspace.ResetWorkspaceResultDto;
 import modules.workspace.application.savequerytabs.SaveQueryTabsDto;
 import modules.workspace.application.saveworkspacestate.SaveWorkspaceStateDto;
@@ -101,7 +102,7 @@ final class WorkspaceStateServicesTest extends AbstractTestCase {
         saveQueryTabs("db_mypromos", List.of(getQueryTab("Query 1", "SELECT 1", true), getQueryTab("informes", "SELECT 2", false)));
         saveQueryTabs("other_db", List.of(getQueryTab("Query 1", "SELECT 3", true)), "conn-ws-2");
 
-        ResetWorkspaceResultDto resetResult = ResetWorkspaceService.getInstance().invoke();
+        ResetWorkspaceResultDto resetResult = ResetWorkspaceService.getInstance().invoke(ResetWorkspaceDto.fromPrimitives(Primitives.of()));
 
         // 4 estados + la BD activa de las dos conexiones; 3 pestañas
         assertEquals(6, resetResult.getDeletedStates());
@@ -115,7 +116,7 @@ final class WorkspaceStateServicesTest extends AbstractTestCase {
         assertEquals("", restored.getActiveDatabase());
         assertTrue(getQueryTabs("conn-ws-2").getQueryTabs().isEmpty());
 
-        ResetWorkspaceResultDto secondReset = ResetWorkspaceService.getInstance().invoke();
+        ResetWorkspaceResultDto secondReset = ResetWorkspaceService.getInstance().invoke(ResetWorkspaceDto.fromPrimitives(Primitives.of()));
         assertEquals(0, secondReset.getDeletedStates());
         assertEquals(0, secondReset.getDeletedQueryTabs());
     }

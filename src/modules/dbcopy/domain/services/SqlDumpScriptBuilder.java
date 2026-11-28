@@ -3,6 +3,7 @@ package modules.dbcopy.domain.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import modules.shared.domain.enums.SharedConfigEnum;
 import modules.shared.domain.services.SqlIdentifierQuoter;
 
 import modules.dbcopy.domain.enums.DbCopyObjectTypeEnum;
@@ -27,14 +28,15 @@ public final class SqlDumpScriptBuilder {
     }
 
     /**
-     * Comentarios con origen y fecha (versionInfo vacio = sin la linea de version) y los SET de mysqldump: utf8mb4,
-     * zona UTC (los TIMESTAMP viajan como texto), sin modo estricto y, si se pide, sin claves foraneas.
+     * Comentarios con la BD y la fecha, ya con su etiqueta en el idioma de la app (versionInfo vacio = sin la linea de
+     * version) y los SET de mysqldump: utf8mb4, zona UTC (los TIMESTAMP viajan como texto), sin modo estricto y, si se
+     * pide, sin claves foraneas.
      */
-    public String getHeader(String databaseName, String versionInfo, String nowDt, boolean isForeignKeyChecksOff) {
+    public String getHeader(String databaseText, String dateText, String versionInfo, boolean isForeignKeyChecksOff) {
         List<String> lines = new ArrayList<>(List.of(
-            "-- multidbs SQL Dump",
-            getCommentLine("BD: " + databaseName),
-            getCommentLine("Fecha: " + nowDt)
+            "-- " + SharedConfigEnum.APP_NAME + " SQL Dump",
+            getCommentLine(databaseText),
+            getCommentLine(dateText)
         ));
         if (!versionInfo.isEmpty()) lines.add(getCommentLine(versionInfo));
         lines.addAll(List.of(
@@ -74,10 +76,10 @@ public final class SqlDumpScriptBuilder {
     }
 
     /**
-     * "-- Datos de `clientes`" con una linea en blanco antes: abre los INSERT de una tabla.
+     * "-- Datos de `clientes`" con una linea en blanco antes: abre los INSERT de una tabla. La etiqueta llega ya traducida.
      */
-    public String getDataComment(String tableName) {
-        return NEW_LINE + getCommentLine("Datos de " + sqlIdentifierQuoter.getQuoted(tableName)) + NEW_LINE;
+    public String getDataComment(String label, String tableName) {
+        return NEW_LINE + getCommentLine(label + " " + sqlIdentifierQuoter.getQuoted(tableName)) + NEW_LINE;
     }
 
     /**

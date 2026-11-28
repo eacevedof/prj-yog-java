@@ -28,6 +28,8 @@ import java.util.regex.Pattern;
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.domain.services.SqlLiteralQuoter;
 
+import modules.connections.domain.enums.DbEngineEnum;
+
 /**
  * Una sesion contra el MySQL a traves del tunel HTTP, presentada como java.sql.Connection: asi el arbol, el editor,
  * la pestaña Datos y el autocompletado funcionan sin saber que no hay JDBC detras. Solo se implementa lo que usa
@@ -51,7 +53,7 @@ public final class HttpTunnelSession {
         this.sqlDialect = SqlDialect.getInstance(dbEngine);
         String database = initialDatabase == null ? "" : initialDatabase;
         // como por JDBC: una conexion de PostgreSQL sin BD va a "postgres"
-        this.currentDatabase = database.isEmpty() && sqlDialect.isPgsql() ? "postgres" : database;
+        this.currentDatabase = database.isEmpty() && sqlDialect.isPgsql() ? DbEngineEnum.PGSQL_DEFAULT_DATABASE : database;
     }
 
     /**

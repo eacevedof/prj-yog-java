@@ -345,3 +345,33 @@ msgstr "Tussen verschillende engines worden alleen tabellen gekopieerd (vertaald
 
 msgid "Renombrando: espera a que acabe, no se puede parar a medias"
 msgstr "Hernoemen: wacht tot het klaar is, het kan niet halverwege worden gestopt"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "ERROR"
+msgstr "FOUT"
+
+msgid "({0} filas)"
+msgstr "({0} rijen)"
+
+msgid "BD: {0}"
+msgstr "Database: {0}"
+
+msgid "Fecha: {0}"
+msgstr "Datum: {0}"
+
+msgid "Datos de"
+msgstr "Gegevens van"
+
+msgid "Procedimiento"
+msgstr "Procedure"
+
+msgid "Función"
+msgstr "Functie"
+
+msgid "Trigger"
+msgstr "Trigger"
+
+msgid "Evento"
+msgstr "Event"

@@ -3,6 +3,7 @@ package modules.connections.domain.enums;
 public final class ConnectionsMessageEnum {
 
     public static final String FIELD_IS_REQUIRED = "field is required";
+    public static final String FIELD_IS_REQUIRED_X = "{0} is required";
     public static final String MAX_LENGTH_IS_X = "max length is {0}";
     public static final String ALLOWED_VALUES_ARE_X = "allowed values are {0}";
     public static final String VALUE_BETWEEN_X_AND_X = "value must be between {0} and {1}";

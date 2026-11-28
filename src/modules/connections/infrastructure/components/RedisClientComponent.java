@@ -5,6 +5,7 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisClientConfig;
 
+import modules.shared.domain.enums.SharedConfigEnum;
 import static modules.shared.application.Primitives.getInt;
 
 import modules.connections.domain.entities.ConnectionEntity;
@@ -16,7 +17,7 @@ import modules.connections.domain.entities.ConnectionEntity;
 public final class RedisClientComponent {
 
     private static final int CONNECT_TIMEOUT_MS = 8000;
-    private static final String CLIENT_NAME = "multidbs";
+    private static final String CLIENT_NAME = SharedConfigEnum.APP_NAME;
 
     private RedisClientComponent() {
     }

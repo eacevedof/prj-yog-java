@@ -2,6 +2,7 @@ package modules.redis.application.executecommand;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
@@ -75,7 +76,7 @@ public final class ExecuteRedisCommandService {
         return ExecuteRedisCommandResultDto.fromPrimitives(Primitives.of(
             "output", output,
             "isError", isError,
-            "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000,
+            "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos),
             "currentDatabase", redisWriterRepository.getCurrentDatabase()
         ));
     }

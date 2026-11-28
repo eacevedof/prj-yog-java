@@ -2,6 +2,7 @@ package modules.explorer.application.createdatabase;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.application.Primitives;
 
@@ -72,7 +73,7 @@ public final class CreateDatabaseService {
                 "connectionUuid", createDatabaseDto.getConnectionUuid(),
                 "databaseName", createDatabaseDto.getDatabaseName(),
                 "sqlQuery", createSql,
-                "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000,
+                "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos),
                 "hasError", hasError
             )));
         }

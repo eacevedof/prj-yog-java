@@ -19,6 +19,7 @@ import org.bson.Document;
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
 
+import modules.connections.domain.enums.DbEngineEnum;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelClient;
 import modules.connections.infrastructure.components.httptunnel.HttpTunnelResult;
 
@@ -34,7 +35,7 @@ import modules.connections.infrastructure.components.httptunnel.HttpTunnelResult
  */
 final class MongoHttpTunnelCommands {
 
-    private static final String ADMIN_DATABASE = "admin";
+    private static final String ADMIN_DATABASE = DbEngineEnum.MONGODB_ADMIN_DATABASE;
     private static final int MAX_TIME_EXPIRED_CODE = 50;
     // 2003: destino fuera de YOG_ALLOWED_HOSTS o sin conexion con MongoDB
     private static final int CONNECTION_ERROR_CODE = 2003;

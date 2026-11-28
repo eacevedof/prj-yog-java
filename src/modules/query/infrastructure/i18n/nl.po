@@ -567,3 +567,6 @@ msgstr "Vernieuwen"
 
 msgid "Volver a leer el historial (F5): lo lanzado desde el árbol (DROP, duplicar...) aparece al refrescar"
 msgstr "Geschiedenis opnieuw lezen (F5): wat vanuit de boom is uitgevoerd (DROP, dupliceren...) verschijnt na vernieuwen"
+
+msgid "Query: {0}"
+msgstr "Query: {0}"

@@ -220,20 +220,20 @@ public final class QueryHistoryController extends AbstractFxController {
         // la misma carpeta que el Volcado SQL: los .sql exportados quedan juntos
         LastDirectoryComponent lastDirectoryComponent = LastDirectoryComponent.getInstance(WorkspaceKeyEnum.SQL_DUMP_DIRECTORY);
         fileChooser.setInitialDirectory(lastDirectoryComponent.getDirectory());
-        File file = fileChooser.showSaveDialog(historyTableView.getScene().getWindow());
-        if (file == null) return;
-        lastDirectoryComponent.saveDirectoryOf(file);
+        File sqlExportFile = fileChooser.showSaveDialog(historyTableView.getScene().getWindow());
+        if (sqlExportFile == null) return;
+        lastDirectoryComponent.saveDirectoryOf(sqlExportFile);
         try {
             ExportQueryHistoryResultDto exportQueryHistoryResultDto = ExportQueryHistoryService.getInstance().invoke(ExportQueryHistoryDto.fromPrimitives(Primitives.of(
                 "connectionUuid", getFilterConnectionUuid(),
                 "searchText", searchField.getText(),
                 "dbEngine", dbEngine,
-                "filePath", file.getAbsolutePath()
+                "filePath", sqlExportFile.getAbsolutePath()
             )));
             countLabel.setText(__("Exportadas {0} ejecución(es) a {1}", exportQueryHistoryResultDto.getExportedCount(), exportQueryHistoryResultDto.getFilePath()));
         }
         catch (IOException e) {
-            showErrorMessage(__("No se pudo escribir {0}: {1}", file.getAbsolutePath(), e.getMessage()));
+            showErrorMessage(__("No se pudo escribir {0}: {1}", sqlExportFile.getAbsolutePath(), e.getMessage()));
         }
         catch (RuntimeException e) {
             showError(e);

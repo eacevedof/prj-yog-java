@@ -5,6 +5,7 @@ import modules.shared.application.Primitives;
 import static core.config.Global.__;
 
 import modules.workspace.domain.enums.WorkspaceKeyEnum;
+import modules.workspace.domain.enums.WorkspaceMessageEnum;
 import modules.workspace.infrastructure.repositories.WorkspaceStateSqliteRepository;
 import modules.workspace.domain.exceptions.WorkspaceException;
 
@@ -24,11 +25,19 @@ public final class GetWorkspaceStateService {
      * @throws WorkspaceException
      */
     public GetWorkspaceStateResultDto invoke(GetWorkspaceStateDto getWorkspaceStateDto) {
+        failIfWrongInput(getWorkspaceStateDto);
+
+        String stateValue = WorkspaceStateSqliteRepository.getInstance().getStateValue(getWorkspaceStateDto.getStateKey());
+        return GetWorkspaceStateResultDto.fromPrimitives(Primitives.of("stateValue", stateValue == null ? "" : stateValue));
+    }
+
+    /**
+     * @throws WorkspaceException
+     */
+    private void failIfWrongInput(GetWorkspaceStateDto getWorkspaceStateDto) {
         String stateKey = getWorkspaceStateDto.getStateKey();
         if (!WorkspaceKeyEnum.isStateKey(stateKey)) {
-            throw WorkspaceException.badRequestCustom(__("Unknown workspace state {0}", stateKey));
+            throw WorkspaceException.badRequestCustom(__(WorkspaceMessageEnum.UNKNOWN_WORKSPACE_STATE_X, stateKey));
         }
-        String stateValue = WorkspaceStateSqliteRepository.getInstance().getStateValue(stateKey);
-        return GetWorkspaceStateResultDto.fromPrimitives(Primitives.of("stateValue", stateValue == null ? "" : stateValue));
     }
 }

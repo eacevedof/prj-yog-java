@@ -38,7 +38,7 @@ public final class FolderOpenerComponent {
         File folder = getExistingFolder(filePath);
         if (folder == null) throw new IllegalArgumentException(filePath);
         File file = new File(filePath.trim()).getAbsoluteFile();
-        Thread thread = new Thread(() -> {
+        Thread daemonThread = new Thread(() -> {
             try {
                 if (IS_WINDOWS && file.isFile()) {
                     new ProcessBuilder("explorer.exe", "/select,", file.getPath()).start();
@@ -54,7 +54,7 @@ public final class FolderOpenerComponent {
                 System.err.println("multidbs: no se pudo abrir la carpeta " + folder + ": " + e.getMessage());
             }
         }, "open-folder");
-        thread.setDaemon(true);
-        thread.start();
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 }

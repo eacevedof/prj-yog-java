@@ -19,7 +19,7 @@ public final class EncryptStoredSecretsService {
         return new EncryptStoredSecretsService();
     }
 
-    public EncryptStoredSecretsResultDto invoke() {
+    public EncryptStoredSecretsResultDto invoke(EncryptStoredSecretsDto encryptStoredSecretsDto) {
         ConnectionsReaderSqliteRepository connectionsReaderSqliteRepository = ConnectionsReaderSqliteRepository.getInstance();
         ConnectionsWriterSqliteRepository connectionsWriterSqliteRepository = ConnectionsWriterSqliteRepository.getInstance();
         int encryptedConnections = 0;

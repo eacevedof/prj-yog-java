@@ -1,10 +1,12 @@
 package modules.workspace.application.saveworkspacestate;
 
+import modules.shared.application.Primitives;
 import modules.shared.infrastructure.components.date.DateTimer;
 
 import static core.config.Global.__;
 
 import modules.workspace.domain.enums.WorkspaceKeyEnum;
+import modules.workspace.domain.enums.WorkspaceMessageEnum;
 import modules.workspace.infrastructure.repositories.WorkspaceStateSqliteRepository;
 import modules.workspace.domain.exceptions.WorkspaceException;
 
@@ -24,12 +26,13 @@ public final class SaveWorkspaceStateService {
     /**
      * @throws WorkspaceException
      */
-    public void invoke(SaveWorkspaceStateDto saveWorkspaceStateDto) {
+    public SaveWorkspaceStateResultDto invoke(SaveWorkspaceStateDto saveWorkspaceStateDto) {
         failIfWrongInput(saveWorkspaceStateDto);
 
         WorkspaceStateSqliteRepository.getInstance().upsertState(
             saveWorkspaceStateDto.getStateKey(), saveWorkspaceStateDto.getStateValue(), DateTimer.getInstance().getNowDt()
         );
+        return SaveWorkspaceStateResultDto.fromPrimitives(Primitives.of());
     }
 
     /**
@@ -38,10 +41,10 @@ public final class SaveWorkspaceStateService {
     private void failIfWrongInput(SaveWorkspaceStateDto saveWorkspaceStateDto) {
         String stateKey = saveWorkspaceStateDto.getStateKey();
         if (!WorkspaceKeyEnum.isStateKey(stateKey)) {
-            throw WorkspaceException.badRequestCustom(__("Unknown workspace state {0}", stateKey));
+            throw WorkspaceException.badRequestCustom(__(WorkspaceMessageEnum.UNKNOWN_WORKSPACE_STATE_X, stateKey));
         }
         if (saveWorkspaceStateDto.getStateValue().length() > WorkspaceKeyEnum.MAX_STATE_VALUE_LENGTH) {
-            throw WorkspaceException.badRequestCustom(__("{0} is too long", stateKey));
+            throw WorkspaceException.badRequestCustom(__(WorkspaceMessageEnum.FIELD_X_IS_TOO_LONG, stateKey));
         }
     }
 }

@@ -29,10 +29,8 @@ public final class ListMongoCollectionsService {
      * @throws modules.connections.domain.exceptions.ConnectionsException
      */
     public ListMongoCollectionsResultDto invoke(ListMongoCollectionsDto listMongoCollectionsDto) {
-        if (listMongoCollectionsDto.getConnectionUuid().isEmpty() || listMongoCollectionsDto.getSessionKey().isEmpty()
-            || listMongoCollectionsDto.getDatabaseName().isEmpty()) {
-            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid, sessionKey, databaseName"));
-        }
+        failIfWrongInput(listMongoCollectionsDto);
+
         try {
             return ListMongoCollectionsResultDto.fromPrimitives(Primitives.of(
                 "collections",
@@ -48,6 +46,16 @@ public final class ListMongoCollectionsService {
         }
         catch (MongoException e) {
             throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.COULD_NOT_READ_X_X, listMongoCollectionsDto.getDatabaseName(), e.getMessage()));
+        }
+    }
+
+    /**
+     * @throws MongoModuleException
+     */
+    private void failIfWrongInput(ListMongoCollectionsDto listMongoCollectionsDto) {
+        if (listMongoCollectionsDto.getConnectionUuid().isEmpty() || listMongoCollectionsDto.getSessionKey().isEmpty()
+            || listMongoCollectionsDto.getDatabaseName().isEmpty()) {
+            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid, sessionKey, databaseName"));
         }
     }
 }

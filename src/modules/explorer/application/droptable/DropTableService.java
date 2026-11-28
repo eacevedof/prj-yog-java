@@ -2,6 +2,7 @@ package modules.explorer.application.droptable;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.application.Primitives;
 
@@ -56,7 +57,7 @@ public final class DropTableService {
                 "connectionUuid", dropTableDto.getConnectionUuid(),
                 "databaseName", dropTableDto.getDatabaseName(),
                 "sqlQuery", dropSql,
-                "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000,
+                "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos),
                 "hasError", hasError
             )));
         }

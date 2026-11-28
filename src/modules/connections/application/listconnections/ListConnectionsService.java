@@ -21,7 +21,7 @@ public final class ListConnectionsService {
         return new ListConnectionsService();
     }
 
-    public ListConnectionsResultDto invoke() {
+    public ListConnectionsResultDto invoke(ListConnectionsDto listConnectionsDto) {
         List<Map<String, Object>> connections = new ArrayList<>();
         for (ConnectionEntity connectionEntity : ConnectionsReaderSqliteRepository.getInstance().getAllConnections()) {
             connections.add(connectionEntity.toPrimitives());

@@ -14,6 +14,7 @@ import org.bson.Document;
 import static core.config.Global.__;
 
 import modules.connections.domain.enums.ConnectionsMessageEnum;
+import modules.connections.domain.enums.DbEngineEnum;
 import modules.connections.domain.entities.ConnectionEntity;
 import modules.connections.infrastructure.components.MongoClientComponent;
 import modules.connections.infrastructure.components.SshTunnelComponent;
@@ -134,7 +135,7 @@ public final class MongoSessionFactory {
      */
     private boolean isAlive(MongoClient mongoClient) {
         try {
-            mongoClient.getDatabase("admin").runCommand(new Document("ping", 1));
+            mongoClient.getDatabase(DbEngineEnum.MONGODB_ADMIN_DATABASE).runCommand(new Document("ping", 1));
             return true;
         }
         catch (MongoException e) {

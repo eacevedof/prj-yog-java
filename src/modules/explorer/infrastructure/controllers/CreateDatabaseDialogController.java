@@ -142,15 +142,15 @@ public final class CreateDatabaseDialogController extends AbstractFxController {
         GetCreateDatabaseOptionsDto getCreateDatabaseOptionsDto = GetCreateDatabaseOptionsDto.fromPrimitives(Primitives.of(
             "connectionUuid", connectionUuid, "sessionKey", sessionKey
         ));
-        Task<GetCreateDatabaseOptionsResultDto> task = new Task<>() {
+        Task<GetCreateDatabaseOptionsResultDto> getCreateDatabaseOptionsTask = new Task<>() {
             @Override
             protected GetCreateDatabaseOptionsResultDto call() throws SQLException {
                 return GetCreateDatabaseOptionsService.getInstance().invoke(getCreateDatabaseOptionsDto);
             }
         };
-        task.setOnSucceeded(event -> showOptions(task.getValue()));
-        task.setOnFailed(event -> setErrorStatus(getErrorMessage(task.getException())));
-        startDaemon(task, "create-database-read");
+        getCreateDatabaseOptionsTask.setOnSucceeded(event -> showOptions(getCreateDatabaseOptionsTask.getValue()));
+        getCreateDatabaseOptionsTask.setOnFailed(event -> setErrorStatus(getErrorMessage(getCreateDatabaseOptionsTask.getException())));
+        startDaemon(getCreateDatabaseOptionsTask, "create-database-read");
     }
 
     private void showOptions(GetCreateDatabaseOptionsResultDto getCreateDatabaseOptionsResultDto) {
@@ -287,19 +287,19 @@ public final class CreateDatabaseDialogController extends AbstractFxController {
         )));
         createButton.setDisable(true);
         setStatus(__("Creando..."));
-        Task<CreateDatabaseResultDto> task = new Task<>() {
+        Task<CreateDatabaseResultDto> createDatabaseTask = new Task<>() {
             @Override
             protected CreateDatabaseResultDto call() throws SQLException {
                 return CreateDatabaseService.getInstance().invoke(createDatabaseDto);
             }
         };
-        task.setOnSucceeded(event -> {
-            onCreated.accept(task.getValue().getDatabaseName());
+        createDatabaseTask.setOnSucceeded(event -> {
+            onCreated.accept(createDatabaseTask.getValue().getDatabaseName());
             ((Stage) closeButton.getScene().getWindow()).close();
         });
-        task.setOnFailed(event -> {
+        createDatabaseTask.setOnFailed(event -> {
             createButton.setDisable(false);
-            Throwable throwable = task.getException();
+            Throwable throwable = createDatabaseTask.getException();
             if (throwable instanceof InterfaceException interfaceException && interfaceException.getCode() == ExceptionEnum.CODE_PRECONDITION_REQUIRED) {
                 setStatus("");
                 if (isConfirmed(throwable.getMessage() + ".\n\n" + __("¿Crear igualmente?"))) createDatabase(true);
@@ -307,7 +307,7 @@ public final class CreateDatabaseDialogController extends AbstractFxController {
             }
             setErrorStatus(getErrorMessage(throwable));
         });
-        startDaemon(task, "create-database-save");
+        startDaemon(createDatabaseTask, "create-database-save");
     }
 
     @FXML
@@ -325,10 +325,10 @@ public final class CreateDatabaseDialogController extends AbstractFxController {
         statusLabel.getStyleClass().add("form-message-error");
     }
 
-    private void startDaemon(Task<?> task, String threadName) {
-        Thread thread = new Thread(task, threadName);
-        thread.setDaemon(true);
-        thread.start();
+    private void startDaemon(Task<?> backgroundTask, String threadName) {
+        Thread daemonThread = new Thread(backgroundTask, threadName);
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 
     /**

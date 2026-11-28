@@ -2,6 +2,7 @@ package modules.mongo.application.finddocuments;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import com.mongodb.MongoException;
 import com.mongodb.MongoExecutionTimeoutException;
@@ -53,7 +54,7 @@ public final class FindMongoDocumentsService {
             List<Document> documents = mongoReaderRepository.findDocuments(
                 databaseName, collectionName, filter, sort, findMongoDocumentsDto.getSkip(), findMongoDocumentsDto.getLimit()
             );
-            long elapsedMs = (System.nanoTime() - startNanos) / 1_000_000;
+            long elapsedMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
             long totalCount;
             try {
                 totalCount = mongoReaderRepository.countDocuments(databaseName, collectionName, filter);
@@ -61,10 +62,10 @@ public final class FindMongoDocumentsService {
             catch (MongoExecutionTimeoutException e) {
                 totalCount = -1;
             }
-            Map<String, Object> table = mongoDocumentFormatter.getTable(documents);
+            Map<String, Object> documentsTable = mongoDocumentFormatter.getTable(documents);
             return FindMongoDocumentsResultDto.fromPrimitives(Primitives.of(
-                "columns", table.get("columns"),
-                "rows", table.get("rows"),
+                "columns", documentsTable.get("columns"),
+                "rows", documentsTable.get("rows"),
                 "documentsJson", documents.stream().map(mongoDocumentFormatter::getPrettyJson).toList(),
                 "totalCount", totalCount,
                 "elapsedMs", elapsedMs

@@ -9,10 +9,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
 import modules.shared.domain.enums.AppEnvKeyEnum;
+import modules.shared.application.Primitives;
 import modules.shared.infrastructure.factories.DbFactory;
 
 import core.config.Global;
 
+import modules.devops.application.runmigrations.RunMigrationsDto;
 import modules.devops.application.runmigrations.RunMigrationsService;
 
 /**
@@ -31,7 +33,7 @@ public abstract class AbstractTestCase {
             throw new UncheckedIOException(e);
         }
         Global.putenv(AppEnvKeyEnum.JAVAYOG_HOME, testHome.toString());
-        RunMigrationsService.getInstance().invoke();
+        RunMigrationsService.getInstance().invoke(RunMigrationsDto.fromPrimitives(Primitives.of()));
     }
 
     protected void assertEquals(Object expected, Object actual) {

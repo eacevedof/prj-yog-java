@@ -24,7 +24,7 @@ public final class RecordQueryHistoryService {
         return new RecordQueryHistoryService();
     }
 
-    public void invoke(RecordQueryHistoryDto recordQueryHistoryDto) {
+    public RecordQueryHistoryResultDto invoke(RecordQueryHistoryDto recordQueryHistoryDto) {
         try {
             ConnectionEntity connectionEntity = ConnectionsReaderSqliteRepository.getInstance().getConnectionByUuid(recordQueryHistoryDto.getConnectionUuid());
             QueryHistoryWriterSqliteRepository queryHistoryWriterSqliteRepository = QueryHistoryWriterSqliteRepository.getInstance();
@@ -44,5 +44,6 @@ public final class RecordQueryHistoryService {
             // el historial no bloquea la operacion: se pierde esta fila. Cualquier fallo, no solo el de SQLite: se llama
             // desde finally y una excepcion aqui taparia el error original de la operacion
         }
+        return RecordQueryHistoryResultDto.fromPrimitives(Primitives.of());
     }
 }

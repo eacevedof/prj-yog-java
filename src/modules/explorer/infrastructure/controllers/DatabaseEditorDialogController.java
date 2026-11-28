@@ -112,15 +112,15 @@ public final class DatabaseEditorDialogController extends AbstractFxController {
         GetDatabaseOptionsDto getDatabaseOptionsDto = GetDatabaseOptionsDto.fromPrimitives(Primitives.of(
             "connectionUuid", connectionUuid, "sessionKey", sessionKey, "databaseName", databaseName
         ));
-        Task<GetDatabaseOptionsResultDto> task = new Task<>() {
+        Task<GetDatabaseOptionsResultDto> getDatabaseOptionsTask = new Task<>() {
             @Override
             protected GetDatabaseOptionsResultDto call() throws SQLException {
                 return GetDatabaseOptionsService.getInstance().invoke(getDatabaseOptionsDto);
             }
         };
-        task.setOnSucceeded(event -> showOptions(task.getValue()));
-        task.setOnFailed(event -> setStatus(getErrorMessage(task.getException())));
-        startDaemon(task, "database-editor-read");
+        getDatabaseOptionsTask.setOnSucceeded(event -> showOptions(getDatabaseOptionsTask.getValue()));
+        getDatabaseOptionsTask.setOnFailed(event -> setStatus(getErrorMessage(getDatabaseOptionsTask.getException())));
+        startDaemon(getDatabaseOptionsTask, "database-editor-read");
     }
 
     private void showOptions(GetDatabaseOptionsResultDto resultDto) {
@@ -188,19 +188,19 @@ public final class DatabaseEditorDialogController extends AbstractFxController {
         ));
         saveButton.setDisable(true);
         setStatus(__("Guardando..."));
-        Task<AlterDatabaseResultDto> task = new Task<>() {
+        Task<AlterDatabaseResultDto> alterDatabaseTask = new Task<>() {
             @Override
             protected AlterDatabaseResultDto call() throws SQLException {
                 return AlterDatabaseService.getInstance().invoke(alterDatabaseDto);
             }
         };
-        task.setOnSucceeded(event -> {
+        alterDatabaseTask.setOnSucceeded(event -> {
             onSaved.accept(original.databaseName());
             ((Stage) closeButton.getScene().getWindow()).close();
         });
-        task.setOnFailed(event -> {
+        alterDatabaseTask.setOnFailed(event -> {
             saveButton.setDisable(false);
-            Throwable throwable = task.getException();
+            Throwable throwable = alterDatabaseTask.getException();
             if (throwable instanceof InterfaceException interfaceException && interfaceException.getCode() == ExceptionEnum.CODE_PRECONDITION_REQUIRED) {
                 setStatus("");
                 if (isConfirmed(throwable.getMessage() + ".\n\n" + __("¿Guardar igualmente?"))) saveDatabase(true);
@@ -209,7 +209,7 @@ public final class DatabaseEditorDialogController extends AbstractFxController {
             setStatus(getErrorMessage(throwable));
             showError(throwable);
         });
-        startDaemon(task, "database-editor-save");
+        startDaemon(alterDatabaseTask, "database-editor-save");
     }
 
     @FXML
@@ -221,9 +221,9 @@ public final class DatabaseEditorDialogController extends AbstractFxController {
         statusLabel.setText(status);
     }
 
-    private void startDaemon(Task<?> task, String threadName) {
-        Thread thread = new Thread(task, threadName);
-        thread.setDaemon(true);
-        thread.start();
+    private void startDaemon(Task<?> backgroundTask, String threadName) {
+        Thread daemonThread = new Thread(backgroundTask, threadName);
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 }

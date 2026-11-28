@@ -312,3 +312,33 @@ msgstr "Between different engines only tables are copied (translated types, prim
 
 msgid "Renombrando: espera a que acabe, no se puede parar a medias"
 msgstr "Renaming: wait until it finishes, it cannot be stopped halfway"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "ERROR"
+msgstr "ERROR"
+
+msgid "({0} filas)"
+msgstr "({0} rows)"
+
+msgid "BD: {0}"
+msgstr "Database: {0}"
+
+msgid "Fecha: {0}"
+msgstr "Date: {0}"
+
+msgid "Datos de"
+msgstr "Data for"
+
+msgid "Procedimiento"
+msgstr "Procedure"
+
+msgid "Función"
+msgstr "Function"
+
+msgid "Trigger"
+msgstr "Trigger"
+
+msgid "Evento"
+msgstr "Event"

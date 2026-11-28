@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import modules.shared.domain.services.SqlDialect;
 import modules.shared.domain.services.SqlErrorCode;
@@ -173,7 +174,7 @@ public final class ExecuteQueryService {
             "results", results,
             "currentDatabase", currentDatabase,
             "isCancelled", runningStatementsComponent.isCancelled(executeQueryDto.getSessionKey()),
-            "elapsedMs", (System.nanoTime() - startNanos) / 1_000_000
+            "elapsedMs", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos)
         ));
     }
 

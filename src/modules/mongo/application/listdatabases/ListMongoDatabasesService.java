@@ -32,9 +32,8 @@ public final class ListMongoDatabasesService {
      * @throws modules.connections.domain.exceptions.ConnectionsException
      */
     public ListMongoDatabasesResultDto invoke(ListMongoDatabasesDto listMongoDatabasesDto) {
-        if (listMongoDatabasesDto.getConnectionUuid().isEmpty() || listMongoDatabasesDto.getSessionKey().isEmpty()) {
-            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid, sessionKey"));
-        }
+        failIfWrongInput(listMongoDatabasesDto);
+
         ConnectionEntity connectionEntity = ConnectionsReaderSqliteRepository.getInstance().getConnectionByUuid(listMongoDatabasesDto.getConnectionUuid());
         String defaultDatabase = connectionEntity == null ? "" : connectionEntity.getDatabaseName();
         try {
@@ -52,6 +51,15 @@ public final class ListMongoDatabasesService {
         }
         catch (MongoException e) {
             throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.COULD_NOT_READ_X_X, "databases", e.getMessage()));
+        }
+    }
+
+    /**
+     * @throws MongoModuleException
+     */
+    private void failIfWrongInput(ListMongoDatabasesDto listMongoDatabasesDto) {
+        if (listMongoDatabasesDto.getConnectionUuid().isEmpty() || listMongoDatabasesDto.getSessionKey().isEmpty()) {
+            throw MongoModuleException.badRequestCustom(__(MongoMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid, sessionKey"));
         }
     }
 }

@@ -60,6 +60,7 @@ import modules.connections.infrastructure.controllers.ConnectionsPanelController
 
 import modules.workspace.domain.enums.WorkspaceKeyEnum;
 import modules.workspace.application.getworkspacestate.GetWorkspaceStateDto;
+import modules.workspace.application.resetworkspace.ResetWorkspaceDto;
 import modules.workspace.application.saveworkspacestate.SaveWorkspaceStateDto;
 import modules.workspace.application.getworkspacestate.GetWorkspaceStateService;
 import modules.workspace.application.resetworkspace.ResetWorkspaceService;
@@ -349,7 +350,7 @@ public final class MainWindowController extends AbstractFxController {
 
         closeAllConnectionTabs();
         try {
-            ResetWorkspaceService.getInstance().invoke();
+            ResetWorkspaceService.getInstance().invoke(ResetWorkspaceDto.fromPrimitives(Primitives.of()));
         }
         catch (RuntimeException e) {
             showError(e);
@@ -444,7 +445,7 @@ public final class MainWindowController extends AbstractFxController {
             nameLabel.setTextFill(getBrightness(color) > LIGHT_COLOR_LUMINANCE ? Color.BLACK : Color.WHITE);
         }
         if (getBool(connection.get(ConnectionsKeyEnum.IS_PRODUCTION))) {
-            Label productionLabel = new Label("PROD");
+            Label productionLabel = new Label(__("PROD"));
             productionLabel.getStyleClass().add("production-badge");
             header.getChildren().add(productionLabel);
         }

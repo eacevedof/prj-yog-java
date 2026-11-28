@@ -567,3 +567,6 @@ msgstr "Refreská"
 
 msgid "Volver a leer el historial (F5): lo lanzado desde el árbol (DROP, duplicar...) aparece al refrescar"
 msgstr "Lesa e historia di nobo (F5): loke a lansa for di e palu (DROP, duplicá...) ta aparesé ora di refreská"
+
+msgid "Query: {0}"
+msgstr "Konsulta: {0}"

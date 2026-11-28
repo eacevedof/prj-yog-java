@@ -7,10 +7,12 @@ import static modules.shared.application.Primitives.getTrimmedString;
 public final class CreateConnectionResultDto {
 
     private final Map<String, Object> connection;
+    private final String connectionUuid;
 
     @SuppressWarnings("unchecked")
     private CreateConnectionResultDto(Map<String, Object> primitives) {
         this.connection = (Map<String, Object>) primitives.get("connection");
+        this.connectionUuid = getTrimmedString(primitives.get("connectionUuid"));
     }
 
     public static CreateConnectionResultDto fromPrimitives(Map<String, Object> primitives) {
@@ -25,6 +27,6 @@ public final class CreateConnectionResultDto {
     }
 
     public String getConnectionUuid() {
-        return getTrimmedString(connection.get("connection_uuid"));
+        return connectionUuid;
     }
 }

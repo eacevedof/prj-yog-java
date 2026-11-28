@@ -169,7 +169,7 @@ public final class TargetDbReaderJdbcRepository {
             case DbEngineEnum.MONGODB -> "{\"ping\": 1}";
             default -> "SELECT VERSION()";
         };
-        String databaseName = DbEngineEnum.MONGODB.equals(dbEngine) ? "admin" : connectionEntity.getDatabaseName();
+        String databaseName = DbEngineEnum.MONGODB.equals(dbEngine) ? DbEngineEnum.MONGODB_ADMIN_DATABASE : connectionEntity.getDatabaseName();
         List<HttpTunnelResult> results = httpTunnelClient.execute(probe, databaseName, false);
         if (results.isEmpty()) return "(HTTP tunnel " + tunnelVersion + ")";
         HttpTunnelResult firstResult = results.getFirst();

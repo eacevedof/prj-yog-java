@@ -25,6 +25,8 @@ public final class DbEngineEnum {
     public static final int REDIS_DEFAULT_PORT = 6379;
     public static final int MONGODB_DEFAULT_PORT = 27017;
     public static final String PGSQL_DEFAULT_DATABASE = "postgres";
+    // la BD de Mongo donde se autentica por defecto y van los comandos de servidor (ping, listDatabases, adminCommand)
+    public static final String MONGODB_ADMIN_DATABASE = "admin";
     public static final int REDIS_MAX_DATABASE_INDEX = 999;
 
     public static final List<String> VALUES = List.of(MYSQL, PGSQL, MSSQL, SQLITE, FILES, REDIS, MONGODB);

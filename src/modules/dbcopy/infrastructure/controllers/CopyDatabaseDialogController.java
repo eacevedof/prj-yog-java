@@ -54,6 +54,7 @@ import static core.config.Global.__;
 
 import modules.connections.domain.enums.ConnectionsKeyEnum;
 import modules.connections.domain.enums.DbEngineEnum;
+import modules.connections.application.listconnections.ListConnectionsDto;
 import modules.connections.application.listconnections.ListConnectionsService;
 import modules.connections.infrastructure.components.EngineIconComponent;
 import modules.connections.infrastructure.factories.TargetSessionFactory;
@@ -208,7 +209,7 @@ public final class CopyDatabaseDialogController extends AbstractFxController {
     }
 
     private void loadConnections() {
-        List<Map<String, Object>> connections = ListConnectionsService.getInstance().invoke().getConnections();
+        List<Map<String, Object>> connections = ListConnectionsService.getInstance().invoke(ListConnectionsDto.fromPrimitives(Primitives.of())).getConnections();
         Map<String, Object> sourceConnection = null;
         Map<String, Object> firstOtherSameEngine = null;
         Map<String, Object> firstOtherConnection = null;
@@ -422,11 +423,11 @@ public final class CopyDatabaseDialogController extends AbstractFxController {
         for (Map<String, Object> object : copyDatabaseResultDto.getObjects()) {
             boolean isOk = getBool(object.get(DbCopyKeyEnum.IS_OK));
             String objectType = getTrimmedString(object.get(DbCopyKeyEnum.OBJECT_TYPE));
-            summary.append(isOk ? "OK     " : "ERROR  ")
+            summary.append(String.format("%-7s", isOk ? __("OK") : __("ERROR")))
                 .append(getTypeName(objectType)).append(" ")
                 .append(getTrimmedString(object.get(DbCopyKeyEnum.OBJECT_NAME)));
             if (DbCopyObjectTypeEnum.TABLE.equals(objectType) && object.get(DbCopyKeyEnum.COPIED_ROWS) instanceof Number copiedRows) {
-                summary.append("  (").append(__("{0} filas", String.format("%,d", copiedRows.longValue()))).append(")");
+                summary.append("  ").append(__("({0} filas)", String.format("%,d", copiedRows.longValue())));
             }
             String message = getTrimmedString(object.get(DbCopyKeyEnum.MESSAGE));
             if (!message.isEmpty()) summary.append("\n       ").append(message.replace("\n", "\n       "));
@@ -562,17 +563,17 @@ public final class CopyDatabaseDialogController extends AbstractFxController {
     }
 
     private <T> void runInBackground(Callable<T> work, Consumer<T> onSucceeded, Consumer<Throwable> onFailed, String threadName) {
-        Task<T> task = new Task<>() {
+        Task<T> backgroundTask = new Task<>() {
             @Override
             protected T call() throws Exception {
                 return work.call();
             }
         };
-        task.setOnSucceeded(event -> onSucceeded.accept(task.getValue()));
-        task.setOnFailed(event -> onFailed.accept(task.getException()));
-        Thread thread = new Thread(task, threadName);
-        thread.setDaemon(true);
-        thread.start();
+        backgroundTask.setOnSucceeded(event -> onSucceeded.accept(backgroundTask.getValue()));
+        backgroundTask.setOnFailed(event -> onFailed.accept(backgroundTask.getException()));
+        Thread daemonThread = new Thread(backgroundTask, threadName);
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 
     /**
@@ -635,7 +636,7 @@ public final class CopyDatabaseDialogController extends AbstractFxController {
             HBox graphic = new HBox(6, colorRectangle, engineIcon);
             graphic.setAlignment(Pos.CENTER_LEFT);
             if (getBool(connection.get(ConnectionsKeyEnum.IS_PRODUCTION))) {
-                Label productionLabel = new Label("PROD");
+                Label productionLabel = new Label(__("PROD"));
                 productionLabel.getStyleClass().add("production-badge");
                 graphic.getChildren().add(productionLabel);
             }

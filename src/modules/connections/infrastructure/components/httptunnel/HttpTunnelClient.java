@@ -30,6 +30,8 @@ import org.w3c.dom.NodeList;
 
 import org.xml.sax.SAXException;
 
+import modules.shared.domain.enums.SharedConfigEnum;
+
 import modules.connections.domain.entities.ConnectionEntity;
 
 /**
@@ -42,7 +44,7 @@ public final class HttpTunnelClient {
 
     public static final String TUNNEL_VERSION = "13.21";
     private static final String CHARSET = "utf8mb4";
-    private static final String USER_AGENT = "multidbs";
+    private static final String USER_AGENT = SharedConfigEnum.APP_NAME;
     private static final Duration CONNECT_TIMEOUT = Duration.ofSeconds(10);
     private static final int MAX_ERROR_BODY_CHARS = 200;
     private static final String PING_PARAMETER = "app";

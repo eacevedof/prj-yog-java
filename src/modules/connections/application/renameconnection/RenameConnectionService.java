@@ -40,6 +40,8 @@ public final class RenameConnectionService {
      * @throws ConnectionsException
      */
     public RenameConnectionResultDto invoke(RenameConnectionDto renameConnectionDto) {
+        failIfWrongInput(renameConnectionDto);
+
         ConnectionEntity savedConnectionEntity = connectionsReaderSqliteRepository.getConnectionByUuid(renameConnectionDto.getConnectionUuid());
         if (savedConnectionEntity == null) {
             throw ConnectionsException.notFoundCustom(__(ConnectionsMessageEnum.CONNECTION_X_NOT_FOUND, renameConnectionDto.getConnectionUuid()));
@@ -76,6 +78,15 @@ public final class RenameConnectionService {
         String connectionName = connectionEntity.getConnectionName();
         if (connectionsReaderSqliteRepository.doesConnectionNameExist(connectionName, connectionEntity.getConnectionUuid())) {
             throw ConnectionsException.conflictCustom(__(ConnectionsMessageEnum.CONNECTION_NAME_X_ALREADY_EXISTS, connectionName));
+        }
+    }
+
+    /**
+     * @throws ConnectionsException
+     */
+    private void failIfWrongInput(RenameConnectionDto renameConnectionDto) {
+        if (renameConnectionDto.getConnectionUuid().isEmpty()) {
+            throw ConnectionsException.badRequestCustom(__(ConnectionsMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid"));
         }
     }
 }

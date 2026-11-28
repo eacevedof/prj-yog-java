@@ -15,6 +15,10 @@ public final class ConnectionsException extends RuntimeException implements Inte
     /**
      * Se lanza en el sitio: throw ConnectionsException.notFoundCustom(...)
      */
+    public static ConnectionsException badRequestCustom(String message) {
+        return new ConnectionsException(message, ExceptionEnum.CODE_BAD_REQUEST);
+    }
+
     public static ConnectionsException notFoundCustom(String message) {
         return new ConnectionsException(message, ExceptionEnum.CODE_NOT_FOUND);
     }

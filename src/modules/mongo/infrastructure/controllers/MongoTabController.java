@@ -237,10 +237,10 @@ public final class MongoTabController extends AbstractFxController implements Co
         );
     }
 
-    private void showDocuments(FindMongoDocumentsResultDto result) {
-        documentsJson = result.getDocumentsJson();
+    private void showDocuments(FindMongoDocumentsResultDto findMongoDocumentsResultDto) {
+        documentsJson = findMongoDocumentsResultDto.getDocumentsJson();
         documentsTableView.getColumns().clear();
-        List<String> columns = result.getColumns();
+        List<String> columns = findMongoDocumentsResultDto.getColumns();
         for (int i = 0; i < columns.size(); i++) {
             int columnIndex = i;
             TableColumn<List<String>, String> tableColumn = new TableColumn<>(columns.get(i));
@@ -250,12 +250,12 @@ public final class MongoTabController extends AbstractFxController implements Co
             tableColumn.setPrefWidth(i == 0 ? 230 : 140);
             documentsTableView.getColumns().add(tableColumn);
         }
-        documentsTableView.getItems().setAll(result.getRows());
+        documentsTableView.getItems().setAll(findMongoDocumentsResultDto.getRows());
         documentArea.clear();
         saveDocumentButton.setDisable(true);
         deleteDocumentButton.setDisable(true);
-        String total = result.getTotalCount() < 0 ? "?" : String.valueOf(result.getTotalCount());
-        documentsStatusLabel.setText(__("{0} de {1} documento(s) · {2} ms", result.getRows().size(), total, result.getElapsedMs()));
+        String total = findMongoDocumentsResultDto.getTotalCount() < 0 ? "?" : String.valueOf(findMongoDocumentsResultDto.getTotalCount());
+        documentsStatusLabel.setText(__("{0} de {1} documento(s) · {2} ms", findMongoDocumentsResultDto.getRows().size(), total, findMongoDocumentsResultDto.getElapsedMs()));
     }
 
     @FXML
@@ -286,9 +286,9 @@ public final class MongoTabController extends AbstractFxController implements Co
                 "connectionUuid", connectionUuid, "sessionKey", browserSessionKey, "databaseName", databaseName, "collectionName", collectionName,
                 "documentJson", documentJson, "isNew", isNew, "isDelete", isDelete, "isConfirmed", isConfirmed
             ))),
-            result -> {
+            saveMongoDocumentResultDto -> {
                 onFind();
-                documentsStatusLabel.setText(isDelete ? __("Borrado {0}", result.getIdJson()) : isNew ? __("Insertado {0}", result.getIdJson()) : __("Guardado {0}", result.getIdJson()));
+                documentsStatusLabel.setText(isDelete ? __("Borrado {0}", saveMongoDocumentResultDto.getIdJson()) : isNew ? __("Insertado {0}", saveMongoDocumentResultDto.getIdJson()) : __("Guardado {0}", saveMongoDocumentResultDto.getIdJson()));
             },
             throwable -> {
                 if (isPreconditionRequired(throwable) && isProductionConfirmed(throwable.getMessage())) {
@@ -321,10 +321,10 @@ public final class MongoTabController extends AbstractFxController implements Co
                 "connectionUuid", connectionUuid, "sessionKey", consoleSessionKey, "databaseName", databaseName,
                 "commandLine", commandLine, "isConfirmed", isConfirmed
             ))),
-            result -> {
+            executeMongoCommandResultDto -> {
                 runCommandButton.setDisable(false);
-                appendConsole(databaseName, commandLine, result.getOutput() + (result.isError() ? "" : "\n(" + result.getElapsedMs() + " ms)"));
-                consoleDatabase = result.getCurrentDatabase();
+                appendConsole(databaseName, commandLine, executeMongoCommandResultDto.getOutput() + (executeMongoCommandResultDto.isError() ? "" : "\n(" + executeMongoCommandResultDto.getElapsedMs() + " ms)"));
+                consoleDatabase = executeMongoCommandResultDto.getCurrentDatabase();
                 consolePromptLabel.setText(consoleDatabase + ">");
             },
             throwable -> {
@@ -369,17 +369,17 @@ public final class MongoTabController extends AbstractFxController implements Co
     }
 
     private <T> void runInBackground(Supplier<T> work, Consumer<T> onSucceeded, Consumer<Throwable> onFailed, String threadName) {
-        Task<T> task = new Task<>() {
+        Task<T> backgroundTask = new Task<>() {
             @Override
             protected T call() {
                 return work.get();
             }
         };
-        task.setOnSucceeded(event -> onSucceeded.accept(task.getValue()));
-        task.setOnFailed(event -> onFailed.accept(task.getException()));
-        Thread thread = new Thread(task, threadName);
-        thread.setDaemon(true);
-        thread.start();
+        backgroundTask.setOnSucceeded(event -> onSucceeded.accept(backgroundTask.getValue()));
+        backgroundTask.setOnFailed(event -> onFailed.accept(backgroundTask.getException()));
+        Thread daemonThread = new Thread(backgroundTask, threadName);
+        daemonThread.setDaemon(true);
+        daemonThread.start();
     }
 
     /**

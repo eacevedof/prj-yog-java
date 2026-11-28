@@ -22,11 +22,22 @@ public final class GetConnectionService {
      * @throws ConnectionsException
      */
     public GetConnectionResultDto invoke(GetConnectionDto getConnectionDto) {
+        failIfWrongInput(getConnectionDto);
+
         ConnectionEntity connectionEntity = ConnectionsReaderSqliteRepository.getInstance()
             .getConnectionByUuid(getConnectionDto.getConnectionUuid());
         if (connectionEntity == null) {
             throw ConnectionsException.notFoundCustom(__(ConnectionsMessageEnum.CONNECTION_X_NOT_FOUND, getConnectionDto.getConnectionUuid()));
         }
         return GetConnectionResultDto.fromPrimitives(Primitives.of("connection", connectionEntity.toPrimitives()));
+    }
+
+    /**
+     * @throws ConnectionsException
+     */
+    private void failIfWrongInput(GetConnectionDto getConnectionDto) {
+        if (getConnectionDto.getConnectionUuid().isEmpty()) {
+            throw ConnectionsException.badRequestCustom(__(ConnectionsMessageEnum.FIELD_IS_REQUIRED_X, "connectionUuid"));
+        }
     }
 }
